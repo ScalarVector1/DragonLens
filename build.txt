@@ -1,0 +1,3 @@
+displayName = Dragon Lens
+author = ScalarVector
+version = 0.1
