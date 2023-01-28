@@ -111,6 +111,8 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 				.AddTool<TestTool>()
 				.AddTool<TestTool>()
 				);
+
+			UILoader.GetUIState<ToolbarState>().Refresh();
 		}
 	}
 }
