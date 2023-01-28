@@ -19,6 +19,9 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 		InventoryClosed
 	}
 
+	/// <summary>
+	/// Holds data about a toolbar, including it's position, orientation, and what tools it contains.
+	/// </summary>
 	internal class Toolbar
 	{
 		public bool hidden;
@@ -53,13 +56,24 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 			}
 		}
 
+		public Toolbar() { }
+
+		public Toolbar(Vector2 relativePosition, Orientation orientation, AutomaticHideOption automaticHideOption)
+		{
+			this.relativePosition = relativePosition;
+			this.orientation = orientation;
+			this.automaticHideOption = automaticHideOption;
+		}
+
 		/// <summary>
-		/// Adds the tool of the given type to the toolbar
+		/// Adds the tool of the given type to the toolbar, can be used in a builder-like pattern
 		/// </summary>
 		/// <typeparam name="T">The type of the singleton tool to add</typeparam>
-		public void AddTool<T>()
+		/// <returns>the toolbar instance that was added to</returns>
+		public Toolbar AddTool<T>()
 		{
 			tools.Add(ToolHandler.GetTool<T>());
+			return this;
 		}
 
 		/// <summary>

@@ -4,6 +4,9 @@ using Terraria.ModLoader;
 
 namespace DragonLens.Core.Systems.ToolSystem
 {
+	/// <summary>
+	/// A singleton type which can be extended to add new tools. Tools function primarily as a 'kick-off-point' for other GUIs or state changes.
+	/// </summary>
 	internal abstract class Tool
 	{
 		/// <summary>
