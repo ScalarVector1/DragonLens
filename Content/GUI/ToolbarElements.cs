@@ -89,7 +89,7 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			if (toolbar.Visible)
+			if (!toolbar.Invisible)
 			{
 				base.Draw(spriteBatch);
 

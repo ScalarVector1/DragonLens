@@ -38,7 +38,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 		/// <summary>
 		/// If the toolbar should not draw at all, even a collapse button
 		/// </summary>
-		public bool Visible => automaticHideOption switch
+		public bool Invisible => automaticHideOption switch
 		{
 			AutomaticHideOption.Never => false,
 			AutomaticHideOption.InventoryOpen => Main.playerInventory,
