@@ -1,4 +1,6 @@
-﻿using DragonLens.Core.Systems.ToolSystem;
+﻿using DragonLens.Content.GUI;
+using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Core.Systems.ToolSystem;
 using Terraria;
 
 namespace DragonLens.Content.Tools
@@ -13,6 +15,7 @@ namespace DragonLens.Content.Tools
 
 		public override void OnActivate()
 		{
+			UILoader.GetUIState<ToolbarState>().Refresh();
 			Main.NewText("Test tool used!");
 		}
 	}

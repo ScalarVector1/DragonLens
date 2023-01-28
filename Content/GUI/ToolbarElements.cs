@@ -35,6 +35,17 @@ namespace DragonLens.Content.GUI
 
 			Vector2 position = Vector2.One * 10;
 
+			if (toolbar.orientation == Orientation.Horizontal)
+			{
+				if (toolbar.relativePosition.Y > 0.5f)
+					position.Y += 15;
+			}
+			else
+			{
+				if (toolbar.relativePosition.X > 0.5f)
+					position.X += 15;
+			}
+
 			foreach (Tool tool in toolbar.toolList)
 			{
 				ToolButton button = new(tool, position, this);
@@ -57,6 +68,17 @@ namespace DragonLens.Content.GUI
 				Width.Set(72, 0);
 			}
 
+			if (toolbar.orientation == Orientation.Horizontal)
+			{
+				Top.Set(toolbar.relativePosition.Y > 0.5f ? -72 : 0, toolbar.relativePosition.Y);
+				Left.Set(-position.X / 2, toolbar.relativePosition.X);
+			}
+			else
+			{
+				Left.Set(toolbar.relativePosition.X > 0.5f ? -72 : 0, toolbar.relativePosition.X);
+				Top.Set(-position.Y / 2, toolbar.relativePosition.Y);
+			}
+
 			AddCollapseTab();
 			Recalculate();
 		}
@@ -71,10 +93,10 @@ namespace DragonLens.Content.GUI
 			{
 				collapseButton.Left.Set(-15, 0.5f);
 
-				if (toolbar.relativePosition.Y < 0.5f)
-					collapseButton.Top.Set(15, 0f);
+				if (toolbar.relativePosition.Y > 0.5f)
+					collapseButton.Top.Set(-15, 0f);
 				else
-					collapseButton.Top.Set(-15, 1f);
+					collapseButton.Top.Set(15, 1f);
 			}
 			else
 			{
@@ -93,18 +115,32 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
+			Texture2D tex = Terraria.GameContent.TextureAssets.MagicPixel.Value;
+			spriteBatch.Draw(tex, GetDimensions().ToRectangle(), Color.Red * 0.25f);
+
 			if (!toolbar.Invisible)
 			{
 				var bgTarget = GetDimensions().ToRectangle();
 
 				if (toolbar.orientation == Orientation.Horizontal)
+				{
 					bgTarget.Height -= 14;
+
+					if (toolbar.relativePosition.Y > 0.5f)
+						bgTarget.Y += 15;
+				}
 				else
+				{
 					bgTarget.Width -= 14;
+
+					if (toolbar.relativePosition.X > 0.5f)
+						bgTarget.X += 15;
+				}
 
 				Helpers.GUIHelper.DrawBox(spriteBatch, bgTarget, new Color(20, 50, 80));
 
 				base.Draw(spriteBatch);
+				Recalculate();
 			}
 		}
 	}

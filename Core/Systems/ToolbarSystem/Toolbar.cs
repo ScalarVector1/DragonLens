@@ -19,6 +19,15 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 		InventoryClosed
 	}
 
+	public enum CollapseDirection
+	{
+		Left,
+		Right,
+		Up,
+		Down,
+		Floating
+	}
+
 	/// <summary>
 	/// Holds data about a toolbar, including it's position, orientation, and what tools it contains.
 	/// </summary>
@@ -45,6 +54,26 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 			AutomaticHideOption.InventoryClosed => !Main.playerInventory,
 			_ => false,
 		};
+
+		public CollapseDirection CollapseDirection
+		{
+			get
+			{
+				if (relativePosition.X == 0)
+					return CollapseDirection.Left;
+
+				if (relativePosition.X == 1)
+					return CollapseDirection.Right;
+
+				if (relativePosition.Y == 0)
+					return CollapseDirection.Up;
+
+				if (relativePosition.Y == 1)
+					return CollapseDirection.Down;
+
+				return CollapseDirection.Floating;
+			}
+		}
 
 		public Toolbar() { }
 

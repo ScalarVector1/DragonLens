@@ -1,5 +1,6 @@
 ﻿using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolbarSystem;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria.UI;
 
@@ -17,6 +18,12 @@ namespace DragonLens.Content.GUI
 		public override void OnInitialize()
 		{
 			Refresh();
+		}
+
+		public override void Update(GameTime gameTime)
+		{
+			base.Update(gameTime);
+			Recalculate();
 		}
 
 		/// <summary>
