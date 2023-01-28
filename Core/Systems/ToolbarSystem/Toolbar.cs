@@ -30,7 +30,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 		public Orientation orientation;
 		public AutomaticHideOption automaticHideOption;
 
-		public List<Tool> tools;
+		public List<Tool> tools = new();
 
 		/// <summary>
 		/// If the toolbar should appear collapsed, based on hidden state and automatic hide options

@@ -83,6 +83,8 @@ namespace DragonLens.Content.GUI
 				collapseButton.Top.Set(0, 0.5f);
 			}
 
+			collapseButton.OnClick += (UIMouseEvent mouseEvent, UIElement element) => toolbar.hidden = !toolbar.hidden;
+
 			Append(collapseButton);
 		}
 

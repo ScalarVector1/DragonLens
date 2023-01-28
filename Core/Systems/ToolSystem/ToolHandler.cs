@@ -11,6 +11,9 @@ namespace DragonLens.Core.Systems.ToolSystem
 
 		public static Tool GetTool<T>() where T : Tool
 		{
+			if (!toolsByType.ContainsKey(typeof(T)))
+				return null;
+
 			return toolsByType[typeof(T)];
 		}
 
