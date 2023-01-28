@@ -1,5 +1,6 @@
 ﻿using DragonLens.Content.GUI;
 using DragonLens.Content.Tools;
+using DragonLens.Content.Tools.Spawners;
 using DragonLens.Core.Loaders.UILoading;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -106,6 +107,16 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 		{
 			activeToolbars.Add(
 				new Toolbar(new Vector2(0, 0.5f), Orientation.Vertical, AutomaticHideOption.Never)
+				.AddTool<ItemSpawner>()
+				.AddTool<ProjectileSpawner>()
+				.AddTool<NPCSpawner>()
+				.AddTool<DustSpawner>()
+				.AddTool<TileSpawner>()
+				.AddTool<BuffSpawner>()
+				);
+
+			activeToolbars.Add(
+				new Toolbar(new Vector2(0.5f, 1f), Orientation.Horizontal, AutomaticHideOption.Never)
 				.AddTool<TestTool>()
 				.AddTool<TestTool>()
 				.AddTool<TestTool>()
