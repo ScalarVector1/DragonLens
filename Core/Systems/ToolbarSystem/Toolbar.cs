@@ -72,7 +72,11 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 		/// <returns>the toolbar instance that was added to</returns>
 		public Toolbar AddTool<T>() where T : Tool
 		{
-			tools.Add(ToolHandler.GetTool<T>());
+			Tool tool = ToolHandler.GetTool<T>();
+
+			if (tool != null)
+				tools.Add(tool);
+
 			return this;
 		}
 
@@ -82,7 +86,10 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 		/// <param name="typeName">The name of the type to load</param>
 		public void AddTool(string typeName)
 		{
-			tools.Add(ToolHandler.GetTool(typeName));
+			Tool tool = ToolHandler.GetTool(typeName);
+
+			if (tool != null)
+				tools.Add(tool);
 		}
 
 		public void SaveData(TagCompound tag)

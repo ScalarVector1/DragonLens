@@ -24,7 +24,9 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 			}
 			else
 			{
-				Directory.CreateDirectory(currentPath);
+				string dir = Path.Join(Main.SavePath, "DragonLensLayouts");
+				Directory.CreateDirectory(dir);
+
 				File.Create(currentPath);
 				LoadFallback();
 				ExportToFile(currentPath);
