@@ -1,4 +1,6 @@
-﻿using DragonLens.Content.Tools;
+﻿using DragonLens.Content.GUI;
+using DragonLens.Content.Tools;
+using DragonLens.Core.Loaders.UILoading;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.IO;
@@ -62,6 +64,8 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 				newBar.LoadData(loadedTag);
 				activeToolbars.Add(newBar);
 			}
+
+			UILoader.GetUIState<ToolbarState>().Refresh();
 		}
 
 		/// <summary>

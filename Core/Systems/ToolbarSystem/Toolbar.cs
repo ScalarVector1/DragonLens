@@ -70,7 +70,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 		/// </summary>
 		/// <typeparam name="T">The type of the singleton tool to add</typeparam>
 		/// <returns>the toolbar instance that was added to</returns>
-		public Toolbar AddTool<T>()
+		public Toolbar AddTool<T>() where T : Tool
 		{
 			tools.Add(ToolHandler.GetTool<T>());
 			return this;

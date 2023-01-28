@@ -9,7 +9,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 		public readonly static List<Tool> tools = new();
 		private readonly static Dictionary<Type, Tool> toolsByType = new();
 
-		public static Tool GetTool<T>()
+		public static Tool GetTool<T>() where T : Tool
 		{
 			return toolsByType[typeof(T)];
 		}
