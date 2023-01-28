@@ -24,37 +24,27 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 	/// </summary>
 	internal class Toolbar
 	{
-		public bool hidden;
+		/// <summary>
+		/// If the toolbar should be collapsed to a collapse button only
+		/// </summary>
+		public bool collapsed;
 
 		public Vector2 relativePosition;
 		public Orientation orientation;
 		public AutomaticHideOption automaticHideOption;
 
-		public List<Tool> tools = new();
+		public List<Tool> toolList = new();
 
 		/// <summary>
-		/// If the toolbar should appear collapsed, based on hidden state and automatic hide options
+		/// If the toolbar should not draw at all, even a collapse button
 		/// </summary>
-		public bool Visible
+		public bool Visible => automaticHideOption switch
 		{
-			get
-			{
-				if (hidden)
-				{
-					return false;
-				}
-				else
-				{
-					return automaticHideOption switch
-					{
-						AutomaticHideOption.Never => false,
-						AutomaticHideOption.InventoryOpen => Main.playerInventory,
-						AutomaticHideOption.InventoryClosed => !Main.playerInventory,
-						_ => false,
-					};
-				}
-			}
-		}
+			AutomaticHideOption.Never => false,
+			AutomaticHideOption.InventoryOpen => Main.playerInventory,
+			AutomaticHideOption.InventoryClosed => !Main.playerInventory,
+			_ => false,
+		};
 
 		public Toolbar() { }
 
@@ -75,7 +65,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 			Tool tool = ToolHandler.GetTool<T>();
 
 			if (tool != null)
-				tools.Add(tool);
+				toolList.Add(tool);
 
 			return this;
 		}
@@ -89,7 +79,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 			Tool tool = ToolHandler.GetTool(typeName);
 
 			if (tool != null)
-				tools.Add(tool);
+				toolList.Add(tool);
 		}
 
 		public void SaveData(TagCompound tag)
@@ -99,7 +89,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 			tag["automaticHideOption"] = (int)automaticHideOption;
 
 			List<string> toolData = new();
-			tools.ForEach(n => toolData.Add(n.GetType().Name));
+			toolList.ForEach(n => toolData.Add(n.GetType().FullName));
 
 			tag["tools"] = toolData;
 		}

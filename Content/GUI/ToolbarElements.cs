@@ -3,7 +3,6 @@ using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using Terraria.UI;
 
@@ -36,7 +35,7 @@ namespace DragonLens.Content.GUI
 
 			Vector2 position = Vector2.One * 10;
 
-			foreach (Tool tool in toolbar.tools)
+			foreach (Tool tool in toolbar.toolList)
 			{
 				ToolButton button = new(tool, position);
 				Append(button);
@@ -64,7 +63,7 @@ namespace DragonLens.Content.GUI
 
 		private void AddCollapseTab()
 		{
-			var collapseButton = new UIImageButton(ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Tab"));
+			var collapseButton = new HideTab(this);
 			collapseButton.Width.Set(30, 0);
 			collapseButton.Height.Set(30, 0);
 
@@ -83,15 +82,26 @@ namespace DragonLens.Content.GUI
 				collapseButton.Top.Set(0, 0.5f);
 			}
 
-			collapseButton.OnClick += (UIMouseEvent mouseEvent, UIElement element) => toolbar.hidden = !toolbar.hidden;
+			collapseButton.OnClick += (UIMouseEvent mouseEvent, UIElement element) => toolbar.collapsed = !toolbar.collapsed;
 
 			Append(collapseButton);
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), new Color(20, 50, 80));
-			base.Draw(spriteBatch);
+			if (toolbar.Visible)
+			{
+				base.Draw(spriteBatch);
+
+				var bgTarget = GetDimensions().ToRectangle();
+
+				if (toolbar.orientation == Orientation.Horizontal)
+					bgTarget.Height -= 14;
+				else
+					bgTarget.Width -= 14;
+
+				Helpers.GUIHelper.DrawBox(spriteBatch, bgTarget, new Color(20, 50, 80));
+			}
 		}
 	}
 
@@ -121,6 +131,42 @@ namespace DragonLens.Content.GUI
 
 			if (IsMouseHovering)
 				Utils.DrawBorderString(spriteBatch, tool.Name, Main.MouseScreen + Vector2.One * 16, Color.White);
+
+			base.Draw(spriteBatch);
+		}
+	}
+
+	internal class HideTab : UIElement
+	{
+		public ToolbarElement parent;
+
+		public HideTab(ToolbarElement parent)
+		{
+			this.parent = parent;
+		}
+
+		public override void Click(UIMouseEvent evt)
+		{
+			parent.toolbar.collapsed = !parent.toolbar.collapsed;
+
+			if (parent.toolbar.orientation == Orientation.Horizontal)
+				parent.Height.Set(parent.toolbar.collapsed ? 30 : 72, 0);
+			else
+				parent.Width.Set(parent.toolbar.collapsed ? 30 : 72, 0);
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Tab").Value;
+
+			float rotation;
+
+			if (parent.toolbar.orientation == Orientation.Horizontal)
+				rotation = parent.toolbar.relativePosition.Y > 0.5f ? 0 : 3.14f;
+			else
+				rotation = parent.toolbar.relativePosition.X > 0.5f ? 1.57f : 1.57f * 3;
+
+			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, rotation, tex.Size() / 2f, 1, 0, 0);
 
 			base.Draw(spriteBatch);
 		}
