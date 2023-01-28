@@ -107,6 +107,9 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 			activeToolbars.Add(
 				new Toolbar(new Vector2(0, 0.5f), Orientation.Vertical, AutomaticHideOption.Never)
 				.AddTool<TestTool>()
+				.AddTool<TestTool>()
+				.AddTool<TestTool>()
+				.AddTool<TestTool>()
 				);
 		}
 	}

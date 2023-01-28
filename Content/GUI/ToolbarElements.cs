@@ -37,7 +37,7 @@ namespace DragonLens.Content.GUI
 
 			foreach (Tool tool in toolbar.toolList)
 			{
-				ToolButton button = new(tool, position);
+				ToolButton button = new(tool, position, this);
 				Append(button);
 
 				if (toolbar.orientation == Orientation.Horizontal)
@@ -69,17 +69,21 @@ namespace DragonLens.Content.GUI
 
 			if (toolbar.orientation == Orientation.Horizontal)
 			{
-				collapseButton.Left.Set(0, 0.5f);
-				collapseButton.Top.Set(-30, 1f);
+				collapseButton.Left.Set(-15, 0.5f);
+
+				if (toolbar.relativePosition.Y < 0.5f)
+					collapseButton.Top.Set(15, 0f);
+				else
+					collapseButton.Top.Set(-15, 1f);
 			}
 			else
 			{
 				if (toolbar.relativePosition.X < 0.5f)
-					collapseButton.Left.Set(-30, 1f);
+					collapseButton.Left.Set(-15, 1f);
 				else
-					collapseButton.Left.Set(30, 0f);
+					collapseButton.Left.Set(15, 0f);
 
-				collapseButton.Top.Set(0, 0.5f);
+				collapseButton.Top.Set(-15, 0.5f);
 			}
 
 			collapseButton.OnClick += (UIMouseEvent mouseEvent, UIElement element) => toolbar.collapsed = !toolbar.collapsed;
@@ -91,8 +95,6 @@ namespace DragonLens.Content.GUI
 		{
 			if (!toolbar.Invisible)
 			{
-				base.Draw(spriteBatch);
-
 				var bgTarget = GetDimensions().ToRectangle();
 
 				if (toolbar.orientation == Orientation.Horizontal)
@@ -101,6 +103,8 @@ namespace DragonLens.Content.GUI
 					bgTarget.Width -= 14;
 
 				Helpers.GUIHelper.DrawBox(spriteBatch, bgTarget, new Color(20, 50, 80));
+
+				base.Draw(spriteBatch);
 			}
 		}
 	}
@@ -109,7 +113,9 @@ namespace DragonLens.Content.GUI
 	{
 		public Tool tool;
 
-		public ToolButton(Tool tool, Vector2 pos)
+		public ToolbarElement parent;
+
+		public ToolButton(Tool tool, Vector2 pos, ToolbarElement parent)
 		{
 			this.tool = tool;
 
@@ -117,22 +123,27 @@ namespace DragonLens.Content.GUI
 			Top.Set(pos.Y, 0);
 			Width.Set(38, 0);
 			Height.Set(38, 0);
+			this.parent = parent;
 		}
 
 		public override void Click(UIMouseEvent evt)
 		{
-			tool.OnActivate();
+			if (!parent.toolbar.collapsed)
+				tool.OnActivate();
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle());
-			tool.DrawIcon(spriteBatch, GetDimensions().Position() + Vector2.One * 3);
+			if (!parent.toolbar.collapsed)
+			{
+				Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle());
+				tool.DrawIcon(spriteBatch, GetDimensions().Position() + Vector2.One * 3);
 
-			if (IsMouseHovering)
-				Utils.DrawBorderString(spriteBatch, tool.Name, Main.MouseScreen + Vector2.One * 16, Color.White);
+				if (IsMouseHovering)
+					Utils.DrawBorderString(spriteBatch, tool.Name, Main.MouseScreen + Vector2.One * 16, Color.White);
 
-			base.Draw(spriteBatch);
+				base.Draw(spriteBatch);
+			}
 		}
 	}
 
@@ -150,9 +161,11 @@ namespace DragonLens.Content.GUI
 			parent.toolbar.collapsed = !parent.toolbar.collapsed;
 
 			if (parent.toolbar.orientation == Orientation.Horizontal)
-				parent.Height.Set(parent.toolbar.collapsed ? 30 : 72, 0);
+				parent.Height.Set(parent.toolbar.collapsed ? 20 : 72, 0);
 			else
-				parent.Width.Set(parent.toolbar.collapsed ? 30 : 72, 0);
+				parent.Width.Set(parent.toolbar.collapsed ? 20 : 72, 0);
+
+			parent.Recalculate();
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
@@ -164,7 +177,7 @@ namespace DragonLens.Content.GUI
 			if (parent.toolbar.orientation == Orientation.Horizontal)
 				rotation = parent.toolbar.relativePosition.Y > 0.5f ? 0 : 3.14f;
 			else
-				rotation = parent.toolbar.relativePosition.X > 0.5f ? 1.57f : 1.57f * 3;
+				rotation = parent.toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
 
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, rotation, tex.Size() / 2f, 1, 0, 0);
 
