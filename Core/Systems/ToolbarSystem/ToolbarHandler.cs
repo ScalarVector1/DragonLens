@@ -14,7 +14,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 	{
 		public static readonly List<Toolbar> activeToolbars = new();
 
-		public override void Load()
+		public override void OnModLoad()
 		{
 			string currentPath = Path.Join(Main.SavePath, "DragonLensLayouts", "Current");
 

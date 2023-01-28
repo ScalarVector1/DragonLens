@@ -14,6 +14,11 @@ namespace DragonLens.Content.GUI
 			return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
 		}
 
+		public override void OnInitialize()
+		{
+			Refresh();
+		}
+
 		/// <summary>
 		/// Refresh the entire HUD with new toolbars, like when you would want to load a template
 		/// </summary>
