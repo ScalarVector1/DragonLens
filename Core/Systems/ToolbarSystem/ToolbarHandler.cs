@@ -24,6 +24,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 			}
 			else
 			{
+				Directory.CreateDirectory(currentPath);
 				File.Create(currentPath);
 				LoadFallback();
 				ExportToFile(currentPath);
