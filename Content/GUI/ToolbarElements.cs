@@ -1,4 +1,5 @@
-﻿using DragonLens.Core.Systems.ToolbarSystem;
+﻿using DragonLens.Configs;
+using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -180,7 +181,7 @@ namespace DragonLens.Content.GUI
 				var bgTarget = GetDimensions().ToRectangle();
 				bgTarget.Inflate(-15, -15);
 
-				Helpers.GUIHelper.DrawBox(spriteBatch, bgTarget, new Color(20, 50, 80) * 0.8f);
+				Helpers.GUIHelper.DrawBox(spriteBatch, bgTarget, ModContent.GetInstance<GUIConfig>().backgroundColor);
 
 				base.Draw(spriteBatch);
 				Recalculate();
@@ -223,7 +224,7 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle());
+			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
 			tool.DrawIcon(spriteBatch, GetDimensions().Position() + Vector2.One * 7);
 
 			if (IsMouseHovering)

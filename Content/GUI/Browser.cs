@@ -1,4 +1,5 @@
-﻿using DragonLens.Core.Loaders.UILoading;
+﻿using DragonLens.Configs;
+using DragonLens.Core.Loaders.UILoading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -133,7 +134,7 @@ namespace DragonLens.Content.GUI
 		{
 			var target = new Rectangle((int)basePos.X, (int)basePos.Y, 500, 600);
 
-			Helpers.GUIHelper.DrawBox(spriteBatch, target, new Color(20, 50, 80) * 0.8f);
+			Helpers.GUIHelper.DrawBox(spriteBatch, target, ModContent.GetInstance<GUIConfig>().backgroundColor);
 
 			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 400, 48);
@@ -165,7 +166,7 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle());
+			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
 
 			base.Draw(spriteBatch);
 		}
@@ -182,7 +183,7 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle());
+			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
 
 			Vector2 pos = GetDimensions().Position() + Vector2.One * 4;
 			Utils.DrawBorderString(spriteBatch, searchingFor, pos, Color.White);
