@@ -5,6 +5,8 @@ namespace DragonLens.Core.Loaders.UILoading
 {
 	public abstract class SmartUIState : UIState
 	{
+		protected internal virtual UserInterface UserInterface { get; set; }
+		
 		public abstract int InsertionIndex(List<GameInterfaceLayer> layers);
 
 		public virtual bool Visible { get; set; } = false;
