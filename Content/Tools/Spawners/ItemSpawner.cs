@@ -34,6 +34,8 @@ namespace DragonLens.Content.Tools.Spawners
 	{
 		public override string Name => "Item spawner";
 
+		public override string IconTexture => "DragonLens/Assets/Tools/ItemSpawner";
+
 		public override void PopulateGrid(UIGrid grid)
 		{
 			for (int k = 0; k < ItemLoader.ItemCount; k++)

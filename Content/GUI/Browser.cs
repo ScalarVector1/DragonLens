@@ -18,6 +18,7 @@ namespace DragonLens.Content.GUI
 		private UIGrid options;
 		private UIImageButton closeButton;
 		private FixedUIScrollbar scrollBar;
+		private SearchBar searchBar;
 
 		public Vector2 basePos;
 
@@ -30,6 +31,8 @@ namespace DragonLens.Content.GUI
 		public Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 500, 64);
 
 		public abstract string Name { get; }
+
+		public virtual string IconTexture => "DragonLens/Assets/Tools/TestTool";
 
 		public override bool Visible => visible;
 
@@ -78,6 +81,11 @@ namespace DragonLens.Content.GUI
 			options.SetScrollbar(scrollBar);
 			Append(options);
 
+			searchBar = new();
+			searchBar.Width.Set(200, 0);
+			searchBar.Height.Set(32, 0);
+			Append(searchBar);
+
 			SafeOnInitialize();
 		}
 
@@ -107,6 +115,9 @@ namespace DragonLens.Content.GUI
 			options.Left.Set(basePos.X + 10, 0);
 			options.Top.Set(basePos.Y + 110, 0);
 
+			searchBar.Left.Set(basePos.X + 10, 0);
+			searchBar.Top.Set(basePos.Y + 66, 0);
+
 			Recalculate();
 		}
 
@@ -122,9 +133,21 @@ namespace DragonLens.Content.GUI
 		{
 			var target = new Rectangle((int)basePos.X, (int)basePos.Y, 500, 600);
 
-			Helpers.GUIHelper.DrawBox(spriteBatch, target);
+			Helpers.GUIHelper.DrawBox(spriteBatch, target, new Color(20, 50, 80) * 0.8f);
 
-			Utils.DrawBorderString(spriteBatch, Name, basePos + Vector2.One * 8, Color.White);
+			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
+			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 400, 48);
+			spriteBatch.Draw(back, backTarget, Color.Black * 0.5f);
+
+			Texture2D gridBack = Terraria.GameContent.TextureAssets.MagicPixel.Value;
+			var gridBackTarget = options.GetDimensions().ToRectangle();
+			gridBackTarget.Inflate(4, 4);
+			spriteBatch.Draw(gridBack, gridBackTarget, Color.Black * 0.25f);
+
+			Texture2D icon = ModContent.Request<Texture2D>(IconTexture).Value;
+			spriteBatch.Draw(icon, basePos + Vector2.One * 16, Color.White);
+
+			Utils.DrawBorderStringBig(spriteBatch, Name, basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.6f);
 
 			base.Draw(spriteBatch);
 		}
@@ -150,11 +173,19 @@ namespace DragonLens.Content.GUI
 
 	internal class SearchBar : UIElement
 	{
-		public string searchingFor;
+		public string searchingFor = "";
+
+		public override void Click(UIMouseEvent evt)
+		{
+			searchingFor = Main.GetInputText(searchingFor);
+		}
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
+			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle());
 
+			Vector2 pos = GetDimensions().Position() + Vector2.One * 4;
+			Utils.DrawBorderString(spriteBatch, searchingFor, pos, Color.White);
 		}
 	}
 }
