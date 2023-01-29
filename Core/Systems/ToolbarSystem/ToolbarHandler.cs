@@ -1,5 +1,5 @@
 ﻿using DragonLens.Content.GUI;
-using DragonLens.Content.Tools;
+using DragonLens.Content.Tools.Gameplay;
 using DragonLens.Content.Tools.Spawners;
 using DragonLens.Core.Loaders.UILoading;
 using Microsoft.Xna.Framework;
@@ -117,10 +117,12 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 
 			activeToolbars.Add(
 				new Toolbar(new Vector2(0.5f, 1f), Orientation.Horizontal, AutomaticHideOption.Never)
-				.AddTool<TestTool>()
-				.AddTool<TestTool>()
-				.AddTool<TestTool>()
-				.AddTool<TestTool>()
+				.AddTool<Godmode>()
+				.AddTool<Dogmode>()
+				.AddTool<InfiniteReach>()
+				.AddTool<NoClip>()
+				.AddTool<Difficulty>()
+				.AddTool<FastForward>()
 				);
 
 			UILoader.GetUIState<ToolbarState>().Refresh();

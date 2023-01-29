@@ -75,7 +75,7 @@ namespace DragonLens.Content.GUI
 		{
 			orig();
 
-			if (Main.screenWidth != oldScreenSize.X || Main.screenHeight != oldScreenSize.Y)
+			if (!Main.gameMenu && (Main.screenWidth != oldScreenSize.X || Main.screenHeight != oldScreenSize.Y))
 				UILoader.GetUIState<ToolbarState>().Refresh();
 
 			oldScreenSize.X = Main.screenWidth;
