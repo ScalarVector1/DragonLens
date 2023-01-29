@@ -1,5 +1,4 @@
 ﻿using DragonLens.Configs;
-using DragonLens.Core.Loaders.UILoading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -14,28 +13,23 @@ using FixedUIScrollbar = Terraria.GameContent.UI.Elements.FixedUIScrollbar;
 
 namespace DragonLens.Content.GUI
 {
-	internal abstract class Browser : SmartUIState
+	internal abstract class Browser : DraggableUIState
 	{
 		private UIGrid options;
 		private UIImageButton closeButton;
 		private FixedUIScrollbar scrollBar;
 		private SearchBar searchBar;
 
-		public Vector2 basePos;
-
 		public bool visible;
 		public bool initialized;
-
-		public bool dragging;
-		public Vector2 dragOff;
-
-		public Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 500, 64);
 
 		public abstract string Name { get; }
 
 		public virtual string IconTexture => "DragonLens/Assets/Tools/TestTool";
 
 		public override bool Visible => visible;
+
+		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 500, 64);
 
 		public override int InsertionIndex(List<GameInterfaceLayer> layers)
 		{
@@ -90,36 +84,19 @@ namespace DragonLens.Content.GUI
 			SafeOnInitialize();
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void AdjustPositions(Vector2 newPos)
 		{
-			if (Main.LocalPlayer.controlHook) //Debug
-				Refresh();
+			closeButton.Left.Set(newPos.X + 500 - 24, 0);
+			closeButton.Top.Set(newPos.Y + 8, 0);
 
-			if (DragBox.Contains(Main.MouseScreen.ToPoint()) && Main.mouseLeft)
-			{
-				if (dragOff == Vector2.Zero)
-					dragOff = Main.MouseScreen - basePos;
+			scrollBar.Left.Set(newPos.X + 464, 0);
+			scrollBar.Top.Set(newPos.Y + 110, 0);
 
-				basePos = Main.MouseScreen - dragOff;
-			}
-			else
-			{
-				dragOff = Vector2.Zero;
-			}
+			options.Left.Set(newPos.X + 10, 0);
+			options.Top.Set(newPos.Y + 110, 0);
 
-			closeButton.Left.Set(basePos.X + 500 - 24, 0);
-			closeButton.Top.Set(basePos.Y + 8, 0);
-
-			scrollBar.Left.Set(basePos.X + 464, 0);
-			scrollBar.Top.Set(basePos.Y + 110, 0);
-
-			options.Left.Set(basePos.X + 10, 0);
-			options.Top.Set(basePos.Y + 110, 0);
-
-			searchBar.Left.Set(basePos.X + 10, 0);
-			searchBar.Top.Set(basePos.Y + 66, 0);
-
-			Recalculate();
+			searchBar.Left.Set(newPos.X + 10, 0);
+			searchBar.Top.Set(newPos.Y + 66, 0);
 		}
 
 		public void Refresh()
