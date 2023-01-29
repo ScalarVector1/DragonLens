@@ -9,6 +9,7 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
+using FixedUIScrollbar = Terraria.GameContent.UI.Elements.FixedUIScrollbar;
 
 namespace DragonLens.Content.GUI
 {
@@ -16,7 +17,7 @@ namespace DragonLens.Content.GUI
 	{
 		private UIGrid options;
 		private UIImageButton closeButton;
-		private UIScrollbar scrollBar;
+		private FixedUIScrollbar scrollBar;
 
 		public Vector2 basePos;
 
@@ -66,7 +67,7 @@ namespace DragonLens.Content.GUI
 			closeButton.OnClick += (a, b) => visible = false;
 			Append(closeButton);
 
-			scrollBar = new();
+			scrollBar = new(UserInterface);
 			scrollBar.Width.Set(24, 0);
 			scrollBar.Height.Set(480, 0);
 			Append(scrollBar);

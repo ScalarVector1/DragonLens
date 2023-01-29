@@ -27,6 +27,7 @@ namespace DragonLens.Core.Loaders.UILoading
 					var state = (SmartUIState)Activator.CreateInstance(t, null);
 					var userInterface = new UserInterface();
 					userInterface.SetState(state);
+					state.UserInterface = userInterface;
 
 					UIStates?.Add(state);
 					UserInterfaces?.Add(userInterface);
