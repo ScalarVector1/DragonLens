@@ -18,6 +18,10 @@ namespace DragonLens.Content.GUI
 		/// </summary>
 		public Toolbar toolbar;
 
+		public Vector2 basePos;
+		public Vector2 offset;
+		public Vector2 offsetTarget;
+
 		public ToolbarElement(Toolbar toolbar)
 		{
 			this.toolbar = toolbar;
@@ -33,18 +37,12 @@ namespace DragonLens.Content.GUI
 		{
 			RemoveAllChildren();
 
-			Vector2 position = Vector2.One * 10;
+			Vector2 position = Vector2.Zero;
 
 			if (toolbar.orientation == Orientation.Horizontal)
-			{
-				if (toolbar.relativePosition.Y > 0.5f)
-					position.Y += 15;
-			}
+				position += new Vector2(32, 92 / 2 - 46 / 2);
 			else
-			{
-				if (toolbar.relativePosition.X > 0.5f)
-					position.X += 15;
-			}
+				position += new Vector2(92 / 2 - 46 / 2, 32);
 
 			foreach (Tool tool in toolbar.toolList)
 			{
@@ -52,37 +50,66 @@ namespace DragonLens.Content.GUI
 				Append(button);
 
 				if (toolbar.orientation == Orientation.Horizontal)
-					position.X += 42;
+					position.X += 50;
 				else
-					position.Y += 42;
+					position.Y += 50;
 			}
 
 			if (toolbar.orientation == Orientation.Horizontal)
 			{
-				Width.Set(position.X + 10, 0);
-				Height.Set(72, 0);
+				Width.Set(position.X + 26, 0);
+				Height.Set(92, 0);
 			}
 			else
 			{
-				Height.Set(position.Y + 10, 0);
-				Width.Set(72, 0);
+				Height.Set(position.Y + 26, 0);
+				Width.Set(92, 0);
 			}
 
-			if (toolbar.orientation == Orientation.Horizontal)
-			{
-				Top.Set(toolbar.relativePosition.Y > 0.5f ? -72 : 0, toolbar.relativePosition.Y);
-				Left.Set(-position.X / 2, toolbar.relativePosition.X);
-			}
-			else
-			{
-				Left.Set(toolbar.relativePosition.X > 0.5f ? -72 : 0, toolbar.relativePosition.X);
-				Top.Set(-position.Y / 2, toolbar.relativePosition.Y);
-			}
-
-			AddCollapseTab();
 			Recalculate();
+			AdjustDimensions();
+			AddCollapseTab();
+
+			Recalculate();
+
+			basePos = GetDimensions().Position();
 		}
 
+		/// <summary>
+		/// Centers the toolbar based on it's orientation, and applies offsets for bars snapped to edges
+		/// </summary>
+		private void AdjustDimensions()
+		{
+			CalculatedStyle dims = GetDimensions();
+
+			if (toolbar.orientation == Orientation.Horizontal)
+				Left.Set(-dims.Width / 2, toolbar.relativePosition.X);
+			else
+				Top.Set(-dims.Height / 2, toolbar.relativePosition.Y);
+
+			switch (toolbar.CollapseDirection)
+			{
+				case CollapseDirection.Left:
+					Left.Set(-15, 0);
+					break;
+
+				case CollapseDirection.Right:
+					Left.Set(-92 + 15, 1);
+					break;
+
+				case CollapseDirection.Up:
+					Top.Set(-15, 0);
+					break;
+
+				case CollapseDirection.Down:
+					Top.Set(-92 + 15, 1);
+					break;
+			}
+		}
+
+		/// <summary>
+		/// Adds the collapse tab button
+		/// </summary>
 		private void AddCollapseTab()
 		{
 			var collapseButton = new HideTab(this);
@@ -113,31 +140,47 @@ namespace DragonLens.Content.GUI
 			Append(collapseButton);
 		}
 
+		public override void Update(GameTime gameTime)
+		{
+			Left.Set(basePos.X + offset.X, 0);
+			Top.Set(basePos.Y + offset.Y, 0);
+
+			//For the opening and closing animation
+			if (offset != offsetTarget)
+			{
+				if (Vector2.Distance(offset, offsetTarget) < 0.1f)
+					offset = offsetTarget;
+				else
+					offset += (offsetTarget - offset) * 0.08f;
+			}
+		}
+
+		public void Customize()
+		{
+			foreach (UIElement child in Children)
+			{
+				if (child is ToolButton)
+					(child as ToolButton).Customize();
+			}
+		}
+
+		public void FinishCustomize()
+		{
+			foreach (UIElement child in Children)
+			{
+				if (child is ToolButton)
+					(child as ToolButton).FinishCustomize();
+			}
+		}
+
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Texture2D tex = Terraria.GameContent.TextureAssets.MagicPixel.Value;
-			spriteBatch.Draw(tex, GetDimensions().ToRectangle(), Color.Red * 0.25f);
-
 			if (!toolbar.Invisible)
 			{
 				var bgTarget = GetDimensions().ToRectangle();
+				bgTarget.Inflate(-15, -15);
 
-				if (toolbar.orientation == Orientation.Horizontal)
-				{
-					bgTarget.Height -= 14;
-
-					if (toolbar.relativePosition.Y > 0.5f)
-						bgTarget.Y += 15;
-				}
-				else
-				{
-					bgTarget.Width -= 14;
-
-					if (toolbar.relativePosition.X > 0.5f)
-						bgTarget.X += 15;
-				}
-
-				Helpers.GUIHelper.DrawBox(spriteBatch, bgTarget, new Color(20, 50, 80));
+				Helpers.GUIHelper.DrawBox(spriteBatch, bgTarget, new Color(20, 50, 80) * 0.8f);
 
 				base.Draw(spriteBatch);
 				Recalculate();
@@ -157,8 +200,8 @@ namespace DragonLens.Content.GUI
 
 			Left.Set(pos.X, 0);
 			Top.Set(pos.Y, 0);
-			Width.Set(38, 0);
-			Height.Set(38, 0);
+			Width.Set(46, 0);
+			Height.Set(46, 0);
 			this.parent = parent;
 		}
 
@@ -168,24 +211,33 @@ namespace DragonLens.Content.GUI
 				tool.OnActivate();
 		}
 
+		public void Customize()
+		{
+			Append(new RemoveButton(this));
+		}
+
+		public void FinishCustomize()
+		{
+			RemoveAllChildren();
+		}
+
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			if (!parent.toolbar.collapsed)
-			{
-				Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle());
-				tool.DrawIcon(spriteBatch, GetDimensions().Position() + Vector2.One * 3);
+			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle());
+			tool.DrawIcon(spriteBatch, GetDimensions().Position() + Vector2.One * 7);
 
-				if (IsMouseHovering)
-					Utils.DrawBorderString(spriteBatch, tool.Name, Main.MouseScreen + Vector2.One * 16, Color.White);
+			if (IsMouseHovering)
+				Utils.DrawBorderString(spriteBatch, tool.Name, Main.MouseScreen + Vector2.One * 16, Color.White);
 
-				base.Draw(spriteBatch);
-			}
+			base.Draw(spriteBatch);
 		}
 	}
 
 	internal class HideTab : UIElement
 	{
 		public ToolbarElement parent;
+
+		public Toolbar Toolbar => parent.toolbar;
 
 		public HideTab(ToolbarElement parent)
 		{
@@ -194,12 +246,26 @@ namespace DragonLens.Content.GUI
 
 		public override void Click(UIMouseEvent evt)
 		{
-			parent.toolbar.collapsed = !parent.toolbar.collapsed;
+			Toolbar.collapsed = !Toolbar.collapsed;
 
-			if (parent.toolbar.orientation == Orientation.Horizontal)
-				parent.Height.Set(parent.toolbar.collapsed ? 20 : 72, 0);
-			else
-				parent.Width.Set(parent.toolbar.collapsed ? 20 : 72, 0);
+			switch (Toolbar.CollapseDirection)
+			{
+				case CollapseDirection.Left:
+					parent.offsetTarget = new Vector2(Toolbar.collapsed ? -62 : 0, 0);
+					break;
+
+				case CollapseDirection.Right:
+					parent.offsetTarget = new Vector2(Toolbar.collapsed ? 62 : 0, 0);
+					break;
+
+				case CollapseDirection.Up:
+					parent.offsetTarget = new Vector2(0, Toolbar.collapsed ? -62 : 0);
+					break;
+
+				case CollapseDirection.Down:
+					parent.offsetTarget = new Vector2(0, Toolbar.collapsed ? 62 : 0);
+					break;
+			}
 
 			parent.Recalculate();
 		}
@@ -210,10 +276,10 @@ namespace DragonLens.Content.GUI
 
 			float rotation;
 
-			if (parent.toolbar.orientation == Orientation.Horizontal)
-				rotation = parent.toolbar.relativePosition.Y > 0.5f ? 0 : 3.14f;
+			if (Toolbar.orientation == Orientation.Horizontal)
+				rotation = Toolbar.relativePosition.Y > 0.5f ? 0 : 3.14f;
 			else
-				rotation = parent.toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
+				rotation = Toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
 
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, rotation, tex.Size() / 2f, 1, 0, 0);
 

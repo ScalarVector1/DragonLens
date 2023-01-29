@@ -59,16 +59,16 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 		{
 			get
 			{
-				if (relativePosition.X == 0)
+				if (relativePosition.X == 0 && orientation == Orientation.Vertical)
 					return CollapseDirection.Left;
 
-				if (relativePosition.X == 1)
+				if (relativePosition.X == 1 && orientation == Orientation.Vertical)
 					return CollapseDirection.Right;
 
-				if (relativePosition.Y == 0)
+				if (relativePosition.Y == 0 && orientation == Orientation.Horizontal)
 					return CollapseDirection.Up;
 
-				if (relativePosition.Y == 1)
+				if (relativePosition.Y == 1 && orientation == Orientation.Horizontal)
 					return CollapseDirection.Down;
 
 				return CollapseDirection.Floating;

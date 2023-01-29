@@ -22,7 +22,7 @@ namespace DragonLens.Core.Loaders.UILoading
 
 			foreach (Type t in mod.Code.GetTypes())
 			{
-				if (t.IsSubclassOf(typeof(SmartUIState)))
+				if (!t.IsAbstract && t.IsSubclassOf(typeof(SmartUIState)))
 				{
 					var state = (SmartUIState)Activator.CreateInstance(t, null);
 					var userInterface = new UserInterface();

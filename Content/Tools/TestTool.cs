@@ -15,7 +15,8 @@ namespace DragonLens.Content.Tools
 
 		public override void OnActivate()
 		{
-			UILoader.GetUIState<ToolbarState>().Refresh();
+			UILoader.GetUIState<ToolbarState>().Customize();
+			//UILoader.GetUIState<ToolbarState>().Refresh();
 			Main.NewText("Test tool used!");
 		}
 	}
