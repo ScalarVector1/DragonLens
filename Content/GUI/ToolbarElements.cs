@@ -78,45 +78,6 @@ namespace DragonLens.Content.GUI
 		}
 
 		/// <summary>
-		/// Used for when the toolbar gets dragged
-		/// </summary>
-		public void RefreshPositionOnly()
-		{
-			Vector2 position = Vector2.Zero;
-
-			if (toolbar.orientation == Orientation.Horizontal)
-				position += new Vector2(32, 92 / 2 - 46 / 2);
-			else
-				position += new Vector2(92 / 2 - 46 / 2, 32);
-
-			foreach (Tool tool in toolbar.toolList)
-			{
-				if (toolbar.orientation == Orientation.Horizontal)
-					position.X += 50;
-				else
-					position.Y += 50;
-			}
-
-			if (toolbar.orientation == Orientation.Horizontal)
-			{
-				Width.Set(position.X + 26, 0);
-				Height.Set(92, 0);
-			}
-			else
-			{
-				Height.Set(position.Y + 26, 0);
-				Width.Set(92, 0);
-			}
-
-			Recalculate();
-			AdjustDimensions();
-
-			Recalculate();
-
-			basePos = GetDimensions().Position();
-		}
-
-		/// <summary>
 		/// Centers the toolbar based on it's orientation, and applies offsets for bars snapped to edges
 		/// </summary>
 		private void AdjustDimensions()
@@ -385,9 +346,11 @@ namespace DragonLens.Content.GUI
 	{
 		public ToolbarElement parent;
 
-		public bool dragging;
+		public static bool dragging;
+		public static ToolbarElement draggedElement;
 
 		public Toolbar Toolbar => parent.toolbar;
+		public Toolbar DraggedToolbar => draggedElement.toolbar;
 
 		public DragButton(ToolbarElement parent)
 		{
@@ -397,6 +360,7 @@ namespace DragonLens.Content.GUI
 		public override void MouseDown(UIMouseEvent evt)
 		{
 			dragging = true;
+			draggedElement = parent;
 		}
 
 		public override void MouseUp(UIMouseEvent evt)
@@ -404,28 +368,38 @@ namespace DragonLens.Content.GUI
 			dragging = false;
 			parent.Refresh();
 			parent.Customize();
+
+			draggedElement = null;
 		}
 
 		public override void Update(GameTime gameTime)
 		{
-			if (dragging)
+			if (dragging && draggedElement != null)
 			{
-				Toolbar.relativePosition.X = MathHelper.Clamp(Main.MouseScreen.X / Main.screenWidth, 0, 1);
-				Toolbar.relativePosition.Y = MathHelper.Clamp(Main.MouseScreen.Y / Main.screenHeight, 0, 1);
+				if (Main.mouseRight && Main.mouseRightRelease)
+				{
+					if (DraggedToolbar.orientation == Orientation.Horizontal)
+						DraggedToolbar.orientation = Orientation.Vertical;
+					else
+						DraggedToolbar.orientation = Orientation.Horizontal;
+				}
 
-				if (Main.MouseScreen.X / Main.screenWidth < 0.05f && Toolbar.orientation == Orientation.Vertical)
-					Toolbar.relativePosition.X = 0;
+				DraggedToolbar.relativePosition.X = MathHelper.Clamp(Main.MouseScreen.X / Main.screenWidth, 0, 1);
+				DraggedToolbar.relativePosition.Y = MathHelper.Clamp(Main.MouseScreen.Y / Main.screenHeight, 0, 1);
 
-				if (Main.MouseScreen.X / Main.screenWidth > 0.95f && Toolbar.orientation == Orientation.Vertical)
-					Toolbar.relativePosition.X = 1;
+				if (Main.MouseScreen.X / Main.screenWidth < 0.05f && DraggedToolbar.orientation == Orientation.Vertical)
+					DraggedToolbar.relativePosition.X = 0;
 
-				if (Main.MouseScreen.Y / Main.screenHeight < 0.05f && Toolbar.orientation == Orientation.Horizontal)
-					Toolbar.relativePosition.Y = 0;
+				if (Main.MouseScreen.X / Main.screenWidth > 0.95f && DraggedToolbar.orientation == Orientation.Vertical)
+					DraggedToolbar.relativePosition.X = 1;
 
-				if (Main.MouseScreen.Y / Main.screenHeight > 0.95f && Toolbar.orientation == Orientation.Horizontal)
-					Toolbar.relativePosition.Y = 1;
+				if (Main.MouseScreen.Y / Main.screenHeight < 0.05f && DraggedToolbar.orientation == Orientation.Horizontal)
+					DraggedToolbar.relativePosition.Y = 0;
 
-				parent.RefreshPositionOnly();
+				if (Main.MouseScreen.Y / Main.screenHeight > 0.95f && DraggedToolbar.orientation == Orientation.Horizontal)
+					DraggedToolbar.relativePosition.Y = 1;
+
+				draggedElement.Refresh();
 			}
 		}
 
