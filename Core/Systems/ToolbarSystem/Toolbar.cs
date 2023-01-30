@@ -111,6 +111,15 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 				toolList.Add(tool);
 		}
 
+		/// <summary>
+		/// Adds a tool instance to this toolbar.
+		/// </summary>
+		/// <param name="tool">The tool to add.</param>
+		public void AddTool(Tool tool)
+		{
+			toolList.Add(tool);
+		}
+
 		public void SaveData(TagCompound tag)
 		{
 			tag["position"] = relativePosition;

@@ -1,4 +1,5 @@
 ﻿using DragonLens.Configs;
+using DragonLens.Content.Tools;
 using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
@@ -141,6 +142,34 @@ namespace DragonLens.Content.GUI
 			Append(collapseButton);
 		}
 
+		private void AddAddButton()
+		{
+			var addButton = new AddButton(this);
+			addButton.Width.Set(30, 0);
+			addButton.Height.Set(30, 0);
+
+			if (toolbar.orientation == Orientation.Horizontal)
+			{
+				addButton.Left.Set(-15, 0.2f);
+
+				if (toolbar.relativePosition.Y > 0.5f)
+					addButton.Top.Set(-15, 0f);
+				else
+					addButton.Top.Set(15, 1f);
+			}
+			else
+			{
+				if (toolbar.relativePosition.X < 0.5f)
+					addButton.Left.Set(-15, 0f);
+				else
+					addButton.Left.Set(15, 0f);
+
+				addButton.Top.Set(-15, 0.2f);
+			}
+
+			Append(addButton);
+		}
+
 		public override void Update(GameTime gameTime)
 		{
 			Left.Set(basePos.X + offset.X, 0);
@@ -158,6 +187,8 @@ namespace DragonLens.Content.GUI
 
 		public void Customize()
 		{
+			AddAddButton();
+
 			foreach (UIElement child in Children)
 			{
 				if (child is ToolButton)
@@ -172,6 +203,8 @@ namespace DragonLens.Content.GUI
 				if (child is ToolButton)
 					(child as ToolButton).FinishCustomize();
 			}
+
+			Refresh();
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
@@ -282,7 +315,40 @@ namespace DragonLens.Content.GUI
 			else
 				rotation = Toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
 
-			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, rotation, tex.Size() / 2f, 1, 0, 0);
+			spriteBatch.Draw(tex, GetDimensions().Center(), null, ModContent.GetInstance<GUIConfig>().buttonColor, rotation, tex.Size() / 2f, 1, 0, 0);
+
+			base.Draw(spriteBatch);
+		}
+	}
+
+	internal class AddButton : UIElement
+	{
+		public ToolbarElement parent;
+
+		public Toolbar Toolbar => parent.toolbar;
+
+		public AddButton(ToolbarElement parent)
+		{
+			this.parent = parent;
+		}
+
+		public override void Click(UIMouseEvent evt)
+		{
+			ToolBrowser.OpenForToolbar(parent);
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Tab").Value;
+
+			float rotation;
+
+			if (Toolbar.orientation == Orientation.Horizontal)
+				rotation = Toolbar.relativePosition.Y > 0.5f ? 0 : 3.14f;
+			else
+				rotation = Toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
+
+			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.LimeGreen, rotation, tex.Size() / 2f, 1, 0, 0);
 
 			base.Draw(spriteBatch);
 		}

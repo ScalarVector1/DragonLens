@@ -1,4 +1,5 @@
 ﻿using DragonLens.Content.GUI;
+using DragonLens.Content.Tools;
 using DragonLens.Content.Tools.Gameplay;
 using DragonLens.Content.Tools.Spawners;
 using DragonLens.Core.Loaders.UILoading;
@@ -123,6 +124,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 				.AddTool<NoClip>()
 				.AddTool<Difficulty>()
 				.AddTool<FastForward>()
+				.AddTool<CustomizeTool>()
 				);
 
 			UILoader.GetUIState<ToolbarState>().Refresh();
