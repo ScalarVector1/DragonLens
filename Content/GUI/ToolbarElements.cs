@@ -123,8 +123,6 @@ namespace DragonLens.Content.GUI
 		{
 			CalculatedStyle dims = GetDimensions();
 
-			Main.NewText(toolbar.relativePosition);
-
 			Left.Set(-dims.Width / 2, toolbar.relativePosition.X);
 			Top.Set(-dims.Height / 2, toolbar.relativePosition.Y);
 
