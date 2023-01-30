@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
-using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -16,18 +15,14 @@ namespace DragonLens.Content.GUI
 	internal abstract class Browser : DraggableUIState
 	{
 		private UIGrid options;
-		private UIImageButton closeButton;
 		private FixedUIScrollbar scrollBar;
 		private SearchBar searchBar;
 
-		public bool visible;
 		public bool initialized;
 
 		public abstract string Name { get; }
 
 		public virtual string IconTexture => "DragonLens/Assets/Tools/TestTool";
-
-		public override bool Visible => visible;
 
 		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 500, 64);
 
@@ -55,15 +50,12 @@ namespace DragonLens.Content.GUI
 			options.Children.ToList().RemoveAll(n => !filter((BrowserButton)n));
 		}
 
-		public virtual void SafeOnInitialize() { }
+		public virtual void PostInitialize() { }
 
-		public sealed override void OnInitialize()
+		public sealed override void SafeOnInitialize()
 		{
-			closeButton = new UIImageButton(ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Remove"));
-			closeButton.Width.Set(16, 0);
-			closeButton.Height.Set(16, 0);
-			closeButton.OnClick += (a, b) => visible = false;
-			Append(closeButton);
+			width = 500;
+			height = 600;
 
 			scrollBar = new(UserInterface);
 			scrollBar.Width.Set(24, 0);
@@ -81,14 +73,11 @@ namespace DragonLens.Content.GUI
 			searchBar.Height.Set(32, 0);
 			Append(searchBar);
 
-			SafeOnInitialize();
+			PostInitialize();
 		}
 
 		public override void AdjustPositions(Vector2 newPos)
 		{
-			closeButton.Left.Set(newPos.X + 500 - 24, 0);
-			closeButton.Top.Set(newPos.Y + 8, 0);
-
 			scrollBar.Left.Set(newPos.X + 464, 0);
 			scrollBar.Top.Set(newPos.Y + 110, 0);
 
