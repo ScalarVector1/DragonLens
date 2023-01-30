@@ -78,16 +78,55 @@ namespace DragonLens.Content.GUI
 		}
 
 		/// <summary>
+		/// Used for when the toolbar gets dragged
+		/// </summary>
+		public void RefreshPositionOnly()
+		{
+			Vector2 position = Vector2.Zero;
+
+			if (toolbar.orientation == Orientation.Horizontal)
+				position += new Vector2(32, 92 / 2 - 46 / 2);
+			else
+				position += new Vector2(92 / 2 - 46 / 2, 32);
+
+			foreach (Tool tool in toolbar.toolList)
+			{
+				if (toolbar.orientation == Orientation.Horizontal)
+					position.X += 50;
+				else
+					position.Y += 50;
+			}
+
+			if (toolbar.orientation == Orientation.Horizontal)
+			{
+				Width.Set(position.X + 26, 0);
+				Height.Set(92, 0);
+			}
+			else
+			{
+				Height.Set(position.Y + 26, 0);
+				Width.Set(92, 0);
+			}
+
+			Recalculate();
+			AdjustDimensions();
+
+			Recalculate();
+
+			basePos = GetDimensions().Position();
+		}
+
+		/// <summary>
 		/// Centers the toolbar based on it's orientation, and applies offsets for bars snapped to edges
 		/// </summary>
 		private void AdjustDimensions()
 		{
 			CalculatedStyle dims = GetDimensions();
 
-			if (toolbar.orientation == Orientation.Horizontal)
-				Left.Set(-dims.Width / 2, toolbar.relativePosition.X);
-			else
-				Top.Set(-dims.Height / 2, toolbar.relativePosition.Y);
+			Main.NewText(toolbar.relativePosition);
+
+			Left.Set(-dims.Width / 2, toolbar.relativePosition.X);
+			Top.Set(-dims.Height / 2, toolbar.relativePosition.Y);
 
 			switch (toolbar.CollapseDirection)
 			{
@@ -106,6 +145,9 @@ namespace DragonLens.Content.GUI
 				case CollapseDirection.Down:
 					Top.Set(-92 + 15, 1);
 					break;
+
+				case CollapseDirection.Floating:
+					break;
 			}
 		}
 
@@ -115,59 +157,36 @@ namespace DragonLens.Content.GUI
 		private void AddCollapseTab()
 		{
 			var collapseButton = new HideTab(this);
-			collapseButton.Width.Set(30, 0);
-			collapseButton.Height.Set(30, 0);
-
-			if (toolbar.orientation == Orientation.Horizontal)
-			{
-				collapseButton.Left.Set(-15, 0.5f);
-
-				if (toolbar.relativePosition.Y > 0.5f)
-					collapseButton.Top.Set(-15, 0f);
-				else
-					collapseButton.Top.Set(15, 1f);
-			}
-			else
-			{
-				if (toolbar.relativePosition.X < 0.5f)
-					collapseButton.Left.Set(-15, 1f);
-				else
-					collapseButton.Left.Set(15, 0f);
-
-				collapseButton.Top.Set(-15, 0.5f);
-			}
-
 			collapseButton.OnClick += (UIMouseEvent mouseEvent, UIElement element) => toolbar.collapsed = !toolbar.collapsed;
 
-			Append(collapseButton);
+			AddTabButton(collapseButton, 0.5f);
 		}
 
-		private void AddAddButton()
+		private void AddTabButton(UIElement element, float offset)
 		{
-			var addButton = new AddButton(this);
-			addButton.Width.Set(30, 0);
-			addButton.Height.Set(30, 0);
+			element.Width.Set(30, 0);
+			element.Height.Set(30, 0);
 
 			if (toolbar.orientation == Orientation.Horizontal)
 			{
-				addButton.Left.Set(-15, 0.2f);
+				element.Left.Set(-15, offset);
 
 				if (toolbar.relativePosition.Y > 0.5f)
-					addButton.Top.Set(-15, 0f);
+					element.Top.Set(-15, 0f);
 				else
-					addButton.Top.Set(15, 1f);
+					element.Top.Set(-15, 1f);
 			}
 			else
 			{
 				if (toolbar.relativePosition.X < 0.5f)
-					addButton.Left.Set(-15, 1f);
+					element.Left.Set(-15, 1f);
 				else
-					addButton.Left.Set(15, 0f);
+					element.Left.Set(-15, 0f);
 
-				addButton.Top.Set(-15, 0.2f);
+				element.Top.Set(-15, offset);
 			}
 
-			Append(addButton);
+			Append(element);
 		}
 
 		public override void Update(GameTime gameTime)
@@ -183,11 +202,14 @@ namespace DragonLens.Content.GUI
 				else
 					offset += (offsetTarget - offset) * 0.08f;
 			}
+
+			base.Update(gameTime);
 		}
 
 		public void Customize()
 		{
-			AddAddButton();
+			AddTabButton(new AddButton(this), 0.25f);
+			AddTabButton(new DragButton(this), 0.75f);
 
 			foreach (UIElement child in Children)
 			{
@@ -257,6 +279,9 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
+			if (parent.toolbar.collapsed && parent.toolbar.CollapseDirection == CollapseDirection.Floating)
+				return;
+
 			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
 			tool.DrawIcon(spriteBatch, GetDimensions().Position() + Vector2.One * 7);
 
@@ -298,6 +323,10 @@ namespace DragonLens.Content.GUI
 
 				case CollapseDirection.Down:
 					parent.offsetTarget = new Vector2(0, Toolbar.collapsed ? 62 : 0);
+					break;
+
+				case CollapseDirection.Floating:
+
 					break;
 			}
 
@@ -349,6 +378,71 @@ namespace DragonLens.Content.GUI
 				rotation = Toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
 
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.LimeGreen, rotation, tex.Size() / 2f, 1, 0, 0);
+
+			base.Draw(spriteBatch);
+		}
+	}
+
+	internal class DragButton : UIElement
+	{
+		public ToolbarElement parent;
+
+		public bool dragging;
+
+		public Toolbar Toolbar => parent.toolbar;
+
+		public DragButton(ToolbarElement parent)
+		{
+			this.parent = parent;
+		}
+
+		public override void MouseDown(UIMouseEvent evt)
+		{
+			dragging = true;
+		}
+
+		public override void MouseUp(UIMouseEvent evt)
+		{
+			dragging = false;
+			parent.Refresh();
+			parent.Customize();
+		}
+
+		public override void Update(GameTime gameTime)
+		{
+			if (dragging)
+			{
+				Toolbar.relativePosition.X = MathHelper.Clamp(Main.MouseScreen.X / Main.screenWidth, 0, 1);
+				Toolbar.relativePosition.Y = MathHelper.Clamp(Main.MouseScreen.Y / Main.screenHeight, 0, 1);
+
+				if (Main.MouseScreen.X / Main.screenWidth < 0.05f && Toolbar.orientation == Orientation.Vertical)
+					Toolbar.relativePosition.X = 0;
+
+				if (Main.MouseScreen.X / Main.screenWidth > 0.95f && Toolbar.orientation == Orientation.Vertical)
+					Toolbar.relativePosition.X = 1;
+
+				if (Main.MouseScreen.Y / Main.screenHeight < 0.05f && Toolbar.orientation == Orientation.Horizontal)
+					Toolbar.relativePosition.Y = 0;
+
+				if (Main.MouseScreen.Y / Main.screenHeight > 0.95f && Toolbar.orientation == Orientation.Horizontal)
+					Toolbar.relativePosition.Y = 1;
+
+				parent.RefreshPositionOnly();
+			}
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Tab").Value;
+
+			float rotation;
+
+			if (Toolbar.orientation == Orientation.Horizontal)
+				rotation = Toolbar.relativePosition.Y > 0.5f ? 0 : 3.14f;
+			else
+				rotation = Toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
+
+			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Blue, rotation, tex.Size() / 2f, 1, 0, 0);
 
 			base.Draw(spriteBatch);
 		}
