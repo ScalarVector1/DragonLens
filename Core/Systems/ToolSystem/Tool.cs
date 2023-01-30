@@ -10,6 +10,11 @@ namespace DragonLens.Core.Systems.ToolSystem
 	internal abstract class Tool
 	{
 		/// <summary>
+		/// The hotkey keybind for this tool
+		/// </summary>
+		public ModKeybind keybind;
+
+		/// <summary>
 		/// A path to the texture of the icon used for this tool
 		/// </summary>
 		public abstract string Texture { get; }

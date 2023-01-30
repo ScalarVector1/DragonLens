@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Terraria.GameInput;
 using Terraria.ModLoader;
 
 namespace DragonLens.Core.Systems.ToolSystem
@@ -32,9 +33,24 @@ namespace DragonLens.Core.Systems.ToolSystem
 					var singleton = (Tool)Activator.CreateInstance(t);
 					singleton.Load();
 
+					ModKeybind bind = KeybindLoader.RegisterKeybind(Mod, singleton.Name, Microsoft.Xna.Framework.Input.Keys.None);
+					singleton.keybind = bind;
+
 					tools.Add(singleton);
-					toolsByType.Add(t, singleton);
+					toolsByType.Add(t, singleton);		
 				}
+			}
+		}
+	}
+
+	internal class ToolPlayer : ModPlayer
+	{
+		public override void ProcessTriggers(TriggersSet triggersSet)
+		{
+			foreach(Tool tool in ToolHandler.tools)
+			{
+				if (tool.keybind.JustPressed)
+					tool.OnActivate();
 			}
 		}
 	}
