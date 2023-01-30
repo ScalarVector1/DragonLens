@@ -19,7 +19,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 
 		public static Tool GetTool(string typeString)
 		{
-			Type type = DragonLens.instance.Code.GetType(typeString);
+			Type type = ModContent.GetInstance<DragonLens>().Code.GetType(typeString);
 			return toolsByType[type];
 		}
 
