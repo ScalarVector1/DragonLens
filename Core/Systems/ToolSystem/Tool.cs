@@ -27,6 +27,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 		protected sealed override void Register()
 		{
 			ModTypeLookup<Tool>.Register(this);
+			ToolLoader.AddTool(this);
 		}
 
 		public sealed override void SetupContent()

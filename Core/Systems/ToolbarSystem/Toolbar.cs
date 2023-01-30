@@ -99,7 +99,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 
 			return this;
 		}
-		
+
 		/// <summary>
 		/// Adds a tool specified by a string representation of a type to the toolbar. Intended to only be used by I/O code.
 		/// </summary>
@@ -110,11 +110,20 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 
 			if (!ModLoader.TryGetMod(modName, out Mod mod))
 				return;
-			
+
 			Tool tool = mod.Find<Tool>(type);
 
 			if (tool != null)
 				toolList.Add(tool);
+		}
+
+		/// <summary>
+		/// Adds a tool instance to this toolbar.
+		/// </summary>
+		/// <param name="tool">The tool to add.</param>
+		public void AddTool(Tool tool)
+		{
+			toolList.Add(tool);
 		}
 
 		public void SaveData(TagCompound tag)
