@@ -160,7 +160,7 @@ namespace DragonLens.Content.GUI
 			else
 			{
 				if (toolbar.relativePosition.X < 0.5f)
-					addButton.Left.Set(-15, 0f);
+					addButton.Left.Set(-15, 1f);
 				else
 					addButton.Left.Set(15, 0f);
 

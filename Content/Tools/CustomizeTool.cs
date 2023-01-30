@@ -3,6 +3,7 @@ using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 using Terraria;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -24,11 +25,17 @@ namespace DragonLens.Content.Tools
 			customizing = !customizing;
 
 			if (customizing)
+			{
 				UILoader.GetUIState<ToolbarState>().Customize();
+			}
 			else
+			{
 				UILoader.GetUIState<ToolbarState>().FinishCustomize();
+				ToolbarHandler.ExportToFile(Path.Join(Main.SavePath, "DragonLensLayouts", "Current"));
+				Main.NewText("Layout saved!");
+			}
 
-			Main.NewText("Test tool used!");
+
 		}
 	}
 
