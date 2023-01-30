@@ -15,7 +15,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override string Texture => "DragonLens/Assets/Tools/GodMode";
 
-		public override string Name => "God mode";
+		public override string DisplayName => "God mode";
 
 		public override string Description => "You cannot be hit or die while active. Mutually exclusive with Dog mode";
 

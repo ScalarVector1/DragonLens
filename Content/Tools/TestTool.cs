@@ -9,7 +9,7 @@ namespace DragonLens.Content.Tools
 	{
 		public override string Texture => "DragonLens/Assets/Tools/TestTool";
 
-		public override string Name => "Test Tool";
+		public override string DisplayName => "Test Tool";
 
 		public override string Description => "Displays a message to test the functionality of DragonLens";
 

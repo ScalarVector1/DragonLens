@@ -14,7 +14,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override string Texture => "DragonLens/Assets/Tools/FastForward";
 
-		public override string Name => "Fast forward";
+		public override string DisplayName => "Fast forward";
 
 		public override string Description => "The game moves at increasingly fast speeds!";
 

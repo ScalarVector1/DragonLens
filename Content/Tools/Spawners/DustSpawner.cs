@@ -7,7 +7,7 @@ namespace DragonLens.Content.Tools.Spawners
 	{
 		public override string Texture => "DragonLens/Assets/Tools/DustSpawner";
 
-		public override string Name => "Dust spawner";
+		public override string DisplayName => "Dust spawner";
 
 		public override string Description => "Spawn dust, with options to preview different spawning methods and parameters";
 

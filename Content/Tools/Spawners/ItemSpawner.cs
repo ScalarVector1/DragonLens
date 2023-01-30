@@ -13,7 +13,7 @@ namespace DragonLens.Content.Tools.Spawners
 	{
 		public override string Texture => "DragonLens/Assets/Tools/ItemSpawner";
 
-		public override string Name => "Item spawner";
+		public override string DisplayName => "Item spawner";
 
 		public override string Description => "Spawn items, with options to customize their stats";
 

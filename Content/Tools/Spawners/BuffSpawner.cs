@@ -7,7 +7,7 @@ namespace DragonLens.Content.Tools.Spawners
 	{
 		public override string Texture => "DragonLens/Assets/Tools/BuffSpawner";
 
-		public override string Name => "Buff spawner";
+		public override string DisplayName => "Buff spawner";
 
 		public override string Description => "Allows you to apply buffs to yourself or NPCs";
 

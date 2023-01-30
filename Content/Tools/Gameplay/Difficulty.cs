@@ -9,7 +9,7 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public override string Texture => "DragonLens/Assets/Tools/Difficulty";
 
-		public override string Name => "Difficulty switcher";
+		public override string DisplayName => "Difficulty switcher";
 
 		public override string Description => "Cycle through the 3 main game difficulties";
 

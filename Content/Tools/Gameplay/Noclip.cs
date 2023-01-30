@@ -16,7 +16,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override string Texture => "DragonLens/Assets/Tools/Noclip";
 
-		public override string Name => "Noclip";
+		public override string DisplayName => "Noclip";
 
 		public override string Description => "You can move without any inhibition";
 
