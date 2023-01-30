@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace DragonLens.Core.Systems.ToolbarSystem
@@ -91,7 +92,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 		/// <returns>the toolbar instance that was added to</returns>
 		public Toolbar AddTool<T>() where T : Tool
 		{
-			Tool tool = ToolHandler.GetTool<T>();
+			Tool tool = ModContent.GetInstance<T>();
 
 			if (tool != null)
 				toolList.Add(tool);
@@ -105,7 +106,12 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 		/// <param name="typeName">The name of the type to load</param>
 		public void AddTool(string typeName)
 		{
-			Tool tool = ToolHandler.GetTool(typeName);
+			ModContent.SplitName(typeName, out string modName, out string type);
+
+			if (!ModLoader.TryGetMod(modName, out Mod mod))
+				return;
+
+			Tool tool = mod.Find<Tool>(type);
 
 			if (tool != null)
 				toolList.Add(tool);
@@ -127,7 +133,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 			tag["automaticHideOption"] = (int)automaticHideOption;
 
 			List<string> toolData = new();
-			toolList.ForEach(n => toolData.Add(n.GetType().FullName));
+			toolList.ForEach(n => toolData.Add(n.FullName));
 
 			tag["tools"] = toolData;
 		}
@@ -139,7 +145,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 			automaticHideOption = (AutomaticHideOption)tag.GetInt("automaticHideOption");
 
 			var toolData = (List<string>)tag.GetList<string>("tools");
-			toolData.ForEach(n => AddTool(n));
+			toolData.ForEach(AddTool);
 		}
 	}
 }

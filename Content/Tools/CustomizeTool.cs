@@ -15,7 +15,7 @@ namespace DragonLens.Content.Tools
 
 		public override string Texture => "DragonLens/Assets/Tools/TestTool";
 
-		public override string Name => "Customize tool";
+		public override string DisplayName => "Customize tool";
 
 		public override string Description => "Customize your toolbar layout!";
 
@@ -44,9 +44,9 @@ namespace DragonLens.Content.Tools
 
 		public override void PopulateGrid(UIGrid grid)
 		{
-			for (int k = 0; k < ToolHandler.tools.Count; k++)
+			foreach (Tool tool in ToolHandler.Tools)
 			{
-				grid.Add(new ToolBrowserButton(ToolHandler.tools[k]));
+				grid.Add(new ToolBrowserButton(tool));
 			}
 		}
 
@@ -69,7 +69,7 @@ namespace DragonLens.Content.Tools
 	{
 		public Tool tool;
 
-		public override string Identifier => tool.Name;
+		public override string Identifier => tool.DisplayName;
 
 		public ToolBrowserButton(Tool tool)
 		{
@@ -93,7 +93,7 @@ namespace DragonLens.Content.Tools
 
 		public override int CompareTo(object obj)
 		{
-			return tool.Name.CompareTo((obj as ToolBrowserButton).tool.Name);
+			return tool.DisplayName.CompareTo((obj as ToolBrowserButton).tool.DisplayName);
 		}
 	}
 }

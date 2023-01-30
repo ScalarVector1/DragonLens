@@ -15,7 +15,7 @@ namespace DragonLens.Content.Tools.Spawners
 	{
 		public override string Texture => "DragonLens/Assets/Tools/ProjectileSpawner";
 
-		public override string Name => "Projectile spawner";
+		public override string DisplayName => "Projectile spawner";
 
 		public override string Description => "Spawn projectiles, with options for setting velocity and other parameters";
 
