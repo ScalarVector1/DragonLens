@@ -17,15 +17,21 @@ namespace DragonLens.Content.GUI
 		public Vector2 dragOff;
 		public bool visible;
 
+		public int width;
+		public int height;
+
 		public abstract Rectangle DragBox { get; }
 
-		public virtual void SafeUpdate(GameTime gameTime) { }
+		public override bool Visible => visible;
 
 		public virtual void AdjustPositions(Vector2 newPos) { }
 
 		public virtual void SafeOnInitialize() { }
 
-		public override bool Visible => visible;
+		public virtual void SafeUpdate(GameTime gameTime)
+		{
+			base.Update(gameTime);
+		}
 
 		public sealed override void OnInitialize()
 		{
@@ -57,7 +63,7 @@ namespace DragonLens.Content.GUI
 				dragOff = Vector2.Zero;
 			}
 
-			closeButton.Left.Set(basePos.X + 500 - 24, 0);
+			closeButton.Left.Set(basePos.X + width - 24, 0);
 			closeButton.Top.Set(basePos.Y + 8, 0);
 
 			AdjustPositions(basePos);
