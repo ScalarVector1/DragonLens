@@ -3,6 +3,11 @@ using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ModLoader;
@@ -42,14 +47,16 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void PopulateGrid(UIGrid grid)
 		{
+			List<NPCButton> buttons = new List<NPCButton>();
 			for (int k = 0; k < NPCLoader.NPCCount; k++)
 			{
 				var npc = new NPC();
 				npc.SetDefaults(k);
 
-				grid.Add(new NPCButton(npc));
+				buttons.Add(new NPCButton(npc));
 			}
-		}
+			grid.AddRange(buttons);//causes most of the delay
+	}
 
 		public override void Click(UIMouseEvent evt)
 		{

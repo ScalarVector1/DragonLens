@@ -2,6 +2,7 @@
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
@@ -38,13 +39,15 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void PopulateGrid(UIGrid grid)
 		{
+			List<ItemButton> buttons = new List<ItemButton>();
 			for (int k = 0; k < ItemLoader.ItemCount; k++)
 			{
 				var item = new Item();
 				item.SetDefaults(k);
 
-				grid.Add(new ItemButton(item));
+				buttons.Add(new ItemButton(item));
 			}
+			grid.AddRange(buttons);
 		}
 	}
 

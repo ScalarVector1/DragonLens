@@ -3,6 +3,7 @@ using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.ModLoader.UI.Elements;
@@ -51,10 +52,12 @@ namespace DragonLens.Content.Tools
 
 		public override void PopulateGrid(UIGrid grid)
 		{
+			List<ToolBrowserButton> buttons = new List<ToolBrowserButton>();
 			for (int k = 0; k < ToolHandler.tools.Count; k++)
 			{
-				grid.Add(new ToolBrowserButton(ToolHandler.tools[k]));
+				buttons.Add(new ToolBrowserButton(ToolHandler.tools[k]));
 			}
+			grid.AddRange(buttons);
 		}
 
 		public static void OpenForToolbar(ToolbarElement bar)
