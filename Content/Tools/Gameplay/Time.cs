@@ -101,8 +101,6 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override void Update(GameTime gameTime)
 		{
-			Main.NewText(dragging);
-
 			if (dragging)
 			{
 				progress = MathHelper.Clamp((Main.MouseScreen.X - GetDimensions().Position().X) / GetDimensions().Width, 0, 1);
