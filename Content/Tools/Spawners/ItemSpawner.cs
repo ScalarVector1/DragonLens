@@ -39,7 +39,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void PopulateGrid(UIGrid grid)
 		{
-			List<ItemButton> buttons = new List<ItemButton>();
+			var buttons = new List<ItemButton>();
 			for (int k = 0; k < ItemLoader.ItemCount; k++)
 			{
 				var item = new Item();
@@ -47,6 +47,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 				buttons.Add(new ItemButton(item));
 			}
+
 			grid.AddRange(buttons);
 		}
 	}
@@ -66,7 +67,7 @@ namespace DragonLens.Content.Tools.Spawners
 		{
 			base.Draw(spriteBatch);
 
-			Main.inventoryScale = 36 / 52f;
+			Main.inventoryScale = 36 / 52f * GetDimensions().Width / 36f;
 			ItemSlot.Draw(spriteBatch, ref item, 21, GetDimensions().Position());
 
 			if (IsMouseHovering)

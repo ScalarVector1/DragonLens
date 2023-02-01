@@ -126,8 +126,23 @@ namespace DragonLens.Content.GUI
 
 		public BrowserButton()
 		{
-			Width.Set(36, 0);
-			Height.Set(36, 0);
+			int size = (int)MathHelper.Clamp(ModContent.GetInstance<GUIConfig>().browserButtonSize, 36, 108);
+
+			Width.Set(size, 0);
+			Height.Set(size, 0);
+		}
+
+		public override void Update(GameTime gameTime)
+		{
+			int size = (int)MathHelper.Clamp(ModContent.GetInstance<GUIConfig>().browserButtonSize, 36, 108);
+
+			if (GetDimensions().Width != size)
+			{
+				Width.Set(size, 0);
+				Height.Set(size, 0);
+			}
+
+			base.Update(gameTime);
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)

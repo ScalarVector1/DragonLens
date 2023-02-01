@@ -3,11 +3,7 @@ using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ModLoader;
@@ -47,16 +43,17 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void PopulateGrid(UIGrid grid)
 		{
-			List<NPCButton> buttons = new List<NPCButton>();
+			var buttons = new List<NPCButton>();
 			for (int k = 0; k < NPCLoader.NPCCount; k++)
 			{
 				var npc = new NPC();
-				npc.SetDefaults(k);
+				npc.SetDefaults_ForNetId(k, 1);
 
 				buttons.Add(new NPCButton(npc));
 			}
+
 			grid.AddRange(buttons);//causes most of the delay
-	}
+		}
 
 		public override void Click(UIMouseEvent evt)
 		{
@@ -98,7 +95,7 @@ namespace DragonLens.Content.Tools.Spawners
 			this.npc = npc;
 			icon = new(npc.type);
 
-			OverrideSamplerState = Main.DefaultSamplerState;
+			OverrideSamplerState = SamplerState.PointClamp;
 			UseImmediateMode = true;
 		}
 
@@ -133,7 +130,13 @@ namespace DragonLens.Content.Tools.Spawners
 				IsPortrait = true
 			};
 
+			var newClip = GetDimensions().ToRectangle();
+			newClip.Inflate(-4, -4);
+
+			Rectangle oldRect = spriteBatch.GraphicsDevice.ScissorRectangle;
+			spriteBatch.GraphicsDevice.ScissorRectangle = newClip;
 			icon?.Draw(info, spriteBatch, settings);
+			spriteBatch.GraphicsDevice.ScissorRectangle = oldRect;
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
