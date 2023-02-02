@@ -16,7 +16,7 @@ namespace DragonLens.Content.Tools.Spawners
 	{
 		public override string Texture => "DragonLens/Assets/Tools/NPCSpawner";
 
-		public override string Name => "NPC spawner";
+		public override string DisplayName => "NPC spawner";
 
 		public override string Description => "Spawn NPCs, from villagers to skeletons to bosses";
 

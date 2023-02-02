@@ -7,7 +7,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 	/// <summary>
 	/// A singleton type which can be extended to add new tools. Tools function primarily as a 'kick-off-point' for other GUIs or state changes.
 	/// </summary>
-	internal abstract class Tool
+	internal abstract class Tool : ModTexturedType
 	{
 		/// <summary>
 		/// The hotkey keybind for this tool
@@ -17,12 +17,12 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// <summary>
 		/// A path to the texture of the icon used for this tool
 		/// </summary>
-		public abstract string Texture { get; }
+		public abstract override string Texture { get; }
 
 		/// <summary>
 		/// The display name of the tool to the end user
 		/// </summary>
-		public abstract string Name { get; }
+		public abstract string DisplayName { get; }
 
 		/// <summary>
 		/// The description that should show up when queried for more information about this tool
@@ -34,10 +34,11 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// </summary>
 		public abstract void OnActivate();
 
-		/// <summary>
-		/// Allows you to load or initialize other things when this tool loads.
-		/// </summary>
-		public virtual void Load() { }
+		protected sealed override void Register()
+		{
+			ModTypeLookup<Tool>.Register(this);
+			ToolHandler.AddTool(this);
+		}
 
 		/// <summary>
 		/// Draws this tool's icon at a given position. Can be overridden to change how it draws or add effects like opacity based on state.
