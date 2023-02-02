@@ -14,7 +14,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override string Texture => "DragonLens/Assets/Tools/InfiniteReach";
 
-		public override string Name => "Omnipotent building";
+		public override string DisplayName => "Omnipotent building";
 
 		public override string Description => "You have infinite reach and can place blocks super quickly";
 
