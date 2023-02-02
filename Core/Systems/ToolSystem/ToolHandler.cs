@@ -21,7 +21,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 	{
 		public override void ProcessTriggers(TriggersSet triggersSet)
 		{
-			foreach(Tool tool in ToolHandler.Tools)
+			foreach (Tool tool in ToolHandler.Tools)
 			{
 				if (tool.keybind.JustPressed)
 					tool.OnActivate();

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Terraria.ModLoader;
 
 namespace DragonLens.Core.Systems.ToolSystem
@@ -38,6 +39,8 @@ namespace DragonLens.Core.Systems.ToolSystem
 		{
 			ModTypeLookup<Tool>.Register(this);
 			ToolHandler.AddTool(this);
+
+			keybind = KeybindLoader.RegisterKeybind(Mod, Name, Keys.None);
 		}
 
 		/// <summary>
