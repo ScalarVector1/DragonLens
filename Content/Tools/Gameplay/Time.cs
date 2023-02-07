@@ -17,7 +17,7 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public override string Texture => "DragonLens/Assets/Tools/Time";
 
-		public override string Name => "Time tool";
+		public override string DisplayName => "Time tool";
 
 		public override string Description => "Adjust or pause the day/night cycle";
 
