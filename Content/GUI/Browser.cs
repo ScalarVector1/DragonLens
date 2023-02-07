@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.GameInput;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -155,11 +156,24 @@ namespace DragonLens.Content.GUI
 
 	internal class SearchBar : UIElement
 	{
+		public bool typing;
+
 		public string searchingFor = "";
 
 		public override void Click(UIMouseEvent evt)
 		{
-			searchingFor = Main.GetInputText(searchingFor);
+			typing = true;
+		}
+
+		public override void Update(GameTime gameTime)
+		{
+			if (typing)
+			{
+				PlayerInput.WritingText = true;
+				Main.instance.HandleIME();
+
+				searchingFor = Main.GetInputText(searchingFor);
+			}
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
