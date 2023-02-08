@@ -22,6 +22,8 @@ namespace DragonLens.Content.GUI
 
 		public abstract Rectangle DragBox { get; }
 
+		public Rectangle BoundingBox => new((int)basePos.X, (int)basePos.Y, width, height);
+
 		public override bool Visible => visible;
 
 		public virtual void AdjustPositions(Vector2 newPos) { }

@@ -1,4 +1,5 @@
-﻿using DragonLens.Content.GUI;
+﻿using DragonLens.Configs;
+using DragonLens.Content.GUI;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
@@ -119,6 +120,12 @@ namespace DragonLens.Content.Tools.Spawners
 
 		protected override void DrawSelf(SpriteBatch spriteBatch)
 		{
+			int size = (int)MathHelper.Clamp(ModContent.GetInstance<GUIConfig>().browserButtonSize, 36, 108);
+			var iconBox = GetDimensions().ToRectangle();
+
+			if (parent.listMode)
+				iconBox.Width = size;
+
 			var info = new BestiaryUICollectionInfo
 			{
 				UnlockState = BestiaryEntryUnlockState.CanShowPortraitOnly_1
@@ -126,11 +133,11 @@ namespace DragonLens.Content.Tools.Spawners
 
 			var settings = new EntryIconDrawSettings
 			{
-				iconbox = GetDimensions().ToRectangle(),
+				iconbox = iconBox,
 				IsPortrait = true
 			};
 
-			var newClip = GetDimensions().ToRectangle();
+			Rectangle newClip = iconBox;
 			newClip.Inflate(-4, -4);
 
 			Rectangle oldRect = spriteBatch.GraphicsDevice.ScissorRectangle;
@@ -139,10 +146,8 @@ namespace DragonLens.Content.Tools.Spawners
 			spriteBatch.GraphicsDevice.ScissorRectangle = oldRect;
 		}
 
-		public override void Draw(SpriteBatch spriteBatch)
+		public override void SafeDraw(SpriteBatch spriteBatch, Rectangle iconBox)
 		{
-			base.Draw(spriteBatch);
-
 			if (IsMouseHovering)
 			{
 				Main.LocalPlayer.mouseInterface = true;

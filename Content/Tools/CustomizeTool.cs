@@ -2,6 +2,7 @@
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Core.Systems.ToolSystem;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.IO;
@@ -35,8 +36,6 @@ namespace DragonLens.Content.Tools
 				ToolbarHandler.ExportToFile(Path.Join(Main.SavePath, "DragonLensLayouts", "Current"));
 				Main.NewText("Layout saved!");
 			}
-
-
 		}
 	}
 
@@ -52,11 +51,12 @@ namespace DragonLens.Content.Tools
 
 		public override void PopulateGrid(UIGrid grid)
 		{
-			List<ToolBrowserButton> buttons = new List<ToolBrowserButton>();
+			var buttons = new List<ToolBrowserButton>();
 			for (int k = 0; k < ToolHandler.Tools.Count; k++)
 			{
 				buttons.Add(new ToolBrowserButton(ToolHandler.Tools[k], this));
 			}
+
 			grid.AddRange(buttons);
 		}
 
@@ -86,10 +86,8 @@ namespace DragonLens.Content.Tools
 			this.tool = tool;
 		}
 
-		public override void Draw(SpriteBatch spriteBatch)
+		public override void SafeDraw(SpriteBatch spriteBatch, Rectangle iconBox)
 		{
-			base.Draw(spriteBatch);
-
 			tool.DrawIcon(spriteBatch, GetDimensions().Position());
 		}
 

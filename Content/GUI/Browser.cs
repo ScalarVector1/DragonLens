@@ -1,4 +1,5 @@
 ﻿using DragonLens.Configs;
+using DragonLens.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -19,7 +20,10 @@ namespace DragonLens.Content.GUI
 		private FixedUIScrollbar scrollBar;
 		internal SearchBar searchBar;
 
+		private ToggleButton listButton;
+
 		public bool initialized;
+		public bool listMode;
 
 		public abstract string Name { get; }
 
@@ -67,12 +71,17 @@ namespace DragonLens.Content.GUI
 			options.Width.Set(460, 0);
 			options.Height.Set(480, 0);
 			options.SetScrollbar(scrollBar);
+			options.ListPadding = 0;
 			Append(options);
 
 			searchBar = new();
 			searchBar.Width.Set(200, 0);
 			searchBar.Height.Set(32, 0);
 			Append(searchBar);
+
+			listButton = new("DragonLens/Assets/GUI/Play", () => listMode);
+			listButton.OnClick += (n, k) => listMode = !listMode;
+			Append(listButton);
 
 			PostInitialize();
 		}
@@ -87,6 +96,9 @@ namespace DragonLens.Content.GUI
 
 			searchBar.Left.Set(newPos.X + 10, 0);
 			searchBar.Top.Set(newPos.Y + 66, 0);
+
+			listButton.Left.Set(newPos.X + 220, 0);
+			listButton.Top.Set(newPos.Y + 66, 0);
 		}
 
 		public void Refresh()
@@ -101,7 +113,7 @@ namespace DragonLens.Content.GUI
 		{
 			var target = new Rectangle((int)basePos.X, (int)basePos.Y, 500, 600);
 
-			Helpers.GUIHelper.DrawBox(spriteBatch, target, ModContent.GetInstance<GUIConfig>().backgroundColor);
+			GUIHelper.DrawBox(spriteBatch, target, ModContent.GetInstance<GUIConfig>().backgroundColor);
 
 			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 400, 48);
@@ -118,6 +130,13 @@ namespace DragonLens.Content.GUI
 			Utils.DrawBorderStringBig(spriteBatch, Name, basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.6f);
 
 			base.Draw(spriteBatch);
+		}
+
+		public override void Click(UIMouseEvent evt)
+		{
+			//stop searching if you click outside the browser
+			if (!BoundingBox.Contains(Main.MouseScreen.ToPoint()))
+				searchBar.typing = false;
 		}
 	}
 
@@ -140,27 +159,77 @@ namespace DragonLens.Content.GUI
 		public override void Update(GameTime gameTime)
 		{
 			//Will likely need a better solution to optimize when not constantly searching
-			if (!Identifier.Contains(parent.searchBar.searchingFor))
+			if (!Identifier.ToLower().Contains(parent.searchBar.searchingFor.ToLower()))
 			{
 				Width.Set(0, 0);
 				Height.Set(0, 0);
+
+				MarginLeft = 0;
+				MarginRight = 0;
+				MarginTop = 0;
+				MarginBottom = 0;
 				return;
 			}
 
-			int size = (int)MathHelper.Clamp(ModContent.GetInstance<GUIConfig>().browserButtonSize, 36, 108);
-
-			if (GetDimensions().Width != size)
-			{
-				Width.Set(size, 0);
-				Height.Set(size, 0);
-			}
+			if (parent.listMode)
+				UpdateAsList();
+			else
+				UpdateAsGrid();
 
 			base.Update(gameTime);
 		}
 
-		public override void Draw(SpriteBatch spriteBatch)
+		private void UpdateAsGrid()
 		{
-			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+			int size = (int)MathHelper.Clamp(ModContent.GetInstance<GUIConfig>().browserButtonSize, 36, 108);
+
+			if (GetDimensions().Width != size || MarginLeft == 0)
+			{
+				Width.Set(size, 0);
+				Height.Set(size, 0);
+
+				MarginLeft = 2;
+				MarginRight = 2;
+				MarginTop = 2;
+				MarginBottom = 2;
+			}
+		}
+
+		private void UpdateAsList()
+		{
+			int size = (int)MathHelper.Clamp(ModContent.GetInstance<GUIConfig>().browserButtonSize, 36, 108);
+
+			Width.Set(Parent.GetDimensions().Width - 24, 0);
+			Height.Set(size, 0);
+
+			MarginLeft = 2;
+			MarginRight = 2;
+			MarginTop = 2;
+			MarginBottom = 2;
+		}
+
+		public virtual void SafeDraw(SpriteBatch spriteBatch, Rectangle iconArea) { }
+
+		public sealed override void Draw(SpriteBatch spriteBatch)
+		{
+			if (GetDimensions().Width <= 0)
+				return;
+
+			int size = (int)MathHelper.Clamp(ModContent.GetInstance<GUIConfig>().browserButtonSize, 36, 108);
+
+			var drawBox = GetDimensions().ToRectangle();
+
+			if (parent.listMode)
+				drawBox.Width = size;
+
+			if (parent.listMode)
+			{
+				GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().backgroundColor);
+				Utils.DrawBorderStringBig(spriteBatch, Identifier, GetDimensions().Position() + new Vector2(size + 10, size / 2f + 4), Color.White, size / 36f / 3f, 0, 0.5f);
+			}
+
+			GUIHelper.DrawBox(spriteBatch, drawBox, ModContent.GetInstance<GUIConfig>().buttonColor);
+			SafeDraw(spriteBatch, drawBox);
 
 			base.Draw(spriteBatch);
 		}
@@ -181,19 +250,39 @@ namespace DragonLens.Content.GUI
 		{
 			if (typing)
 			{
+				if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape))
+					typing = false;
+
 				PlayerInput.WritingText = true;
 				Main.instance.HandleIME();
 
-				searchingFor = Main.GetInputText(searchingFor);
+				string newText = Main.GetInputText(searchingFor);
+
+				if (newText != searchingFor)
+				{
+					searchingFor = newText;
+					(Parent as Browser)?.SortGrid();
+				}
 			}
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+
+			if (typing)
+			{
+				GUIHelper.DrawOutline(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+			}
 
 			Vector2 pos = GetDimensions().Position() + Vector2.One * 4;
-			Utils.DrawBorderString(spriteBatch, searchingFor, pos, Color.White);
+
+			string displayed = searchingFor;
+
+			if (typing && Main.GameUpdateCount % 20 < 10)
+				displayed += "|";
+
+			Utils.DrawBorderString(spriteBatch, displayed, pos, Color.White);
 		}
 	}
 }

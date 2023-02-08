@@ -1,6 +1,7 @@
 ﻿using DragonLens.Content.GUI;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolSystem;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -63,11 +64,9 @@ namespace DragonLens.Content.Tools.Spawners
 			this.item = item;
 		}
 
-		public override void Draw(SpriteBatch spriteBatch)
+		public override void SafeDraw(SpriteBatch spriteBatch, Rectangle iconBox)
 		{
-			base.Draw(spriteBatch);
-
-			Main.inventoryScale = 36 / 52f * GetDimensions().Width / 36f;
+			Main.inventoryScale = 36 / 52f * iconBox.Width / 36f;
 			ItemSlot.Draw(spriteBatch, ref item, 21, GetDimensions().Position());
 
 			if (IsMouseHovering)

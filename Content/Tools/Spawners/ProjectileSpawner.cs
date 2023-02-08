@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
@@ -46,7 +45,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void PopulateGrid(UIGrid grid)
 		{
-			List<ProjectileButton> buttons = new List<ProjectileButton>();
+			var buttons = new List<ProjectileButton>();
 			for (int k = 0; k < ProjectileLoader.ProjectileCount; k++)
 			{
 				var proj = new Projectile();
@@ -54,6 +53,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 				buttons.Add(new ProjectileButton(proj, this));
 			}
+
 			grid.AddRange(buttons);
 		}
 
@@ -101,10 +101,8 @@ namespace DragonLens.Content.Tools.Spawners
 			this.proj = proj;
 		}
 
-		public override void Draw(SpriteBatch spriteBatch)
+		public override void SafeDraw(SpriteBatch spriteBatch, Rectangle iconBox)
 		{
-			base.Draw(spriteBatch);
-
 			Main.instance.LoadProjectile(proj.type);
 			Texture2D tex = Terraria.GameContent.TextureAssets.Projectile[proj.type].Value;
 
@@ -112,7 +110,7 @@ namespace DragonLens.Content.Tools.Spawners
 			if (tex.Width > 32 || tex.Height > 32)
 				scale = 32f / Math.Max(tex.Width, tex.Height);
 
-			spriteBatch.Draw(tex, GetDimensions().Center(), new Rectangle(0, 0, tex.Width, tex.Height), Color.White, 0, new Vector2(tex.Width, tex.Height) / 2, scale, 0, 0);
+			spriteBatch.Draw(tex, iconBox.Center(), new Rectangle(0, 0, tex.Width, tex.Height), Color.White, 0, new Vector2(tex.Width, tex.Height) / 2, scale, 0, 0);
 
 			if (IsMouseHovering)
 			{
