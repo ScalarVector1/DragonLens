@@ -53,15 +53,9 @@ namespace DragonLens.Content.GUI
 			Vector2 pos;
 
 			if (Main.MouseScreen.X > Main.screenWidth - width)
-			{
-				width = Math.Max(nameWidth, tipWidth);
 				pos = Main.MouseScreen - new Vector2(width + 20, 0);
-			}
 			else
-			{
-				width = Math.Max(nameWidth, tipWidth);
 				pos = Main.MouseScreen + new Vector2(40, 0);
-			}
 
 			height += ChatManager.GetStringSize(font, "{Dummy}\n" + tooltip, Vector2.One).Y + 16;
 
