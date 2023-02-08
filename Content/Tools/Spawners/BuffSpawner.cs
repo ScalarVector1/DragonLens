@@ -56,6 +56,8 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SafeUpdate(GameTime gameTime)
 		{
+			base.SafeUpdate(gameTime);
+
 			if (selected != -1)
 				Main.LocalPlayer.mouseInterface = true;
 		}
