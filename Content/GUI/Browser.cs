@@ -17,7 +17,7 @@ namespace DragonLens.Content.GUI
 	{
 		private UIGrid options;
 		private FixedUIScrollbar scrollBar;
-		private SearchBar searchBar;
+		internal SearchBar searchBar;
 
 		public bool initialized;
 
@@ -123,18 +123,30 @@ namespace DragonLens.Content.GUI
 
 	internal abstract class BrowserButton : UIElement
 	{
+		public Browser parent;
+
 		public abstract string Identifier { get; }
 
-		public BrowserButton()
+		public BrowserButton(Browser parent)
 		{
 			int size = (int)MathHelper.Clamp(ModContent.GetInstance<GUIConfig>().browserButtonSize, 36, 108);
 
 			Width.Set(size, 0);
 			Height.Set(size, 0);
+
+			this.parent = parent;
 		}
 
 		public override void Update(GameTime gameTime)
 		{
+			//Will likely need a better solution to optimize when not constantly searching
+			if (!Identifier.Contains(parent.searchBar.searchingFor))
+			{
+				Width.Set(0, 0);
+				Height.Set(0, 0);
+				return;
+			}
+
 			int size = (int)MathHelper.Clamp(ModContent.GetInstance<GUIConfig>().browserButtonSize, 36, 108);
 
 			if (GetDimensions().Width != size)

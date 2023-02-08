@@ -45,7 +45,7 @@ namespace DragonLens.Content.Tools.Spawners
 				var item = new Item();
 				item.SetDefaults(k);
 
-				buttons.Add(new ItemButton(item));
+				buttons.Add(new ItemButton(item, this));
 			}
 
 			grid.AddRange(buttons);
@@ -58,7 +58,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override string Identifier => item.Name;
 
-		public ItemButton(Item item)
+		public ItemButton(Item item, Browser browser) : base(browser)
 		{
 			this.item = item;
 		}

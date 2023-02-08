@@ -52,7 +52,7 @@ namespace DragonLens.Content.Tools.Spawners
 				var proj = new Projectile();
 				proj.SetDefaults(k);
 
-				buttons.Add(new ProjectileButton(proj));
+				buttons.Add(new ProjectileButton(proj, this));
 			}
 			grid.AddRange(buttons);
 		}
@@ -96,7 +96,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override string Identifier => proj.Name;
 
-		public ProjectileButton(Projectile proj)
+		public ProjectileButton(Projectile proj, Browser browser) : base(browser)
 		{
 			this.proj = proj;
 		}

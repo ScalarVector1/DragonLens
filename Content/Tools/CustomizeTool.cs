@@ -55,7 +55,7 @@ namespace DragonLens.Content.Tools
 			List<ToolBrowserButton> buttons = new List<ToolBrowserButton>();
 			for (int k = 0; k < ToolHandler.Tools.Count; k++)
 			{
-				buttons.Add(new ToolBrowserButton(ToolHandler.Tools[k]));
+				buttons.Add(new ToolBrowserButton(ToolHandler.Tools[k], this));
 			}
 			grid.AddRange(buttons);
 		}
@@ -81,7 +81,7 @@ namespace DragonLens.Content.Tools
 
 		public override string Identifier => tool.DisplayName;
 
-		public ToolBrowserButton(Tool tool)
+		public ToolBrowserButton(Tool tool, Browser browser) : base(browser)
 		{
 			this.tool = tool;
 		}

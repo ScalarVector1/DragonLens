@@ -49,7 +49,7 @@ namespace DragonLens.Content.Tools.Spawners
 				var npc = new NPC();
 				npc.SetDefaults_ForNetId(k, 1);
 
-				buttons.Add(new NPCButton(npc));
+				buttons.Add(new NPCButton(npc, this));
 			}
 
 			grid.AddRange(buttons);//causes most of the delay
@@ -90,7 +90,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override string Identifier => npc.FullName;
 
-		public NPCButton(NPC npc)
+		public NPCButton(NPC npc, Browser browser) : base(browser)
 		{
 			this.npc = npc;
 			icon = new(npc.type);
