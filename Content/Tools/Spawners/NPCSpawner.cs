@@ -56,15 +56,18 @@ namespace DragonLens.Content.Tools.Spawners
 			grid.AddRange(buttons);//causes most of the delay
 		}
 
+		public override void SafeUpdate(GameTime gameTime)
+		{
+			if (selected != null)
+				Main.LocalPlayer.mouseInterface = true;
+		}
+
 		public override void Click(UIMouseEvent evt)
 		{
 			base.Click(evt);
 
 			if (selected != null)
-			{
 				NPC.NewNPC(null, (int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, selected.type);
-				Main.isMouseLeftConsumedByUI = true;
-			}
 		}
 
 		public override void RightClick(UIMouseEvent evt)

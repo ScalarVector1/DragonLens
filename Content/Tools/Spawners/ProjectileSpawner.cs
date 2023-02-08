@@ -57,15 +57,18 @@ namespace DragonLens.Content.Tools.Spawners
 			grid.AddRange(buttons);
 		}
 
+		public override void SafeUpdate(GameTime gameTime)
+		{
+			if (selected != null)
+				Main.LocalPlayer.mouseInterface = true;
+		}
+
 		public override void Click(UIMouseEvent evt)
 		{
 			base.Click(evt);
 
 			if (selected != null)
-			{
 				Projectile.NewProjectile(null, Main.MouseWorld, velocity, selected.type, selected.damage, selected.knockBack, Main.myPlayer);
-				Main.isMouseLeftConsumedByUI = true;
-			}
 		}
 
 		public override void RightClick(UIMouseEvent evt)

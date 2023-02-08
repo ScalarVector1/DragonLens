@@ -54,6 +54,12 @@ namespace DragonLens.Content.Tools.Spawners
 			grid.AddRange(buttons);
 		}
 
+		public override void SafeUpdate(GameTime gameTime)
+		{
+			if (selected != -1)
+				Main.LocalPlayer.mouseInterface = true;
+		}
+
 		public override void Click(UIMouseEvent evt)
 		{
 			base.Click(evt);
@@ -72,8 +78,6 @@ namespace DragonLens.Content.Tools.Spawners
 						break;
 					}
 				}
-
-				Main.isMouseLeftConsumedByUI = true;
 			}
 		}
 

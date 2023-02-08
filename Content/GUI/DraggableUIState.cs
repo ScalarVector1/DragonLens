@@ -71,6 +71,9 @@ namespace DragonLens.Content.GUI
 			AdjustPositions(basePos);
 			Recalculate();
 
+			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
+				Main.LocalPlayer.mouseInterface = true;
+
 			SafeUpdate(gameTime);
 		}
 	}

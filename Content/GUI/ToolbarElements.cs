@@ -162,6 +162,9 @@ namespace DragonLens.Content.GUI
 					offset += (offsetTarget - offset) * 0.08f;
 			}
 
+			if (IsMouseHovering)
+				Main.LocalPlayer.mouseInterface = true;
+
 			base.Update(gameTime);
 		}
 
