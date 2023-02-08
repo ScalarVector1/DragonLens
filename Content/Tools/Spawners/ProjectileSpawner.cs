@@ -59,6 +59,8 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void Click(UIMouseEvent evt)
 		{
+			base.Click(evt);
+
 			if (selected != null)
 			{
 				Projectile.NewProjectile(null, Main.MouseWorld, velocity, selected.type, selected.damage, selected.knockBack, Main.myPlayer);

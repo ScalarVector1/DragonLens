@@ -58,6 +58,8 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void Click(UIMouseEvent evt)
 		{
+			base.Click(evt);
+
 			if (selected != null)
 			{
 				NPC.NewNPC(null, (int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, selected.type);

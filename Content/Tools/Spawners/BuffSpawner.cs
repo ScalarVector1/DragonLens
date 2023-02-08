@@ -56,6 +56,8 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void Click(UIMouseEvent evt)
 		{
+			base.Click(evt);
+
 			if (selected != -1)
 			{
 				foreach (NPC npc in Main.npc)
