@@ -245,7 +245,10 @@ namespace DragonLens.Content.GUI
 			tool.DrawIcon(spriteBatch, GetDimensions().Position() + Vector2.One * 7);
 
 			if (IsMouseHovering)
-				Utils.DrawBorderString(spriteBatch, tool.DisplayName, Main.MouseScreen + Vector2.One * 16, Color.White);
+			{
+				Tooltip.SetName(tool.DisplayName);
+				Tooltip.SetTooltip(tool.Description);
+			}
 
 			base.Draw(spriteBatch);
 		}

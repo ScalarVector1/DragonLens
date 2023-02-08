@@ -114,9 +114,8 @@ namespace DragonLens.Content.Tools.Spawners
 
 			if (IsMouseHovering)
 			{
-				Main.LocalPlayer.mouseInterface = true;
-				Main.LocalPlayer.cursorItemIconEnabled = true;
-				Main.LocalPlayer.cursorItemIconText = proj.Name;
+				Tooltip.SetName(proj.Name);
+				Tooltip.SetTooltip($"Type: {proj.type}");
 			}
 		}
 

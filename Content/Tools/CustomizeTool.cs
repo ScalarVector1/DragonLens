@@ -89,6 +89,12 @@ namespace DragonLens.Content.Tools
 		public override void SafeDraw(SpriteBatch spriteBatch, Rectangle iconBox)
 		{
 			tool.DrawIcon(spriteBatch, GetDimensions().Position());
+
+			if (IsMouseHovering)
+			{
+				Tooltip.SetName(tool.DisplayName);
+				Tooltip.SetTooltip(tool.Description);
+			}
 		}
 
 		public override void Click(UIMouseEvent evt)

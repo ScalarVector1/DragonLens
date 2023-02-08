@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Graphics;
 using System;
 using Terraria.ModLoader;
 
@@ -62,6 +63,36 @@ namespace DragonLens.Helpers
 		public static Color InvertColor(this Color color)
 		{
 			return new Color(255 - color.R, 255 - color.G, 255 - color.B, color.A);
+		}
+
+		public static string WrapString(string input, int length, DynamicSpriteFont font, float scale)
+		{
+			string output = "";
+			string[] words = input.Split();
+
+			string line = "";
+			foreach (string str in words)
+			{
+				if (str == "NEWBLOCK")
+				{
+					output += "\n\n";
+					line = "";
+					continue;
+				}
+
+				if (font.MeasureString(line).X * scale < length)
+				{
+					output += " " + str;
+					line += " " + str;
+				}
+				else
+				{
+					output += "\n" + str;
+					line = str;
+				}
+			}
+
+			return output[1..];
 		}
 	}
 }
