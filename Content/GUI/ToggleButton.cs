@@ -3,6 +3,7 @@ using DragonLens.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 
@@ -25,7 +26,8 @@ namespace DragonLens.Content.GUI
 		{
 			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
 
-			spriteBatch.Draw(ModContent.Request<Texture2D>(iconTexture).Value, GetDimensions().Position(), Color.White);
+			Texture2D tex = ModContent.Request<Texture2D>(iconTexture).Value;
+			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
 
 			if (isOn())
 				GUIHelper.DrawOutline(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
