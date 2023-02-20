@@ -110,32 +110,26 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 		private static void LoadFallback()
 		{
 			activeToolbars.Add(
-				new Toolbar(new Vector2(0, 0.5f), Orientation.Vertical, AutomaticHideOption.Never)
+				new Toolbar(new Vector2(0.3f, 1f), Orientation.Horizontal, AutomaticHideOption.Never)
 				.AddTool<ItemSpawner>()
 				.AddTool<ProjectileSpawner>()
 				.AddTool<NPCSpawner>()
-				.AddTool<DustSpawner>()
-				.AddTool<TileSpawner>()
 				.AddTool<BuffSpawner>()
 				);
 
 			activeToolbars.Add(
-				new Toolbar(new Vector2(1, 0.5f), Orientation.Vertical, AutomaticHideOption.Never)
+				new Toolbar(new Vector2(0.3f, 0.9f), Orientation.Horizontal, AutomaticHideOption.Never)
 				.AddTool<ItemDespawner>()
 				.AddTool<ProjectileDespawner>()
 				.AddTool<NPCDespawner>()
-				.AddTool<DustDespawner>()
 				.AddTool<GoreDespawner>()
-				.AddTool<BuffDespawner>()
 				);
 
 			activeToolbars.Add(
 				new Toolbar(new Vector2(0.5f, 1f), Orientation.Horizontal, AutomaticHideOption.Never)
 				.AddTool<Godmode>()
-				.AddTool<Dogmode>()
 				.AddTool<InfiniteReach>()
 				.AddTool<NoClip>()
-				.AddTool<Difficulty>()
 				.AddTool<FastForward>()
 				.AddTool<Time>()
 				.AddTool<Weather>()
@@ -143,7 +137,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 				);
 
 			activeToolbars.Add(
-				new Toolbar(new Vector2(0.5f, 0f), Orientation.Horizontal, AutomaticHideOption.Never)
+				new Toolbar(new Vector2(0.7f, 1f), Orientation.Horizontal, AutomaticHideOption.Never)
 				.AddTool<Floodlight>()
 				.AddTool<Hitboxes>()
 				.AddTool<FreeCamera>()
@@ -155,6 +149,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 				.AddTool<RevealMap>()
 				.AddTool<HideMap>()
 				.AddTool<MapTeleport>()
+				.AddTool<CustomizeTool>()
 				);
 
 			UILoader.GetUIState<ToolbarState>().Refresh();
