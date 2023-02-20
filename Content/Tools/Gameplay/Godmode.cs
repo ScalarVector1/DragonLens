@@ -11,7 +11,7 @@ namespace DragonLens.Content.Tools.Gameplay
 {
 	internal class Godmode : Tool
 	{
-		public static bool active = false;
+		public static bool active = ModContent.GetInstance<ToolConfig>().defaultGodmode;
 
 		public override string Texture => "DragonLens/Assets/Tools/GodMode";
 
