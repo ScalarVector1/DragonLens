@@ -150,22 +150,30 @@ namespace DragonLens.Content.GUI
 
 		public override void Update(GameTime gameTime)
 		{
-			Left.Set(basePos.X + offset.X, 0);
-			Top.Set(basePos.Y + offset.Y, 0);
-
-			//For the opening and closing animation
-			if (offset != offsetTarget)
+			if (!toolbar.Invisible)
 			{
-				if (Vector2.Distance(offset, offsetTarget) < 0.1f)
-					offset = offsetTarget;
-				else
-					offset += (offsetTarget - offset) * 0.08f;
+				Left.Set(basePos.X + offset.X, 0);
+				Top.Set(basePos.Y + offset.Y, 0);
+
+				//For the opening and closing animation
+				if (offset != offsetTarget)
+				{
+					if (Vector2.Distance(offset, offsetTarget) < 0.1f)
+						offset = offsetTarget;
+					else
+						offset += (offsetTarget - offset) * 0.08f;
+				}
+
+				if (IsMouseHovering)
+					Main.LocalPlayer.mouseInterface = true;
+
+				base.Update(gameTime);
 			}
-
-			if (IsMouseHovering)
-				Main.LocalPlayer.mouseInterface = true;
-
-			base.Update(gameTime);
+			else //This is here to prevent invisible toolbars from interfering with mouse interactions, since terraria is terrible about that
+			{
+				Left.Set(0, -1);
+				Top.Set(0, -1);
+			}
 		}
 
 		public void Customize()
