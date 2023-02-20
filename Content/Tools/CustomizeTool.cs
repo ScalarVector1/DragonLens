@@ -57,7 +57,7 @@ namespace DragonLens.Content.Tools
 	{
 		public static ToolbarElement trackedElement;
 
-		public static Toolbar TrackedToolbar => trackedElement.toolbar;
+		public static Toolbar TrackedToolbar => trackedElement?.toolbar;
 
 		public override string Name => "Add tool";
 
@@ -91,10 +91,10 @@ namespace DragonLens.Content.Tools
 		public override void SafeUpdate(GameTime gameTime)
 		{
 			// Have the browser follow expected visibility on map VS non-map bars
-			if (TrackedToolbar.automaticHideOption != AutomaticHideOption.NoMapScreen && Main.mapFullscreen)
+			if (TrackedToolbar != null && TrackedToolbar.automaticHideOption != AutomaticHideOption.NoMapScreen && Main.mapFullscreen)
 				visible = false;
 
-			if (TrackedToolbar.automaticHideOption == AutomaticHideOption.NoMapScreen && !Main.mapFullscreen)
+			if (TrackedToolbar != null && TrackedToolbar.automaticHideOption == AutomaticHideOption.NoMapScreen && !Main.mapFullscreen)
 				visible = false;
 		}
 	}
