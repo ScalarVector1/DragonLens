@@ -4,6 +4,7 @@ using DragonLens.Content.Tools.Despawners;
 using DragonLens.Content.Tools.Gameplay;
 using DragonLens.Content.Tools.Map;
 using DragonLens.Content.Tools.Spawners;
+using DragonLens.Content.Tools.Visualization;
 using DragonLens.Core.Loaders.UILoading;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -136,7 +137,16 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 				.AddTool<NoClip>()
 				.AddTool<Difficulty>()
 				.AddTool<FastForward>()
+				.AddTool<Time>()
 				.AddTool<CustomizeTool>()
+				);
+
+			activeToolbars.Add(
+				new Toolbar(new Vector2(0.5f, 0f), Orientation.Horizontal, AutomaticHideOption.Never)
+				.AddTool<Floodlight>()
+				.AddTool<Hitboxes>()
+				.AddTool<FreeCamera>()
+				.AddTool<LockCamera>()
 				);
 
 			activeToolbars.Add(
