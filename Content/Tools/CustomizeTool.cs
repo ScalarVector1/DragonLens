@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
@@ -88,7 +89,9 @@ namespace DragonLens.Content.Tools
 
 		public override void SafeDraw(SpriteBatch spriteBatch, Rectangle iconBox)
 		{
-			tool.DrawIcon(spriteBatch, GetDimensions().Position());
+			Rectangle target = iconBox;
+			target.Inflate(-4, -4);
+			spriteBatch.Draw(ModContent.Request<Texture2D>(tool.Texture).Value, target, Color.White);
 
 			if (IsMouseHovering)
 			{
