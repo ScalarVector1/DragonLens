@@ -16,7 +16,11 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override string DisplayName => "Fast forward";
 
-		public override string Description => "The game moves at increasingly fast speeds!";
+		public override string Description => "Click to speed up the game, up to 4x. Right click to move backwards through speeds.";
+
+		public override bool HasRightClick => true;
+
+		public override string RightClickName => "Decrease fast forward rate";
 
 		public override void OnActivate()
 		{
@@ -24,6 +28,14 @@ namespace DragonLens.Content.Tools.Gameplay
 				speedup++;
 			else
 				speedup = 0;
+		}
+
+		public override void OnRightClick()
+		{
+			if (speedup > 0)
+				speedup--;
+			else
+				speedup = 4;
 		}
 
 		public override void DrawIcon(SpriteBatch spriteBatch, Vector2 position)

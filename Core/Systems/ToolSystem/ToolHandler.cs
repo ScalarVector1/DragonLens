@@ -10,7 +10,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 		private static readonly List<Tool> tools = new();
 
 		public static ReadOnlyCollection<Tool> Tools => tools.AsReadOnly();
-		
+
 		internal static void AddTool(Tool tool)
 		{
 			tools.Add(tool);
@@ -25,6 +25,9 @@ namespace DragonLens.Core.Systems.ToolSystem
 			{
 				if (tool.keybind.JustPressed)
 					tool.OnActivate();
+
+				if (tool.HasRightClick && tool.altKeybind.JustPressed)
+					tool.OnRightClick();
 			}
 		}
 	}

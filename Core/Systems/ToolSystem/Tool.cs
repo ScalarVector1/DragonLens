@@ -16,6 +16,11 @@ namespace DragonLens.Core.Systems.ToolSystem
 		public ModKeybind keybind;
 
 		/// <summary>
+		/// The hotkey used for the right click function of this tool
+		/// </summary>
+		public ModKeybind altKeybind;
+
+		/// <summary>
 		/// A path to the texture of the icon used for this tool
 		/// </summary>
 		public abstract override string Texture { get; }
@@ -35,12 +40,30 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// </summary>
 		public abstract void OnActivate();
 
+		/// <summary>
+		/// If this tool has functionality on right click.
+		/// </summary>
+		public virtual bool HasRightClick => false;
+
+		/// <summary>
+		/// The name of this tools right click funcitonality. Used for hotkeys.
+		/// </summary>
+		public virtual string RightClickName => "";
+
+		/// <summary>
+		/// What happens if this tool is right clicked. Only used if HasRightClick is true.
+		/// </summary>
+		public virtual void OnRightClick() { }
+
 		protected sealed override void Register()
 		{
 			ModTypeLookup<Tool>.Register(this);
 			ToolHandler.AddTool(this);
 
 			keybind = KeybindLoader.RegisterKeybind(Mod, DisplayName, Keys.None);
+
+			if (HasRightClick)
+				altKeybind = KeybindLoader.RegisterKeybind(Mod, RightClickName, Keys.None);
 		}
 
 		/// <summary>

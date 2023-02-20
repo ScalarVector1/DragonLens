@@ -11,21 +11,23 @@ namespace DragonLens.Content.Tools.Despawners
 
 		public override string Description => "Removes all NPCs currently in the world. Right click for a more traditional 'butcher'";
 
+		public override bool HasRightClick => true;
+
+		public override string RightClickName => "Traditional butcher";
+
 		public override void OnActivate()
 		{
-			if (Main.mouseRight)
+			foreach (NPC npc in Main.npc)
 			{
-				foreach (NPC npc in Main.npc)
-				{
-					npc.StrikeNPC(int.MaxValue, 0, 0);
-				}
+				npc.active = false;
 			}
-			else
+		}
+
+		public override void OnRightClick()
+		{
+			foreach (NPC npc in Main.npc)
 			{
-				foreach (NPC npc in Main.npc)
-				{
-					npc.active = false;
-				}
+				npc.StrikeNPC(int.MaxValue, 0, 0);
 			}
 		}
 	}

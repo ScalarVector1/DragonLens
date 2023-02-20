@@ -239,6 +239,12 @@ namespace DragonLens.Content.GUI
 				tool.OnActivate();
 		}
 
+		public override void RightClick(UIMouseEvent evt)
+		{
+			if (!parent.toolbar.collapsed && tool.HasRightClick)
+				tool.OnRightClick();
+		}
+
 		public void Customize()
 		{
 			Append(new RemoveButton(this));

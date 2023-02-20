@@ -17,12 +17,24 @@ namespace DragonLens.Content.Tools.Visualization
 
 		public override string Description => "Light up the entire screen!";
 
+		public override bool HasRightClick => true;
+
+		public override string RightClickName => "Decrease Mass Illumination";
+
 		public override void OnActivate()
 		{
 			if (strength < 1)
 				strength += 0.25f;
 			else
 				strength = 0;
+		}
+
+		public override void OnRightClick()
+		{
+			if (strength > 0)
+				strength -= 0.25f;
+			else
+				strength = 1;
 		}
 
 		public override void DrawIcon(SpriteBatch spriteBatch, Vector2 position)
