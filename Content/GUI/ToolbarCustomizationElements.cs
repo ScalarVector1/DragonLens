@@ -1,6 +1,10 @@
-﻿using DragonLens.Core.Loaders.UILoading;
+﻿using DragonLens.Configs;
+using DragonLens.Content.Tools;
+using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Core.Systems.ToolbarSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 
@@ -29,6 +33,281 @@ namespace DragonLens.Content.GUI
 		{
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Remove").Value;
 			spriteBatch.Draw(tex, GetDimensions().Position(), Color.White);
+
+			if (IsMouseHovering)
+			{
+				Tooltip.SetName("Remove tool");
+				Tooltip.SetTooltip("You can always re-add it from the add tool menu (green tab)!");
+			}
+
+			base.Draw(spriteBatch);
+		}
+	}
+
+	internal class AddButton : UIElement
+	{
+		public ToolbarElement parent;
+
+		public Toolbar Toolbar => parent.toolbar;
+
+		public AddButton(ToolbarElement parent)
+		{
+			this.parent = parent;
+		}
+
+		public override void Click(UIMouseEvent evt)
+		{
+			ToolBrowser.OpenForToolbar(parent);
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Tab").Value;
+
+			float rotation;
+
+			if (Toolbar.orientation == Orientation.Horizontal)
+				rotation = Toolbar.relativePosition.Y > 0.5f ? 0 : 3.14f;
+			else
+				rotation = Toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
+
+			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.LimeGreen, rotation, tex.Size() / 2f, 1, 0, 0);
+
+			if (IsMouseHovering)
+			{
+				Tooltip.SetName("Add tool");
+				Tooltip.SetTooltip("Click to add tools to this toolbar");
+			}
+
+			base.Draw(spriteBatch);
+		}
+	}
+
+	internal class RemoveToolbarButton : UIElement
+	{
+		public ToolbarElement parent;
+
+		public Toolbar Toolbar => parent.toolbar;
+
+		public RemoveToolbarButton(ToolbarElement parent)
+		{
+			this.parent = parent;
+		}
+
+		public override void Click(UIMouseEvent evt)
+		{
+			ToolbarHandler.activeToolbars.Remove(Toolbar);
+			UILoader.GetUIState<ToolbarState>().Refresh();
+			UILoader.GetUIState<ToolbarState>().Customize();
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Tab").Value;
+
+			float rotation;
+
+			if (Toolbar.orientation == Orientation.Horizontal)
+				rotation = Toolbar.relativePosition.Y > 0.5f ? 0 : 3.14f;
+			else
+				rotation = Toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
+
+			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Red, rotation, tex.Size() / 2f, 1, 0, 0);
+
+			if (IsMouseHovering)
+			{
+				Tooltip.SetName("Remove toolbar");
+				Tooltip.SetTooltip("Remove this entire toolbar!");
+			}
+
+			base.Draw(spriteBatch);
+		}
+	}
+
+	internal class DragButton : UIElement
+	{
+		public ToolbarElement parent;
+
+		public static bool dragging;
+		public static ToolbarElement draggedElement;
+
+		public Toolbar Toolbar => parent.toolbar;
+		public Toolbar DraggedToolbar => draggedElement.toolbar;
+
+		public DragButton(ToolbarElement parent)
+		{
+			this.parent = parent;
+		}
+
+		public override void MouseDown(UIMouseEvent evt)
+		{
+			dragging = true;
+			draggedElement = parent;
+		}
+
+		public override void MouseUp(UIMouseEvent evt)
+		{
+			dragging = false;
+			parent.Refresh();
+			parent.Customize();
+
+			draggedElement = null;
+		}
+
+		public override void Update(GameTime gameTime)
+		{
+			if (dragging && draggedElement != null)
+			{
+				if (Main.mouseRight && Main.mouseRightRelease)
+				{
+					if (DraggedToolbar.orientation == Orientation.Horizontal)
+					{
+						DraggedToolbar.orientation = Orientation.Vertical;
+						Main.mouseRightRelease = false; //failsafe for slow updates
+					}
+					else
+					{
+						DraggedToolbar.orientation = Orientation.Horizontal;
+						Main.mouseRightRelease = false;
+					}
+				}
+
+				DraggedToolbar.relativePosition.X = MathHelper.Clamp(Main.MouseScreen.X / Main.screenWidth, 0, 1);
+				DraggedToolbar.relativePosition.Y = MathHelper.Clamp(Main.MouseScreen.Y / Main.screenHeight, 0, 1);
+
+				if (Main.MouseScreen.X / Main.screenWidth < 0.05f && DraggedToolbar.orientation == Orientation.Vertical)
+					DraggedToolbar.relativePosition.X = 0;
+
+				if (Main.MouseScreen.X / Main.screenWidth > 0.95f && DraggedToolbar.orientation == Orientation.Vertical)
+					DraggedToolbar.relativePosition.X = 1;
+
+				if (Main.MouseScreen.Y / Main.screenHeight < 0.05f && DraggedToolbar.orientation == Orientation.Horizontal)
+					DraggedToolbar.relativePosition.Y = 0;
+
+				if (Main.MouseScreen.Y / Main.screenHeight > 0.95f && DraggedToolbar.orientation == Orientation.Horizontal)
+					DraggedToolbar.relativePosition.Y = 1;
+
+				draggedElement.Refresh();
+			}
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Tab").Value;
+
+			float rotation;
+
+			if (Toolbar.orientation == Orientation.Horizontal)
+				rotation = Toolbar.relativePosition.Y > 0.5f ? 0 : 3.14f;
+			else
+				rotation = Toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
+
+			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Blue, rotation, tex.Size() / 2f, 1, 0, 0);
+
+			if (IsMouseHovering)
+			{
+				Tooltip.SetName("Move toolbar");
+				Tooltip.SetTooltip("Click and drag to re-position this toolbar. The toolbar will automatically snap to the edges of the screen if close enough. Right click while dragging to rotate the toolbar.");
+			}
+
+			base.Draw(spriteBatch);
+		}
+	}
+
+	internal class HideOptionButton : UIElement
+	{
+		public ToolbarElement parent;
+
+		public Toolbar Toolbar => parent.toolbar;
+
+		public HideOptionButton(ToolbarElement parent)
+		{
+			this.parent = parent;
+		}
+
+		public override void Click(UIMouseEvent evt)
+		{
+			Toolbar.automaticHideOption++;
+
+			if (Toolbar.automaticHideOption > AutomaticHideOption.NoMapScreen)
+				Toolbar.automaticHideOption = AutomaticHideOption.Never;
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Tab").Value;
+
+			float rotation;
+
+			if (Toolbar.orientation == Orientation.Horizontal)
+				rotation = Toolbar.relativePosition.Y > 0.5f ? 0 : 3.14f;
+			else
+				rotation = Toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
+
+			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Yellow, rotation, tex.Size() / 2f, 1, 0, 0);
+
+			if (IsMouseHovering)
+			{
+				string hideOption = Toolbar.automaticHideOption switch
+				{
+					AutomaticHideOption.Never => "Normal",
+					AutomaticHideOption.InventoryOpen => "Inventory closed only",
+					AutomaticHideOption.InventoryClosed => "Inventory open only",
+					AutomaticHideOption.NoMapScreen => "Map only",
+					_ => "ERROR"
+				};
+
+				string hideTip = Toolbar.automaticHideOption switch
+				{
+					AutomaticHideOption.Never => "Always visible during normal gameplay",
+					AutomaticHideOption.InventoryOpen => "Only visible if your inventory is closed",
+					AutomaticHideOption.InventoryClosed => "Only visible if your inventory is open",
+					AutomaticHideOption.NoMapScreen => "Visible on the map -- note: tools which open other windows will require you to close the map to use them!",
+					_ => "ERROR"
+				};
+
+				string nextOption = Toolbar.automaticHideOption switch
+				{
+					AutomaticHideOption.Never => "Inventory closed only",
+					AutomaticHideOption.InventoryOpen => "Inventory open only",
+					AutomaticHideOption.InventoryClosed => "Map only",
+					AutomaticHideOption.NoMapScreen => "Normal",
+					_ => "ERROR"
+				};
+
+				Tooltip.SetName($"Auto-hide: {hideOption}");
+				Tooltip.SetTooltip($"Allows you to set visibility rules for this toolbar. \n\n {hideTip} \n\n Clicking will change to: {nextOption}");
+			}
+
+			base.Draw(spriteBatch);
+		}
+	}
+
+	internal class NewBarButton : UIElement
+	{
+		public NewBarButton()
+		{
+			Width.Set(48, 0);
+			Height.Set(48, 0);
+		}
+
+		public override void Click(UIMouseEvent evt)
+		{
+			ToolbarHandler.activeToolbars.Add(new Toolbar(new Vector2(0.5f, 0.6f), Orientation.Horizontal, AutomaticHideOption.Never));
+
+			UILoader.GetUIState<ToolbarState>().Refresh();
+			UILoader.GetUIState<ToolbarState>().Customize();
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+
+			if (IsMouseHovering)
+			{
+				Tooltip.SetName("New toolbar");
+				Tooltip.SetTooltip("Create a brand new empty toolbar!");
+			}
 
 			base.Draw(spriteBatch);
 		}

@@ -1,4 +1,5 @@
-﻿using DragonLens.Core.Loaders.UILoading;
+﻿using DragonLens.Content.Tools;
+using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolbarSystem;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -47,6 +48,11 @@ namespace DragonLens.Content.GUI
 				if (child is ToolbarElement)
 					(child as ToolbarElement).Customize();
 			}
+
+			var addButton = new NewBarButton();
+			addButton.Left.Set(-24, 0.5f);
+			addButton.Top.Set(-24, 0.5f);
+			Append(addButton);
 		}
 
 		public void FinishCustomize()
@@ -55,6 +61,15 @@ namespace DragonLens.Content.GUI
 			{
 				if (child is ToolbarElement)
 					(child as ToolbarElement).FinishCustomize();
+			}
+
+			foreach (UIElement child in Children)
+			{
+				if (child is NewBarButton)
+				{
+					RemoveChild(child);
+					break;
+				}
 			}
 		}
 	}
@@ -80,9 +95,11 @@ namespace DragonLens.Content.GUI
 		private void DrawToolbars(Vector2 arg1, float arg2)
 		{
 			UILoader.GetUIState<ToolbarState>().UserInterface.Update(Main._drawInterfaceGameTime);
+			UILoader.GetUIState<ToolBrowser>().UserInterface.Update(Main._drawInterfaceGameTime); //We update/draw the tool browser here too to ease customization
 
 			Main.spriteBatch.Begin();
 			UILoader.GetUIState<ToolbarState>().Draw(Main.spriteBatch);
+			//UILoader.GetUIState<ToolBrowser>().Draw(Main.spriteBatch);
 			UILoader.GetUIState<Tooltip>().Draw(Main.spriteBatch);
 			Main.spriteBatch.End();
 		}

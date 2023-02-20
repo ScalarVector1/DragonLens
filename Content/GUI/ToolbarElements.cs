@@ -1,9 +1,9 @@
 ﻿using DragonLens.Configs;
-using DragonLens.Content.Tools;
 using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
@@ -59,12 +59,12 @@ namespace DragonLens.Content.GUI
 
 			if (toolbar.orientation == Orientation.Horizontal)
 			{
-				Width.Set(position.X + 26, 0);
+				Width.Set(Math.Max(position.X + 26, 200), 0);
 				Height.Set(92, 0);
 			}
 			else
 			{
-				Height.Set(position.Y + 26, 0);
+				Height.Set(Math.Max(position.Y + 26, 200), 0);
 				Width.Set(92, 0);
 			}
 
@@ -178,8 +178,10 @@ namespace DragonLens.Content.GUI
 
 		public void Customize()
 		{
-			AddTabButton(new AddButton(this), 0.25f);
-			AddTabButton(new DragButton(this), 0.75f);
+			AddTabButton(new AddButton(this), 0.20f);
+			AddTabButton(new RemoveToolbarButton(this), 0.35f);
+			AddTabButton(new DragButton(this), 0.65f);
+			AddTabButton(new HideOptionButton(this), 0.80f);
 
 			foreach (UIElement child in Children)
 			{
@@ -318,123 +320,6 @@ namespace DragonLens.Content.GUI
 				rotation = Toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
 
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, ModContent.GetInstance<GUIConfig>().buttonColor, rotation, tex.Size() / 2f, 1, 0, 0);
-
-			base.Draw(spriteBatch);
-		}
-	}
-
-	internal class AddButton : UIElement
-	{
-		public ToolbarElement parent;
-
-		public Toolbar Toolbar => parent.toolbar;
-
-		public AddButton(ToolbarElement parent)
-		{
-			this.parent = parent;
-		}
-
-		public override void Click(UIMouseEvent evt)
-		{
-			ToolBrowser.OpenForToolbar(parent);
-		}
-
-		public override void Draw(SpriteBatch spriteBatch)
-		{
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Tab").Value;
-
-			float rotation;
-
-			if (Toolbar.orientation == Orientation.Horizontal)
-				rotation = Toolbar.relativePosition.Y > 0.5f ? 0 : 3.14f;
-			else
-				rotation = Toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
-
-			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.LimeGreen, rotation, tex.Size() / 2f, 1, 0, 0);
-
-			base.Draw(spriteBatch);
-		}
-	}
-
-	internal class DragButton : UIElement
-	{
-		public ToolbarElement parent;
-
-		public static bool dragging;
-		public static ToolbarElement draggedElement;
-
-		public Toolbar Toolbar => parent.toolbar;
-		public Toolbar DraggedToolbar => draggedElement.toolbar;
-
-		public DragButton(ToolbarElement parent)
-		{
-			this.parent = parent;
-		}
-
-		public override void MouseDown(UIMouseEvent evt)
-		{
-			dragging = true;
-			draggedElement = parent;
-		}
-
-		public override void MouseUp(UIMouseEvent evt)
-		{
-			dragging = false;
-			parent.Refresh();
-			parent.Customize();
-
-			draggedElement = null;
-		}
-
-		public override void Update(GameTime gameTime)
-		{
-			if (dragging && draggedElement != null)
-			{
-				if (Main.mouseRight && Main.mouseRightRelease)
-				{
-					if (DraggedToolbar.orientation == Orientation.Horizontal)
-					{
-						DraggedToolbar.orientation = Orientation.Vertical;
-						Main.mouseRightRelease = false; //failsafe for slow updates
-					}
-					else
-					{
-						DraggedToolbar.orientation = Orientation.Horizontal;
-						Main.mouseRightRelease = false;
-					}
-				}
-
-				DraggedToolbar.relativePosition.X = MathHelper.Clamp(Main.MouseScreen.X / Main.screenWidth, 0, 1);
-				DraggedToolbar.relativePosition.Y = MathHelper.Clamp(Main.MouseScreen.Y / Main.screenHeight, 0, 1);
-
-				if (Main.MouseScreen.X / Main.screenWidth < 0.05f && DraggedToolbar.orientation == Orientation.Vertical)
-					DraggedToolbar.relativePosition.X = 0;
-
-				if (Main.MouseScreen.X / Main.screenWidth > 0.95f && DraggedToolbar.orientation == Orientation.Vertical)
-					DraggedToolbar.relativePosition.X = 1;
-
-				if (Main.MouseScreen.Y / Main.screenHeight < 0.05f && DraggedToolbar.orientation == Orientation.Horizontal)
-					DraggedToolbar.relativePosition.Y = 0;
-
-				if (Main.MouseScreen.Y / Main.screenHeight > 0.95f && DraggedToolbar.orientation == Orientation.Horizontal)
-					DraggedToolbar.relativePosition.Y = 1;
-
-				draggedElement.Refresh();
-			}
-		}
-
-		public override void Draw(SpriteBatch spriteBatch)
-		{
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Tab").Value;
-
-			float rotation;
-
-			if (Toolbar.orientation == Orientation.Horizontal)
-				rotation = Toolbar.relativePosition.Y > 0.5f ? 0 : 3.14f;
-			else
-				rotation = Toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
-
-			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Blue, rotation, tex.Size() / 2f, 1, 0, 0);
 
 			base.Draw(spriteBatch);
 		}
