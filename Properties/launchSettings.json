@@ -8,7 +8,7 @@
     },
     "TerrariaServer": {
       "commandName": "Executable",
-      "executablePath": "(DotNetPath)",
+      "executablePath": "$(DotNetPath)",
       "commandLineArgs": "$(tMLServerPath)",
       "workingDirectory": "$(tMLSteamPath)"
     }
