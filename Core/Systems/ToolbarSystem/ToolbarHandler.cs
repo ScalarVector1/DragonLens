@@ -1,5 +1,6 @@
 ﻿using DragonLens.Content.GUI;
 using DragonLens.Content.Tools;
+using DragonLens.Content.Tools.Despawners;
 using DragonLens.Content.Tools.Gameplay;
 using DragonLens.Content.Tools.Map;
 using DragonLens.Content.Tools.Spawners;
@@ -115,6 +116,15 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 				.AddTool<DustSpawner>()
 				.AddTool<TileSpawner>()
 				.AddTool<BuffSpawner>()
+				);
+
+			activeToolbars.Add(
+				new Toolbar(new Vector2(1, 0.5f), Orientation.Vertical, AutomaticHideOption.Never)
+				.AddTool<ItemDespawner>()
+				.AddTool<ProjectileDespawner>()
+				.AddTool<NPCDespawner>()
+				.AddTool<DustDespawner>()
+				.AddTool<GoreDespawner>()
 				);
 
 			activeToolbars.Add(
