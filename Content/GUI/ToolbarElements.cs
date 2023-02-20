@@ -385,9 +385,15 @@ namespace DragonLens.Content.GUI
 				if (Main.mouseRight && Main.mouseRightRelease)
 				{
 					if (DraggedToolbar.orientation == Orientation.Horizontal)
+					{
 						DraggedToolbar.orientation = Orientation.Vertical;
+						Main.mouseRightRelease = false; //failsafe for slow updates
+					}
 					else
+					{
 						DraggedToolbar.orientation = Orientation.Horizontal;
+						Main.mouseRightRelease = false;
+					}
 				}
 
 				DraggedToolbar.relativePosition.X = MathHelper.Clamp(Main.MouseScreen.X / Main.screenWidth, 0, 1);
