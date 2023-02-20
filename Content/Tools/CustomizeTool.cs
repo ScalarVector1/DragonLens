@@ -74,6 +74,16 @@ namespace DragonLens.Content.Tools
 				state.initialized = true;
 			}
 		}
+
+		public override void SafeUpdate(GameTime gameTime)
+		{
+			// Have the browser follow expected visibility on map VS non-map bars
+			if (TrackedToolbar.automaticHideOption != AutomaticHideOption.NoMapScreen && Main.mapFullscreen)
+				visible = false;
+
+			if (TrackedToolbar.automaticHideOption == AutomaticHideOption.NoMapScreen && !Main.mapFullscreen)
+				visible = false;
+		}
 	}
 
 	internal class ToolBrowserButton : BrowserButton

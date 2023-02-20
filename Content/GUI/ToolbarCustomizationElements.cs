@@ -293,7 +293,7 @@ namespace DragonLens.Content.GUI
 
 		public override void Click(UIMouseEvent evt)
 		{
-			ToolbarHandler.activeToolbars.Add(new Toolbar(new Vector2(0.5f, 0.6f), Orientation.Horizontal, AutomaticHideOption.Never));
+			ToolbarHandler.activeToolbars.Add(new Toolbar(new Vector2(0.5f, 0.6f), Orientation.Horizontal, Main.mapFullscreen ? AutomaticHideOption.NoMapScreen : AutomaticHideOption.Never));
 
 			UILoader.GetUIState<ToolbarState>().Refresh();
 			UILoader.GetUIState<ToolbarState>().Customize();

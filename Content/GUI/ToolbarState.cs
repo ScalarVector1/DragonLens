@@ -99,7 +99,10 @@ namespace DragonLens.Content.GUI
 
 			Main.spriteBatch.Begin();
 			UILoader.GetUIState<ToolbarState>().Draw(Main.spriteBatch);
-			//UILoader.GetUIState<ToolBrowser>().Draw(Main.spriteBatch);
+
+			if (UILoader.GetUIState<ToolBrowser>().Visible)
+				UILoader.GetUIState<ToolBrowser>().Draw(Main.spriteBatch);
+
 			UILoader.GetUIState<Tooltip>().Draw(Main.spriteBatch);
 			Main.spriteBatch.End();
 		}
