@@ -118,7 +118,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 				);
 
 			activeToolbars.Add(
-				new Toolbar(new Vector2(0.3f, 0.9f), Orientation.Horizontal, AutomaticHideOption.Never)
+				new Toolbar(new Vector2(0.3f, 0.85f), Orientation.Horizontal, AutomaticHideOption.Never)
 				.AddTool<ItemDespawner>()
 				.AddTool<ProjectileDespawner>()
 				.AddTool<NPCDespawner>()
@@ -139,7 +139,6 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 			activeToolbars.Add(
 				new Toolbar(new Vector2(0.7f, 1f), Orientation.Horizontal, AutomaticHideOption.Never)
 				.AddTool<Floodlight>()
-				.AddTool<Hitboxes>()
 				.AddTool<FreeCamera>()
 				.AddTool<LockCamera>()
 				);
