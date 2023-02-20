@@ -91,6 +91,7 @@ namespace DragonLens.Content.GUI
 	internal class ToolbarStateHandler : ModSystem
 	{
 		int initialTimer = 0;
+		float oldUIScale;
 
 		public override void Load()
 		{
@@ -120,6 +121,12 @@ namespace DragonLens.Content.GUI
 
 		public override void PostUpdateEverything()
 		{
+			if (Main.UIScale != oldUIScale)
+			{
+				UILoader.GetUIState<ToolbarState>().Refresh();
+				oldUIScale = Main.UIScale;
+			}
+
 			if (Main.gameMenu)
 				initialTimer = 0;
 			else
