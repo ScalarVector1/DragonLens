@@ -125,6 +125,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 				.AddTool<NPCDespawner>()
 				.AddTool<DustDespawner>()
 				.AddTool<GoreDespawner>()
+				.AddTool<BuffDespawner>()
 				);
 
 			activeToolbars.Add(
