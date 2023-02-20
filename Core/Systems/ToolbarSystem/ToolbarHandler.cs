@@ -143,6 +143,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 				new Toolbar(new Vector2(1f, 0.5f), Orientation.Vertical, AutomaticHideOption.NoMapScreen)
 				.AddTool<RevealMap>()
 				.AddTool<HideMap>()
+				.AddTool<MapTeleport>()
 				);
 
 			UILoader.GetUIState<ToolbarState>().Refresh();
