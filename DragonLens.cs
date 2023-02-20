@@ -4,5 +4,6 @@ namespace DragonLens
 {
 	public class DragonLens : Mod
 	{
+
 	}
 }

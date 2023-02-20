@@ -10,10 +10,12 @@ namespace DragonLens.Configs
 
 		[Label("Background color")]
 		[Tooltip("The color of DragonLens' backgrounds")]
+		[DefaultValue("25, 35, 100, 200")]
 		public Color backgroundColor;
 
 		[Label("Button color")]
 		[Tooltip("The color of DragonLens' buttons")]
+		[DefaultValue("45, 55, 130, 200")]
 		public Color buttonColor;
 
 		[Label("Browser button size")]
