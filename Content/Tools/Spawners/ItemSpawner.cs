@@ -38,6 +38,8 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override string IconTexture => "DragonLens/Assets/Tools/ItemSpawner";
 
+		public override Vector2 DefaultPosition => new(0.3f, 0.4f);
+
 		public override void PopulateGrid(UIGrid grid)
 		{
 			var buttons = new List<ItemButton>();

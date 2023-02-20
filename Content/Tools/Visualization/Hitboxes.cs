@@ -61,6 +61,8 @@ namespace DragonLens.Content.Tools.Visualization
 
 		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 220, 32);
 
+		public override Vector2 DefaultPosition => new(0.7f, 0.5f);
+
 		public override int InsertionIndex(List<GameInterfaceLayer> layers)
 		{
 			return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));

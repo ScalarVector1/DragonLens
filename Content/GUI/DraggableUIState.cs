@@ -26,6 +26,8 @@ namespace DragonLens.Content.GUI
 
 		public override bool Visible => visible;
 
+		public virtual Vector2 DefaultPosition => Vector2.Zero;
+
 		public virtual void AdjustPositions(Vector2 newPos) { }
 
 		public virtual void SafeOnInitialize() { }
@@ -37,6 +39,8 @@ namespace DragonLens.Content.GUI
 
 		public sealed override void OnInitialize()
 		{
+			basePos = new Vector2(DefaultPosition.X * Main.screenWidth, DefaultPosition.Y * Main.screenHeight);
+
 			closeButton = new UIImageButton(ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Remove"));
 			closeButton.Width.Set(16, 0);
 			closeButton.Height.Set(16, 0);

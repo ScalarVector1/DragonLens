@@ -43,6 +43,8 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override string IconTexture => "DragonLens/Assets/Tools/BuffSpawner";
 
+		public override Vector2 DefaultPosition => new(0.1f, 0.4f);
+
 		public override void PopulateGrid(UIGrid grid)
 		{
 			var buttons = new List<BuffButton>();
