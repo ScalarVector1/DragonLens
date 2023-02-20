@@ -104,15 +104,15 @@ namespace DragonLens.Content.GUI
 			Main.spriteBatch.End();
 		}
 
-		public override void PostUpdateWorld()
+		public override void PostUpdateEverything()
 		{
-			if (initialTimer >= 0)
+			if (Main.gameMenu)
+				initialTimer = 0;
+			else
 				initialTimer++;
 
-			if (initialTimer == 20)
+			if (initialTimer == 30)
 				UILoader.GetUIState<ToolbarState>().Refresh();
-			else
-				initialTimer = -1;
 		}
 	}
 }
