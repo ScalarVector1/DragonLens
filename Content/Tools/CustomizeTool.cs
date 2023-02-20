@@ -61,7 +61,7 @@ namespace DragonLens.Content.Tools
 
 		public override string Name => "Add tool";
 
-		public override string IconTexture => "DragonLens/Assets/Tools/TestTool";
+		public override string IconTexture => "DragonLens/Assets/Tools/Customize";
 
 		public override void PopulateGrid(UIGrid grid)
 		{
