@@ -40,7 +40,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 			ModTypeLookup<Tool>.Register(this);
 			ToolHandler.AddTool(this);
 
-			keybind = KeybindLoader.RegisterKeybind(Mod, Name, Keys.None);
+			keybind = KeybindLoader.RegisterKeybind(Mod, DisplayName, Keys.None);
 		}
 
 		/// <summary>
