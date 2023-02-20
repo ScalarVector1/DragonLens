@@ -138,6 +138,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 				.AddTool<Difficulty>()
 				.AddTool<FastForward>()
 				.AddTool<Time>()
+				.AddTool<Weather>()
 				.AddTool<CustomizeTool>()
 				);
 
