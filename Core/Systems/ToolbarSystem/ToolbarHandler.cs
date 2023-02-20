@@ -1,6 +1,7 @@
 ﻿using DragonLens.Content.GUI;
 using DragonLens.Content.Tools;
 using DragonLens.Content.Tools.Gameplay;
+using DragonLens.Content.Tools.Map;
 using DragonLens.Content.Tools.Spawners;
 using DragonLens.Core.Loaders.UILoading;
 using Microsoft.Xna.Framework;
@@ -125,6 +126,12 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 				.AddTool<Difficulty>()
 				.AddTool<FastForward>()
 				.AddTool<CustomizeTool>()
+				);
+
+			activeToolbars.Add(
+				new Toolbar(new Vector2(1f, 0.5f), Orientation.Vertical, AutomaticHideOption.NoMapScreen)
+				.AddTool<RevealMap>()
+				.AddTool<HideMap>()
 				);
 
 			UILoader.GetUIState<ToolbarState>().Refresh();

@@ -17,7 +17,8 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 	{
 		Never,
 		InventoryOpen,
-		InventoryClosed
+		InventoryClosed,
+		NoMapScreen
 	}
 
 	public enum CollapseDirection
@@ -50,9 +51,10 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 		/// </summary>
 		public bool Invisible => automaticHideOption switch
 		{
-			AutomaticHideOption.Never => false,
-			AutomaticHideOption.InventoryOpen => Main.playerInventory,
-			AutomaticHideOption.InventoryClosed => !Main.playerInventory,
+			AutomaticHideOption.Never => false || Main.mapFullscreen,
+			AutomaticHideOption.InventoryOpen => Main.playerInventory || Main.mapFullscreen,
+			AutomaticHideOption.InventoryClosed => !Main.playerInventory || Main.mapFullscreen,
+			AutomaticHideOption.NoMapScreen => !Main.mapFullscreen,
 			_ => false,
 		};
 

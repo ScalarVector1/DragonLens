@@ -64,22 +64,38 @@ namespace DragonLens.Content.GUI
 	/// </summary>
 	internal class ToolbarStateHandler : ModSystem
 	{
-		Vector2 oldScreenSize;
+		int initialTimer = 0;
 
 		public override void Load()
 		{
-			On.Terraria.Main.CheckMonoliths += RefreshUI;
+			Main.OnResolutionChanged += RefreshUI;
+			Main.OnPostFullscreenMapDraw += DrawToolbars;
 		}
 
-		private void RefreshUI(On.Terraria.Main.orig_CheckMonoliths orig)
+		private void RefreshUI(Vector2 newSize)
 		{
-			orig();
+			UILoader.GetUIState<ToolbarState>().Refresh();
+		}
 
-			if (!Main.gameMenu && (Main.screenWidth != oldScreenSize.X || Main.screenHeight != oldScreenSize.Y))
+		private void DrawToolbars(Vector2 arg1, float arg2)
+		{
+			UILoader.GetUIState<ToolbarState>().UserInterface.Update(Main._drawInterfaceGameTime);
+
+			Main.spriteBatch.Begin();
+			UILoader.GetUIState<ToolbarState>().Draw(Main.spriteBatch);
+			UILoader.GetUIState<Tooltip>().Draw(Main.spriteBatch);
+			Main.spriteBatch.End();
+		}
+
+		public override void PostUpdateWorld()
+		{
+			if (initialTimer >= 0)
+				initialTimer++;
+
+			if (initialTimer == 20)
 				UILoader.GetUIState<ToolbarState>().Refresh();
-
-			oldScreenSize.X = Main.screenWidth;
-			oldScreenSize.Y = Main.screenHeight;
+			else
+				initialTimer = -1;
 		}
 	}
 }
