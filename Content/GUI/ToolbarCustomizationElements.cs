@@ -276,7 +276,7 @@ namespace DragonLens.Content.GUI
 				};
 
 				Tooltip.SetName($"Auto-hide: {hideOption}");
-				Tooltip.SetTooltip($"Allows you to set visibility rules for this toolbar. \n\n {hideTip} \n\n Clicking will change to: {nextOption}");
+				Tooltip.SetTooltip($"Allows you to set visibility rules for this toolbar. NEWBLOCK {hideTip} NEWBLOCK Clicking will change to: {nextOption}");
 			}
 
 			base.Draw(spriteBatch);
