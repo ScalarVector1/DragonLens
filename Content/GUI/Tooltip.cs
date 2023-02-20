@@ -59,6 +59,9 @@ namespace DragonLens.Content.GUI
 
 			height += ChatManager.GetStringSize(font, "{Dummy}\n" + tooltip, Vector2.One).Y + 16;
 
+			if (pos.Y + height > Main.screenHeight)
+				pos.Y -= height;
+
 			Utils.DrawInvBG(Main.spriteBatch, new Rectangle((int)pos.X - 10, (int)pos.Y - 10, (int)width + 20, (int)height + 20), new Color(20, 20, 55) * 0.925f);
 
 			Utils.DrawBorderString(Main.spriteBatch, text, pos, Color.White);
