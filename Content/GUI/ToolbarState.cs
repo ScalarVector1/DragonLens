@@ -53,23 +53,34 @@ namespace DragonLens.Content.GUI
 			addButton.Left.Set(-24, 0.5f);
 			addButton.Top.Set(-24, 0.5f);
 			Append(addButton);
+
+			var saveButton = new SaveLayoutButton();
+			saveButton.Left.Set(34, 0.5f);
+			saveButton.Top.Set(-24, 0.5f);
+			Append(saveButton);
+
+			var loadButton = new LoadLayoutButton();
+			loadButton.Left.Set(-84, 0.5f);
+			loadButton.Top.Set(-24, 0.5f);
+			Append(loadButton);
 		}
 
 		public void FinishCustomize()
 		{
+			List<UIElement> toRemove = new();
+
 			foreach (UIElement child in Children)
 			{
 				if (child is ToolbarElement)
 					(child as ToolbarElement).FinishCustomize();
+
+				if (child is NewBarButton || child is SaveLayoutButton || child is LoadLayoutButton)
+					toRemove.Add(child);
 			}
 
-			foreach (UIElement child in Children)
+			foreach (UIElement child in toRemove)
 			{
-				if (child is NewBarButton)
-				{
-					RemoveChild(child);
-					break;
-				}
+				RemoveChild(child);
 			}
 		}
 	}

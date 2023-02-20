@@ -4,6 +4,7 @@ using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolbarSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
@@ -301,12 +302,85 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+			var drawTarget = GetDimensions().ToRectangle();
+
+			Helpers.GUIHelper.DrawBox(spriteBatch, drawTarget, ModContent.GetInstance<GUIConfig>().buttonColor);
+
+			drawTarget.Inflate(-6, -16);
+			Helpers.GUIHelper.DrawBox(spriteBatch, drawTarget, ModContent.GetInstance<GUIConfig>().buttonColor);
+
+			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/NewBar").Value;
+			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
 
 			if (IsMouseHovering)
 			{
 				Tooltip.SetName("New toolbar");
 				Tooltip.SetTooltip("Create a brand new empty toolbar!");
+			}
+
+			base.Draw(spriteBatch);
+		}
+	}
+
+	internal class SaveLayoutButton : UIElement
+	{
+		public SaveLayoutButton()
+		{
+			Width.Set(48, 0);
+			Height.Set(48, 0);
+		}
+
+		public override void Click(UIMouseEvent evt)
+		{
+			UILoader.GetUIState<ToolbarState>().FinishCustomize();
+			ToolbarHandler.ExportToFile(Path.Join(Main.SavePath, "DragonLensLayouts", "Current"));
+
+			CustomizeTool.customizing = false;
+
+			Main.NewText("Layout saved!");
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+
+			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/SaveLayout").Value;
+			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
+
+			if (IsMouseHovering)
+			{
+				Tooltip.SetName("Save layout");
+				Tooltip.SetTooltip("Finish customizing and save your layout");
+			}
+
+			base.Draw(spriteBatch);
+		}
+	}
+
+	internal class LoadLayoutButton : UIElement
+	{
+		public LoadLayoutButton()
+		{
+			Width.Set(48, 0);
+			Height.Set(48, 0);
+		}
+
+		public override void Click(UIMouseEvent evt)
+		{
+			Main.NewText("To be implemented while file browsers are...");
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+
+			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/LoadLayout").Value;
+			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
+
+			if (IsMouseHovering)
+			{
+				Tooltip.SetName("Load layout");
+				Tooltip.SetTooltip("Load an existing layout");
 			}
 
 			base.Draw(spriteBatch);

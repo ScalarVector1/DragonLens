@@ -1,11 +1,12 @@
-﻿using DragonLens.Content.GUI;
+﻿using DragonLens.Configs;
+using DragonLens.Content.GUI;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Core.Systems.ToolSystem;
+using DragonLens.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using System.IO;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
@@ -17,7 +18,7 @@ namespace DragonLens.Content.Tools
 	{
 		public static bool customizing;
 
-		public override string Texture => "DragonLens/Assets/Tools/TestTool";
+		public override string Texture => "DragonLens/Assets/Tools/Customize";
 
 		public override string DisplayName => "Customize tool";
 
@@ -25,17 +26,29 @@ namespace DragonLens.Content.Tools
 
 		public override void OnActivate()
 		{
-			customizing = !customizing;
+			if (!customizing)
+			{
+				customizing = true;
+
+				if (customizing)
+					UILoader.GetUIState<ToolbarState>().Customize();
+			}
+		}
+
+		public override void DrawIcon(SpriteBatch spriteBatch, Vector2 position)
+		{
+			base.DrawIcon(spriteBatch, position);
 
 			if (customizing)
 			{
-				UILoader.GetUIState<ToolbarState>().Customize();
-			}
-			else
-			{
-				UILoader.GetUIState<ToolbarState>().FinishCustomize();
-				ToolbarHandler.ExportToFile(Path.Join(Main.SavePath, "DragonLensLayouts", "Current"));
-				Main.NewText("Layout saved!");
+				GUIHelper.DrawOutline(spriteBatch, new Rectangle((int)position.X - 7, (int)position.Y - 7, 46, 46), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+
+				Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Misc/GlowAlpha").Value;
+				Color color = Color.White;
+				color.A = 0;
+				var target = new Rectangle((int)position.X, (int)position.Y, 32, 32);
+
+				spriteBatch.Draw(tex, target, color);
 			}
 		}
 	}
