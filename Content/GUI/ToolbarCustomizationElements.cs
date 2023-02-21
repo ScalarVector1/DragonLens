@@ -176,17 +176,29 @@ namespace DragonLens.Content.GUI
 				DraggedToolbar.relativePosition.X = MathHelper.Clamp(Main.MouseScreen.X / Main.screenWidth, 0, 1);
 				DraggedToolbar.relativePosition.Y = MathHelper.Clamp(Main.MouseScreen.Y / Main.screenHeight, 0, 1);
 
-				if (Main.MouseScreen.X / Main.screenWidth < 0.05f && DraggedToolbar.orientation == Orientation.Vertical)
+				if (Main.MouseScreen.X / Main.screenWidth < 0.025f)
+				{
 					DraggedToolbar.relativePosition.X = 0;
+					DraggedToolbar.orientation = Orientation.Vertical;
+				}
 
-				if (Main.MouseScreen.X / Main.screenWidth > 0.95f && DraggedToolbar.orientation == Orientation.Vertical)
+				if (Main.MouseScreen.X / Main.screenWidth > 0.975f)
+				{
 					DraggedToolbar.relativePosition.X = 1;
+					DraggedToolbar.orientation = Orientation.Vertical;
+				}
 
-				if (Main.MouseScreen.Y / Main.screenHeight < 0.05f && DraggedToolbar.orientation == Orientation.Horizontal)
+				if (Main.MouseScreen.Y / Main.screenHeight < 0.025f)
+				{
 					DraggedToolbar.relativePosition.Y = 0;
+					DraggedToolbar.orientation = Orientation.Horizontal;
+				}
 
-				if (Main.MouseScreen.Y / Main.screenHeight > 0.95f && DraggedToolbar.orientation == Orientation.Horizontal)
+				if (Main.MouseScreen.Y / Main.screenHeight > 0.975f)
+				{
 					DraggedToolbar.relativePosition.Y = 1;
+					DraggedToolbar.orientation = Orientation.Horizontal;
+				}
 
 				draggedElement.Refresh();
 			}
