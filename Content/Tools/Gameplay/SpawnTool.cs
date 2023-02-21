@@ -16,9 +16,9 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public override string Texture => "DragonLens/Assets/Tools/SpawnTool";
 
-		public override string DisplayName => "Time tool";
+		public override string DisplayName => "Enemy spawn adjuster";
 
-		public override string Description => "Adjust or pause the day/night cycle";
+		public override string Description => "Change the rate at which enemies spawn, or disable natural spawns altogether";
 
 		public override void OnActivate()
 		{

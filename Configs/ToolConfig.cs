@@ -13,8 +13,8 @@ namespace DragonLens.Configs
 
 		[Label("Default spawnrate")]
 		[Tooltip("Set the default enemy spawn rate")]
-		[DefaultValue(1)]
-		[Range(0, 10)]
+		[Range(0f, 10f)]
+		[DefaultValue(1f)]
 		public float defaultSpawnrate;
 
 		[Label("Preload spawners")]
