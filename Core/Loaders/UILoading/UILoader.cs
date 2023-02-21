@@ -9,8 +9,8 @@ namespace DragonLens.Core.Loaders.UILoading
 {
 	class UILoader : ILoadable
 	{
-		public static List<UserInterface> UserInterfaces;
-		public static List<SmartUIState> UIStates;
+		public static List<UserInterface> UserInterfaces = new();
+		public static List<SmartUIState> UIStates = new();
 
 		public void Load(Mod mod)
 		{
