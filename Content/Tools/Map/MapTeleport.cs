@@ -58,10 +58,17 @@ namespace DragonLens.Content.Tools.Map
 				var screenSize = new Vector2(Main.screenWidth, Main.screenHeight);
 				Vector2 target = ((Main.MouseScreen - screenSize / 2) / 16 * (16 / Main.mapFullscreenScale) + Main.mapFullscreenPos) * 16;
 
-				Main.LocalPlayer.Center = target;
+				if (WorldGen.InWorld((int)target.X / 16, (int)target.Y / 16))
+				{
+					Main.LocalPlayer.Center = target;
 
-				if (NoClip.active)
-					NoClip.desiredPos = target;
+					if (NoClip.active)
+						NoClip.desiredPos = target;
+				}
+				else
+				{
+					Main.NewText("You cant teleport outside of the world!");
+				}
 			}
 		}
 	}
