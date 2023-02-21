@@ -55,7 +55,7 @@ namespace DragonLens.Content.Tools.Map
 		{
 			if (MapTeleport.active && Main.mouseRight)
 			{
-				var screenSize = new Vector2(Main.screenWidth, Main.screenHeight);
+				Vector2 screenSize = new Vector2(Main.screenWidth, Main.screenHeight) * Main.UIScale;
 				Vector2 target = ((Main.MouseScreen - screenSize / 2) / 16 * (16 / Main.mapFullscreenScale) + Main.mapFullscreenPos) * 16;
 
 				if (WorldGen.InWorld((int)target.X / 16, (int)target.Y / 16))

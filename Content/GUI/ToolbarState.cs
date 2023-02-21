@@ -109,7 +109,7 @@ namespace DragonLens.Content.GUI
 			UILoader.GetUIState<ToolbarState>().UserInterface.Update(Main._drawInterfaceGameTime);
 			UILoader.GetUIState<ToolBrowser>().UserInterface.Update(Main._drawInterfaceGameTime); //We update/draw the tool browser here too to ease customization
 
-			Main.spriteBatch.Begin();
+			Main.spriteBatch.Begin(default, default, default, default, default, default, Main.UIScaleMatrix);
 			UILoader.GetUIState<ToolbarState>().Draw(Main.spriteBatch);
 
 			if (UILoader.GetUIState<ToolBrowser>().Visible)
