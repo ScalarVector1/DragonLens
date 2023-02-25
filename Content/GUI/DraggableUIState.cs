@@ -48,6 +48,8 @@ namespace DragonLens.Content.GUI
 			Append(closeButton);
 
 			SafeOnInitialize();
+
+			base.OnInitialize();
 		}
 
 		public sealed override void Update(GameTime gameTime)

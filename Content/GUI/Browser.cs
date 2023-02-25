@@ -1,10 +1,9 @@
 ﻿using DragonLens.Configs;
+using DragonLens.Content.Filters;
 using DragonLens.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.GameInput;
 using Terraria.ModLoader;
@@ -18,9 +17,10 @@ namespace DragonLens.Content.GUI
 	{
 		private UIGrid options;
 		private FixedUIScrollbar scrollBar;
-		internal SearchBar searchBar;
-
+		private FilterPanel filters;
 		private ToggleButton listButton;
+
+		internal SearchBar searchBar;
 
 		public bool initialized;
 		public bool listMode;
@@ -30,6 +30,8 @@ namespace DragonLens.Content.GUI
 		public virtual string IconTexture => "DragonLens/Assets/Tools/TestTool";
 
 		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 500, 64);
+
+		public event FilterDelegate FilterEvent;
 
 		public override int InsertionIndex(List<GameInterfaceLayer> layers)
 		{
@@ -49,11 +51,22 @@ namespace DragonLens.Content.GUI
 			options.UpdateOrder();
 		}
 
-		public void FilterGrid(Func<BrowserButton, bool> filter)
+		public bool ShouldBeFiltered(BrowserButton button)
 		{
-			PopulateGrid(options);
-			options.Children.ToList().RemoveAll(n => !filter((BrowserButton)n));
+			bool result = false;
+
+			if (FilterEvent is null)
+				return false;
+
+			foreach (FilterDelegate del in FilterEvent?.GetInvocationList())
+			{
+				result |= del(button);
+			}
+
+			return result;
 		}
+
+		public virtual void SetupFilters(FilterPanel filters) { }
 
 		public virtual void PostInitialize() { }
 
@@ -83,6 +96,12 @@ namespace DragonLens.Content.GUI
 			listButton.OnClick += (n, k) => listMode = !listMode;
 			Append(listButton);
 
+			filters = new(this);
+			filters.Width.Set(220, 0);
+			filters.Height.Set(420, 0);
+			Append(filters);
+
+			SetupFilters(filters);
 			PostInitialize();
 		}
 
@@ -99,6 +118,9 @@ namespace DragonLens.Content.GUI
 
 			listButton.Left.Set(newPos.X + 220, 0);
 			listButton.Top.Set(newPos.Y + 66, 0);
+
+			filters.Left.Set(newPos.X + width + 10, 0);
+			filters.Top.Set(newPos.Y, 0);
 		}
 
 		public void Refresh()
@@ -164,7 +186,7 @@ namespace DragonLens.Content.GUI
 				drawDelayTimer--;
 
 			//Will likely need a better solution to optimize when not constantly searching
-			if (!Identifier.ToLower().Contains(parent.searchBar.searchingFor.ToLower()))
+			if (!Identifier.ToLower().Contains(parent.searchBar.searchingFor.ToLower()) || parent.ShouldBeFiltered(this))
 			{
 				Width.Set(0, 0);
 				Height.Set(0, 0);

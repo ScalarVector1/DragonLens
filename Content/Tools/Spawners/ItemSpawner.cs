@@ -1,4 +1,6 @@
-﻿using DragonLens.Content.GUI;
+﻿using DragonLens.Content.Filters;
+using DragonLens.Content.Filters.ItemFilters;
+using DragonLens.Content.GUI;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
@@ -52,6 +54,29 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 
 			grid.AddRange(buttons);
+		}
+
+		public override void SetupFilters(FilterPanel filters)
+		{
+			filters.AddSeperator("Mod filters");
+
+			foreach (Mod mod in ModLoader.Mods)
+			{
+				filters.AddFilter(new ItemModFilter(mod));
+			}
+
+			filters.AddSeperator("Damage filters");
+			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Any damage", "Any item that deals damage", n => !(n is ItemButton && (n as ItemButton).item.damage > 0)));
+			filters.AddFilter(new DamageClassFilter(DamageClass.Default, "DragonLens/Assets/GUI/NoBox"));
+			filters.AddFilter(new DamageClassFilter(DamageClass.Melee, "DragonLens/Assets/GUI/NoBox"));
+			filters.AddFilter(new DamageClassFilter(DamageClass.Ranged, "DragonLens/Assets/GUI/NoBox"));
+			filters.AddFilter(new DamageClassFilter(DamageClass.Magic, "DragonLens/Assets/GUI/NoBox"));
+			filters.AddFilter(new DamageClassFilter(DamageClass.Summon, "DragonLens/Assets/GUI/NoBox"));
+			filters.AddFilter(new DamageClassFilter(DamageClass.Throwing, "DragonLens/Assets/GUI/NoBox"));
+
+			filters.AddSeperator("Misc filters");
+			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Accessory", "Any item that can be equipped as an accessory", n => !(n is ItemButton && (n as ItemButton).item.accessory)));
+			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Armor", "Any item that can be equipped as armor", n => !(n is ItemButton && (n as ItemButton).item.defense > 0)));
 		}
 	}
 
