@@ -1,15 +1,19 @@
 ﻿using DragonLens.Configs;
+using DragonLens.Content.Filters;
+using DragonLens.Content.Filters.NPCFilters;
 using DragonLens.Content.GUI;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
+using static Terraria.GameContent.Bestiary.Filters;
 
 namespace DragonLens.Content.Tools.Spawners
 {
@@ -37,6 +41,7 @@ namespace DragonLens.Content.Tools.Spawners
 	internal class NPCBrowser : Browser
 	{
 		public static NPC selected;
+		public static UnlockableNPCEntryIcon preview;
 
 		public override string Name => "NPC spawner";
 
@@ -58,6 +63,31 @@ namespace DragonLens.Content.Tools.Spawners
 			grid.AddRange(buttons);//causes most of the delay
 		}
 
+		public override void SetupFilters(FilterPanel filters)
+		{
+			filters.AddSeperator("Mod filters");
+
+			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModNPC>().Count() > 0))
+			{
+				filters.AddFilter(new NPCModFilter(mod));
+			}
+
+			filters.AddSeperator("Type filters");
+			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Boss", "NPCs which are bosses", n => !(n is NPCButton && (n as NPCButton).npc.boss)));
+			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Critter", "NPCs which count as critters", n => !(n is NPCButton && (n as NPCButton).npc.CountsAsACritter)));
+
+			filters.AddSeperator("Hostility filters");
+			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Friendly", "NPCs which are friendly", n => !(n is NPCButton && (n as NPCButton).npc.friendly)));
+			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Hostile", "Enemy NPCs", n => !(n is NPCButton && !(n as NPCButton).npc.friendly)));
+
+			filters.AddSeperator("Bestiary filters");
+
+			foreach (IBestiaryEntryFilter bestiary in Main.BestiaryDB.Filters.Where(n => n is ByInfoElement))
+			{
+				filters.AddFilter(new BestiaryFilter(bestiary));
+			}
+		}
+
 		public override void SafeUpdate(GameTime gameTime)
 		{
 			base.SafeUpdate(gameTime);
@@ -77,15 +107,36 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void RightClick(UIMouseEvent evt)
 		{
 			if (selected != null)
+			{
 				selected = null;
+				preview = null;
+			}
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			if (selected != null)
+			if (selected != null && preview != null)
 			{
-				selected.position = Main.MouseScreen + Vector2.One * 16;
-				Main.instance.DrawNPCDirect(spriteBatch, selected, false, Vector2.Zero);
+				var iconBox = new Rectangle((int)Main.MouseScreen.X + 16, (int)Main.MouseScreen.Y + 16, 64, 64);
+
+				var info = new BestiaryUICollectionInfo
+				{
+					UnlockState = BestiaryEntryUnlockState.CanShowPortraitOnly_1
+				};
+
+				var settings = new EntryIconDrawSettings
+				{
+					iconbox = iconBox,
+					IsPortrait = true
+				};
+
+				Rectangle newClip = iconBox;
+				newClip.Inflate(-4, -4);
+
+				Rectangle oldRect = spriteBatch.GraphicsDevice.ScissorRectangle;
+				spriteBatch.GraphicsDevice.ScissorRectangle = newClip;
+				preview.Draw(info, spriteBatch, settings);
+				spriteBatch.GraphicsDevice.ScissorRectangle = oldRect;
 			}
 
 			base.Draw(spriteBatch);
@@ -95,6 +146,7 @@ namespace DragonLens.Content.Tools.Spawners
 	internal class NPCButton : BrowserButton
 	{
 		public NPC npc;
+		public BestiaryEntry entry;
 
 		public UnlockableNPCEntryIcon icon;
 
@@ -104,6 +156,8 @@ namespace DragonLens.Content.Tools.Spawners
 		{
 			this.npc = npc;
 			icon = new(npc.type);
+
+			entry = Main.BestiaryDB.FindEntryByNPCID(npc.type);
 
 			OverrideSamplerState = SamplerState.PointClamp;
 			UseImmediateMode = true;
@@ -167,6 +221,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void Click(UIMouseEvent evt)
 		{
 			NPCBrowser.selected = (NPC)npc.Clone();
+			NPCBrowser.preview = (UnlockableNPCEntryIcon)icon.CreateClone();
 			Main.NewText($"{npc.FullName} selected, click anywhere in the world to spawn. Right click to deselect.");
 		}
 

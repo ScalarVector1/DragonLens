@@ -96,6 +96,8 @@ namespace DragonLens.Content.Tools
 
 			if (TrackedToolbar != null && TrackedToolbar.automaticHideOption == AutomaticHideOption.NoMapScreen && !Main.mapFullscreen)
 				visible = false;
+
+			base.SafeUpdate(gameTime);
 		}
 	}
 

@@ -1,10 +1,13 @@
-﻿using DragonLens.Content.GUI;
+﻿using DragonLens.Content.Filters;
+using DragonLens.Content.Filters.ProjectileFilters;
+using DragonLens.Content.GUI;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
@@ -57,6 +60,20 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 
 			grid.AddRange(buttons);
+		}
+
+		public override void SetupFilters(FilterPanel filters)
+		{
+			filters.AddSeperator("Mod filters");
+
+			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModProjectile>().Count() > 0))
+			{
+				filters.AddFilter(new ProjectileModFilter(mod));
+			}
+
+			filters.AddSeperator("Friendly/Hostile filters");
+			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Friendly", "Projectiles which by default belong to a player", n => !(n is ProjectileButton && (n as ProjectileButton).proj.friendly)));
+			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Hostile", "Projectiles which by default belong to an enemy", n => !(n is ProjectileButton && (n as ProjectileButton).proj.hostile)));
 		}
 
 		public override void SafeUpdate(GameTime gameTime)

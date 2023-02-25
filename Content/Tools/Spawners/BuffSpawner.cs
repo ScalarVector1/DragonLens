@@ -1,10 +1,13 @@
-﻿using DragonLens.Content.GUI;
+﻿using DragonLens.Content.Filters;
+using DragonLens.Content.Filters.BuffFilters;
+using DragonLens.Content.GUI;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
@@ -54,6 +57,20 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 
 			grid.AddRange(buttons);
+		}
+
+		public override void SetupFilters(FilterPanel filters)
+		{
+			filters.AddSeperator("Mod filters");
+
+			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModBuff>().Count() > 0))
+			{
+				filters.AddFilter(new BuffModFilter(mod));
+			}
+
+			filters.AddSeperator("Buff type filters");
+			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Buff", "Buffs with positive effects", n => !(n is BuffButton && !Main.debuff[(n as BuffButton).type])));
+			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Debuff", "Buffs with negative effects", n => !(n is BuffButton && Main.debuff[(n as BuffButton).type])));
 		}
 
 		public override void SafeUpdate(GameTime gameTime)
