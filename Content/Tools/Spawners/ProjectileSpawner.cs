@@ -65,6 +65,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void SetupFilters(FilterPanel filters)
 		{
 			filters.AddSeperator("Mod filters");
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Vanilla", "Projectiles from the base game", n => !(n is ProjectileButton && (n as ProjectileButton).proj.ModProjectile is null)));
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModProjectile>().Count() > 0))
 			{
@@ -72,8 +73,8 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 
 			filters.AddSeperator("Friendly/Hostile filters");
-			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Friendly", "Projectiles which by default belong to a player", n => !(n is ProjectileButton && (n as ProjectileButton).proj.friendly)));
-			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Hostile", "Projectiles which by default belong to an enemy", n => !(n is ProjectileButton && (n as ProjectileButton).proj.hostile)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Friendly", "Friendly", "Projectiles which by default belong to a player", n => !(n is ProjectileButton && (n as ProjectileButton).proj.friendly)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Hostile", "Hostile", "Projectiles which by default belong to an enemy", n => !(n is ProjectileButton && (n as ProjectileButton).proj.hostile)));
 		}
 
 		public override void SafeUpdate(GameTime gameTime)

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -62,6 +63,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void SetupFilters(FilterPanel filters)
 		{
 			filters.AddSeperator("Mod filters");
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Vanilla", "Buffs from vanilla", n => !(n is BuffButton && (n as BuffButton).type <= BuffID.Count)));
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModBuff>().Count() > 0))
 			{
@@ -69,8 +71,8 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 
 			filters.AddSeperator("Buff type filters");
-			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Buff", "Buffs with positive effects", n => !(n is BuffButton && !Main.debuff[(n as BuffButton).type])));
-			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Debuff", "Buffs with negative effects", n => !(n is BuffButton && Main.debuff[(n as BuffButton).type])));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Friendly", "Buff", "Buffs with positive effects", n => !(n is BuffButton && !Main.debuff[(n as BuffButton).type])));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Hostile", "Debuff", "Buffs with negative effects", n => !(n is BuffButton && Main.debuff[(n as BuffButton).type])));
 		}
 
 		public override void SafeUpdate(GameTime gameTime)

@@ -60,6 +60,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void SetupFilters(FilterPanel filters)
 		{
 			filters.AddSeperator("Mod filters");
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Vanilla", "Items from the base game", n => !(n is ItemButton && (n as ItemButton).item.ModItem is null)));
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModItem>().Count() > 0))
 			{

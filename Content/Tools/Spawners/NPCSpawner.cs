@@ -66,6 +66,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void SetupFilters(FilterPanel filters)
 		{
 			filters.AddSeperator("Mod filters");
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Vanilla", "NPCs from the base game", n => !(n is NPCButton && (n as NPCButton).npc.ModNPC is null)));
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModNPC>().Count() > 0))
 			{
@@ -73,12 +74,12 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 
 			filters.AddSeperator("Type filters");
-			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Boss", "NPCs which are bosses", n => !(n is NPCButton && (n as NPCButton).npc.boss)));
-			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Critter", "NPCs which count as critters", n => !(n is NPCButton && (n as NPCButton).npc.CountsAsACritter)));
+			filters.AddFilter(new Filter("DragonLens/Assets/GUI/Boss", "Boss", "NPCs which are bosses", n => !(n is NPCButton && (n as NPCButton).npc.boss)));
+			filters.AddFilter(new Filter("DragonLens/Assets/GUI/Critter", "Critter", "NPCs which count as critters", n => !(n is NPCButton && (n as NPCButton).npc.CountsAsACritter)));
 
 			filters.AddSeperator("Hostility filters");
-			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Friendly", "NPCs which are friendly", n => !(n is NPCButton && (n as NPCButton).npc.friendly)));
-			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Hostile", "Enemy NPCs", n => !(n is NPCButton && !(n as NPCButton).npc.friendly)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Friendly", "Friendly", "NPCs which are friendly", n => !(n is NPCButton && (n as NPCButton).npc.friendly)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Hostile", "Hostile", "Enemy NPCs", n => !(n is NPCButton && !(n as NPCButton).npc.friendly)));
 
 			filters.AddSeperator("Bestiary filters");
 
