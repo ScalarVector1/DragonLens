@@ -64,6 +64,8 @@ namespace DragonLens.Content.Tools.Map
 
 					if (NoClip.active)
 						NoClip.desiredPos = target;
+
+					Main.LocalPlayer.fallStart = (int)Main.LocalPlayer.position.Y;
 				}
 				else
 				{

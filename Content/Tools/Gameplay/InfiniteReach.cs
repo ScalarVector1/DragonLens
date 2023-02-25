@@ -49,6 +49,19 @@ namespace DragonLens.Content.Tools.Gameplay
 				Player.blockRange = int.MaxValue;
 		}
 
+		public override bool CanUseItem(Item item)
+		{
+			return base.CanUseItem(item);
+		}
+
+		public override float UseTimeMultiplier(Item item)
+		{
+			if (InfiniteReach.active && item.createTile != -1)
+				return 0.1f;
+
+			return 1;
+		}
+
 		public override float UseAnimationMultiplier(Item item)
 		{
 			if (InfiniteReach.active && item.createTile != -1)
