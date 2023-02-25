@@ -144,6 +144,8 @@ namespace DragonLens.Content.GUI
 	{
 		public Browser parent;
 
+		public int drawDelayTimer = 4; //Here so we dont draw on the first frame of the grid populating, causing a lag bonanza since every single button tries to draw.
+
 		public abstract string Identifier { get; }
 
 		public BrowserButton(Browser parent)
@@ -158,6 +160,9 @@ namespace DragonLens.Content.GUI
 
 		public override void Update(GameTime gameTime)
 		{
+			if (drawDelayTimer > 0)
+				drawDelayTimer--;
+
 			//Will likely need a better solution to optimize when not constantly searching
 			if (!Identifier.ToLower().Contains(parent.searchBar.searchingFor.ToLower()))
 			{
@@ -213,6 +218,12 @@ namespace DragonLens.Content.GUI
 		public sealed override void Draw(SpriteBatch spriteBatch)
 		{
 			if (GetDimensions().Width <= 0)
+				return;
+
+			if (!parent.GetDimensions().ToRectangle().Intersects(GetDimensions().ToRectangle()))
+				return;
+
+			if (drawDelayTimer > 0)
 				return;
 
 			int size = (int)MathHelper.Clamp(ModContent.GetInstance<GUIConfig>().browserButtonSize, 36, 108);

@@ -13,10 +13,19 @@ namespace DragonLens
 			if (ModContent.GetInstance<ToolConfig>().preloadSpawners)
 			{
 				UILoader.GetUIState<ItemBrowser>().Refresh();
+				UILoader.GetUIState<ItemBrowser>().initialized = true;
+
 				UILoader.GetUIState<ProjectileBrowser>().Refresh();
+				UILoader.GetUIState<ProjectileBrowser>().initialized = true;
+
 				UILoader.GetUIState<NPCBrowser>().Refresh();
+				UILoader.GetUIState<NPCBrowser>().initialized = true;
+
 				UILoader.GetUIState<BuffBrowser>().Refresh();
+				UILoader.GetUIState<BuffBrowser>().initialized = true;
+
 				UILoader.GetUIState<ToolBrowser>().Refresh();
+				UILoader.GetUIState<ToolBrowser>().initialized = true;
 			}
 		}
 	}
