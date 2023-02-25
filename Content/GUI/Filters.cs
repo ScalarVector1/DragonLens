@@ -109,6 +109,7 @@ namespace DragonLens.Content.GUI
 
 			if (IsMouseHovering)
 			{
+				Main.LocalPlayer.mouseInterface = true;
 				Tooltip.SetName(filter.name);
 				Tooltip.SetTooltip(filter.description);
 			}

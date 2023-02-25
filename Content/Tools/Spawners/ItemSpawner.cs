@@ -66,13 +66,12 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 
 			filters.AddSeperator("Damage filters");
-			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Any damage", "Any item that deals damage", n => !(n is ItemButton && (n as ItemButton).item.damage > 0)));
-			filters.AddFilter(new DamageClassFilter(DamageClass.Default, "DragonLens/Assets/GUI/NoBox"));
-			filters.AddFilter(new DamageClassFilter(DamageClass.Melee, "DragonLens/Assets/GUI/NoBox"));
-			filters.AddFilter(new DamageClassFilter(DamageClass.Ranged, "DragonLens/Assets/GUI/NoBox"));
-			filters.AddFilter(new DamageClassFilter(DamageClass.Magic, "DragonLens/Assets/GUI/NoBox"));
-			filters.AddFilter(new DamageClassFilter(DamageClass.Summon, "DragonLens/Assets/GUI/NoBox"));
-			filters.AddFilter(new DamageClassFilter(DamageClass.Throwing, "DragonLens/Assets/GUI/NoBox"));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Unknown", "Any damage", "Any item that deals damage", n => !(n is ItemButton && (n as ItemButton).item.damage > 0)));
+			filters.AddFilter(new DamageClassFilter(DamageClass.Melee, "DragonLens/Assets/Filters/Melee"));
+			filters.AddFilter(new DamageClassFilter(DamageClass.Ranged, "DragonLens/Assets/Filters/Ranged"));
+			filters.AddFilter(new DamageClassFilter(DamageClass.Magic, "DragonLens/Assets/Filters/Magic"));
+			filters.AddFilter(new DamageClassFilter(DamageClass.Summon, "DragonLens/Assets/Filters/Summon"));
+			filters.AddFilter(new DamageClassFilter(DamageClass.Throwing, "DragonLens/Assets/Filters/Throwing"));
 
 			filters.AddSeperator("Misc filters");
 			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Accessory", "Any item that can be equipped as an accessory", n => !(n is ItemButton && (n as ItemButton).item.accessory)));
