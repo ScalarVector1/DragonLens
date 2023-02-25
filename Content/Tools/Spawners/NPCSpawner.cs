@@ -74,8 +74,8 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 
 			filters.AddSeperator("Type filters");
-			filters.AddFilter(new Filter("DragonLens/Assets/GUI/Boss", "Boss", "NPCs which are bosses", n => !(n is NPCButton && (n as NPCButton).npc.boss)));
-			filters.AddFilter(new Filter("DragonLens/Assets/GUI/Critter", "Critter", "NPCs which count as critters", n => !(n is NPCButton && (n as NPCButton).npc.CountsAsACritter)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Boss", "Boss", "NPCs which are bosses", n => !(n is NPCButton && (n as NPCButton).npc.boss)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Critter", "Critter", "NPCs which count as critters", n => !(n is NPCButton && (n as NPCButton).npc.CountsAsACritter)));
 
 			filters.AddSeperator("Hostility filters");
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Friendly", "Friendly", "NPCs which are friendly", n => !(n is NPCButton && (n as NPCButton).npc.friendly)));
