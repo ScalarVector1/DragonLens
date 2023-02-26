@@ -3,6 +3,7 @@ using DragonLens.Content.Filters.TileFilters;
 using DragonLens.Content.GUI;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolSystem;
+using DragonLens.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
+using Terraria.ObjectData;
 using Terraria.UI;
 
 namespace DragonLens.Content.Tools.Spawners
@@ -61,7 +63,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void SetupFilters(FilterPanel filters)
 		{
 			filters.AddSeperator("Mod filters");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Vanilla", "Projectiles from the base game", n => !(n is TileButton && (n as TileButton).tileType <= TileID.Count)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Vanilla", "Tiles from the base game", n => !(n is TileButton && (n as TileButton).tileType <= TileID.Count)));
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModTile>().Count() > 0))
 			{
@@ -73,18 +75,26 @@ namespace DragonLens.Content.Tools.Spawners
 		{
 			base.SafeUpdate(gameTime);
 
+			if (Main.mouseLeft && selected != -1)
+			{
+				if (Main.tileFrameImportant[selected])
+				{
+					TileObject.CanPlace((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16, selected, 0, 0, out TileObject to);
+					TileObject.Place(to);
+				}
+				else
+				{
+					Tile tilePtr = Framing.GetTileSafely((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
+					tilePtr.HasTile = true;
+					tilePtr.TileType = (ushort)selected;
+					tilePtr.Slope = 0;
+
+					WorldGen.SquareTileFrame((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
+				}
+			}
+
 			if (selected != -1)
 				Main.LocalPlayer.mouseInterface = true;
-		}
-
-		public override void Click(UIMouseEvent evt)
-		{
-			base.Click(evt);
-
-			if (selected != -1)
-			{
-				WorldGen.PlaceTile((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16, selected);
-			}
 		}
 
 		public override void RightClick(UIMouseEvent evt)
@@ -100,7 +110,23 @@ namespace DragonLens.Content.Tools.Spawners
 				Main.instance.LoadTiles(selected);
 				Texture2D tex = Terraria.GameContent.TextureAssets.Tile[selected].Value;
 
-				spriteBatch.Draw(tex, Main.MouseScreen + Vector2.One * 8 + tex.Size(), new Rectangle(0, 0, 16, 16), Color.White * 0.5f, 0, Vector2.One * 8, 1, 0, 0);
+				spriteBatch.Draw(tex, Main.MouseScreen + Vector2.One * 32, new Rectangle(0, 0, 16, 16), Color.White, 0, Vector2.One * 8, 1, 0, 0);
+
+				Vector2 pos = new((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
+				int width = 16;
+				int height = 16;
+
+				var tod = TileObjectData.GetTileData(selected, 0, 0);
+
+				if (tod != null)
+				{
+					pos -= new Vector2(tod.Origin.X, tod.Origin.Y);
+					width = tod.Width * 16;
+					height = tod.Height * 16;
+				}
+
+				var point = (pos * 16 - Main.screenPosition).ToPoint16();
+				GUIHelper.DrawOutline(spriteBatch, new Rectangle(point.X, point.Y, width, height), Color.White);
 			}
 
 			base.Draw(spriteBatch);
@@ -142,7 +168,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void Click(UIMouseEvent evt)
 		{
 			TileBrowser.selected = tileType;
-			Main.NewText($"{tileType} selected, click anywhere in the world to place. Right click to deselect.");
+			Main.NewText($"{Identifier} selected, click anywhere in the world to place. Right click to deselect.");
 		}
 
 		public override void RightClick(UIMouseEvent evt)

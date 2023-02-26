@@ -39,8 +39,15 @@ namespace DragonLens.Content.Filters.NPCFilters
 		{
 			if (bestiaryFilter is ByInfoElement)
 			{
-				var provider = (FilterProviderInfoElement)elementInfo.GetValue(bestiaryFilter);
+				var provider = elementInfo.GetValue(bestiaryFilter) as FilterProviderInfoElement;
+
+				if (provider is null)
+					return;
+
 				var frame = (Point)frameInfo.GetValue(provider);
+
+				if (frame == default)
+					return;
 
 				ReLogic.Content.Asset<Texture2D> tex = Main.Assets.Request<Texture2D>("Images/UI/Bestiary/Icon_Tags_Shadow");
 				Rectangle source = tex.Frame(16, 5, frame.X, frame.Y);
