@@ -43,6 +43,8 @@ namespace DragonLens.Content.Tools.Spawners
 	{
 		public static int selected = -1;
 
+		public static int variant = 0;
+
 		public override string Name => "Tile spawner";
 
 		public override string IconTexture => "DragonLens/Assets/Tools/TileSpawner";
@@ -79,7 +81,7 @@ namespace DragonLens.Content.Tools.Spawners
 			{
 				if (Main.tileFrameImportant[selected])
 				{
-					TileObject.CanPlace((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16, selected, 0, 0, out TileObject to);
+					TileObject.CanPlace((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16, selected, variant, 0, out TileObject to);
 					TileObject.Place(to);
 				}
 				else
@@ -97,10 +99,47 @@ namespace DragonLens.Content.Tools.Spawners
 				Main.LocalPlayer.mouseInterface = true;
 		}
 
+		public override void ScrollWheel(UIScrollWheelEvent evt)
+		{
+			if (selected == -1)
+				return;
+
+			int maxVariants = 1;
+
+			var tod = TileObjectData.GetTileData(selected, 0, 0);
+			Texture2D tex = Terraria.GameContent.TextureAssets.Tile[selected].Value;
+
+			if (tod != null)
+			{
+				if (tod.StyleHorizontal)
+					maxVariants = tex.Width / tod.CoordinateFullWidth - 1;
+				else
+					maxVariants = tex.Height / tod.CoordinateFullHeight - 1;
+			}
+
+			if (evt.ScrollWheelValue < 1)
+			{
+				if (variant < maxVariants)
+					variant++;
+				else
+					variant = 0;
+			}
+			else
+			{
+				if (variant > 0)
+					variant--;
+				else
+					variant = maxVariants;
+			}
+		}
+
 		public override void RightClick(UIMouseEvent evt)
 		{
 			if (selected != -1)
+			{
 				selected = -1;
+				variant = 0;
+			}
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
@@ -109,8 +148,6 @@ namespace DragonLens.Content.Tools.Spawners
 			{
 				Main.instance.LoadTiles(selected);
 				Texture2D tex = Terraria.GameContent.TextureAssets.Tile[selected].Value;
-
-				spriteBatch.Draw(tex, Main.MouseScreen + Vector2.One * 32, new Rectangle(0, 0, 16, 16), Color.White, 0, Vector2.One * 8, 1, 0, 0);
 
 				Vector2 pos = new((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
 				int width = 16;
@@ -124,6 +161,18 @@ namespace DragonLens.Content.Tools.Spawners
 					width = tod.Width * 16;
 					height = tod.Height * 16;
 				}
+
+				var sourcePos = new Vector2(0, 0);
+
+				if (tod != null && Main.tileFrameImportant[selected])
+				{
+					if (tod.StyleHorizontal)
+						sourcePos.X = tod.CoordinateFullWidth * variant;
+					else
+						sourcePos.Y = tod.CoordinateFullHeight * variant;
+				}
+
+				spriteBatch.Draw(tex, Main.MouseScreen + Vector2.One * 32, new Rectangle((int)sourcePos.X, (int)sourcePos.Y, 16, 16), Color.White, 0, Vector2.One * 8, 1, 0, 0);
 
 				var point = (pos * 16 - Main.screenPosition).ToPoint16();
 				GUIHelper.DrawOutline(spriteBatch, new Rectangle(point.X, point.Y, width, height), Color.White);
@@ -156,7 +205,19 @@ namespace DragonLens.Content.Tools.Spawners
 			Main.instance.LoadTiles(tileType);
 			Texture2D tex = Terraria.GameContent.TextureAssets.Tile[tileType].Value;
 
-			spriteBatch.Draw(tex, iconBox.Center(), new Rectangle(0, 0, 16, 16), Color.White, 0, Vector2.One * 8, 1, 0, 0);
+			var sourcePos = new Vector2(0, 0);
+
+			var tod = TileObjectData.GetTileData(tileType, 0, 0);
+
+			if (TileBrowser.selected == tileType && tod != null && Main.tileFrameImportant[tileType])
+			{
+				if (tod.StyleHorizontal)
+					sourcePos.X = tod.CoordinateFullWidth * TileBrowser.variant;
+				else
+					sourcePos.Y = tod.CoordinateFullHeight * TileBrowser.variant;
+			}
+
+			spriteBatch.Draw(tex, iconBox.Center(), new Rectangle((int)sourcePos.X, (int)sourcePos.Y, 16, 16), Color.White, 0, Vector2.One * 8, 1, 0, 0);
 
 			if (IsMouseHovering)
 			{
@@ -168,6 +229,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void Click(UIMouseEvent evt)
 		{
 			TileBrowser.selected = tileType;
+			TileBrowser.variant = 0;
 			Main.NewText($"{Identifier} selected, click anywhere in the world to place. Right click to deselect.");
 		}
 
