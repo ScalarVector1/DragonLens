@@ -8,7 +8,7 @@ namespace DragonLens
 {
 	public class DragonLens : Mod
 	{
-		public override void PostSetupContent()
+		public override void PostAddRecipes()
 		{
 			if (ModContent.GetInstance<ToolConfig>().preloadSpawners)
 			{
@@ -23,6 +23,9 @@ namespace DragonLens
 
 				UILoader.GetUIState<BuffBrowser>().Refresh();
 				UILoader.GetUIState<BuffBrowser>().initialized = true;
+
+				UILoader.GetUIState<TileBrowser>().Refresh();
+				UILoader.GetUIState<TileBrowser>().initialized = true;
 
 				UILoader.GetUIState<ToolBrowser>().Refresh();
 				UILoader.GetUIState<ToolBrowser>().initialized = true;

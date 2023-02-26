@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Reflection;
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.Localization;
 using static Terraria.GameContent.Bestiary.Filters;
 
 namespace DragonLens.Content.Filters.NPCFilters
@@ -16,7 +17,7 @@ namespace DragonLens.Content.Filters.NPCFilters
 
 		public IBestiaryEntryFilter bestiaryFilter;
 
-		public BestiaryFilter(IBestiaryEntryFilter bestiaryFilter) : base("", bestiaryFilter.GetDisplayNameKey(), $"NPCs with the bestiary atgtribute {bestiaryFilter.GetDisplayNameKey()}", n => FilterByBestiary(n, bestiaryFilter))
+		public BestiaryFilter(IBestiaryEntryFilter bestiaryFilter) : base("", Language.GetTextValue(bestiaryFilter.GetDisplayNameKey()), $"NPCs with the bestiary attribute {Language.GetTextValue(bestiaryFilter.GetDisplayNameKey())}", n => FilterByBestiary(n, bestiaryFilter))
 		{
 			this.bestiaryFilter = bestiaryFilter;
 		}
