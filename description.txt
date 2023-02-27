@@ -1,1 +1,3 @@
-Dragon Lens is a pretty cool mod, it does...this. Modify this file with a description of your mod.
+DragonLens is a modern, powerful, highly-customizable, community-driven cheat and debugging mod for TModLoader. It offers all of your favorite features from previous similar mods such as HEROs mod, CheatSheet, and Modders Toolkit; with a fully customizable UI layout and consistent, beautiful UI design.
+
+You can find additional documentation and track development at https://github.com/ScalarVector1/DragonLens

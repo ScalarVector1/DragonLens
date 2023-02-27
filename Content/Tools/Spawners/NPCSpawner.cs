@@ -151,7 +151,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public UnlockableNPCEntryIcon icon;
 
-		public override string Identifier => npc.FullName;
+		public override string Identifier => npc.TypeName;
 
 		public NPCButton(NPC npc, Browser browser) : base(browser)
 		{
