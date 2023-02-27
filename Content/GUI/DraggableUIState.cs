@@ -7,10 +7,16 @@ using Terraria.ModLoader;
 
 namespace DragonLens.Content.GUI
 {
+	/// <summary>
+	/// Defines a UIState for a simple window that can be dragged around the screen.
+	/// </summary>
 	public abstract class DraggableUIState : SmartUIState
 	{
 		private UIImageButton closeButton;
 
+		/// <summary>
+		/// The top-left of the main window
+		/// </summary>
 		public Vector2 basePos;
 
 		public bool dragging;
@@ -20,14 +26,27 @@ namespace DragonLens.Content.GUI
 		public int width;
 		public int height;
 
+		/// <summary>
+		/// The area where the user can click and drag to move the main window
+		/// </summary>
 		public abstract Rectangle DragBox { get; }
 
+		/// <summary>
+		/// The dimensions of the main window
+		/// </summary>
 		public Rectangle BoundingBox => new((int)basePos.X, (int)basePos.Y, width, height);
 
 		public override bool Visible => visible;
 
+		/// <summary>
+		/// Where the main window will be placed initially
+		/// </summary>
 		public virtual Vector2 DefaultPosition => Vector2.Zero;
 
+		/// <summary>
+		/// You should adjust the position of all child elements of your UIState here so they move when the window is being dragged.
+		/// </summary>
+		/// <param name="newPos">The new position of the base window</param>
 		public virtual void AdjustPositions(Vector2 newPos) { }
 
 		public virtual void SafeOnInitialize() { }

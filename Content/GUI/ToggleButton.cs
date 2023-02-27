@@ -9,12 +9,30 @@ using Terraria.UI;
 
 namespace DragonLens.Content.GUI
 {
+	/// <summary>
+	/// A simple button used for on/off states
+	/// </summary>
 	internal class ToggleButton : UIElement
 	{
+		/// <summary>
+		/// The texture of the icon to draw on the button
+		/// </summary>
 		public string iconTexture;
+		/// <summary>
+		/// How the button should determine if it is 'on' or not. While on, it will draw a colored outline around itself.
+		/// </summary>
 		public Func<bool> isOn;
+		/// <summary>
+		/// What this button should say when hovered over
+		/// </summary>
 		public string tooltip;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="iconTexture">The texture of the icon to draw on the button</param>
+		/// <param name="isOn">How the button should determine if it is 'on' or not. While on, it will draw a colored outline around itself.</param>
+		/// <param name="tooltip">What this button should say when hovered over</param>
 		public ToggleButton(string iconTexture, Func<bool> isOn, string tooltip = "")
 		{
 			this.iconTexture = iconTexture;

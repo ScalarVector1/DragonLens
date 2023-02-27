@@ -24,7 +24,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override string DisplayName => "Tile spawner";
 
-		public override string Description => "Place tiles without items! Spawns tile entities aswell";
+		public override string Description => "Place tiles without items!";
 
 		public override void OnActivate()
 		{

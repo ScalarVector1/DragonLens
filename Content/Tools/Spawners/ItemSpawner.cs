@@ -20,7 +20,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override string DisplayName => "Item spawner";
 
-		public override string Description => "Spawn items, with options to customize their stats";
+		public override string Description => "Spawn any item in the game!";
 
 		public override void OnActivate()
 		{

@@ -13,6 +13,9 @@ using FixedUIScrollbar = Terraria.GameContent.UI.Elements.FixedUIScrollbar;
 
 namespace DragonLens.Content.GUI
 {
+	/// <summary>
+	/// A draggable UI state used for the various spawners of the mod. Allows the user to browse and select entries easily.
+	/// </summary>
 	internal abstract class Browser : DraggableUIState
 	{
 		private UIGrid options;
@@ -40,19 +43,25 @@ namespace DragonLens.Content.GUI
 			return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
 		}
 
+		/// <summary>
+		/// How the grid should be filled out with BrowserButton elements. Add all BrowserButton instances to the grid here.
+		/// </summary>
+		/// <param name="grid">The grid to populate</param>
 		public abstract void PopulateGrid(UIGrid grid);
 
-		public void AddButton(BrowserButton button)
-		{
-			//Might need to add positioning code here?
-			options.Append(button);
-		}
-
+		/// <summary>
+		/// Forces an update on the order of the elements in the browser.
+		/// </summary>
 		public void SortGrid()
 		{
 			options.UpdateOrder();
 		}
 
+		/// <summary>
+		/// Determines if a button should be filtered out based on the current active filters.
+		/// </summary>
+		/// <param name="button">The button to check</param>
+		/// <returns>true if the button should be hidden, false otherwise</returns>
 		public bool ShouldBeFiltered(BrowserButton button)
 		{
 			bool result = false;
@@ -68,8 +77,15 @@ namespace DragonLens.Content.GUI
 			return result;
 		}
 
+		/// <summary>
+		/// Add filters to the browser here, by calling AddFilter and AddSeperator on the FilterPanel parameter.
+		/// </summary>
+		/// <param name="filters">The FilterPanel instance to add your filters to.</param>
 		public virtual void SetupFilters(FilterPanel filters) { }
 
+		/// <summary>
+		/// Any initialization you need to do should be done here so it is appropriately refrehed.
+		/// </summary>
 		public virtual void PostInitialize() { }
 
 		public sealed override void SafeOnInitialize()
@@ -139,6 +155,9 @@ namespace DragonLens.Content.GUI
 			filters.Top.Set(newPos.Y, 0);
 		}
 
+		/// <summary>
+		/// Reload the entire browser. Note this may cause a bit of lag due to re-populating the entire grid.
+		/// </summary>
 		public void Refresh()
 		{
 			RemoveAllChildren();

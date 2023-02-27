@@ -10,6 +10,9 @@ using Terraria.UI.Chat;
 
 namespace DragonLens.Content.GUI
 {
+	/// <summary>
+	/// Draws the popup tooltip when various elements of the UI are hovered over.
+	/// </summary>
 	public class Tooltip : SmartUIState, ILoadable
 	{
 		private static string text = string.Empty;
@@ -27,11 +30,19 @@ namespace DragonLens.Content.GUI
 			return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text")) + 1;
 		}
 
+		/// <summary>
+		/// Sets the brightly colored main line of the tooltip. This should be a short descriptor of what you're hovering over, like its name
+		/// </summary>
+		/// <param name="name"></param>
 		public static void SetName(string name)
 		{
 			text = name;
 		}
 
+		/// <summary>
+		/// Sets the more dimly colored 'description' of the tooltip. This should be the 'body' of the tooltip.
+		/// </summary>
+		/// <param name="newTooltip"></param>
 		public static void SetTooltip(string newTooltip)
 		{
 			ReLogic.Graphics.DynamicSpriteFont font = Terraria.GameContent.FontAssets.MouseText.Value;
