@@ -88,23 +88,23 @@ namespace DragonLens.Content.Tools.Spawners
 
 			float nextY = 0;
 
-			perfectEditor.Left.Set(newPos.X - 170, 0);
+			perfectEditor.Left.Set(newPos.X - 160, 0);
 			perfectEditor.Top.Set(newPos.Y, 0);
 			nextY += perfectEditor.Height.Pixels + 4;
 
-			scaleEditor.Left.Set(newPos.X - 170, 0);
+			scaleEditor.Left.Set(newPos.X - 160, 0);
 			scaleEditor.Top.Set(newPos.Y + nextY, 0);
 			nextY += scaleEditor.Height.Pixels + 4;
 
-			alphaEditor.Left.Set(newPos.X - 170, 0);
+			alphaEditor.Left.Set(newPos.X - 160, 0);
 			alphaEditor.Top.Set(newPos.Y + nextY, 0);
 			nextY += alphaEditor.Height.Pixels + 4;
 
-			velocityEditor.Left.Set(newPos.X - 170, 0);
+			velocityEditor.Left.Set(newPos.X - 160, 0);
 			velocityEditor.Top.Set(newPos.Y + nextY, 0);
 			nextY += velocityEditor.Height.Pixels + 4;
 
-			colorEditor.Left.Set(newPos.X - 170, 0);
+			colorEditor.Left.Set(newPos.X - 160, 0);
 			colorEditor.Top.Set(newPos.Y + nextY, 0);
 		}
 

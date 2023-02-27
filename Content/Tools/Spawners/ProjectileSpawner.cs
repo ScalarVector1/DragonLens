@@ -1,6 +1,7 @@
 ﻿using DragonLens.Content.Filters;
 using DragonLens.Content.Filters.ProjectileFilters;
 using DragonLens.Content.GUI;
+using DragonLens.Content.GUI.FieldEditors;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
@@ -40,13 +41,50 @@ namespace DragonLens.Content.Tools.Spawners
 	{
 		public static Projectile selected;
 
-		public Vector2 velocity;
+		public static Vector2 velocity;
+		public static Vector2Editor velocityEditor;
+
+		public static float ai0;
+		public static FloatEditor ai0Editor;
+
+		public static float ai1;
+		public static FloatEditor ai1Editor;
 
 		public override string Name => "Projectile spawner";
 
 		public override string IconTexture => "DragonLens/Assets/Tools/ProjectileSpawner";
 
 		public override Vector2 DefaultPosition => new(0.5f, 0.4f);
+
+		public override void PostInitialize()
+		{
+			velocityEditor = new("Velocity", n => velocity = (Vector2)n, Vector2.Zero);
+			Append(velocityEditor);
+
+			ai0Editor = new("ai 0", n => ai0 = (float)n, 0);
+			Append(ai0Editor);
+
+			ai1Editor = new("ai 1", n => ai1 = (float)n, 0);
+			Append(ai1Editor);
+		}
+
+		public override void AdjustPositions(Vector2 newPos)
+		{
+			base.AdjustPositions(newPos);
+
+			float nextY = 0;
+
+			velocityEditor.Left.Set(newPos.X - 160, 0);
+			velocityEditor.Top.Set(newPos.Y + nextY, 0);
+			nextY += velocityEditor.Height.Pixels + 4;
+
+			ai0Editor.Left.Set(newPos.X - 160, 0);
+			ai0Editor.Top.Set(newPos.Y + nextY, 0);
+			nextY += ai0Editor.Height.Pixels + 4;
+
+			ai1Editor.Left.Set(newPos.X - 160, 0);
+			ai1Editor.Top.Set(newPos.Y + nextY, 0);
+		}
 
 		public override void PopulateGrid(UIGrid grid)
 		{
@@ -90,7 +128,7 @@ namespace DragonLens.Content.Tools.Spawners
 			base.Click(evt);
 
 			if (selected != null)
-				Projectile.NewProjectile(null, Main.MouseWorld, velocity, selected.type, selected.damage, selected.knockBack, Main.myPlayer);
+				Projectile.NewProjectile(null, Main.MouseWorld, velocity, selected.type, selected.damage, selected.knockBack, Main.myPlayer, ai0, ai1);
 		}
 
 		public override void RightClick(UIMouseEvent evt)
