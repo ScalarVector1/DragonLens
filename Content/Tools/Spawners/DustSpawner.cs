@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -40,8 +41,6 @@ namespace DragonLens.Content.Tools.Spawners
 	internal class DustBrowser : Browser
 	{
 		public static Dust selected;
-
-		public Vector2 velocity;
 
 		public override string Name => "Dust spawner";
 
@@ -115,7 +114,9 @@ namespace DragonLens.Content.Tools.Spawners
 	{
 		public Dust dust;
 
-		public override string Identifier => dust.type <= DustID.Count ? $"Dust {dust.type}" : DustLoader.GetDust(dust.type).Name;
+		public string name;
+
+		public override string Identifier => name;
 
 		public DustButton(Dust dust, Browser browser) : base(browser)
 		{
@@ -123,6 +124,8 @@ namespace DragonLens.Content.Tools.Spawners
 
 			if (dust.type > DustID.Count)
 			{
+				name = DustLoader.GetDust(dust.type).Name;
+
 				ModDust md = DustLoader.GetDust(dust.type);
 				try
 				{
@@ -136,6 +139,12 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 			else
 			{
+				//We use reflection here to steal the name from DustID of this vanilla dust
+				System.Reflection.FieldInfo[] fields = typeof(DustID).GetFields();
+				name = fields.FirstOrDefault(n => (short)n.GetValue(null) == dust.type).Name;
+
+				name = Regex.Replace(name, "([a-z])([A-Z])", "$1 $2");
+
 				dust.frame.X = 10 * dust.type;
 				dust.frame.Y = 10;
 				dust.shader = null;

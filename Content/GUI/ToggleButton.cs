@@ -13,13 +13,15 @@ namespace DragonLens.Content.GUI
 	{
 		public string iconTexture;
 		public Func<bool> isOn;
+		public string tooltip;
 
-		public ToggleButton(string iconTexture, Func<bool> isOn)
+		public ToggleButton(string iconTexture, Func<bool> isOn, string tooltip = "")
 		{
 			this.iconTexture = iconTexture;
 			this.isOn = isOn;
 			Width.Set(32, 0);
 			Height.Set(32, 0);
+			this.tooltip = tooltip;
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
@@ -31,6 +33,12 @@ namespace DragonLens.Content.GUI
 
 			if (isOn())
 				GUIHelper.DrawOutline(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+
+			if (IsMouseHovering && tooltip != "")
+			{
+				Tooltip.SetName(tooltip);
+				Tooltip.SetTooltip(isOn() ? "On" : "Off");
+			}
 		}
 	}
 }

@@ -19,11 +19,13 @@ namespace DragonLens.Content.GUI
 		private FixedUIScrollbar scrollBar;
 		private FilterPanel filters;
 		private ToggleButton listButton;
+		private ToggleButton filterButton;
 
 		internal SearchBar searchBar;
 
 		public bool initialized;
 		public bool listMode;
+		public bool filtersVisible;
 
 		public abstract string Name { get; }
 
@@ -92,12 +94,23 @@ namespace DragonLens.Content.GUI
 			searchBar.Height.Set(32, 0);
 			Append(searchBar);
 
-			listButton = new("DragonLens/Assets/GUI/Play", () => listMode);
+			listButton = new("DragonLens/Assets/GUI/Play", () => listMode, "List view");
 			listButton.OnClick += (n, k) => listMode = !listMode;
 			Append(listButton);
 
+			filterButton = new("DragonLens/Assets/GUI/Filter", () => filtersVisible, "Filters");
+			filterButton.OnClick += (n, k) =>
+			{
+				filtersVisible = !filtersVisible;
+				if (filtersVisible)
+					filters.Width.Set(220, 0);
+				else
+					filters.Width.Set(0, 0);
+			};
+			Append(filterButton);
+
 			filters = new(this);
-			filters.Width.Set(220, 0);
+			filters.Width.Set(0, 0);
 			filters.Height.Set(420, 0);
 			Append(filters);
 
@@ -118,6 +131,9 @@ namespace DragonLens.Content.GUI
 
 			listButton.Left.Set(newPos.X + 220, 0);
 			listButton.Top.Set(newPos.Y + 66, 0);
+
+			filterButton.Left.Set(newPos.X + 262, 0);
+			filterButton.Top.Set(newPos.Y + 66, 0);
 
 			filters.Left.Set(newPos.X + width + 10, 0);
 			filters.Top.Set(newPos.Y, 0);

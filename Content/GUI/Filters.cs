@@ -46,6 +46,10 @@ namespace DragonLens.Content.GUI
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var drawBox = GetDimensions().ToRectangle();
+
+			if (drawBox.Width == 0)
+				return;
+
 			drawBox.Height = (int)MathHelper.Min(420, filters.GetTotalHeight() + 20);
 
 			bar.Height.Set(drawBox.Height - 20, 0);
