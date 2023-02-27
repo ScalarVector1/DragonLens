@@ -1,6 +1,7 @@
 ﻿using DragonLens.Content.Filters;
 using DragonLens.Content.Filters.DustFilters;
 using DragonLens.Content.GUI;
+using DragonLens.Content.GUI.FieldEditors;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
@@ -42,11 +43,70 @@ namespace DragonLens.Content.Tools.Spawners
 	{
 		public static Dust selected;
 
+		public static bool perfect;
+		public static BoolEditor perfectEditor;
+
+		public static float scale = 1f;
+		public static FloatEditor scaleEditor;
+
+		public static float alpha;
+		public static FloatEditor alphaEditor;
+
+		public static Vector2 velocity;
+		public static Vector2Editor velocityEditor;
+
+		public static Color color = Color.White;
+		public static ColorEditor colorEditor;
+
 		public override string Name => "Dust spawner";
 
 		public override string IconTexture => "DragonLens/Assets/Tools/DustSpawner";
 
 		public override Vector2 DefaultPosition => new(0.5f, 0.4f);
+
+		public override void PostInitialize()
+		{
+			perfectEditor = new("Use NewDustPerfect", n => perfect = (bool)n, false);
+			Append(perfectEditor);
+
+			scaleEditor = new("Scale", n => scale = (float)n, 1);
+			Append(scaleEditor);
+
+			alphaEditor = new("Alpha", n => alpha = (float)n, 0);
+			Append(alphaEditor);
+
+			velocityEditor = new("Velocity", n => velocity = (Vector2)n, Vector2.Zero);
+			Append(velocityEditor);
+
+			colorEditor = new("Color", n => color = (Color)n, Color.White);
+			Append(colorEditor);
+		}
+
+		public override void AdjustPositions(Vector2 newPos)
+		{
+			base.AdjustPositions(newPos);
+
+			float nextY = 0;
+
+			perfectEditor.Left.Set(newPos.X - 170, 0);
+			perfectEditor.Top.Set(newPos.Y, 0);
+			nextY += perfectEditor.Height.Pixels + 4;
+
+			scaleEditor.Left.Set(newPos.X - 170, 0);
+			scaleEditor.Top.Set(newPos.Y + nextY, 0);
+			nextY += scaleEditor.Height.Pixels + 4;
+
+			alphaEditor.Left.Set(newPos.X - 170, 0);
+			alphaEditor.Top.Set(newPos.Y + nextY, 0);
+			nextY += alphaEditor.Height.Pixels + 4;
+
+			velocityEditor.Left.Set(newPos.X - 170, 0);
+			velocityEditor.Top.Set(newPos.Y + nextY, 0);
+			nextY += velocityEditor.Height.Pixels + 4;
+
+			colorEditor.Left.Set(newPos.X - 170, 0);
+			colorEditor.Top.Set(newPos.Y + nextY, 0);
+		}
 
 		public override void PopulateGrid(UIGrid grid)
 		{
@@ -88,7 +148,10 @@ namespace DragonLens.Content.Tools.Spawners
 
 				if (Main.mouseLeft)
 				{
-					Dust.NewDust(Main.MouseWorld, 16, 16, selected.type);
+					if (perfect)
+						Dust.NewDustPerfect(Main.MouseWorld, selected.type, velocity, 0, color);
+					else
+						Dust.NewDust(Main.MouseWorld, 16, 16, selected.type, velocity.X, velocity.Y, 0, color);
 				}
 			}
 		}

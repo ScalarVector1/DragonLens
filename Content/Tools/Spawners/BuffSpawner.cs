@@ -1,6 +1,7 @@
 ﻿using DragonLens.Content.Filters;
 using DragonLens.Content.Filters.BuffFilters;
 using DragonLens.Content.GUI;
+using DragonLens.Content.GUI.FieldEditors;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
@@ -41,13 +42,29 @@ namespace DragonLens.Content.Tools.Spawners
 	{
 		public static int selected = -1;
 
-		public int duration = 180;
+		public static int duration = 180;
+
+		IntEditor durationEditor;
 
 		public override string Name => "Buff spawner";
 
 		public override string IconTexture => "DragonLens/Assets/Tools/BuffSpawner";
 
 		public override Vector2 DefaultPosition => new(0.1f, 0.4f);
+
+		public override void PostInitialize()
+		{
+			durationEditor = new IntEditor("Duration (ticks)", n => duration = (int)n, 180);
+			Append(durationEditor);
+		}
+
+		public override void AdjustPositions(Vector2 newPos)
+		{
+			base.AdjustPositions(newPos);
+
+			durationEditor.Left.Set(newPos.X - 160, 0);
+			durationEditor.Top.Set(newPos.Y, 0);
+		}
 
 		public override void PopulateGrid(UIGrid grid)
 		{
@@ -183,7 +200,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void RightClick(UIMouseEvent evt)
 		{
-			Main.LocalPlayer.AddBuff(type, 180);
+			Main.LocalPlayer.AddBuff(type, BuffBrowser.duration);
 			Main.NewText($"Applied {Lang.GetBuffName(type)} to {Main.LocalPlayer.name}");
 		}
 
