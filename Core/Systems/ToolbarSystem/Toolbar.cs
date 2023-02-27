@@ -7,12 +7,18 @@ using Terraria.ModLoader.IO;
 
 namespace DragonLens.Core.Systems.ToolbarSystem
 {
+	/// <summary>
+	/// The direction in which a toolbar expands with new tools
+	/// </summary>
 	public enum Orientation
 	{
 		Horizontal,
 		Vertical
 	}
 
+	/// <summary>
+	/// When a toolbar should automatically remove itself from the UI
+	/// </summary>
 	public enum AutomaticHideOption
 	{
 		Never,
@@ -21,6 +27,9 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 		NoMapScreen
 	}
 
+	/// <summary>
+	/// The direction in which a toolbar should collapse itself
+	/// </summary>
 	public enum CollapseDirection
 	{
 		Left,
@@ -40,10 +49,24 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 		/// </summary>
 		public bool collapsed;
 
+		/// <summary>
+		/// Where a toolbar should position itself on the UI
+		/// </summary>
 		public Vector2 relativePosition;
+
+		/// <summary>
+		/// The direction in which a toolbar expands with new tools
+		/// </summary>
 		public Orientation orientation;
+
+		/// <summary>
+		/// When a toolbar should automatically remove itself from the UI
+		/// </summary>
 		public AutomaticHideOption automaticHideOption;
 
+		/// <summary>
+		/// The tools that a toolbar contains buttons to use
+		/// </summary>
 		public List<Tool> toolList = new();
 
 		/// <summary>
@@ -58,6 +81,9 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 			_ => false,
 		};
 
+		/// <summary>
+		/// The direction in which a toolbar should collapse itself
+		/// </summary>
 		public CollapseDirection CollapseDirection
 		{
 			get

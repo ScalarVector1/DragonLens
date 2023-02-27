@@ -15,8 +15,14 @@ using Terraria.ModLoader.IO;
 
 namespace DragonLens.Core.Systems.ToolbarSystem
 {
+	/// <summary>
+	/// Manages all active toolbars and toolbar layouts.
+	/// </summary>
 	internal class ToolbarHandler : ModSystem
 	{
+		/// <summary>
+		/// The collection of toolbars currently in use by the current layout
+		/// </summary>
 		public static readonly List<Toolbar> activeToolbars = new();
 
 		public override void OnModLoad()
