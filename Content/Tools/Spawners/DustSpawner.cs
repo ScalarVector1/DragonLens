@@ -49,8 +49,8 @@ namespace DragonLens.Content.Tools.Spawners
 		public static float scale = 1f;
 		public static FloatEditor scaleEditor;
 
-		public static float alpha;
-		public static FloatEditor alphaEditor;
+		public static int alpha;
+		public static IntEditor alphaEditor;
 
 		public static Vector2 velocity;
 		public static Vector2Editor velocityEditor;
@@ -72,7 +72,7 @@ namespace DragonLens.Content.Tools.Spawners
 			scaleEditor = new("Scale", n => scale = (float)n, 1);
 			Append(scaleEditor);
 
-			alphaEditor = new("Alpha", n => alpha = (float)n, 0);
+			alphaEditor = new("Alpha", n => alpha = (int)n, 0);
 			Append(alphaEditor);
 
 			velocityEditor = new("Velocity", n => velocity = (Vector2)n, Vector2.Zero);
@@ -149,9 +149,9 @@ namespace DragonLens.Content.Tools.Spawners
 				if (Main.mouseLeft)
 				{
 					if (perfect)
-						Dust.NewDustPerfect(Main.MouseWorld, selected.type, velocity, 0, color);
+						Dust.NewDustPerfect(Main.MouseWorld, selected.type, velocity, alpha, color, scale);
 					else
-						Dust.NewDust(Main.MouseWorld, 16, 16, selected.type, velocity.X, velocity.Y, 0, color);
+						Dust.NewDust(Main.MouseWorld, 16, 16, selected.type, velocity.X, velocity.Y, alpha, color, scale);
 				}
 			}
 		}
