@@ -8,6 +8,12 @@ namespace DragonLens.Helpers
 {
 	internal static class GUIHelper
 	{
+		/// <summary>
+		/// Draws a simple box in the style of the DragonLens GUI.
+		/// </summary>
+		/// <param name="sb">the spriteBatch to draw the box with</param>
+		/// <param name="target">where/how big the box should be drawn</param>
+		/// <param name="color"><the color of the box/param>
 		public static void DrawBox(SpriteBatch sb, Rectangle target, Color color = default)
 		{
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Box").Value;
@@ -35,6 +41,12 @@ namespace DragonLens.Helpers
 			sb.Draw(tex, new Rectangle(target.X, target.Y + target.Height, 6, 6), sourceCorner, color, (float)Math.PI * 1.5f, Vector2.Zero, 0, 0);
 		}
 
+		/// <summary>
+		/// Draws the outline of a box in the style of the DragonLens GUI.
+		/// </summary>
+		/// <param name="sb">the spriteBatch to draw the outline with</param>
+		/// <param name="target">where/how big the outline should be drawn</param>
+		/// <param name="color">the color of the outline</param>
 		public static void DrawOutline(SpriteBatch sb, Rectangle target, Color color = default)
 		{
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Box").Value;
@@ -60,11 +72,24 @@ namespace DragonLens.Helpers
 			sb.Draw(tex, new Rectangle(target.X, target.Y + target.Height, 6, 6), sourceCorner, color, (float)Math.PI * 1.5f, Vector2.Zero, 0, 0);
 		}
 
+		/// <summary>
+		/// Gets the inverse of a color. Used for 'constrasting' elements of the DragonLens GUI, such as outlines indicating something being on.
+		/// </summary>
+		/// <param name="color">the color to invert</param>
+		/// <returns>the inverted color</returns>
 		public static Color InvertColor(this Color color)
 		{
 			return new Color(255 - color.R, 255 - color.G, 255 - color.B, color.A);
 		}
 
+		/// <summary>
+		/// Wraps a string to a given maximum width, by forcibly adding newlines. Normal newlines will be removed, put the text 'NEWBLOCK' in your string to break a paragraph if needed.
+		/// </summary>
+		/// <param name="input">The input string to be wrapped</param>
+		/// <param name="length">The maximum width of the text</param>
+		/// <param name="font">The font the text will be drawn in, to calculate its size</param>
+		/// <param name="scale">The scale the text will be drawn at, to calculate its size</param>
+		/// <returns>Input text with linebreaks inserted so it obeys the width constraint.</returns>
 		public static string WrapString(string input, int length, DynamicSpriteFont font, float scale)
 		{
 			string output = "";
