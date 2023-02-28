@@ -1,5 +1,6 @@
 ﻿using DragonLens.Configs;
 using DragonLens.Content.Filters;
+using DragonLens.Content.GUI.FieldEditors;
 using DragonLens.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -188,13 +189,6 @@ namespace DragonLens.Content.GUI
 
 			base.Draw(spriteBatch);
 		}
-
-		public override void Click(UIMouseEvent evt)
-		{
-			//stop searching if you click outside the browser
-			if (!BoundingBox.Contains(Main.MouseScreen.ToPoint()))
-				searchBar.typing = false;
-		}
 	}
 
 	internal abstract class BrowserButton : UIElement
@@ -221,7 +215,7 @@ namespace DragonLens.Content.GUI
 				drawDelayTimer--;
 
 			//Will likely need a better solution to optimize when not constantly searching
-			if (!Identifier.ToLower().Contains(parent.searchBar.searchingFor.ToLower()) || parent.ShouldBeFiltered(this))
+			if (!Identifier.ToLower().Contains(parent.searchBar.currentValue.ToLower()) || parent.ShouldBeFiltered(this))
 			{
 				Width.Set(0, 0);
 				Height.Set(0, 0);
@@ -303,35 +297,14 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
-	internal class SearchBar : UIElement
+	internal class SearchBar : TextField
 	{
-		public bool typing;
-
-		public string searchingFor = "";
-
-		public override void Click(UIMouseEvent evt)
-		{
-			typing = true;
-		}
-
 		public override void Update(GameTime gameTime)
 		{
-			if (typing)
-			{
-				if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape))
-					typing = false;
+			base.Update(gameTime);
 
-				PlayerInput.WritingText = true;
-				Main.instance.HandleIME();
-
-				string newText = Main.GetInputText(searchingFor);
-
-				if (newText != searchingFor)
-				{
-					searchingFor = newText;
-					(Parent as Browser)?.SortGrid();
-				}
-			}
+			if(updated)
+				(Parent as Browser)?.SortGrid();
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
@@ -345,7 +318,7 @@ namespace DragonLens.Content.GUI
 
 			Vector2 pos = GetDimensions().Position() + Vector2.One * 4;
 
-			string displayed = searchingFor;
+			string displayed = currentValue;
 
 			if (typing && Main.GameUpdateCount % 20 < 10)
 				displayed += "|";
