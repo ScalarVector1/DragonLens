@@ -66,19 +66,19 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void PostInitialize()
 		{
-			perfectEditor = new("Use NewDustPerfect", n => perfect = (bool)n, false);
+			perfectEditor = new("Use NewDustPerfect", n => perfect = n, false);
 			Append(perfectEditor);
 
-			scaleEditor = new("Scale", n => scale = (float)n, 1);
+			scaleEditor = new("Scale", n => scale = n, 1);
 			Append(scaleEditor);
 
-			alphaEditor = new("Alpha", n => alpha = (int)n, 0);
+			alphaEditor = new("Alpha", n => alpha = n, 0);
 			Append(alphaEditor);
 
-			velocityEditor = new("Velocity", n => velocity = (Vector2)n, Vector2.Zero);
+			velocityEditor = new("Velocity", n => velocity = n, Vector2.Zero);
 			Append(velocityEditor);
 
-			colorEditor = new("Color", n => color = (Color)n, Color.White);
+			colorEditor = new("Color", n => color = n, Color.White);
 			Append(colorEditor);
 		}
 

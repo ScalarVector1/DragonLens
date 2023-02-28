@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -58,13 +59,13 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void PostInitialize()
 		{
-			velocityEditor = new("Velocity", n => velocity = (Vector2)n, Vector2.Zero);
+			velocityEditor = new("Velocity", n => velocity = n, Vector2.Zero);
 			Append(velocityEditor);
 
-			ai0Editor = new("ai 0", n => ai0 = (float)n, 0);
+			ai0Editor = new("ai 0", n => ai0 = n, 0);
 			Append(ai0Editor);
 
-			ai1Editor = new("ai 1", n => ai1 = (float)n, 0);
+			ai1Editor = new("ai 1", n => ai1 = n, 0);
 			Append(ai1Editor);
 		}
 
@@ -89,7 +90,8 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void PopulateGrid(UIGrid grid)
 		{
 			var buttons = new List<ProjectileButton>();
-			for (int k = 0; k < ProjectileLoader.ProjectileCount; k++)
+			// `0` corresponds to ProjectileID.None - that is, no projectile.
+			for (int k = 1; k < ProjectileLoader.ProjectileCount; k++)
 			{
 				var proj = new Projectile();
 				proj.SetDefaults(k);

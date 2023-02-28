@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -45,8 +46,16 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void PopulateGrid(UIGrid grid)
 		{
+			// Clear deprecated items set during loading to allow them to get
+			// their defaults set correctly + allow them to be accessed through
+			// the spawner. The set is stored and restored after the grid is
+			// populated.
+			bool[] deprecated = ItemID.Sets.Deprecated;
+			ItemID.Sets.Deprecated = ItemID.Sets.Factory.CreateBoolSet();
+
 			var buttons = new List<ItemButton>();
-			for (int k = 0; k < ItemLoader.ItemCount; k++)
+			// `0` corresponds to ItemID.None - that is, no item.
+			for (int k = 1; k < ItemLoader.ItemCount; k++)
 			{
 				var item = new Item();
 				item.SetDefaults(k);
@@ -55,6 +64,8 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 
 			grid.AddRange(buttons);
+
+			ItemID.Sets.Deprecated = deprecated;
 		}
 
 		public override void SetupFilters(FilterPanel filters)
@@ -76,9 +87,11 @@ namespace DragonLens.Content.Tools.Spawners
 			filters.AddFilter(new DamageClassFilter(DamageClass.Throwing, "DragonLens/Assets/Filters/Throwing"));
 
 			filters.AddSeperator("Misc filters");
+
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Accessory", "Accessory", "Any item that can be equipped as an accessory", n => !(n is ItemButton && (n as ItemButton).item.accessory)));
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Defense", "Armor", "Any item that can be equipped as armor", n => !(n is ItemButton && (n as ItemButton).item.defense > 0)));
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Placeable", "Placeable", "Any item that palces a tile", n => !(n is ItemButton && (n as ItemButton).item.createTile >= 0)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Unknown", "Deprecated", "Any item that is deprecated (ItemID.Sets.Deprecated)", n => n is ItemButton ib && !ItemID.Sets.Deprecated[ib.item.type]));
 		}
 	}
 
