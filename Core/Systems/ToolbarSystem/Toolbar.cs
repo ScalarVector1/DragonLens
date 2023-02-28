@@ -139,9 +139,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 			if (!ModLoader.TryGetMod(modName, out Mod mod))
 				return;
 
-			Tool tool = mod.Find<Tool>(type);
-
-			if (tool != null)
+			if (mod.TryFind(type, out Tool tool))
 				toolList.Add(tool);
 		}
 
