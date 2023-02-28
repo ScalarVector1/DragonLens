@@ -46,6 +46,9 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void PopulateGrid(UIGrid grid)
 		{
+			bool[] deprecated = ItemID.Sets.Deprecated;
+			ItemID.Sets.Deprecated = ItemID.Sets.Factory.CreateBoolSet();
+			
 			var buttons = new List<ItemButton>();
 			// `0` corresponds to ItemID.None - that is, no item.
 			for (int k = ItemID.IronPickaxe; k < ItemLoader.ItemCount; k++)
@@ -57,6 +60,8 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 
 			grid.AddRange(buttons);
+			
+			ItemID.Sets.Deprecated = deprecated;
 		}
 
 		public override void SetupFilters(FilterPanel filters)
@@ -81,6 +86,7 @@ namespace DragonLens.Content.Tools.Spawners
 			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Accessory", "Any item that can be equipped as an accessory", n => !(n is ItemButton && (n as ItemButton).item.accessory)));
 			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Armor", "Any item that can be equipped as armor", n => !(n is ItemButton && (n as ItemButton).item.defense > 0)));
 			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Placeable", "Any item that palces a tile", n => !(n is ItemButton && (n as ItemButton).item.createTile >= 0)));
+			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Deprecated", "Any item that is deprecated (ItemID.Sets.Deprecated)", n => n is ItemButton ib && !ItemID.Sets.Deprecated[ib.item.type]));
 		}
 	}
 
