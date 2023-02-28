@@ -160,6 +160,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public NPCButton(NPC npc, Browser browser) : base(browser)
 		{
 			this.npc = npc;
+			this.npc.IsABestiaryIconDummy = true;
 
 			try
 			{
@@ -167,8 +168,8 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 			catch
 			{
-				Main.NewText($"A NPCs ({npc.ModNPC.Name}) name threw an exception while getting it! Report to {npc.ModNPC.Mod.Name} developers!");
-				name = $"This NPCs name threw an exception while getting it! Report to {npc.ModNPC.Mod.Name} developers!";
+				Main.NewText($"A NPCs ({npc.ModNPC.Name}) name threw an exception while getting it! Report to {npc.ModNPC.Mod.DisplayName} developers!");
+				name = $"This NPCs name threw an exception while getting it! Report to {npc.ModNPC.Mod.DisplayName} developers!";
 			}
 
 			icon = new(npc.type);
@@ -221,7 +222,21 @@ namespace DragonLens.Content.Tools.Spawners
 
 			Rectangle oldRect = spriteBatch.GraphicsDevice.ScissorRectangle;
 			spriteBatch.GraphicsDevice.ScissorRectangle = newClip;
-			icon?.Draw(info, spriteBatch, settings);
+
+			if (icon != null)
+			{
+				try
+				{
+					npc.IsABestiaryIconDummy = true;
+					icon?.Draw(info, spriteBatch, settings);
+				}
+				catch
+				{
+					icon = null;
+					Main.NewText($"An NPC ({npc.ModNPC.Name}) throws an exception while drawing its bestiary entry! Report to {npc.ModNPC.Mod.DisplayName} developers!");
+				}
+			}
+
 			spriteBatch.GraphicsDevice.ScissorRectangle = oldRect;
 		}
 

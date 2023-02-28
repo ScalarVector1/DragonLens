@@ -175,8 +175,8 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 			catch
 			{
-				Main.NewText($"A Projectiles ({proj.ModProjectile.Name}) name threw an exception while getting it! Report to {proj.ModProjectile.Mod.Name} developers!");
-				name = $"This Projectiles name threw an exception while getting it! Report to {proj.ModProjectile.Mod.Name} developers!";
+				Main.NewText($"A Projectiles ({proj.ModProjectile.Name}) name threw an exception while getting it! Report to {proj.ModProjectile.Mod.DisplayName} developers!");
+				name = $"This Projectiles name threw an exception while getting it! Report to {proj.ModProjectile.Mod.DisplayName} developers!";
 			}
 		}
 
