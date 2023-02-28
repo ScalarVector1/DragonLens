@@ -39,7 +39,7 @@ namespace DragonLens.Content.Tools.Visualization
 		{
 			HitboxWindow state = UILoader.GetUIState<HitboxWindow>();
 
-			Main.spriteBatch.Begin();
+			Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
 
 			state.NPCOption.DrawBoxes(Main.spriteBatch);
 			state.ProjectileOption.DrawBoxes(Main.spriteBatch);
