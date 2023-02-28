@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -89,7 +90,8 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void PopulateGrid(UIGrid grid)
 		{
 			var buttons = new List<ProjectileButton>();
-			for (int k = 0; k < ProjectileLoader.ProjectileCount; k++)
+			// `0` corresponds to ProjectileID.None - that is, no projectile.
+			for (int k = 1; k < ProjectileLoader.ProjectileCount; k++)
 			{
 				var proj = new Projectile();
 				proj.SetDefaults(k);

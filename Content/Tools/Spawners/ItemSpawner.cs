@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -46,7 +47,8 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void PopulateGrid(UIGrid grid)
 		{
 			var buttons = new List<ItemButton>();
-			for (int k = 0; k < ItemLoader.ItemCount; k++)
+			// `0` corresponds to ItemID.None - that is, no item.
+			for (int k = ItemID.IronPickaxe; k < ItemLoader.ItemCount; k++)
 			{
 				var item = new Item();
 				item.SetDefaults(k);

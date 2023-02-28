@@ -54,7 +54,9 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void PopulateGrid(UIGrid grid)
 		{
 			var buttons = new List<TileButton>();
-			for (int k = 0; k < TileLoader.TileCount; k++)
+			// Unlike a lot of content, `0` actually corresponds to TileID.Dirt,
+			// so that works out fine.
+			for (int k = TileID.Dirt; k < TileLoader.TileCount; k++)
 			{
 				buttons.Add(new TileButton(k, this));
 			}

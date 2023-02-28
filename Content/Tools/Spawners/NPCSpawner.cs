@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -52,7 +53,8 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void PopulateGrid(UIGrid grid)
 		{
 			var buttons = new List<NPCButton>();
-			for (int k = 0; k < NPCLoader.NPCCount; k++)
+			// `0` corresponds to NPCID.None - that is, no NPC.
+			for (int k = NPCID.BlueSlime; k < NPCLoader.NPCCount; k++)
 			{
 				var npc = new NPC();
 				npc.SetDefaults_ForNetId(k, 1);

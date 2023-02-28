@@ -69,7 +69,9 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void PopulateGrid(UIGrid grid)
 		{
 			var buttons = new List<BuffButton>();
-			for (int k = 0; k < BuffLoader.BuffCount; k++)
+			// `0` doesn't correspond to anything - not even BuffID.None (which
+			// doesn't exist). ObsidianSkin is the first buff in the game (`1`).
+			for (int k = BuffID.ObsidianSkin; k < BuffLoader.BuffCount; k++)
 			{
 				buttons.Add(new BuffButton(k, this));
 			}
