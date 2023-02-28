@@ -71,7 +71,7 @@ namespace DragonLens.Content.Tools.Spawners
 			var buttons = new List<BuffButton>();
 			// `0` doesn't correspond to anything - not even BuffID.None (which
 			// doesn't exist). ObsidianSkin is the first buff in the game (`1`).
-			for (int k = BuffID.ObsidianSkin; k < BuffLoader.BuffCount; k++)
+			for (int k = 1; k < BuffLoader.BuffCount; k++)
 			{
 				buttons.Add(new BuffButton(k, this));
 			}

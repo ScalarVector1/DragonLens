@@ -55,7 +55,7 @@ namespace DragonLens.Content.Tools.Spawners
 			
 			var buttons = new List<ItemButton>();
 			// `0` corresponds to ItemID.None - that is, no item.
-			for (int k = ItemID.IronPickaxe; k < ItemLoader.ItemCount; k++)
+			for (int k = 1; k < ItemLoader.ItemCount; k++)
 			{
 				var item = new Item();
 				item.SetDefaults(k);

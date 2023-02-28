@@ -56,7 +56,7 @@ namespace DragonLens.Content.Tools.Spawners
 			var buttons = new List<TileButton>();
 			// Unlike a lot of content, `0` actually corresponds to TileID.Dirt,
 			// so that works out fine.
-			for (int k = TileID.Dirt; k < TileLoader.TileCount; k++)
+			for (int k = 0; k < TileLoader.TileCount; k++)
 			{
 				buttons.Add(new TileButton(k, this));
 			}

@@ -54,7 +54,7 @@ namespace DragonLens.Content.Tools.Spawners
 		{
 			var buttons = new List<NPCButton>();
 			// `0` corresponds to NPCID.None - that is, no NPC.
-			for (int k = NPCID.BlueSlime; k < NPCLoader.NPCCount; k++)
+			for (int k = 1; k < NPCLoader.NPCCount; k++)
 			{
 				var npc = new NPC();
 				npc.SetDefaults_ForNetId(k, 1);
