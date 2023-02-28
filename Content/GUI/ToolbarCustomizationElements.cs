@@ -173,8 +173,11 @@ namespace DragonLens.Content.GUI
 					}
 				}
 
-				DraggedToolbar.relativePosition.X = MathHelper.Clamp(Main.MouseScreen.X / Main.screenWidth, 0, 1);
-				DraggedToolbar.relativePosition.Y = MathHelper.Clamp(Main.MouseScreen.Y / Main.screenHeight, 0, 1);
+				float relW = draggedElement.Width.Pixels / Main.screenWidth;
+				float relH = draggedElement.Height.Pixels / Main.screenHeight;
+
+				DraggedToolbar.relativePosition.X = MathHelper.Clamp(Main.MouseScreen.X / Main.screenWidth, 0 + relW / 2, 1 - relW / 2);
+				DraggedToolbar.relativePosition.Y = MathHelper.Clamp(Main.MouseScreen.Y / Main.screenHeight, 0 + relH / 2, 1 - relH / 2);
 
 				if (Main.MouseScreen.X / Main.screenWidth < 0.025f)
 				{
