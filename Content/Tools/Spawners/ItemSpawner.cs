@@ -76,9 +76,9 @@ namespace DragonLens.Content.Tools.Spawners
 			filters.AddFilter(new DamageClassFilter(DamageClass.Throwing, "DragonLens/Assets/Filters/Throwing"));
 
 			filters.AddSeperator("Misc filters");
-			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Accessory", "Any item that can be equipped as an accessory", n => !(n is ItemButton && (n as ItemButton).item.accessory)));
-			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Armor", "Any item that can be equipped as armor", n => !(n is ItemButton && (n as ItemButton).item.defense > 0)));
-			filters.AddFilter(new Filter("DragonLens/Assets/GUI/NoBox", "Placeable", "Any item that palces a tile", n => !(n is ItemButton && (n as ItemButton).item.createTile >= 0)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Accessory", "Accessory", "Any item that can be equipped as an accessory", n => !(n is ItemButton && (n as ItemButton).item.accessory)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Defense", "Armor", "Any item that can be equipped as armor", n => !(n is ItemButton && (n as ItemButton).item.defense > 0)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Placeable", "Placeable", "Any item that palces a tile", n => !(n is ItemButton && (n as ItemButton).item.createTile >= 0)));
 		}
 	}
 
