@@ -46,6 +46,10 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void PopulateGrid(UIGrid grid)
 		{
+			// Clear deprecated items set during loading to allow them to get
+			// their defaults set correctly + allow them to be accessed through
+			// the spawner. The set is stored and restored after the grid is
+			// populated.
 			bool[] deprecated = ItemID.Sets.Deprecated;
 			ItemID.Sets.Deprecated = ItemID.Sets.Factory.CreateBoolSet();
 			
