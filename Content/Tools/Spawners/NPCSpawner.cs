@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent.Bestiary;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -150,14 +149,26 @@ namespace DragonLens.Content.Tools.Spawners
 	{
 		public NPC npc;
 		public BestiaryEntry entry;
+		public string name;
 
 		public UnlockableNPCEntryIcon icon;
 
-		public override string Identifier => npc.TypeName;
+		public override string Identifier => name;
 
 		public NPCButton(NPC npc, Browser browser) : base(browser)
 		{
 			this.npc = npc;
+
+			try
+			{
+				name = npc.TypeName;
+			}
+			catch
+			{
+				Main.NewText($"A NPCs ({npc.ModNPC.Name}) name threw an exception while getting it! Report to {npc.ModNPC.Mod.Name} developers!");
+				name = $"This NPCs name threw an exception while getting it! Report to {npc.ModNPC.Mod.Name} developers!";
+			}
+
 			icon = new(npc.type);
 
 			entry = Main.BestiaryDB.FindEntryByNPCID(npc.type);
@@ -216,7 +227,7 @@ namespace DragonLens.Content.Tools.Spawners
 		{
 			if (IsMouseHovering)
 			{
-				Tooltip.SetName(npc.TypeName);
+				Tooltip.SetName(Identifier);
 				Tooltip.SetTooltip($"Type: {npc.type}");
 			}
 		}
@@ -225,7 +236,7 @@ namespace DragonLens.Content.Tools.Spawners
 		{
 			NPCBrowser.selected = (NPC)npc.Clone();
 			NPCBrowser.preview = (UnlockableNPCEntryIcon)icon.CreateClone();
-			Main.NewText($"{npc.FullName} selected, click anywhere in the world to spawn. Right click to deselect.");
+			Main.NewText($"{Identifier} selected, click anywhere in the world to spawn. Right click to deselect.");
 		}
 
 		public override void RightClick(UIMouseEvent evt)

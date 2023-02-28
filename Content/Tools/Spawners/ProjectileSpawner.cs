@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -160,12 +159,23 @@ namespace DragonLens.Content.Tools.Spawners
 	internal class ProjectileButton : BrowserButton
 	{
 		public Projectile proj;
+		public string name;
 
-		public override string Identifier => proj.Name;
+		public override string Identifier => name;
 
 		public ProjectileButton(Projectile proj, Browser browser) : base(browser)
 		{
 			this.proj = proj;
+
+			try
+			{
+				name = proj.Name;
+			}
+			catch
+			{
+				Main.NewText($"A Projectiles ({proj.ModProjectile.Name}) name threw an exception while getting it! Report to {proj.ModProjectile.Mod.Name} developers!");
+				name = $"This Projectiles name threw an exception while getting it! Report to {proj.ModProjectile.Mod.Name} developers!";
+			}
 		}
 
 		public override void SafeDraw(SpriteBatch spriteBatch, Rectangle iconBox)
