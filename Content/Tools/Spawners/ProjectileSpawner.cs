@@ -58,13 +58,13 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void PostInitialize()
 		{
-			velocityEditor = new("Velocity", n => velocity = (Vector2)n, Vector2.Zero);
+			velocityEditor = new("Velocity", n => velocity = n, Vector2.Zero);
 			Append(velocityEditor);
 
-			ai0Editor = new("ai 0", n => ai0 = (float)n, 0);
+			ai0Editor = new("ai 0", n => ai0 = n, 0);
 			Append(ai0Editor);
 
-			ai1Editor = new("ai 1", n => ai1 = (float)n, 0);
+			ai1Editor = new("ai 1", n => ai1 = n, 0);
 			Append(ai1Editor);
 		}
 

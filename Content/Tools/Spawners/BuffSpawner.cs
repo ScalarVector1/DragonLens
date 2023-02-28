@@ -54,7 +54,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void PostInitialize()
 		{
-			durationEditor = new IntEditor("Duration (ticks)", n => duration = (int)n, 180);
+			durationEditor = new IntEditor("Duration (ticks)", n => duration = n, 180);
 			Append(durationEditor);
 		}
 

@@ -4,11 +4,11 @@ using System;
 
 namespace DragonLens.Content.GUI.FieldEditors
 {
-	internal class FloatEditor : FieldEditor
+	internal class FloatEditor : FieldEditor<float>
 	{
 		public TextField entry;
 
-		public FloatEditor(string name, Action<object> onValueChanged, float initialValue) : base(70, name, onValueChanged, initialValue)
+		public FloatEditor(string name, Action<float> onValueChanged, float initialValue) : base(70, name, onValueChanged, initialValue)
 		{
 			entry = new(InputType.number);
 			entry.Left.Set(10, 0);

@@ -12,7 +12,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 	/// <summary>
 	/// A UI element for changing the value of 'something'. 
 	/// </summary>
-	internal abstract class FieldEditor : UIElement
+	internal abstract class FieldEditor<T> : UIElement
 	{
 		/// <summary>
 		/// The name that gets displated above the panel to the user
@@ -22,12 +22,12 @@ namespace DragonLens.Content.GUI.FieldEditors
 		/// <summary>
 		/// The current value this editor believes the field its tied to to have. This wont update in real time so be careful
 		/// </summary>
-		public object value;
+		public T value;
 
 		/// <summary>
 		/// The callback that should happen when this editor thinks the value its tracking has changed. You'll likely need to cast the object parameter to the correct type.
 		/// </summary>
-		protected readonly Action<object> onValueChanged;
+		protected readonly Action<T> onValueChanged;
 
 		/// <summary>
 		/// 
@@ -36,7 +36,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 		/// <param name="name">The name that gets displated above the panel to the user</param>
 		/// <param name="onValueChanged">The callback that should happen when this editor thinks the value its tracking has changed. You'll likely need to cast the object parameter to the correct type.</param>
 		/// <param name="initialValue">A hint for what the initial value of the field tracked by this editor is</param>
-		public FieldEditor(int height, string name, Action<object> onValueChanged, object initialValue = null)
+		public FieldEditor(int height, string name, Action<T> onValueChanged, T initialValue = default)
 		{
 			Width.Set(150, 0);
 			Height.Set(height, 0);

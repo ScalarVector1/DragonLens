@@ -9,14 +9,14 @@ using Terraria.UI;
 
 namespace DragonLens.Content.GUI.FieldEditors
 {
-	internal class ColorEditor : FieldEditor
+	internal class ColorEditor : FieldEditor<Color>
 	{
 		public Slider rSlider;
 		public Slider gSlider;
 		public Slider bSlider;
 		public Slider aSlider;
 
-		public ColorEditor(string name, Action<object> onValueChanged, Color initialValue) : base(130, name, onValueChanged, initialValue)
+		public ColorEditor(string name, Action<Color> onValueChanged, Color initialValue) : base(130, name, onValueChanged, initialValue)
 		{
 			rSlider = new Slider("DragonLens/Assets/GUI/RedScale", n =>
 			{
@@ -68,7 +68,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 			target.Width = 16;
 			target.Height = 16;
 			target.Offset(124, 8);
-			sprite.Draw(tex, target, (Color)value);
+			sprite.Draw(tex, target, value);
 		}
 	}
 
