@@ -98,6 +98,7 @@ namespace DragonLens.Content.Tools.Spawners
 	internal class ItemButton : BrowserButton
 	{
 		public Item item;
+		public int stackDelay = 0;
 
 		public override string Identifier => item.Name;
 
@@ -127,10 +128,11 @@ namespace DragonLens.Content.Tools.Spawners
 					Main.playerInventory = true;
 
 				Main.mouseItem = item.Clone();
+				Main.mouseItem.stack = Main.mouseItem.maxStack;
 			}
 		}
 
-		public override void RightClick(UIMouseEvent evt)
+		public override void RightMouseDown(UIMouseEvent evt)
 		{
 			if (Main.mouseItem.IsAir)
 			{
@@ -138,7 +140,21 @@ namespace DragonLens.Content.Tools.Spawners
 					Main.playerInventory = true;
 
 				Main.mouseItem = item.Clone();
-				Main.mouseItem.stack = Main.mouseItem.maxStack;
+				stackDelay = 30;
+			}
+		}
+
+		public override void Update(GameTime gameTime)
+		{
+			base.Update(gameTime);
+
+			// Allows for "Hold RMB to get more
+			if (IsMouseHovering && Main.mouseRight && Main.mouseItem.type == item.type)
+			{
+				if (stackDelay > 0)
+					stackDelay--;
+				else if (Main.mouseItem.stack < Main.mouseItem.maxStack)
+					Main.mouseItem.stack++;
 			}
 		}
 
