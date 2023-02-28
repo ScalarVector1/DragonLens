@@ -9,21 +9,21 @@ using Terraria.UI;
 
 namespace DragonLens.Content.GUI.FieldEditors
 {
-	internal class BoolEditor : FieldEditor
+	internal class BoolEditor : FieldEditor<bool>
 	{
 		public TextField entry;
 
-		public BoolEditor(string name, Action<object> onValueChanged, bool initialValue) : base(70, name, onValueChanged, initialValue) { }
+		public BoolEditor(string name, Action<bool> onValueChanged, bool initialValue) : base(70, name, onValueChanged, initialValue) { }
 
 		public override void Click(UIMouseEvent evt)
 		{
-			value = !(bool)value;
-			onValueChanged((bool)value);
+			value = !value;
+			onValueChanged(value);
 		}
 
 		public override void SafeDraw(SpriteBatch sprite)
 		{
-			Utils.DrawBorderString(sprite, $"{(bool)value}", GetDimensions().Position() + new Vector2(12, 38), Color.White, 0.8f);
+			Utils.DrawBorderString(sprite, $"{value}", GetDimensions().Position() + new Vector2(12, 38), Color.White, 0.8f);
 
 			var box = GetDimensions().ToRectangle();
 			box.Width = 40;
@@ -31,7 +31,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 			box.Offset(new Point(95, 40));
 			GUIHelper.DrawBox(sprite, box, ModContent.GetInstance<GUIConfig>().backgroundColor);
 
-			if (value is bool && (bool)value)
+			if (value)
 			{
 				box.Width = 15;
 				box.Offset(new Point(25, 0));

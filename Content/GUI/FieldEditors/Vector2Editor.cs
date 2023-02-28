@@ -5,12 +5,12 @@ using Terraria;
 
 namespace DragonLens.Content.GUI.FieldEditors
 {
-	internal class Vector2Editor : FieldEditor
+	internal class Vector2Editor : FieldEditor<Vector2>
 	{
 		public TextField xEntry;
 		public TextField yEntry;
 
-		public Vector2Editor(string name, Action<object> onValueChanged, Vector2 initialValue) : base(94, name, onValueChanged, initialValue)
+		public Vector2Editor(string name, Action<Vector2> onValueChanged, Vector2 initialValue) : base(94, name, onValueChanged, initialValue)
 		{
 			xEntry = new(InputType.number);
 			xEntry.Left.Set(30, 0);
