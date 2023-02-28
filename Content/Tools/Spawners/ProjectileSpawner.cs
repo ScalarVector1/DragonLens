@@ -29,6 +29,8 @@ namespace DragonLens.Content.Tools.Spawners
 			ProjectileBrowser state = UILoader.GetUIState<ProjectileBrowser>();
 			state.visible = !state.visible;
 
+			BrowserButton.drawDelayTimer = 2;
+
 			if (!state.initialized)
 			{
 				UILoader.GetUIState<ProjectileBrowser>().Refresh();

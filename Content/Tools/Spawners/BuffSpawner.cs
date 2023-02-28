@@ -30,6 +30,8 @@ namespace DragonLens.Content.Tools.Spawners
 			BuffBrowser state = UILoader.GetUIState<BuffBrowser>();
 			state.visible = !state.visible;
 
+			BrowserButton.drawDelayTimer = 2;
+
 			if (!state.initialized)
 			{
 				UILoader.GetUIState<BuffBrowser>().Refresh();

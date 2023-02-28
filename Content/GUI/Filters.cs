@@ -101,6 +101,8 @@ namespace DragonLens.Content.GUI
 				parent.FilterEvent += filter.shouldFilter;
 			else
 				parent.FilterEvent -= filter.shouldFilter;
+
+			BrowserButton.drawDelayTimer = 2;
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)

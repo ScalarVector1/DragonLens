@@ -31,6 +31,8 @@ namespace DragonLens.Content.Tools.Spawners
 			TileBrowser state = UILoader.GetUIState<TileBrowser>();
 			state.visible = !state.visible;
 
+			BrowserButton.drawDelayTimer = 2;
+
 			if (!state.initialized)
 			{
 				UILoader.GetUIState<TileBrowser>().Refresh();

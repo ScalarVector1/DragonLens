@@ -28,6 +28,8 @@ namespace DragonLens.Content.Tools.Spawners
 			ItemBrowser state = UILoader.GetUIState<ItemBrowser>();
 			state.visible = !state.visible;
 
+			BrowserButton.drawDelayTimer = 2;
+
 			if (!state.initialized)
 			{
 				UILoader.GetUIState<ItemBrowser>().Refresh();

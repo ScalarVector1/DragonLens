@@ -31,6 +31,8 @@ namespace DragonLens.Content.Tools.Spawners
 			DustBrowser state = UILoader.GetUIState<DustBrowser>();
 			state.visible = !state.visible;
 
+			BrowserButton.drawDelayTimer = 2;
+
 			if (!state.initialized)
 			{
 				UILoader.GetUIState<DustBrowser>().Refresh();

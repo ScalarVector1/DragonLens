@@ -201,7 +201,7 @@ namespace DragonLens.Content.GUI
 	{
 		public Browser parent;
 
-		public int drawDelayTimer = 4; //Here so we dont draw on the first frame of the grid populating, causing a lag bonanza since every single button tries to draw.
+		public static int drawDelayTimer = 2; //Here so we dont draw on the first frame of the grid populating, causing a lag bonanza since every single button tries to draw.
 
 		public abstract string Identifier { get; }
 
@@ -217,9 +217,6 @@ namespace DragonLens.Content.GUI
 
 		public override void Update(GameTime gameTime)
 		{
-			if (drawDelayTimer > 0)
-				drawDelayTimer--;
-
 			//Will likely need a better solution to optimize when not constantly searching
 			if (!Identifier.ToLower().Contains(parent.searchBar.searchingFor.ToLower()) || parent.ShouldBeFiltered(this))
 			{

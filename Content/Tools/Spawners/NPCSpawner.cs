@@ -30,6 +30,8 @@ namespace DragonLens.Content.Tools.Spawners
 			NPCBrowser state = UILoader.GetUIState<NPCBrowser>();
 			state.visible = !state.visible;
 
+			BrowserButton.drawDelayTimer = 2;
+
 			if (!state.initialized)
 			{
 				UILoader.GetUIState<NPCBrowser>().Refresh();
