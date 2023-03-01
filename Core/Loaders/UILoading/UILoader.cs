@@ -10,7 +10,7 @@ namespace DragonLens.Core.Loaders.UILoading
 	/// <summary>
 	/// Automatically loads SmartUIStates ala IoC.
 	/// </summary>
-	class UILoader : ILoadable
+	class UILoader : ModSystem
 	{
 		/// <summary>
 		/// The collection of automatically craetaed UserInterfaces for SmartUIStates.
@@ -25,8 +25,7 @@ namespace DragonLens.Core.Loaders.UILoading
 		/// <summary>
 		/// Uses reflection to scan through and find all types extending SmartUIState that arent abstract, and loads an instance of them.
 		/// </summary>
-		/// <param name="mod"></param>
-		public void Load(Mod mod)
+		public override void Load()
 		{
 			if (Main.dedServ)
 				return;
@@ -34,7 +33,7 @@ namespace DragonLens.Core.Loaders.UILoading
 			UserInterfaces = new List<UserInterface>();
 			UIStates = new List<SmartUIState>();
 
-			foreach (Type t in mod.Code.GetTypes())
+			foreach (Type t in Mod.Code.GetTypes())
 			{
 				if (!t.IsAbstract && t.IsSubclassOf(typeof(SmartUIState)))
 				{
@@ -49,7 +48,7 @@ namespace DragonLens.Core.Loaders.UILoading
 			}
 		}
 
-		public void Unload()
+		public override void Unload()
 		{
 			UIStates.ForEach(n => n.Unload());
 			UserInterfaces = null;
@@ -102,13 +101,11 @@ namespace DragonLens.Core.Loaders.UILoading
 			UserInterfaces[index] = new UserInterface();
 			UserInterfaces[index].SetState(UIStates[index]);
 		}
-	}
 
-	/// <summary>
-	/// Handles the insertion of the automatically loaded UIs
-	/// </summary>
-	class AutoUISystem : ModSystem
-	{
+		/// <summary>
+		/// Handles the insertion of the automatically generated UIs
+		/// </summary>
+		/// <param name="layers"></param>
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
 		{
 			for (int k = 0; k < UILoader.UIStates.Count; k++)
