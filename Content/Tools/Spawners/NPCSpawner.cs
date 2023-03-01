@@ -193,12 +193,6 @@ namespace DragonLens.Content.Tools.Spawners
 				IsPortrait = true
 			};
 
-			int infAmount = (int)(GetDimensions().Width * Main.UIScale) - 36;
-			//settings.iconbox.Inflate(infAmount, infAmount);
-
-			var offset = (GetDimensions().Position() * Main.UIScale - GetDimensions().Position()).ToPoint();
-			//settings.iconbox.Offset(offset);
-
 			icon?.Update(info, GetDimensions().ToRectangle(), settings);
 
 			base.Update(gameTime);
