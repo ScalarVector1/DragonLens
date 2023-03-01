@@ -356,6 +356,8 @@ namespace DragonLens.Content.GUI
 			UILoader.GetUIState<ToolbarState>().FinishCustomize();
 			ToolbarHandler.ExportToFile(Path.Join(Main.SavePath, "DragonLensLayouts", "Current"));
 
+			UILoader.GetUIState<LayoutPresetBrowser>().visible = false;
+
 			CustomizeTool.customizing = false;
 
 			Main.NewText("Layout saved!");
@@ -394,7 +396,16 @@ namespace DragonLens.Content.GUI
 
 		public override void Click(UIMouseEvent evt)
 		{
-			Main.NewText("To be implemented while file browsers are...");
+			LayoutPresetBrowser state = UILoader.GetUIState<LayoutPresetBrowser>();
+			state.visible = !state.visible;
+
+			BrowserButton.drawDelayTimer = 2;
+
+			if (!state.initialized)
+			{
+				UILoader.GetUIState<LayoutPresetBrowser>().Refresh();
+				state.initialized = true;
+			}
 		}
 
 		public override void Update(GameTime gameTime)

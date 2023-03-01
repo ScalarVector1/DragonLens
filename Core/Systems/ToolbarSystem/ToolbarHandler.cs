@@ -7,6 +7,7 @@ using DragonLens.Content.Tools.Spawners;
 using DragonLens.Content.Tools.Visualization;
 using DragonLens.Core.Loaders.UILoading;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
@@ -108,6 +109,18 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 				LoadLayout(tag);
 			else
 				Main.NewText("Failed to load toolbar! File is missing or corrupted.", Color.Red);
+		}
+
+		/// <summary>
+		/// Builds a preset and exports it to the layouts folder
+		/// </summary>
+		/// <param name="name">The name of your preset</param>
+		/// <param name="build">The action to build your preset. You should add to the toolbars parameter passed to build out the preset.</param>
+		public static void BuildPreset(string name, Action<List<Toolbar>> build)
+		{
+			activeToolbars.Clear();
+			build(activeToolbars);
+			ExportToFile(Path.Join(Main.SavePath, "DragonLensLayouts", name));
 		}
 
 		/// <summary>
