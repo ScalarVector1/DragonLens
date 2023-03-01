@@ -130,7 +130,6 @@ namespace DragonLens.Content.Tools
 			ToolBrowser.TrackedToolbar.AddTool(tool);
 
 			UILoader.GetUIState<ToolbarState>().Refresh();
-			UILoader.GetUIState<ToolbarState>().Customize();
 		}
 
 		public override int CompareTo(object obj)
