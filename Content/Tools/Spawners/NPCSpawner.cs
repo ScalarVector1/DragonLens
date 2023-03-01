@@ -193,6 +193,12 @@ namespace DragonLens.Content.Tools.Spawners
 				IsPortrait = true
 			};
 
+			int infAmount = (int)(GetDimensions().Width * Main.UIScale) - 36;
+			//settings.iconbox.Inflate(infAmount, infAmount);
+
+			var offset = (GetDimensions().Position() * Main.UIScale - GetDimensions().Position()).ToPoint();
+			//settings.iconbox.Offset(offset);
+
 			icon?.Update(info, GetDimensions().ToRectangle(), settings);
 
 			base.Update(gameTime);
@@ -219,6 +225,12 @@ namespace DragonLens.Content.Tools.Spawners
 
 			Rectangle newClip = iconBox;
 			newClip.Inflate(-4, -4);
+
+			int infAmount = (int)(newClip.Width * Main.UIScale) - newClip.Width;
+			newClip.Inflate(infAmount / 2, infAmount / 2);
+
+			var offset = (newClip.Center() * Main.UIScale - newClip.Center()).ToPoint();
+			newClip.Offset(offset);
 
 			Rectangle oldRect = spriteBatch.GraphicsDevice.ScissorRectangle;
 			spriteBatch.GraphicsDevice.ScissorRectangle = newClip;

@@ -23,6 +23,8 @@ namespace DragonLens.Content.GUI
 
 		public override void PopulateGrid(UIGrid grid)
 		{
+			//TODO: Move the definition of these elsewhere, and check if they already exist before regenerating them.
+
 			//Simple layout, default for most players
 			grid.Add(new LayoutPresetButton(this, "Simple", n =>
 			{
