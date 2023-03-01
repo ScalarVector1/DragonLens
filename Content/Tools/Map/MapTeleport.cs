@@ -51,6 +51,11 @@ namespace DragonLens.Content.Tools.Map
 			Main.OnPostFullscreenMapDraw += TeleportFromMap;
 		}
 
+		public override void Unload()
+		{
+			Main.OnPostFullscreenMapDraw -= TeleportFromMap;
+		}
+
 		private void TeleportFromMap(Vector2 arg1, float arg2)
 		{
 			if (MapTeleport.active && Main.mouseRight)
