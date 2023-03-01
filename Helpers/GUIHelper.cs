@@ -141,15 +141,12 @@ namespace DragonLens.Helpers
 
 			Type uiModConfig = typeof(ModLoader).Assembly.GetType("Terraria.ModLoader.Config.UI.UIModConfig");
 			FieldInfo modConfig = interfaceType.GetField("modConfig", BindingFlags.Static | BindingFlags.NonPublic);
-			FieldInfo modConfigForUiModConfig = uiModConfig.GetField("modConfig", BindingFlags.Instance | BindingFlags.NonPublic);
 			MethodInfo setMod = uiModConfig.GetMethod("SetMod", BindingFlags.Instance | BindingFlags.NonPublic);
 
 			var ui = (UIState)modConfig.GetValue(null);
 
-			modConfigForUiModConfig.SetValue(ui, config);
-
-			Main.InGameUI.SetState(ui);
 			setMod.Invoke(ui, new object[] { ModContent.GetInstance<DragonLens>(), config });
+			Main.InGameUI.SetState(ui);
 		}
 	}
 }
