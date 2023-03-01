@@ -9,7 +9,7 @@ namespace DragonLens.Content.Tools.Despawners
 
 		public override string DisplayName => "Clear NPCs";
 
-		public override string Description => "Removes all NPCs currently in the world. Right click for a more traditional 'butcher'";
+		public override string Description => "Removes all hostile NPCs currently in the world. Right click for a more traditional 'butcher'. NEWBLOCK hold SHIFT to clear/butcher friendly NPCs aswell";
 
 		public override bool HasRightClick => true;
 
@@ -19,7 +19,8 @@ namespace DragonLens.Content.Tools.Despawners
 		{
 			foreach (NPC npc in Main.npc)
 			{
-				npc.active = false;
+				if (!npc.friendly || Main.keyState.PressingShift())
+					npc.active = false;
 			}
 		}
 
@@ -27,7 +28,8 @@ namespace DragonLens.Content.Tools.Despawners
 		{
 			foreach (NPC npc in Main.npc)
 			{
-				npc.StrikeNPC(int.MaxValue, 0, 0);
+				if (!npc.friendly || Main.keyState.PressingShift())
+					npc.StrikeNPC(int.MaxValue, 0, 0);
 			}
 		}
 	}
