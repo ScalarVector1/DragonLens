@@ -2,7 +2,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
 using System;
+using System.Reflection;
+using Terraria;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Config;
+using Terraria.UI;
 
 namespace DragonLens.Helpers
 {
@@ -118,6 +122,30 @@ namespace DragonLens.Helpers
 			}
 
 			return output[1..];
+		}
+
+		/// <summary>
+		/// Uses reflection to forcibly open the TModLoader configuration UI to a given ModConfig's screen.
+		/// </summary>
+		/// <param name="config">The config to open up</param>
+		public static void OpenConfig(ModConfig config)
+		{
+			IngameFancyUI.CoverNextFrame();
+			Main.playerInventory = false;
+			Main.editChest = false;
+			Main.npcChatText = "";
+			Main.inFancyUI = true;
+
+			Type interfaceType = typeof(ModLoader).Assembly.GetType("Terraria.ModLoader.UI.Interface");
+			FieldInfo modConfigList = interfaceType.GetField("modConfigList", BindingFlags.Static | BindingFlags.NonPublic);
+
+			Type uiModConfig = typeof(ModLoader).Assembly.GetType("Terraria.ModLoader.Config.UI.UIModConfig");
+			FieldInfo modConfig = interfaceType.GetField("modConfig", BindingFlags.Static | BindingFlags.NonPublic);
+			MethodInfo setMod = uiModConfig.GetMethod("SetMod", BindingFlags.Instance | BindingFlags.NonPublic);
+
+			var ui = (UIState)modConfig.GetValue(null);
+			Main.InGameUI.SetState(ui);
+			setMod.Invoke(ui, new object[] { ModContent.GetInstance<DragonLens>(), config });
 		}
 	}
 }

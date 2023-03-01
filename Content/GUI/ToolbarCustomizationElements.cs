@@ -315,6 +315,12 @@ namespace DragonLens.Content.GUI
 			UILoader.GetUIState<ToolbarState>().Customize();
 		}
 
+		public override void Update(GameTime gameTime)
+		{
+			if (IsMouseHovering)
+				Main.LocalPlayer.mouseInterface = true;
+		}
+
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var drawTarget = GetDimensions().ToRectangle();
@@ -355,6 +361,12 @@ namespace DragonLens.Content.GUI
 			Main.NewText("Layout saved!");
 		}
 
+		public override void Update(GameTime gameTime)
+		{
+			if (IsMouseHovering)
+				Main.LocalPlayer.mouseInterface = true;
+		}
+
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
@@ -385,6 +397,12 @@ namespace DragonLens.Content.GUI
 			Main.NewText("To be implemented while file browsers are...");
 		}
 
+		public override void Update(GameTime gameTime)
+		{
+			if (IsMouseHovering)
+				Main.LocalPlayer.mouseInterface = true;
+		}
+
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
@@ -396,6 +414,78 @@ namespace DragonLens.Content.GUI
 			{
 				Tooltip.SetName("Load layout");
 				Tooltip.SetTooltip("Load an existing layout");
+			}
+
+			base.Draw(spriteBatch);
+		}
+	}
+
+	internal class VisualConfigButton : UIElement
+	{
+		public VisualConfigButton()
+		{
+			Width.Set(48, 0);
+			Height.Set(48, 0);
+		}
+
+		public override void Click(UIMouseEvent evt)
+		{
+			Helpers.GUIHelper.OpenConfig(ModContent.GetInstance<GUIConfig>());
+		}
+
+		public override void Update(GameTime gameTime)
+		{
+			if (IsMouseHovering)
+				Main.LocalPlayer.mouseInterface = true;
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+
+			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/StyleButton").Value;
+			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
+
+			if (IsMouseHovering)
+			{
+				Tooltip.SetName("Change style");
+				Tooltip.SetTooltip("Open the configuration to change the visual style of the GUI");
+			}
+
+			base.Draw(spriteBatch);
+		}
+	}
+
+	internal class FunctionalConfigButton : UIElement
+	{
+		public FunctionalConfigButton()
+		{
+			Width.Set(48, 0);
+			Height.Set(48, 0);
+		}
+
+		public override void Click(UIMouseEvent evt)
+		{
+			Helpers.GUIHelper.OpenConfig(ModContent.GetInstance<ToolConfig>());
+		}
+
+		public override void Update(GameTime gameTime)
+		{
+			if (IsMouseHovering)
+				Main.LocalPlayer.mouseInterface = true;
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+
+			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Tools/Customize").Value;
+			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
+
+			if (IsMouseHovering)
+			{
+				Tooltip.SetName("Tool options");
+				Tooltip.SetTooltip("Open the configuration to change tool functionality/defaults");
 			}
 
 			base.Draw(spriteBatch);

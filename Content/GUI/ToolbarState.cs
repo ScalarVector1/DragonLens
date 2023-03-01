@@ -63,6 +63,16 @@ namespace DragonLens.Content.GUI
 			loadButton.Left.Set(-84, 0.5f);
 			loadButton.Top.Set(-24, 0.5f);
 			Append(loadButton);
+
+			var styleButton = new VisualConfigButton();
+			styleButton.Left.Set(34, 0.5f);
+			styleButton.Top.Set(30, 0.5f);
+			Append(styleButton);
+
+			var functionButton = new FunctionalConfigButton();
+			functionButton.Left.Set(-84, 0.5f);
+			functionButton.Top.Set(30, 0.5f);
+			Append(functionButton);
 		}
 
 		public void FinishCustomize()
