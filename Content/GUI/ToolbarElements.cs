@@ -70,12 +70,40 @@ namespace DragonLens.Content.GUI
 			}
 
 			Recalculate();
+			UpdateTargetOffset();
+			offset = offsetTarget;
 			AdjustDimensions();
 			AddCollapseTab();
 
 			Recalculate();
 
 			basePos = GetDimensions().Position();
+		}
+
+		public void UpdateTargetOffset()
+		{
+			switch (toolbar.CollapseDirection)
+			{
+				case CollapseDirection.Left:
+					offsetTarget = new Vector2(toolbar.collapsed ? -62 : 0, 0);
+					break;
+
+				case CollapseDirection.Right:
+					offsetTarget = new Vector2(toolbar.collapsed ? 62 : 0, 0);
+					break;
+
+				case CollapseDirection.Up:
+					offsetTarget = new Vector2(0, toolbar.collapsed ? -62 : 0);
+					break;
+
+				case CollapseDirection.Down:
+					offsetTarget = new Vector2(0, toolbar.collapsed ? 62 : 0);
+					break;
+
+				case CollapseDirection.Floating:
+					offsetTarget = Vector2.Zero;
+					break;
+			}
 		}
 
 		/// <summary>
@@ -301,31 +329,10 @@ namespace DragonLens.Content.GUI
 			if (CustomizeTool.customizing)
 				return;
 
-			Toolbar.collapsed = !Toolbar.collapsed;
+			if (Toolbar.CollapseDirection != CollapseDirection.Floating)
+				Toolbar.collapsed = !Toolbar.collapsed;
 
-			switch (Toolbar.CollapseDirection)
-			{
-				case CollapseDirection.Left:
-					parent.offsetTarget = new Vector2(Toolbar.collapsed ? -62 : 0, 0);
-					break;
-
-				case CollapseDirection.Right:
-					parent.offsetTarget = new Vector2(Toolbar.collapsed ? 62 : 0, 0);
-					break;
-
-				case CollapseDirection.Up:
-					parent.offsetTarget = new Vector2(0, Toolbar.collapsed ? -62 : 0);
-					break;
-
-				case CollapseDirection.Down:
-					parent.offsetTarget = new Vector2(0, Toolbar.collapsed ? 62 : 0);
-					break;
-
-				case CollapseDirection.Floating:
-
-					break;
-			}
-
+			parent.UpdateTargetOffset();
 			parent.Recalculate();
 		}
 

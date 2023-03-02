@@ -203,6 +203,7 @@ namespace DragonLens.Content.GUI
 					DraggedToolbar.orientation = Orientation.Horizontal;
 				}
 
+				DraggedToolbar.collapsed = false;
 				draggedElement.Refresh();
 			}
 		}
