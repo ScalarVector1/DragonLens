@@ -8,7 +8,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 	{
 		public TextField entry;
 
-		public IntEditor(string name, Action<int> onValueChanged, int initialValue) : base(70, name, onValueChanged, initialValue)
+		public IntEditor(string name, Action<int> onValueChanged, int initialValue, string description = "") : base(70, name, onValueChanged, initialValue, description)
 		{
 			entry = new(InputType.integer);
 			entry.Left.Set(10, 0);

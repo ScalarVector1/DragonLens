@@ -16,7 +16,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 		public Slider bSlider;
 		public Slider aSlider;
 
-		public ColorEditor(string name, Action<Color> onValueChanged, Color initialValue) : base(130, name, onValueChanged, initialValue)
+		public ColorEditor(string name, Action<Color> onValueChanged, Color initialValue, string description = "") : base(130, name, onValueChanged, initialValue, description)
 		{
 			rSlider = new Slider("DragonLens/Assets/GUI/RedScale", n =>
 			{

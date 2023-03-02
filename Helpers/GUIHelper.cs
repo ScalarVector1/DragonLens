@@ -109,6 +109,13 @@ namespace DragonLens.Helpers
 					continue;
 				}
 
+				if (str == "NEWLN")
+				{
+					output += "\n";
+					line = "";
+					continue;
+				}
+
 				if (font.MeasureString(line).X * scale < length)
 				{
 					output += " " + str;

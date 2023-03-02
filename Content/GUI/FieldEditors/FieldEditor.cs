@@ -20,6 +20,11 @@ namespace DragonLens.Content.GUI.FieldEditors
 		public readonly string name;
 
 		/// <summary>
+		/// The info sown when hovering over this panel
+		/// </summary>
+		public readonly string description;
+
+		/// <summary>
 		/// The current value this editor believes the field its tied to to have. This wont update in real time so be careful
 		/// </summary>
 		public T value;
@@ -36,13 +41,14 @@ namespace DragonLens.Content.GUI.FieldEditors
 		/// <param name="name">The name that gets displated above the panel to the user</param>
 		/// <param name="onValueChanged">The callback that should happen when this editor thinks the value its tracking has changed. You'll likely need to cast the object parameter to the correct type.</param>
 		/// <param name="initialValue">A hint for what the initial value of the field tracked by this editor is</param>
-		public FieldEditor(int height, string name, Action<T> onValueChanged, T initialValue = default)
+		public FieldEditor(int height, string name, Action<T> onValueChanged, T initialValue = default, string description = "")
 		{
 			Width.Set(150, 0);
 			Height.Set(height, 0);
 			this.name = name;
 			this.onValueChanged = onValueChanged;
 			value = initialValue;
+			this.description = description;
 		}
 
 		public sealed override void Draw(SpriteBatch spriteBatch)
@@ -60,6 +66,12 @@ namespace DragonLens.Content.GUI.FieldEditors
 			base.Draw(spriteBatch);
 
 			SafeDraw(spriteBatch);
+
+			if (IsMouseHovering)
+			{
+				Tooltip.SetName(name);
+				Tooltip.SetTooltip(description);
+			}
 		}
 
 		public virtual void SafeDraw(SpriteBatch sprite) { }

@@ -13,7 +13,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 	{
 		public TextField entry;
 
-		public BoolEditor(string name, Action<bool> onValueChanged, bool initialValue) : base(70, name, onValueChanged, initialValue) { }
+		public BoolEditor(string name, Action<bool> onValueChanged, bool initialValue, string description = "") : base(70, name, onValueChanged, initialValue, description) { }
 
 		public override void Click(UIMouseEvent evt)
 		{

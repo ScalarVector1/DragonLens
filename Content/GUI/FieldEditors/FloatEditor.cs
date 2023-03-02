@@ -8,7 +8,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 	{
 		public TextField entry;
 
-		public FloatEditor(string name, Action<float> onValueChanged, float initialValue) : base(70, name, onValueChanged, initialValue)
+		public FloatEditor(string name, Action<float> onValueChanged, float initialValue, string description = "") : base(70, name, onValueChanged, initialValue, description)
 		{
 			entry = new(InputType.number);
 			entry.Left.Set(10, 0);

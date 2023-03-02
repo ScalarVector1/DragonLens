@@ -10,7 +10,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 		public TextField xEntry;
 		public TextField yEntry;
 
-		public Vector2Editor(string name, Action<Vector2> onValueChanged, Vector2 initialValue) : base(94, name, onValueChanged, initialValue)
+		public Vector2Editor(string name, Action<Vector2> onValueChanged, Vector2 initialValue, string description = "") : base(94, name, onValueChanged, initialValue, description)
 		{
 			xEntry = new(InputType.number);
 			xEntry.Left.Set(30, 0);
