@@ -6,10 +6,11 @@ using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Terraria;
-using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
+using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
 namespace DragonLens.Content.Tools.Editors
@@ -39,8 +40,8 @@ namespace DragonLens.Content.Tools.Editors
 
 		public ItemEditorSlot slot;
 
-		public UIList basicEditorList;
-		public UIList modItemEditorList;
+		public UIGrid basicEditorList;
+		public Terraria.GameContent.UI.Elements.UIList modItemEditorList;
 
 		public FixedUIScrollbar basicEditorScroll;
 		public FixedUIScrollbar modItemEditorScroll;
@@ -56,49 +57,49 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void SafeOnInitialize()
 		{
-			width = 600;
-			height = 800;
+			width = 800;
+			height = 600;
 
 			slot = new(this);
 			Append(slot);
 
 			basicEditorScroll = new(UserInterface);
-			basicEditorScroll.Height.Set(780, 0);
+			basicEditorScroll.Height.Set(540, 0);
 			basicEditorScroll.Width.Set(16, 0);
 			Append(basicEditorScroll);
 
 			basicEditorList = new();
-			basicEditorList.Width.Set(240, 0);
-			basicEditorList.Height.Set(780, 0);
+			basicEditorList.Width.Set(320, 0);
+			basicEditorList.Height.Set(540, 0);
 			basicEditorList.SetScrollbar(basicEditorScroll);
 			Append(basicEditorList);
 
 			modItemEditorScroll = new(UserInterface);
-			modItemEditorScroll.Height.Set(780, 0);
+			modItemEditorScroll.Height.Set(540, 0);
 			modItemEditorScroll.Width.Set(16, 0);
 			Append(modItemEditorScroll);
 
 			modItemEditorList = new();
-			modItemEditorList.Width.Set(240, 0);
-			modItemEditorList.Height.Set(780, 0);
+			modItemEditorList.Width.Set(160, 0);
+			modItemEditorList.Height.Set(540, 0);
 			modItemEditorList.SetScrollbar(modItemEditorScroll);
 			Append(modItemEditorList);
 		}
 
 		public override void AdjustPositions(Vector2 newPos)
 		{
-			slot.Left.Set(newPos.X + 540 - 21, 0);
+			slot.Left.Set(newPos.X + 594, 0);
 			slot.Top.Set(newPos.Y + 100, 0);
 
 			basicEditorList.Left.Set(newPos.X + 10, 0);
-			basicEditorList.Top.Set(newPos.Y + 10, 0);
-			basicEditorScroll.Left.Set(newPos.X + 160, 0);
-			basicEditorScroll.Top.Set(newPos.Y + 10, 0);
+			basicEditorList.Top.Set(newPos.Y + 50, 0);
+			basicEditorScroll.Left.Set(newPos.X + 320, 0);
+			basicEditorScroll.Top.Set(newPos.Y + 50, 0);
 
-			modItemEditorList.Left.Set(newPos.X + 170, 0);
-			modItemEditorList.Top.Set(newPos.Y + 10, 0);
-			modItemEditorScroll.Left.Set(newPos.X + 160 + 170, 0);
-			modItemEditorScroll.Top.Set(newPos.Y + 10, 0);
+			modItemEditorList.Left.Set(newPos.X + 342, 0);
+			modItemEditorList.Top.Set(newPos.Y + 50, 0);
+			modItemEditorScroll.Left.Set(newPos.X + 160 + 338, 0);
+			modItemEditorScroll.Top.Set(newPos.Y + 50, 0);
 		}
 
 		public void SetupNewItem()
@@ -135,41 +136,45 @@ namespace DragonLens.Content.Tools.Editors
 		{
 			if (item.ModItem != null)
 			{
+				string message = "This field editor was auto-generated via reflection. Changing it may have unknowable consequences depending on what the mod this item is from uses it for.";
+
 				//TODO: some sort of GetEditor generic or something so we dont have to do... this
 				foreach (FieldInfo t in item.ModItem.GetType().GetFields())
 				{
 					if (t.FieldType == typeof(bool))
-						modItemEditorList.Add(new BoolEditor(t.Name, n => t.SetValue(item.ModItem, n), (bool)t.GetValue(item.ModItem)));
+						modItemEditorList.Add(new BoolEditor(t.Name, n => t.SetValue(item.ModItem, n), (bool)t.GetValue(item.ModItem), message));
 
 					if (t.FieldType == typeof(int))
-						modItemEditorList.Add(new IntEditor(t.Name, n => t.SetValue(item.ModItem, n), (int)t.GetValue(item.ModItem)));
+						modItemEditorList.Add(new IntEditor(t.Name, n => t.SetValue(item.ModItem, n), (int)t.GetValue(item.ModItem), message));
 
 					if (t.FieldType == typeof(float))
-						modItemEditorList.Add(new FloatEditor(t.Name, n => t.SetValue(item.ModItem, n), (float)t.GetValue(item.ModItem)));
+						modItemEditorList.Add(new FloatEditor(t.Name, n => t.SetValue(item.ModItem, n), (float)t.GetValue(item.ModItem), message));
 
 					if (t.FieldType == typeof(Vector2))
-						modItemEditorList.Add(new Vector2Editor(t.Name, n => t.SetValue(item.ModItem, n), (Vector2)t.GetValue(item.ModItem)));
+						modItemEditorList.Add(new Vector2Editor(t.Name, n => t.SetValue(item.ModItem, n), (Vector2)t.GetValue(item.ModItem), message));
 
 					if (t.FieldType == typeof(Color))
-						modItemEditorList.Add(new ColorEditor(t.Name, n => t.SetValue(item.ModItem, n), (Color)t.GetValue(item.ModItem)));
+						modItemEditorList.Add(new ColorEditor(t.Name, n => t.SetValue(item.ModItem, n), (Color)t.GetValue(item.ModItem), message));
 				}
 
-				foreach (PropertyInfo t in item.ModItem.GetType().GetProperties())
+				message = "This property editor was auto-generated via reflection. Changing it may have unknowable consequences depending on what the mod this item is from uses it for.";
+
+				foreach (PropertyInfo t in item.ModItem.GetType().GetProperties().Where(n => n.SetMethod != null))
 				{
 					if (t.PropertyType == typeof(bool))
-						modItemEditorList.Add(new BoolEditor(t.Name, n => t.SetValue(item.ModItem, n), (bool)t.GetValue(item.ModItem)));
+						modItemEditorList.Add(new BoolEditor(t.Name, n => t.SetValue(item.ModItem, n), (bool)t.GetValue(item.ModItem), message));
 
 					if (t.PropertyType == typeof(int))
-						modItemEditorList.Add(new IntEditor(t.Name, n => t.SetValue(item.ModItem, n), (int)t.GetValue(item.ModItem)));
+						modItemEditorList.Add(new IntEditor(t.Name, n => t.SetValue(item.ModItem, n), (int)t.GetValue(item.ModItem), message));
 
 					if (t.PropertyType == typeof(float))
-						modItemEditorList.Add(new FloatEditor(t.Name, n => t.SetValue(item.ModItem, n), (float)t.GetValue(item.ModItem)));
+						modItemEditorList.Add(new FloatEditor(t.Name, n => t.SetValue(item.ModItem, n), (float)t.GetValue(item.ModItem), message));
 
 					if (t.PropertyType == typeof(Vector2))
-						modItemEditorList.Add(new Vector2Editor(t.Name, n => t.SetValue(item.ModItem, n), (Vector2)t.GetValue(item.ModItem)));
+						modItemEditorList.Add(new Vector2Editor(t.Name, n => t.SetValue(item.ModItem, n), (Vector2)t.GetValue(item.ModItem), message));
 
 					if (t.PropertyType == typeof(Color))
-						modItemEditorList.Add(new ColorEditor(t.Name, n => t.SetValue(item.ModItem, n), (Color)t.GetValue(item.ModItem)));
+						modItemEditorList.Add(new ColorEditor(t.Name, n => t.SetValue(item.ModItem, n), (Color)t.GetValue(item.ModItem), message));
 				}
 			}
 		}
@@ -177,6 +182,13 @@ namespace DragonLens.Content.Tools.Editors
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			Helpers.GUIHelper.DrawBox(spriteBatch, BoundingBox, ModContent.GetInstance<GUIConfig>().backgroundColor);
+
+			Vector2 pos = basePos;
+			Utils.DrawBorderString(spriteBatch, "Vanilla Fields", pos + new Vector2(120, 25), Color.White, 1, 0f, 0.5f);
+			Utils.DrawBorderString(spriteBatch, "Modded", pos + new Vector2(320 + 70, 25), Color.White, 1, 0f, 0.5f);
+
+			Utils.DrawBorderString(spriteBatch, "Item Editor", pos + new Vector2(320 + 130 + 160, 25), Color.White, 1, 0f, 0.5f);
+
 			base.Draw(spriteBatch);
 		}
 	}
@@ -188,8 +200,8 @@ namespace DragonLens.Content.Tools.Editors
 		public ItemEditorSlot(ItemEditorState parent)
 		{
 			this.parent = parent;
-			Width.Set(42, 0);
-			Height.Set(42, 0);
+			Width.Set(120, 0);
+			Height.Set(120, 0);
 		}
 
 		public override void Click(UIMouseEvent evt)
@@ -217,7 +229,7 @@ namespace DragonLens.Content.Tools.Editors
 
 			if (!parent.item.IsAir)
 			{
-				Main.inventoryScale = 36 / 52f * 42 / 36f;
+				Main.inventoryScale = 36 / 52f * 120 / 36f;
 				ItemSlot.Draw(spriteBatch, ref parent.item, 21, GetDimensions().Position());
 
 				if (IsMouseHovering)
@@ -226,6 +238,10 @@ namespace DragonLens.Content.Tools.Editors
 					Main.HoverItem = parent.item;
 					Main.hoverItemName = "a";
 				}
+			}
+			else
+			{
+				Utils.DrawBorderString(spriteBatch, "Place item\nhere!", GetDimensions().Center(), Color.LightGray, 1, 0.5f, 0.5f);
 			}
 		}
 	}
