@@ -1,5 +1,7 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
+using System.Reflection;
 using Terraria;
+using Terraria.Map;
 
 namespace DragonLens.Content.Tools.Map
 {
@@ -11,18 +13,26 @@ namespace DragonLens.Content.Tools.Map
 
 		public override string Description => "Resets the world map";
 
+		private FieldInfo tilesArray;
+		
+		public override void Load()
+		{
+			base.Load();
+
+			tilesArray = typeof(WorldMap).GetField("_tiles", BindingFlags.NonPublic | BindingFlags.Instance);
+		}
+
 		public override void OnActivate()
 		{
-			for (int i = 0; i < Main.maxTilesX; i++)
-			{
-				for (int j = 0; j < Main.maxTilesY; j++)
-				{
-					if (WorldGen.InWorld(i, j))
-						Main.Map.Update(i, j, 0);
-				}
-			}
+			// Attempt to reinitialize the MapTile array through reflection. If,
+			// for some reason, this fails, just clear the map (slower).
+			if (tilesArray is not null)
+				tilesArray.SetValue(Main.Map, new MapTile[Main.Map.MaxWidth, Main.Map.MaxHeight]);
+			else
+				Main.Map.Clear();
 
 			Main.refreshMap = true;
+			Main.clearMap = true;
 		}
 	}
 }
