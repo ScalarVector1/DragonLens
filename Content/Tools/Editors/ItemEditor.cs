@@ -155,12 +155,27 @@ namespace DragonLens.Content.Tools.Editors
 
 					if (t.FieldType == typeof(Color))
 						modItemEditorList.Add(new ColorEditor(t.Name, n => t.SetValue(item.ModItem, n), (Color)t.GetValue(item.ModItem), message));
+
+					if (t.FieldType == typeof(string))
+						modItemEditorList.Add(new StringEditor(t.Name, n => t.SetValue(item.ModItem, n), (string)t.GetValue(item.ModItem), message));
+
+					if (t.FieldType == typeof(NPC))
+						modItemEditorList.Add(new NPCEditor(t.Name, n => t.SetValue(item.ModItem, n), (NPC)t.GetValue(item.ModItem), message));
+
+					if (t.FieldType == typeof(Projectile))
+						modItemEditorList.Add(new ProjectileEditor(t.Name, n => t.SetValue(item.ModItem, n), (Projectile)t.GetValue(item.ModItem), message));
+
+					if (t.FieldType == typeof(Player))
+						modItemEditorList.Add(new PlayerEditor(t.Name, n => t.SetValue(item.ModItem, n), (Player)t.GetValue(item.ModItem), message));
 				}
 
 				message = "This property editor was auto-generated via reflection. Changing it may have unknowable consequences depending on what the mod this item is from uses it for.";
 
 				foreach (PropertyInfo t in item.ModItem.GetType().GetProperties().Where(n => n.SetMethod != null))
 				{
+					if (t.Name == "SacrificeTotal")
+						continue;
+
 					if (t.PropertyType == typeof(bool))
 						modItemEditorList.Add(new BoolEditor(t.Name, n => t.SetValue(item.ModItem, n), (bool)t.GetValue(item.ModItem), message));
 
@@ -175,6 +190,18 @@ namespace DragonLens.Content.Tools.Editors
 
 					if (t.PropertyType == typeof(Color))
 						modItemEditorList.Add(new ColorEditor(t.Name, n => t.SetValue(item.ModItem, n), (Color)t.GetValue(item.ModItem), message));
+
+					if (t.PropertyType == typeof(string))
+						modItemEditorList.Add(new StringEditor(t.Name, n => t.SetValue(item.ModItem, n), (string)t.GetValue(item.ModItem), message));
+
+					if (t.PropertyType == typeof(NPC))
+						modItemEditorList.Add(new NPCEditor(t.Name, n => t.SetValue(item.ModItem, n), (NPC)t.GetValue(item.ModItem), message));
+
+					if (t.PropertyType == typeof(Projectile))
+						modItemEditorList.Add(new ProjectileEditor(t.Name, n => t.SetValue(item.ModItem, n), (Projectile)t.GetValue(item.ModItem), message));
+
+					if (t.PropertyType == typeof(Player))
+						modItemEditorList.Add(new PlayerEditor(t.Name, n => t.SetValue(item.ModItem, n), (Player)t.GetValue(item.ModItem), message));
 				}
 			}
 		}

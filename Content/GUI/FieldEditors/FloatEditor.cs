@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 
 namespace DragonLens.Content.GUI.FieldEditors
@@ -23,11 +22,6 @@ namespace DragonLens.Content.GUI.FieldEditors
 				onValueChanged(float.TryParse(entry.currentValue, out float value) ? value : 0);
 
 			base.Update(gameTime);
-		}
-
-		public override void SafeDraw(SpriteBatch sprite)
-		{
-			base.SafeDraw(sprite);
 		}
 	}
 }
