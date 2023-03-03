@@ -93,7 +93,8 @@ namespace DragonLens.Content.GUI.FieldEditors
 			backTarget.Offset(new Point(4, 4));
 			spriteBatch.Draw(back, backTarget, Color.Black * 0.5f);
 
-			Utils.DrawBorderString(spriteBatch, name, GetDimensions().Position() + new Vector2(8, 8), Color.White, 0.8f);
+			Utils.DrawBorderString(spriteBatch, name, GetDimensions().Position() + new Vector2(8, 4), Color.White, 0.7f);
+			Utils.DrawBorderString(spriteBatch, typeof(T).Name, GetDimensions().Position() + new Vector2(8, 18), Color.Gray, 0.65f);
 
 			base.Draw(spriteBatch);
 

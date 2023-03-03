@@ -40,6 +40,7 @@ namespace DragonLens.Content.Tools.Editors
 		public Item item = new();
 
 		public ItemEditorSlot slot;
+		public SetDefaultsButton defaultButton;
 
 		public UIGrid basicEditorList;
 		public Terraria.GameContent.UI.Elements.UIList modItemEditorList;
@@ -63,6 +64,9 @@ namespace DragonLens.Content.Tools.Editors
 
 			slot = new(this);
 			Append(slot);
+
+			defaultButton = new(this);
+			Append(defaultButton);
 
 			basicEditorScroll = new(UserInterface);
 			basicEditorScroll.Height.Set(540, 0);
@@ -91,6 +95,9 @@ namespace DragonLens.Content.Tools.Editors
 		{
 			slot.Left.Set(newPos.X + 594, 0);
 			slot.Top.Set(newPos.Y + 100, 0);
+
+			defaultButton.Left.Set(newPos.X + 564, 0);
+			defaultButton.Top.Set(newPos.Y + 240, 0);
 
 			basicEditorList.Left.Set(newPos.X + 10, 0);
 			basicEditorList.Top.Set(newPos.Y + 50, 0);
@@ -137,8 +144,6 @@ namespace DragonLens.Content.Tools.Editors
 		{
 			if (item.ModItem != null)
 			{
-				string message = "This field editor was auto-generated via reflection. Changing it may have unknowable consequences depending on what the mod this item is from uses it for.";
-
 				//TODO: some sort of GetEditor generic or something so we dont have to do... this
 				foreach (FieldInfo t in item.ModItem.GetType().GetFields())
 				{
@@ -152,8 +157,6 @@ namespace DragonLens.Content.Tools.Editors
 					TryAddEditor<Projectile, ProjectileEditor>(t);
 					TryAddEditor<Player, PlayerEditor>(t);
 				}
-
-				message = "This property editor was auto-generated via reflection. Changing it may have unknowable consequences depending on what the mod this item is from uses it for.";
 
 				foreach (PropertyInfo t in item.ModItem.GetType().GetProperties().Where(n => n.SetMethod != null))
 				{
@@ -179,7 +182,9 @@ namespace DragonLens.Content.Tools.Editors
 		{
 			if (t.FieldType == typeof(T))
 			{
-				var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(item.ModItem, n)), (T)t.GetValue(item.ModItem), () => (T)t.GetValue(item.ModItem), "" });
+				string message = "This field editor was auto-generated via reflection. Changing it may have unknowable consequences depending on what the mod this item is from uses it for.";
+
+				var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(item.ModItem, n)), (T)t.GetValue(item.ModItem), () => (T)t.GetValue(item.ModItem), message });
 				modItemEditorList.Add(newEditor);
 			}
 		}
@@ -188,7 +193,9 @@ namespace DragonLens.Content.Tools.Editors
 		{
 			if (t.PropertyType == typeof(T))
 			{
-				var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(item.ModItem, n)), (T)t.GetValue(item.ModItem), () => (T)t.GetValue(item.ModItem), "" });
+				string message = "This property editor was auto-generated via reflection. Changing it may have unknowable consequences depending on what the mod this item is from uses it for.";
+
+				var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(item.ModItem, n)), (T)t.GetValue(item.ModItem), () => (T)t.GetValue(item.ModItem), message });
 				modItemEditorList.Add(newEditor);
 			}
 		}
@@ -256,6 +263,33 @@ namespace DragonLens.Content.Tools.Editors
 			else
 			{
 				Utils.DrawBorderString(spriteBatch, "Place item\nhere!", GetDimensions().Center(), Color.LightGray, 1, 0.5f, 0.5f);
+			}
+		}
+	}
+
+	internal class SetDefaultsButton : UIElement
+	{
+		public ItemEditorState parent;
+
+		public SetDefaultsButton(ItemEditorState parent)
+		{
+			this.parent = parent;
+			Width.Set(180, 0);
+			Height.Set(42, 0);
+		}
+
+		public override void Click(UIMouseEvent evt)
+		{
+			if (!parent.item.IsAir)
+				parent.item.SetDefaults(parent.item.type);
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			if (!parent.item.IsAir)
+			{
+				Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+				Utils.DrawBorderString(spriteBatch, "Reset (SetDefaults)", GetDimensions().Center(), Color.LightGray, 1, 0.5f, 0.5f);
 			}
 		}
 	}
