@@ -9,11 +9,13 @@ using Terraria.UI;
 
 namespace DragonLens.Content.GUI.FieldEditors
 {
-	internal abstract class EntityEditor<T> : FieldEditor<Entity> where T : Entity
+	internal abstract class EntityEditor<T> : FieldEditor<T> where T : Entity
 	{
 		public bool selecting = false;
 
-		public EntityEditor(string name, Action<Entity> onValueChanged, T initialValue = null, string description = "") : base(120, name, onValueChanged, initialValue, description)
+		public override bool Editing => selecting;
+
+		public EntityEditor(string name, Action<T> onValueChanged, Func<T> listenForUpdates = null, T initialValue = null, string description = "") : base(120, name, onValueChanged, listenForUpdates, initialValue, description)
 		{
 			SelectorButton<T> button = new(this);
 			button.Left.Set(80, 0);
@@ -27,7 +29,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 		/// <returns></returns>
 		public abstract T OnSelect();
 
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
 			if (Main.mouseRight)
 				selecting = false;
@@ -43,8 +45,6 @@ namespace DragonLens.Content.GUI.FieldEditors
 					selecting = false;
 				}
 			}
-
-			base.Update(gameTime);
 		}
 
 		public override void SafeDraw(SpriteBatch sprite)

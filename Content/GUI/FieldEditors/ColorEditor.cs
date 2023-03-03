@@ -16,7 +16,9 @@ namespace DragonLens.Content.GUI.FieldEditors
 		public Slider bSlider;
 		public Slider aSlider;
 
-		public ColorEditor(string name, Action<Color> onValueChanged, Color initialValue, string description = "") : base(130, name, onValueChanged, initialValue, description)
+		public override bool Editing => rSlider.dragging || gSlider.dragging || bSlider.dragging || aSlider.dragging;
+
+		public ColorEditor(string name, Action<Color> onValueChanged, Color initialValue, Func<Color> listenForUpdate = null, string description = "") : base(130, name, onValueChanged, listenForUpdate, initialValue, description)
 		{
 			rSlider = new Slider("DragonLens/Assets/GUI/RedScale", n =>
 			{
@@ -57,6 +59,14 @@ namespace DragonLens.Content.GUI.FieldEditors
 			aSlider.Top.Set(104, 0);
 			aSlider.progress = initialValue.A / 255f;
 			Append(aSlider);
+		}
+
+		public override void OnRecieveNewValue(Color newValue)
+		{
+			rSlider.progress = newValue.R / 255f;
+			gSlider.progress = newValue.G / 255f;
+			bSlider.progress = newValue.B / 255f;
+			aSlider.progress = newValue.A / 255f;
 		}
 
 		public override void SafeDraw(SpriteBatch sprite)

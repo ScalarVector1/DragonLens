@@ -7,7 +7,9 @@ namespace DragonLens.Content.GUI.FieldEditors
 	{
 		public TextField entry;
 
-		public FloatEditor(string name, Action<float> onValueChanged, float initialValue, string description = "") : base(70, name, onValueChanged, initialValue, description)
+		public override bool Editing => entry.typing;
+
+		public FloatEditor(string name, Action<float> onValueChanged, float initialValue, Func<float> listenForUpdates = null, string description = "") : base(70, name, onValueChanged, listenForUpdates, initialValue, description)
 		{
 			entry = new(InputType.number);
 			entry.Left.Set(10, 0);
@@ -16,12 +18,15 @@ namespace DragonLens.Content.GUI.FieldEditors
 			Append(entry);
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void OnRecieveNewValue(float newValue)
+		{
+			entry.currentValue = newValue.ToString();
+		}
+
+		public override void SafeUpdate(GameTime gameTime)
 		{
 			if (entry.updated)
 				onValueChanged(float.TryParse(entry.currentValue, out float value) ? value : 0);
-
-			base.Update(gameTime);
 		}
 	}
 }

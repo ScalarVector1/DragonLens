@@ -7,7 +7,9 @@ namespace DragonLens.Content.GUI.FieldEditors
 	{
 		public TextField entry;
 
-		public StringEditor(string name, Action<string> onValueChanged, string initialValue, string description = "") : base(70, name, onValueChanged, initialValue, description)
+		public override bool Editing => entry.typing;
+
+		public StringEditor(string name, Action<string> onValueChanged, string initialValue, Func<string> listenForUpdates = null, string description = "") : base(70, name, onValueChanged, listenForUpdates, initialValue, description)
 		{
 			entry = new(InputType.text);
 			entry.Left.Set(10, 0);
@@ -16,12 +18,15 @@ namespace DragonLens.Content.GUI.FieldEditors
 			Append(entry);
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void OnRecieveNewValue(string newValue)
+		{
+			entry.currentValue = newValue;
+		}
+
+		public override void SafeUpdate(GameTime gameTime)
 		{
 			if (entry.updated)
 				onValueChanged(entry.currentValue);
-
-			base.Update(gameTime);
 		}
 	}
 }

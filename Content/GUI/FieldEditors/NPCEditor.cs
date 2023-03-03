@@ -6,7 +6,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 {
 	internal class NPCEditor : EntityEditor<NPC>
 	{
-		public NPCEditor(string name, Action<Entity> onValueChanged, NPC initialValue = null, string description = "") : base(name, onValueChanged, initialValue, description)
+		public NPCEditor(string name, Action<NPC> onValueChanged, NPC initialValue, Func<NPC> listenForUpdates = null, string description = "") : base(name, onValueChanged, listenForUpdates, initialValue, description)
 		{
 		}
 

@@ -10,7 +10,9 @@ namespace DragonLens.Content.GUI.FieldEditors
 		public TextField xEntry;
 		public TextField yEntry;
 
-		public Vector2Editor(string name, Action<Vector2> onValueChanged, Vector2 initialValue, string description = "") : base(94, name, onValueChanged, initialValue, description)
+		public override bool Editing => xEntry.typing || yEntry.typing;
+
+		public Vector2Editor(string name, Action<Vector2> onValueChanged, Vector2 initialValue, Func<Vector2> listenForUpdate = null, string description = "") : base(94, name, onValueChanged, listenForUpdate, initialValue, description)
 		{
 			xEntry = new(InputType.number);
 			xEntry.Left.Set(30, 0);
@@ -27,7 +29,13 @@ namespace DragonLens.Content.GUI.FieldEditors
 			Append(yEntry);
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void OnRecieveNewValue(Vector2 newValue)
+		{
+			xEntry.currentValue = newValue.X.ToString();
+			yEntry.currentValue = newValue.Y.ToString();
+		}
+
+		public override void SafeUpdate(GameTime gameTime)
 		{
 			if (xEntry.updated || yEntry.updated)
 			{
@@ -36,8 +44,6 @@ namespace DragonLens.Content.GUI.FieldEditors
 				onValueChanged(new Vector2(x, y));
 				value = new Vector2(x, y);
 			}
-
-			base.Update(gameTime);
 		}
 
 		public override void SafeDraw(SpriteBatch sprite)

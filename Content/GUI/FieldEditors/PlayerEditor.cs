@@ -6,7 +6,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 {
 	internal class PlayerEditor : EntityEditor<Player>
 	{
-		public PlayerEditor(string name, Action<Entity> onValueChanged, Player initialValue = null, string description = "") : base(name, onValueChanged, initialValue, description)
+		public PlayerEditor(string name, Action<Player> onValueChanged, Player initialValue, Func<Player> listenForUpdates = null, string description = "") : base(name, onValueChanged, listenForUpdates, initialValue, description)
 		{
 		}
 

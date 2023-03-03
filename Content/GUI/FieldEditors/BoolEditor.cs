@@ -11,9 +11,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 {
 	internal class BoolEditor : FieldEditor<bool>
 	{
-		public TextField entry;
-
-		public BoolEditor(string name, Action<bool> onValueChanged, bool initialValue, string description = "") : base(70, name, onValueChanged, initialValue, description) { }
+		public BoolEditor(string name, Action<bool> onValueChanged, bool initialValue, Func<bool> listenForUpdate = null, string description = "") : base(70, name, onValueChanged, listenForUpdate, initialValue, description) { }
 
 		public override void Click(UIMouseEvent evt)
 		{

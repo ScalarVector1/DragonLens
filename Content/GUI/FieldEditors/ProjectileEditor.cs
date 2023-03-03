@@ -6,7 +6,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 {
 	internal class ProjectileEditor : EntityEditor<Projectile>
 	{
-		public ProjectileEditor(string name, Action<Entity> onValueChanged, Projectile initialValue = null, string description = "") : base(name, onValueChanged, initialValue, description)
+		public ProjectileEditor(string name, Action<Projectile> onValueChanged, Projectile initialValue, Func<Projectile> listenForUpdates = null, string description = "") : base(name, onValueChanged, listenForUpdates, initialValue, description)
 		{
 		}
 
