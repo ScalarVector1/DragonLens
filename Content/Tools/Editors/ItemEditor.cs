@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Terraria;
+using Terraria.GameContent.UI;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -44,9 +46,11 @@ namespace DragonLens.Content.Tools.Editors
 
 		public UIGrid basicEditorList;
 		public Terraria.GameContent.UI.Elements.UIList modItemEditorList;
+		public Terraria.GameContent.UI.Elements.UIList prefixList;
 
 		public FixedUIScrollbar basicEditorScroll;
 		public FixedUIScrollbar modItemEditorScroll;
+		public FixedUIScrollbar prefixScroll;
 
 		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 600, 32);
 
@@ -60,7 +64,7 @@ namespace DragonLens.Content.Tools.Editors
 		public override void SafeOnInitialize()
 		{
 			width = 800;
-			height = 600;
+			height = 648;
 
 			slot = new(this);
 			Append(slot);
@@ -89,31 +93,48 @@ namespace DragonLens.Content.Tools.Editors
 			modItemEditorList.Height.Set(540, 0);
 			modItemEditorList.SetScrollbar(modItemEditorScroll);
 			Append(modItemEditorList);
+
+			prefixScroll = new(UserInterface);
+			prefixScroll.Height.Set(300, 0);
+			prefixScroll.Width.Set(16, 0);
+			Append(prefixScroll);
+
+			prefixList = new();
+			prefixList.Width.Set(180, 0);
+			prefixList.Height.Set(300, 0);
+			prefixList.SetScrollbar(prefixScroll);
+			Append(prefixList);
 		}
 
 		public override void AdjustPositions(Vector2 newPos)
 		{
 			slot.Left.Set(newPos.X + 594, 0);
-			slot.Top.Set(newPos.Y + 100, 0);
+			slot.Top.Set(newPos.Y + 50 + 48, 0);
 
 			defaultButton.Left.Set(newPos.X + 564, 0);
-			defaultButton.Top.Set(newPos.Y + 240, 0);
+			defaultButton.Top.Set(newPos.Y + 190 + 48, 0);
 
 			basicEditorList.Left.Set(newPos.X + 10, 0);
-			basicEditorList.Top.Set(newPos.Y + 50, 0);
+			basicEditorList.Top.Set(newPos.Y + 50 + 48, 0);
 			basicEditorScroll.Left.Set(newPos.X + 320, 0);
-			basicEditorScroll.Top.Set(newPos.Y + 50, 0);
+			basicEditorScroll.Top.Set(newPos.Y + 50 + 48, 0);
 
 			modItemEditorList.Left.Set(newPos.X + 342, 0);
-			modItemEditorList.Top.Set(newPos.Y + 50, 0);
+			modItemEditorList.Top.Set(newPos.Y + 50 + 48, 0);
 			modItemEditorScroll.Left.Set(newPos.X + 160 + 338, 0);
-			modItemEditorScroll.Top.Set(newPos.Y + 50, 0);
+			modItemEditorScroll.Top.Set(newPos.Y + 50 + 48, 0);
+
+			prefixList.Left.Set(newPos.X + 564, 0);
+			prefixList.Top.Set(newPos.Y + 260 + 48, 0);
+			prefixScroll.Left.Set(newPos.X + 564 + 180, 0);
+			prefixScroll.Top.Set(newPos.Y + 260 + 48, 0);
 		}
 
 		public void SetupNewItem()
 		{
 			BuildBasicEditor();
 			BuildModItemEditor();
+			BuildPrefixEditor();
 		}
 
 		private void BuildBasicEditor()
@@ -200,15 +221,50 @@ namespace DragonLens.Content.Tools.Editors
 			}
 		}
 
+		private void BuildPrefixEditor()
+		{
+			prefixList.Clear();
+
+			for (int k = 1; k < PrefixLoader.PrefixCount; k++)
+			{
+				for (int i = 0; i < 100; i++)
+				{
+					Item clone = item.Clone();
+					clone.SetDefaults(item.type);
+					clone.Prefix(-2);
+
+					if (clone.prefix == k)
+					{
+						prefixList.Add(new PrefixButton(this, k));
+						break;
+					}
+				}
+			}
+		}
+
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			Helpers.GUIHelper.DrawBox(spriteBatch, BoundingBox, ModContent.GetInstance<GUIConfig>().backgroundColor);
 
-			Vector2 pos = basePos;
-			Utils.DrawBorderString(spriteBatch, "Vanilla Fields", pos + new Vector2(120, 25), Color.White, 1, 0f, 0.5f);
-			Utils.DrawBorderString(spriteBatch, "Modded", pos + new Vector2(320 + 70, 25), Color.White, 1, 0f, 0.5f);
+			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
+			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 400, 48);
+			spriteBatch.Draw(back, backTarget, Color.Black * 0.5f);
 
-			Utils.DrawBorderString(spriteBatch, "Item Editor", pos + new Vector2(320 + 130 + 160, 25), Color.White, 1, 0f, 0.5f);
+			Texture2D icon = ModContent.Request<Texture2D>("DragonLens/Assets/Tools/ItemEditor").Value;
+			spriteBatch.Draw(icon, basePos + Vector2.One * 16, Color.White);
+
+			Utils.DrawBorderStringBig(spriteBatch, "Item Editor", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.6f);
+
+			Vector2 pos = basePos;
+			Utils.DrawBorderString(spriteBatch, "Vanilla Fields", pos + new Vector2(120, 80), Color.White, 1, 0f, 0.5f);
+			Utils.DrawBorderString(spriteBatch, "Modded", pos + new Vector2(320 + 70, 80), Color.White, 1, 0f, 0.5f);
+			Utils.DrawBorderString(spriteBatch, "Prefixes", pos + new Vector2(320 + 130 + 170, 80), Color.White, 1, 0f, 0.5f);
+
+			Texture2D background = Terraria.GameContent.TextureAssets.MagicPixel.Value;
+
+			spriteBatch.Draw(background, basicEditorList.GetDimensions().ToRectangle(), Color.Black * 0.25f);
+			spriteBatch.Draw(background, modItemEditorList.GetDimensions().ToRectangle(), Color.Black * 0.25f);
+			spriteBatch.Draw(background, prefixList.GetDimensions().ToRectangle(), Color.Black * 0.25f);
 
 			base.Draw(spriteBatch);
 		}
@@ -291,6 +347,66 @@ namespace DragonLens.Content.Tools.Editors
 				Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
 				Utils.DrawBorderString(spriteBatch, "Reset (SetDefaults)", GetDimensions().Center(), Color.LightGray, 1, 0.5f, 0.5f);
 			}
+		}
+	}
+
+	internal class PrefixButton : UIElement
+	{
+		public ItemEditorState parent;
+		public int prefixID;
+
+		private readonly Item dummy;
+
+		public PrefixButton(ItemEditorState parent, int prefixID)
+		{
+			this.parent = parent;
+			this.prefixID = prefixID;
+
+			Width.Set(180, 0);
+			Height.Set(32, 0);
+
+			dummy = new();
+			dummy.SetDefaults(parent.item.type);
+			dummy.Prefix(prefixID);
+		}
+
+		public override void Click(UIMouseEvent evt)
+		{
+			if (!parent.item.IsAir)
+			{
+				parent.item.SetDefaults(parent.item.type);
+				parent.item.Prefix(prefixID);
+			}
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			if (!parent.item.IsAir)
+			{
+				Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+
+				string name = PrefixID.Search.ContainsId(prefixID) ? PrefixID.Search.GetName(prefixID) : PrefixLoader.GetPrefix(prefixID).DisplayName.GetDefault();
+
+				Utils.DrawBorderString(spriteBatch, name, GetDimensions().Center(), ItemRarity.GetColor(dummy.rare), 1, 0.5f, 0.5f);
+
+				ModPrefix prefix = PrefixLoader.GetPrefix(prefixID);
+
+				if (prefix != null)
+				{
+					string path = $"{prefix.Mod.Name}/icon_small";
+					Texture2D tex = ModContent.Request<Texture2D>(path).Value;
+
+					spriteBatch.Draw(tex, GetDimensions().ToRectangle().TopLeft() + new Vector2(16, 16), null, Color.White, 0, tex.Size() / 2f, 0.5f, 0, 0);
+				}
+			}
+		}
+
+		public override int CompareTo(object obj)
+		{
+			if (obj is PrefixButton button)
+				return dummy.rare - button.dummy.rare;
+
+			return 0;
 		}
 	}
 }
