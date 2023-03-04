@@ -5,7 +5,7 @@ namespace DragonLens.Content.Tools.Map
 {
 	internal class RevealMap : Tool
 	{
-		public override string Texture => "DragonLens/Assets/Tools/RevealMap";
+		public override string IconKey => "RevealMap";
 
 		public override string DisplayName => "Reveal map";
 

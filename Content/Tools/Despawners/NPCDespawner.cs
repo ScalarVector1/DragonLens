@@ -5,7 +5,7 @@ namespace DragonLens.Content.Tools.Despawners
 {
 	internal class NPCDespawner : Tool
 	{
-		public override string Texture => "DragonLens/Assets/Tools/NPCDespawner";
+		public override string IconKey => "NPCDespawner";
 
 		public override string DisplayName => "Clear NPCs";
 

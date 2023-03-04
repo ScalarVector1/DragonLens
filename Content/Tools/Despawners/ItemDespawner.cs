@@ -5,7 +5,7 @@ namespace DragonLens.Content.Tools.Despawners
 {
 	internal class ItemDespawner : Tool
 	{
-		public override string Texture => "DragonLens/Assets/Tools/ItemDespawner";
+		public override string IconKey => "ItemDespawner";
 
 		public override string DisplayName => "Clear items";
 

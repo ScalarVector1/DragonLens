@@ -12,7 +12,7 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public static bool active = false;
 
-		public override string Texture => "DragonLens/Assets/Tools/InfiniteReach";
+		public override string IconKey => "InfiniteReach";
 
 		public override string DisplayName => "Omnipotent building";
 

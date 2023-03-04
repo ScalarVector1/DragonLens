@@ -14,7 +14,7 @@ namespace DragonLens.Content.Tools.Visualization
 
 		public static Vector2 lockCameraPos;
 
-		public override string Texture => "DragonLens/Assets/Tools/LockCamera";
+		public override string IconKey => "LockCamera";
 
 		public override string DisplayName => "Lock camera";
 

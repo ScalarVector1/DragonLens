@@ -12,7 +12,7 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public static int speedup = 0;
 
-		public override string Texture => "DragonLens/Assets/Tools/FastForward";
+		public override string IconKey => "FastForward";
 
 		public override string DisplayName => "Fast forward";
 

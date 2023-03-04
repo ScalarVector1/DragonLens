@@ -5,7 +5,7 @@ namespace DragonLens.Content.Tools.Despawners
 {
 	internal class ProjectileDespawner : Tool
 	{
-		public override string Texture => "DragonLens/Assets/Tools/ProjectileDespawner";
+		public override string IconKey => "ProjectileDespawner";
 
 		public override string DisplayName => "Clear projectiles";
 

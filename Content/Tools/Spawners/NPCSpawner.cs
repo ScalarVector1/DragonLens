@@ -19,7 +19,7 @@ namespace DragonLens.Content.Tools.Spawners
 {
 	internal class NPCSpawner : Tool
 	{
-		public override string Texture => "DragonLens/Assets/Tools/NPCSpawner";
+		public override string IconKey => "NPCSpawner";
 
 		public override string DisplayName => "NPC spawner";
 
@@ -47,7 +47,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override string Name => "NPC spawner";
 
-		public override string IconTexture => "DragonLens/Assets/Tools/NPCSpawner";
+		public override string IconTexture => "NPCSpawner";
 
 		public override Vector2 DefaultPosition => new(0.4f, 0.4f);
 

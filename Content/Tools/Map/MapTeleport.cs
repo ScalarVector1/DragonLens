@@ -13,7 +13,7 @@ namespace DragonLens.Content.Tools.Map
 	{
 		public static bool active = true;
 
-		public override string Texture => "DragonLens/Assets/Tools/MapTeleport";
+		public override string IconKey => "MapTeleport";
 
 		public override string DisplayName => "Map teleportation";
 

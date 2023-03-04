@@ -5,7 +5,7 @@ namespace DragonLens.Content.Tools.Despawners
 {
 	internal class GoreDespawner : Tool
 	{
-		public override string Texture => "DragonLens/Assets/Tools/GoreDespawner";
+		public override string IconKey => "GoreDespawner";
 
 		public override string DisplayName => "Clear gores";
 

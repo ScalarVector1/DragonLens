@@ -18,7 +18,7 @@ namespace DragonLens.Content.Tools.Spawners
 {
 	internal class ProjectileSpawner : Tool
 	{
-		public override string Texture => "DragonLens/Assets/Tools/ProjectileSpawner";
+		public override string IconKey => "ProjectileSpawner";
 
 		public override string DisplayName => "Projectile spawner";
 
@@ -54,7 +54,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override string Name => "Projectile spawner";
 
-		public override string IconTexture => "DragonLens/Assets/Tools/ProjectileSpawner";
+		public override string IconTexture => "ProjectileSpawner";
 
 		public override Vector2 DefaultPosition => new(0.5f, 0.4f);
 

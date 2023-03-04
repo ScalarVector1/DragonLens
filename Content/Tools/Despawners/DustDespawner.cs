@@ -5,7 +5,7 @@ namespace DragonLens.Content.Tools.Despawners
 {
 	internal class DustDespawner : Tool
 	{
-		public override string Texture => "DragonLens/Assets/Tools/DustDespawner";
+		public override string IconKey => "DustDespawner";
 
 		public override string DisplayName => "Clear dusts";
 

@@ -2,6 +2,7 @@
 using DragonLens.Content.GUI;
 using DragonLens.Content.GUI.FieldEditors;
 using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,7 +19,7 @@ namespace DragonLens.Content.Tools.Editors
 {
 	internal class PlayerEditorTool : Tool
 	{
-		public override string Texture => "DragonLens/Assets/Tools/PlayerEditor";
+		public override string IconKey => "PlayerEditor";
 
 		public override string DisplayName => "Player Editor";
 
@@ -130,7 +131,7 @@ namespace DragonLens.Content.Tools.Editors
 			basicEditorList.Add(new IntEditor("Max Life", n => player.statLifeMax = n, player.statLifeMax, () => player.statLifeMax, "The players max life via permanent vanilla sources. Changing this below 20 or above 500 might have odd effects."));
 			basicEditorList.Add(new IntEditor("Max Mana", n => player.statManaMax = n, player.statManaMax, () => player.statManaMax, "The players max mana via permanent vanilla sources. Changing this below 20 or above 200 might have odd effects."));
 
-			var mp = player.GetModPlayer<PlayerEditorPlayer>();
+			PlayerEditorPlayer mp = player.GetModPlayer<PlayerEditorPlayer>();
 
 			basicEditorList.Add(new IntEditor("Extra Life", n => mp.lifeBoost = n, mp.lifeBoost, () => mp.lifeBoost, "Allows you to give yourself an arbitrary amount of extra life."));
 			basicEditorList.Add(new IntEditor("Extra Mana", n => mp.manaBoost = n, mp.manaBoost, () => mp.manaBoost, "Allows you to give yourself an arbitrary amount of extra mana."));
@@ -166,7 +167,7 @@ namespace DragonLens.Content.Tools.Editors
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 400, 48);
 			spriteBatch.Draw(back, backTarget, Color.Black * 0.5f);
 
-			Texture2D icon = ModContent.Request<Texture2D>("DragonLens/Assets/Tools/PlayerEditor").Value;
+			Texture2D icon = ThemeHandler.GetIcon("PlayerEditor");
 			spriteBatch.Draw(icon, basePos + Vector2.One * 16, Color.White);
 
 			Utils.DrawBorderStringBig(spriteBatch, "Player Editor", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.6f);

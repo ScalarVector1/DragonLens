@@ -5,7 +5,7 @@ namespace DragonLens.Content.Tools.Despawners
 {
 	internal class BuffDespawner : Tool
 	{
-		public override string Texture => "DragonLens/Assets/Tools/BuffDespawner";
+		public override string IconKey => "BuffDespawner";
 
 		public override string DisplayName => "Clear buffs";
 

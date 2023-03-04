@@ -1,11 +1,8 @@
 ﻿using DragonLens.Content.GUI;
-using DragonLens.Content.Tools;
-using DragonLens.Content.Tools.Despawners;
-using DragonLens.Content.Tools.Gameplay;
-using DragonLens.Content.Tools.Map;
-using DragonLens.Content.Tools.Spawners;
-using DragonLens.Content.Tools.Visualization;
+using DragonLens.Content.Themes.BoxProviders;
+using DragonLens.Content.Themes.IconProviders;
 using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Core.Systems.ThemeSystem;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -43,7 +40,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 				stream.Close();
 
 				LoadFallback();
-				ExportToFile(currentPath);
+				//ExportToFile(currentPath);
 			}
 		}
 
@@ -63,6 +60,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 			}
 
 			tag["Toolbars"] = tags;
+			ThemeHandler.SaveData(tag);
 		}
 
 		/// <summary>
@@ -81,6 +79,8 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 				newBar.LoadData(loadedTag);
 				activeToolbars.Add(newBar);
 			}
+
+			ThemeHandler.LoadData(tag);
 
 			UILoader.GetUIState<ToolbarState>().Refresh();
 		}
@@ -116,10 +116,12 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 		/// </summary>
 		/// <param name="name">The name of your preset</param>
 		/// <param name="build">The action to build your preset. You should add to the toolbars parameter passed to build out the preset.</param>
-		public static void BuildPreset(string name, Action<List<Toolbar>> build)
+		public static void BuildPreset(string name, Action<List<Toolbar>> build, ThemeBoxProvider boxes, ThemeIconProvider icons)
 		{
 			activeToolbars.Clear();
 			build(activeToolbars);
+			ThemeHandler.currentBoxProvider = boxes;
+			ThemeHandler.currentIconProvider = icons;
 			ExportToFile(Path.Join(Main.SavePath, "DragonLensLayouts", name));
 		}
 
@@ -128,47 +130,10 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 		/// </summary>
 		private static void LoadFallback()
 		{
-			activeToolbars.Add(
-				new Toolbar(new Vector2(0.3f, 1f), Orientation.Horizontal, AutomaticHideOption.Never)
-				.AddTool<ItemSpawner>()
-				.AddTool<ProjectileSpawner>()
-				.AddTool<NPCSpawner>()
-				.AddTool<BuffSpawner>()
-				);
+			FirstTimeSetupSystem.trueFirstTime = true;
 
-			activeToolbars.Add(
-				new Toolbar(new Vector2(0.3f, 0.85f), Orientation.Horizontal, AutomaticHideOption.Never)
-				.AddTool<ItemDespawner>()
-				.AddTool<ProjectileDespawner>()
-				.AddTool<NPCDespawner>()
-				.AddTool<GoreDespawner>()
-				);
-
-			activeToolbars.Add(
-				new Toolbar(new Vector2(0.5f, 1f), Orientation.Horizontal, AutomaticHideOption.Never)
-				.AddTool<Godmode>()
-				.AddTool<InfiniteReach>()
-				.AddTool<NoClip>()
-				.AddTool<FastForward>()
-				.AddTool<Time>()
-				.AddTool<Weather>()
-				.AddTool<CustomizeTool>()
-				);
-
-			activeToolbars.Add(
-				new Toolbar(new Vector2(0.7f, 1f), Orientation.Horizontal, AutomaticHideOption.Never)
-				.AddTool<Floodlight>()
-				.AddTool<FreeCamera>()
-				.AddTool<LockCamera>()
-				);
-
-			activeToolbars.Add(
-				new Toolbar(new Vector2(1f, 0.5f), Orientation.Vertical, AutomaticHideOption.NoMapScreen)
-				.AddTool<RevealMap>()
-				.AddTool<HideMap>()
-				.AddTool<MapTeleport>()
-				.AddTool<CustomizeTool>()
-				);
+			ThemeHandler.SetBoxProvider<SimpleBoxes>();
+			ThemeHandler.SetIconProvider<DefaultIcons>();
 
 			UILoader.GetUIState<ToolbarState>().Refresh();
 		}

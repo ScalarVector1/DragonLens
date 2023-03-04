@@ -1,6 +1,7 @@
 ﻿using DragonLens.Configs;
 using DragonLens.Content.GUI;
 using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using Microsoft.Xna.Framework;
@@ -22,7 +23,7 @@ namespace DragonLens.Content.Tools.Gameplay
 {
 	internal class Paint : Tool
 	{
-		public override string Texture => "DragonLens/Assets/Tools/Paint";
+		public override string IconKey => "Paint";
 
 		public override string DisplayName => "Tile painter";
 
@@ -208,7 +209,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 400, 40);
 			spriteBatch.Draw(back, backTarget, Color.Black * 0.5f);
 
-			Texture2D icon = ModContent.Request<Texture2D>("DragonLens/Assets/Tools/Paint").Value;
+			Texture2D icon = ThemeHandler.GetIcon("Paint");
 			spriteBatch.Draw(icon, basePos + Vector2.One * 12, Color.White);
 
 			Utils.DrawBorderStringBig(spriteBatch, "Tile painter", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);

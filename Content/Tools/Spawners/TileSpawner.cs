@@ -20,7 +20,7 @@ namespace DragonLens.Content.Tools.Spawners
 {
 	internal class TileSpawner : Tool
 	{
-		public override string Texture => "DragonLens/Assets/Tools/TileSpawner";
+		public override string IconKey => "TileSpawner";
 
 		public override string DisplayName => "Tile spawner";
 
@@ -49,7 +49,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override string Name => "Tile spawner";
 
-		public override string IconTexture => "DragonLens/Assets/Tools/TileSpawner";
+		public override string IconTexture => "TileSpawner";
 
 		public override Vector2 DefaultPosition => new(0.5f, 0.3f);
 

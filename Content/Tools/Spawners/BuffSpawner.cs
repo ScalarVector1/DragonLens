@@ -19,7 +19,7 @@ namespace DragonLens.Content.Tools.Spawners
 {
 	internal class BuffSpawner : Tool
 	{
-		public override string Texture => "DragonLens/Assets/Tools/BuffSpawner";
+		public override string IconKey => "BuffSpawner";
 
 		public override string DisplayName => "Buff spawner";
 
@@ -50,7 +50,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override string Name => "Buff spawner";
 
-		public override string IconTexture => "DragonLens/Assets/Tools/BuffSpawner";
+		public override string IconTexture => "BuffSpawner";
 
 		public override Vector2 DefaultPosition => new(0.1f, 0.4f);
 

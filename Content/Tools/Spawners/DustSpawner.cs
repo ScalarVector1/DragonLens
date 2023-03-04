@@ -20,7 +20,7 @@ namespace DragonLens.Content.Tools.Spawners
 {
 	internal class DustSpawner : Tool
 	{
-		public override string Texture => "DragonLens/Assets/Tools/DustSpawner";
+		public override string IconKey => "DustSpawner";
 
 		public override string DisplayName => "Dust spawner";
 
@@ -62,7 +62,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override string Name => "Dust spawner";
 
-		public override string IconTexture => "DragonLens/Assets/Tools/DustSpawner";
+		public override string IconTexture => "DustSpawner";
 
 		public override Vector2 DefaultPosition => new(0.5f, 0.4f);
 

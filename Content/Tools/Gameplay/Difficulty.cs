@@ -7,7 +7,7 @@ namespace DragonLens.Content.Tools.Gameplay
 {
 	internal class Difficulty : Tool
 	{
-		public override string Texture => "DragonLens/Assets/Tools/Difficulty";
+		public override string IconKey => "Difficulty";
 
 		public override string DisplayName => "Difficulty switcher";
 

@@ -1,5 +1,6 @@
 ﻿using DragonLens.Content.GUI;
 using DragonLens.Content.Tools.Spawners;
+using DragonLens.Core.Systems.ThemeSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -36,7 +37,7 @@ namespace DragonLens.Content.Filters.ItemFilters
 			string path = $"{mod.Name}/icon_small";
 
 			if (mod.Name == "ModLoader")
-				tex = ModContent.Request<Texture2D>("DragonLens/Assets/Tools/Customize").Value;
+				tex = ThemeHandler.GetIcon("Customize");
 			else if (ModContent.HasAsset(path))
 				tex = ModContent.Request<Texture2D>(path).Value;
 

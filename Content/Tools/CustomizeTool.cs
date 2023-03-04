@@ -1,6 +1,7 @@
 ﻿using DragonLens.Configs;
 using DragonLens.Content.GUI;
 using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
@@ -18,7 +19,7 @@ namespace DragonLens.Content.Tools
 	{
 		public static bool customizing;
 
-		public override string Texture => "DragonLens/Assets/Tools/Customize";
+		public override string IconKey => "Customize";
 
 		public override string DisplayName => "Customize tool";
 
@@ -61,7 +62,7 @@ namespace DragonLens.Content.Tools
 
 		public override string Name => "Add tool";
 
-		public override string IconTexture => "DragonLens/Assets/Tools/Customize";
+		public override string IconTexture => "Customize";
 
 		public override void PopulateGrid(UIGrid grid)
 		{
@@ -116,7 +117,7 @@ namespace DragonLens.Content.Tools
 		{
 			Rectangle target = iconBox;
 			target.Inflate(-4, -4);
-			spriteBatch.Draw(ModContent.Request<Texture2D>(tool.Texture).Value, target, Color.White);
+			spriteBatch.Draw(ThemeHandler.GetIcon(tool.IconKey), target, Color.White);
 
 			if (IsMouseHovering)
 			{

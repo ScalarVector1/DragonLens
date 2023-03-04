@@ -2,6 +2,7 @@
 using DragonLens.Content.GUI;
 using DragonLens.Content.GUI.FieldEditors;
 using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,7 +21,7 @@ namespace DragonLens.Content.Tools.Editors
 {
 	internal class ItemEditor : Tool
 	{
-		public override string Texture => "DragonLens/Assets/Tools/ItemEditor";
+		public override string IconKey => "ItemEditor";
 
 		public override string DisplayName => "Item Editor";
 
@@ -248,7 +249,7 @@ namespace DragonLens.Content.Tools.Editors
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 400, 48);
 			spriteBatch.Draw(back, backTarget, Color.Black * 0.5f);
 
-			Texture2D icon = ModContent.Request<Texture2D>("DragonLens/Assets/Tools/ItemEditor").Value;
+			Texture2D icon = ThemeHandler.GetIcon("ItemEditor");
 			spriteBatch.Draw(icon, basePos + Vector2.One * 16, Color.White);
 
 			Utils.DrawBorderStringBig(spriteBatch, "Item Editor", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.6f);

@@ -14,7 +14,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public static Vector2 desiredPos;
 
-		public override string Texture => "DragonLens/Assets/Tools/Noclip";
+		public override string IconKey => "Noclip";
 
 		public override string DisplayName => "Noclip";
 

@@ -1,6 +1,7 @@
 ﻿using DragonLens.Configs;
 using DragonLens.Content.Filters;
 using DragonLens.Content.GUI.FieldEditors;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -32,7 +33,7 @@ namespace DragonLens.Content.GUI
 
 		public abstract string Name { get; }
 
-		public virtual string IconTexture => "DragonLens/Assets/Tools/TestTool";
+		public virtual string IconTexture => "TestTool";
 
 		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 500, 64);
 
@@ -181,7 +182,7 @@ namespace DragonLens.Content.GUI
 			gridBackTarget.Inflate(4, 4);
 			spriteBatch.Draw(gridBack, gridBackTarget, Color.Black * 0.25f);
 
-			Texture2D icon = ModContent.Request<Texture2D>(IconTexture).Value;
+			Texture2D icon = ThemeHandler.GetIcon(IconTexture);
 			spriteBatch.Draw(icon, basePos + Vector2.One * 16, Color.White);
 
 			Utils.DrawBorderStringBig(spriteBatch, Name, basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.6f);

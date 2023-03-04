@@ -11,7 +11,7 @@ namespace DragonLens.Content.Tools.Visualization
 	{
 		public static float strength = 0f;
 
-		public override string Texture => "DragonLens/Assets/Tools/Lighting";
+		public override string IconKey => "Lighting";
 
 		public override string DisplayName => "Mass Illumination";
 

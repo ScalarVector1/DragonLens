@@ -14,7 +14,7 @@ namespace DragonLens.Content.Tools.Visualization
 
 		public static Vector2 freeCameraPos;
 
-		public override string Texture => "DragonLens/Assets/Tools/FreeCamera";
+		public override string IconKey => "FreeCamera";
 
 		public override string DisplayName => "Free camera";
 

@@ -1,4 +1,5 @@
 ﻿using DragonLens.Configs;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using Microsoft.Xna.Framework;
@@ -15,7 +16,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public static bool dogMode = false;
 
-		public override string Texture => "DragonLens/Assets/Tools/GodMode";
+		public override string IconKey => "GodMode";
 
 		public override string DisplayName => "God mode";
 
@@ -60,7 +61,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			}
 			else if (dogMode)
 			{
-				Texture2D icon = ModContent.Request<Texture2D>("DragonLens/Assets/Tools/DogMode").Value;
+				Texture2D icon = ThemeHandler.GetIcon("DogMode");
 				spriteBatch.Draw(icon, position, Color.White);
 
 				GUIHelper.DrawOutline(spriteBatch, new Rectangle((int)position.X - 7, (int)position.Y - 7, 46, 46), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());

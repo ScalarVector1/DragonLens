@@ -1,6 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using DragonLens.Core.Systems.ThemeSystem;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace DragonLens.Core.Systems.ToolSystem
@@ -8,7 +10,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 	/// <summary>
 	/// A singleton type which can be extended to add new tools. Tools function primarily as a 'kick-off-point' for other GUIs or state changes.
 	/// </summary>
-	internal abstract class Tool : ModTexturedType
+	internal abstract class Tool : ModType
 	{
 		/// <summary>
 		/// The hotkey keybind for this tool
@@ -21,9 +23,9 @@ namespace DragonLens.Core.Systems.ToolSystem
 		public ModKeybind altKeybind;
 
 		/// <summary>
-		/// A path to the texture of the icon used for this tool
+		/// The icon key to retrieve the icon for this tool
 		/// </summary>
-		public abstract override string Texture { get; }
+		public abstract string IconKey { get; }
 
 		/// <summary>
 		/// The display name of the tool to the end user
@@ -73,8 +75,8 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// <param name="position">Where the icon should be drawn on the UI</param>
 		public virtual void DrawIcon(SpriteBatch spriteBatch, Vector2 position)
 		{
-			Texture2D tex = ModContent.Request<Texture2D>(Texture).Value;
-			spriteBatch.Draw(tex, position, Color.White);
+			Texture2D tex = ThemeHandler.GetIcon(IconKey);
+			spriteBatch.Draw(tex, position + tex.Size() / 2f, null, Color.White, 0, tex.Size() / 2f, 1, 0, 0);
 		}
 	}
 }

@@ -7,7 +7,7 @@ namespace DragonLens.Content.Tools.Map
 {
 	internal class HideMap : Tool
 	{
-		public override string Texture => "DragonLens/Assets/Tools/HideMap";
+		public override string IconKey => "HideMap";
 
 		public override string DisplayName => "Hide map";
 
