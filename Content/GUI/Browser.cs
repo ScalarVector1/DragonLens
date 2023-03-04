@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.GameInput;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -300,8 +299,11 @@ namespace DragonLens.Content.GUI
 		{
 			base.Update(gameTime);
 
-			if(updated)
+			if (updated)
+			{
+				BrowserButton.drawDelayTimer = 2;
 				(Parent as Browser)?.SortGrid();
+			}
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
