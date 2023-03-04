@@ -73,8 +73,11 @@ namespace DragonLens.Content.Tools.Gameplay
 			width = 400;
 			height = 500;
 
-			adPanel = new();
-			Append(adPanel);
+			if (!ModLoader.HasMod("StructureHelper"))
+			{
+				adPanel = new();
+				Append(adPanel);
+			}
 
 			sampleButton = new("DragonLens/Assets/GUI/Picker", () => selecting, "Create structure");
 			sampleButton.OnClick += (a, b) => selecting = !selecting;
@@ -94,8 +97,8 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override void AdjustPositions(Vector2 newPos)
 		{
-			adPanel.Left.Set(newPos.X + 410, 0);
-			adPanel.Top.Set(newPos.Y, 0);
+			adPanel?.Left.Set(newPos.X + 410, 0);
+			adPanel?.Top.Set(newPos.Y, 0);
 
 			sampleButton.Left.Set(newPos.X + 344, 0);
 			sampleButton.Top.Set(newPos.Y + 80, 0);
@@ -310,13 +313,18 @@ namespace DragonLens.Content.Tools.Gameplay
 			Width.Set(210, 0);
 			Height.Set(500, 0);
 
-			if (!ModLoader.HasMod("StructureHelper"))
-			{
-				var button = new AdButton();
-				button.Left.Set(25, 0);
-				button.Top.Set(390, 0);
-				Append(button);
-			}
+			var button = new AdButton();
+			button.Left.Set(25, 0);
+			button.Top.Set(390, 0);
+			Append(button);
+
+			var closeButton = new Terraria.GameContent.UI.Elements.UIImageButton(ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Remove"));
+			closeButton.Width.Set(16, 0);
+			closeButton.Height.Set(16, 0);
+			closeButton.Left.Set(186, 0);
+			closeButton.Top.Set(8, 0);
+			closeButton.OnClick += (a, b) => Remove();
+			Append(closeButton);
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
@@ -324,17 +332,14 @@ namespace DragonLens.Content.Tools.Gameplay
 			var dims = GetDimensions().ToRectangle();
 			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().backgroundColor);
 
-			if (!ModLoader.HasMod("StructureHelper"))
-			{
-				ReLogic.Graphics.DynamicSpriteFont font = Terraria.GameContent.FontAssets.MouseText.Value;
-				string message = GUIHelper.WrapString("For more useful features, check out the full Structure Helper mod! You'll be able to: NEWBLOCK" +
-					" > Export structures to files! NEWBLOCK" +
-					" > Use null tiles to generate non-square structures! NEWBLOCK" +
-					" > Place chests with custom, random loot pools! NEWBLOCK" +
-					" > Generate structures in your own mods from files!", 160, font, 0.8f);
+			ReLogic.Graphics.DynamicSpriteFont font = Terraria.GameContent.FontAssets.MouseText.Value;
+			string message = GUIHelper.WrapString("For more useful features, check out the full Structure Helper mod! You'll be able to: NEWBLOCK" +
+				" > Export structures to files! NEWBLOCK" +
+				" > Use null tiles to generate non-square structures! NEWBLOCK" +
+				" > Place chests with custom, random loot pools! NEWBLOCK" +
+				" > Generate structures in your own mods from files!", 160, font, 0.8f);
 
-				Utils.DrawBorderString(spriteBatch, message, dims.TopLeft() + Vector2.One * 8, Color.White, 0.8f);
-			}
+			Utils.DrawBorderString(spriteBatch, message, dims.TopLeft() + Vector2.One * 8, Color.White, 0.8f);
 
 			base.Draw(spriteBatch);
 		}
