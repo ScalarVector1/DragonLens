@@ -194,8 +194,6 @@ namespace DragonLens.Content.Tools.Editors
 					TryAddEditor<Projectile, ProjectileEditor>(t);
 					TryAddEditor<Player, PlayerEditor>(t);
 				}
-
-				Main.NewText("Foo!");
 			}
 		}
 
