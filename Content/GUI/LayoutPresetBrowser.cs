@@ -105,6 +105,7 @@ namespace DragonLens.Content.GUI
 					.AddTool<Difficulty>()
 					.AddTool<SpawnTool>()
 					.AddTool<ItemEditor>()
+					.AddTool<PlayerEditorTool>()
 					.AddTool<Paint>()
 					.AddTool<CustomizeTool>()
 					);
@@ -160,7 +161,7 @@ namespace DragonLens.Content.GUI
 					//TODO: Waypoints?
 					.AddTool<ItemDespawner>()
 					.AddTool<Paint>()
-					//TODO: Player editor
+					.AddTool<PlayerEditorTool>()
 					.AddTool<NPCDespawner>()
 					.AddTool<SpawnTool>()
 					.AddTool<Floodlight>()
