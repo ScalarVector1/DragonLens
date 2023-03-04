@@ -58,6 +58,9 @@ namespace DragonLens.Content.Tools.Gameplay
 		private Point16 lastPlaced;
 
 		public StructureButton structure;
+		public Point16 placeOffset;
+
+		public Point16 PlaceTarget => new Point16(Player.tileTargetX, Player.tileTargetY) + placeOffset;
 
 		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 400, 32);
 
@@ -144,6 +147,23 @@ namespace DragonLens.Content.Tools.Gameplay
 			}
 		}
 
+		public override void RightClick(UIMouseEvent evt)
+		{
+			if (structure != null)
+				structure = null;
+		}
+
+		public override void ScrollWheel(UIScrollWheelEvent evt)
+		{
+			if (structure != null)
+			{
+				if (Main.keyState.PressingShift())
+					placeOffset = new Point16(placeOffset.X + (evt.ScrollWheelValue > 1 ? 1 : -1), placeOffset.Y);
+				else
+					placeOffset = new Point16(placeOffset.X, placeOffset.Y + (evt.ScrollWheelValue > 1 ? 1 : -1));
+			}
+		}
+
 		public override void SafeUpdate(GameTime gameTime)
 		{
 			if (selecting || structure != null)
@@ -151,38 +171,30 @@ namespace DragonLens.Content.Tools.Gameplay
 
 			if (Main.mouseLeft && structure != null)
 			{
-				var placeTarget = new Point16(Player.tileTargetX, Player.tileTargetY);
-
 				//Prevents re-placing the same structure in the same place which could cause lag
-				if (placeTarget != lastPlaced)
+				if (PlaceTarget != lastPlaced)
 				{
-					StructureHelper.Generator.Generate(structure.strucutre, placeTarget);
-					lastPlaced = placeTarget;
+					StructureHelper.Generator.Generate(structure.strucutre, PlaceTarget);
+					lastPlaced = PlaceTarget;
 
 					for (int x = -1; x <= structure.strucutre.GetInt("Width") + 1; x++)
 					{
-						WorldGen.SquareTileFrame(placeTarget.X + x, placeTarget.Y, true);
-						WorldGen.SquareTileFrame(placeTarget.X + x, placeTarget.Y + 1, true);
+						WorldGen.SquareTileFrame(PlaceTarget.X + x, PlaceTarget.Y, true);
+						WorldGen.SquareTileFrame(PlaceTarget.X + x, PlaceTarget.Y + 1, true);
 
 						if (x <= 0 || x >= structure.strucutre.GetInt("Width"))
 						{
 							for (int y = -1; y <= structure.strucutre.GetInt("Height") + 1; y++)
 							{
-								WorldGen.SquareTileFrame(placeTarget.X + x, placeTarget.Y + y, true);
+								WorldGen.SquareTileFrame(PlaceTarget.X + x, PlaceTarget.Y + y, true);
 							}
 						}
 
-						WorldGen.SquareTileFrame(placeTarget.X + x, placeTarget.Y + structure.strucutre.GetInt("Height") + 1, true);
-						WorldGen.SquareTileFrame(placeTarget.X + x, placeTarget.Y + structure.strucutre.GetInt("Height"), true);
+						WorldGen.SquareTileFrame(PlaceTarget.X + x, PlaceTarget.Y + structure.strucutre.GetInt("Height") + 1, true);
+						WorldGen.SquareTileFrame(PlaceTarget.X + x, PlaceTarget.Y + structure.strucutre.GetInt("Height"), true);
 					}
 				}
 			}
-		}
-
-		public override void RightClick(UIMouseEvent evt)
-		{
-			if (structure != null)
-				structure = null;
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
@@ -201,20 +213,12 @@ namespace DragonLens.Content.Tools.Gameplay
 
 			Utils.DrawBorderStringBig(spriteBatch, "Tile painter", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
 
-			/*
-			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y + 180, 400, 80), ModContent.GetInstance<GUIConfig>().backgroundColor);
-
-			string tips = "Try out StructureHelper for more features and the ability to save structures to external files!";
-			Utils.DrawBorderString(spriteBatch, tips, basePos + new Vector2(24, 190), Color.White, 0.8f);
-			*/
-
 			if (structure != null && !selecting)
 			{
 				spriteBatch.End();
 				spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
 
-				var pos = new Point16(Player.tileTargetX, Player.tileTargetY);
-				Vector2 pos2 = pos.ToVector2() * 16 - Main.screenPosition;
+				Vector2 pos2 = PlaceTarget.ToVector2() * 16 - Main.screenPosition;
 
 				GUIHelper.DrawOutline(Main.spriteBatch, new Rectangle((int)pos2.X - 4, (int)pos2.Y - 4, structure.preview.Width + 8, structure.preview.Height + 8), Color.Red);
 
@@ -281,7 +285,10 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void Click(UIMouseEvent evt)
 		{
 			if (!closeButton.IsMouseHovering)
+			{
 				parent.structure = this;
+				parent.placeOffset = new(); //reset placement offset when a new structure is selected
+			}
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
