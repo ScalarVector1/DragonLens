@@ -1,5 +1,6 @@
 ﻿using DragonLens.Content.Tools;
 using DragonLens.Content.Tools.Despawners;
+using DragonLens.Content.Tools.Editors;
 using DragonLens.Content.Tools.Gameplay;
 using DragonLens.Content.Tools.Map;
 using DragonLens.Content.Tools.Spawners;
@@ -103,6 +104,8 @@ namespace DragonLens.Content.GUI
 					.AddTool<Weather>()
 					.AddTool<Difficulty>()
 					.AddTool<SpawnTool>()
+					.AddTool<ItemEditor>()
+					.AddTool<Paint>()
 					.AddTool<CustomizeTool>()
 					);
 
@@ -138,7 +141,7 @@ namespace DragonLens.Content.GUI
 					.AddTool<NPCSpawner>()
 					.AddTool<BuffSpawner>()
 					.AddTool<Godmode>()
-					//TODO: Item editor
+					.AddTool<ItemEditor>()
 					.AddTool<CustomizeTool>()
 					);
 
@@ -156,7 +159,7 @@ namespace DragonLens.Content.GUI
 					//TODO: Recipie browser?
 					//TODO: Waypoints?
 					.AddTool<ItemDespawner>()
-					//TODO: SH menu
+					.AddTool<Paint>()
 					//TODO: Player editor
 					.AddTool<NPCDespawner>()
 					.AddTool<SpawnTool>()
