@@ -273,7 +273,11 @@ namespace DragonLens.Content.GUI
 				return;
 
 			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
-			tool.DrawIcon(spriteBatch, GetDimensions().Position() + Vector2.One * 7);
+
+			var innerRect = GetDimensions().ToRectangle();
+			innerRect.Inflate(-4, -4);
+
+			tool.DrawIcon(spriteBatch, innerRect);
 
 			if (IsMouseHovering)
 			{

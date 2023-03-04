@@ -73,10 +73,15 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// </summary>
 		/// <param name="spriteBatch">Spritebatch used to draw the icon</param>
 		/// <param name="position">Where the icon should be drawn on the UI</param>
-		public virtual void DrawIcon(SpriteBatch spriteBatch, Vector2 position)
+		public virtual void DrawIcon(SpriteBatch spriteBatch, Rectangle target)
 		{
 			Texture2D tex = ThemeHandler.GetIcon(IconKey);
-			spriteBatch.Draw(tex, position + tex.Size() / 2f, null, Color.White, 0, tex.Size() / 2f, 1, 0, 0);
+			float scale = 1;
+
+			if (tex.Width > target.Width || tex.Height > target.Height)
+				scale = tex.Width > tex.Height ? target.Width / tex.Width : target.Height / tex.Height;
+
+			spriteBatch.Draw(tex, target.Center(), null, Color.White, 0, tex.Size() / 2f, scale, 0, 0);
 		}
 	}
 }

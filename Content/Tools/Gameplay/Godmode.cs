@@ -42,20 +42,20 @@ namespace DragonLens.Content.Tools.Gameplay
 				godMode = false;
 		}
 
-		public override void DrawIcon(SpriteBatch spriteBatch, Vector2 position)
+		public override void DrawIcon(SpriteBatch spriteBatch, Rectangle position)
 		{
 			if (godMode)
 			{
 				base.DrawIcon(spriteBatch, position);
 
-				GUIHelper.DrawOutline(spriteBatch, new Rectangle((int)position.X - 7, (int)position.Y - 7, 46, 46), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
 
 				Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Misc/GlowAlpha").Value;
 				var color = new Color(255, 220, 100)
 				{
 					A = 0
 				};
-				var target = new Rectangle((int)position.X, (int)position.Y, 32, 32);
+				var target = new Rectangle(position.X, position.Y, 38, 38);
 
 				spriteBatch.Draw(tex, target, color);
 			}
@@ -64,13 +64,13 @@ namespace DragonLens.Content.Tools.Gameplay
 				Texture2D icon = ThemeHandler.GetIcon("DogMode");
 				spriteBatch.Draw(icon, position, Color.White);
 
-				GUIHelper.DrawOutline(spriteBatch, new Rectangle((int)position.X - 7, (int)position.Y - 7, 46, 46), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
 
 				Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Misc/GlowAlpha").Value;
 				Color color = Color.White;
 				color.A = 0;
 
-				var target = new Rectangle((int)position.X, (int)position.Y, 32, 32);
+				var target = new Rectangle(position.X, position.Y, 38, 38);
 
 				spriteBatch.Draw(tex, target, color);
 			}

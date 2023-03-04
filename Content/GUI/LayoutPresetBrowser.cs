@@ -162,7 +162,7 @@ namespace DragonLens.Content.GUI
 					);
 			},
 			 ThemeHandler.GetBoxProvider<VanillaBoxes>(),
-			 ThemeHandler.GetIconProvider<DefaultIcons>(),
+			 ThemeHandler.GetIconProvider<HEROsIcons>(),
 			"A layout attempting to imitate HEROs mod"));
 
 			//Attempts to mock the Cheatsheet mod UI as best as possible
