@@ -360,6 +360,8 @@ namespace DragonLens.Content.Tools.Gameplay
 			var publishId = new PublishedFileId_t(2790924965); //This is StructureHelpers ID on the workshop
 
 			method.Invoke(null, new object[] { publishId, null, false });
+
+			Main.NewText("StructureHelper is being downloaded. Return to the main menu and go to the workshop menu to enable it!");
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
