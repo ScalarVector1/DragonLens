@@ -81,6 +81,9 @@ namespace DragonLens.Content.GUI
 		public override void Click(UIMouseEvent evt)
 		{
 			ToolbarHandler.LoadFromFile(presetPath);
+
+			ToolbarHandler.ExportToFile(Path.Join(Main.SavePath, "DragonLensLayouts", "Current"));
+
 			UILoader.GetUIState<ToolbarState>().Refresh();
 
 			Main.NewText($"{name} selected! Use the customize tool (wrench icon) to customize your layout or load a different preset.");
