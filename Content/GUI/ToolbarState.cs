@@ -33,6 +33,9 @@ namespace DragonLens.Content.GUI
 
 			foreach (Toolbar toolbar in ToolbarHandler.activeToolbars)
 			{
+				if (toolbar is null)
+					continue;
+
 				var element = new ToolbarElement(toolbar);
 				element.Refresh();
 				Append(element);

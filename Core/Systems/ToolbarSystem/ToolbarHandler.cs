@@ -84,6 +84,8 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 				activeToolbars.Add(newBar);
 			}
 
+			activeToolbars.RemoveAll(n => n is null);
+
 			ThemeHandler.LoadData(tag);
 
 			UILoader.GetUIState<ToolbarState>().Refresh();
