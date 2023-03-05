@@ -28,7 +28,6 @@ namespace DragonLens.Content.GUI
 		{
 			parent.parent.toolbar.toolList.Remove(parent.tool);
 			UILoader.GetUIState<ToolbarState>().Refresh();
-			UILoader.GetUIState<ToolbarState>().Customize();
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
@@ -100,7 +99,6 @@ namespace DragonLens.Content.GUI
 		{
 			ToolbarHandler.activeToolbars.Remove(Toolbar);
 			UILoader.GetUIState<ToolbarState>().Refresh();
-			UILoader.GetUIState<ToolbarState>().Customize();
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
@@ -310,7 +308,6 @@ namespace DragonLens.Content.GUI
 			ToolbarHandler.activeToolbars.Add(new Toolbar(new Vector2(0.5f, 0.6f), Orientation.Horizontal, Main.mapFullscreen ? AutomaticHideOption.NoMapScreen : AutomaticHideOption.Never));
 
 			UILoader.GetUIState<ToolbarState>().Refresh();
-			UILoader.GetUIState<ToolbarState>().Customize();
 		}
 
 		public override void Update(GameTime gameTime)

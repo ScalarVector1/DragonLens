@@ -38,6 +38,9 @@ namespace DragonLens.Content.GUI
 				Append(element);
 			}
 
+			if (CustomizeTool.customizing)
+				Customize();
+
 			Recalculate();
 		}
 
