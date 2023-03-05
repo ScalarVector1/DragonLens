@@ -36,11 +36,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 				string dir = Path.Join(Main.SavePath, "DragonLensLayouts");
 				Directory.CreateDirectory(dir);
 
-				FileStream stream = File.Create(currentPath);
-				stream.Close();
-
 				LoadFallback();
-				//ExportToFile(currentPath);
 			}
 		}
 
@@ -94,6 +90,12 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 			var tag = new TagCompound();
 			SaveLayout(tag);
 
+			if (!File.Exists(path))
+			{
+				FileStream stream = File.Create(path);
+				stream.Close();
+			}
+
 			TagIO.ToFile(tag, path);
 		}
 
@@ -131,6 +133,8 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 		private static void LoadFallback()
 		{
 			FirstTimeSetupSystem.trueFirstTime = true;
+
+			FirstTimeSetupSystem.SetupPresets();
 
 			ThemeHandler.SetBoxProvider<SimpleBoxes>();
 			ThemeHandler.SetIconProvider<DefaultIcons>();

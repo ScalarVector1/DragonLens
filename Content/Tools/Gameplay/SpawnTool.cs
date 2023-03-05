@@ -41,7 +41,7 @@ namespace DragonLens.Content.Tools.Gameplay
 				return;
 			}
 
-			spawnRate /= spawnRate;
+			spawnRate = (int)(spawnRate / spawnRateModifier);
 			maxSpawns = (int)(maxSpawns * spawnRateModifier);
 		}
 	}

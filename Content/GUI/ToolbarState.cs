@@ -149,7 +149,12 @@ namespace DragonLens.Content.GUI
 				initialTimer++;
 
 			if (initialTimer == 30)
+			{
 				UILoader.GetUIState<ToolbarState>().Refresh();
+
+				UILoader.GetUIState<FirstTimeLayoutPresetMenu>().RemoveAllChildren();
+				UILoader.GetUIState<FirstTimeLayoutPresetMenu>().OnInitialize();
+			}
 		}
 	}
 }
