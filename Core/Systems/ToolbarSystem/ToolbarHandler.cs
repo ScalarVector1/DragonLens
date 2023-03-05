@@ -29,7 +29,15 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 
 			if (File.Exists(currentPath))
 			{
-				LoadFromFile(currentPath);
+				try
+				{
+					LoadFromFile(currentPath);
+				}
+				catch
+				{
+					Main.NewText("Your saved layout is invalid or corrupted!", Color.Red);
+					LoadFallback();
+				}
 			}
 			else
 			{

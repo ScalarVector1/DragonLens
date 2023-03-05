@@ -116,10 +116,11 @@ namespace DragonLens.Core.Systems.ThemeSystem
 
 		public static void LoadData(TagCompound tag)
 		{
-			TagCompound themeTag = tag.Get<TagCompound>("Theme");
-
-			SetBoxProvider(themeTag.GetString("BoxTheme"));
-			SetIconProvider(themeTag.GetString("IconTheme"));
+			if (tag.TryGet("Theme", out TagCompound themeTag))
+			{
+				SetBoxProvider(themeTag.GetString("BoxTheme"));
+				SetIconProvider(themeTag.GetString("IconTheme"));
+			}
 		}
 	}
 }
