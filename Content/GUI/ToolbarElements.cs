@@ -38,6 +38,12 @@ namespace DragonLens.Content.GUI
 		/// </summary>
 		public void Refresh()
 		{
+			if (toolbar is null)
+			{
+				Parent.RemoveChild(this);
+				return;
+			}
+
 			RemoveAllChildren();
 
 			Vector2 position = Vector2.Zero;
@@ -190,6 +196,12 @@ namespace DragonLens.Content.GUI
 
 		public override void Update(GameTime gameTime)
 		{
+			if (toolbar is null)
+			{
+				Parent.RemoveChild(this);
+				return;
+			}
+
 			if (!toolbar.Invisible)
 			{
 				Left.Set(basePos.X + offset.X, 0);
@@ -243,6 +255,12 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
+			if (toolbar is null)
+			{
+				Parent.RemoveChild(this);
+				return;
+			}
+
 			if (!toolbar.Invisible)
 			{
 				var bgTarget = GetDimensions().ToRectangle();
