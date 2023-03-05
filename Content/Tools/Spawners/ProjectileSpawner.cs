@@ -168,6 +168,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public ProjectileButton(Projectile proj, Browser browser) : base(browser)
 		{
 			this.proj = proj;
+			Main.instance.LoadProjectile(proj.type);
 
 			try
 			{
@@ -182,7 +183,6 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SafeDraw(SpriteBatch spriteBatch, Rectangle iconBox)
 		{
-			Main.instance.LoadProjectile(proj.type);
 			Texture2D tex = Terraria.GameContent.TextureAssets.Projectile[proj.type].Value;
 
 			float scale = 1;
