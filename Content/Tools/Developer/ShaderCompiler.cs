@@ -1,5 +1,6 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,8 +9,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Terraria;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
 using static Terraria.ModLoader.Core.TmodFile;
@@ -23,6 +22,8 @@ namespace DragonLens.Content.Tools.Developer
 		public static readonly string compilerPath = Path.Join(Main.SavePath, "DragonLensShaderCache", "EasyXnb.exe");
 
 		public static bool busy;
+
+		public static bool needsReload;
 
 		public override string IconKey => "ShaderCompiler";
 
@@ -59,12 +60,12 @@ namespace DragonLens.Content.Tools.Developer
 					{
 						CompileShaders(mod);
 						CopyShadersBack(mod);
-						LoadAllShaders(mod);
 					}
 				}
 
 				watch.Stop();
-				Main.NewText($"Shader re-compilation completed in {watch.ElapsedMilliseconds}");
+				Main.NewText($"Shader re-compilation completed in {watch.ElapsedMilliseconds} ms");
+				needsReload = true;
 				busy = false;
 			});
 			thread.Start();
@@ -91,12 +92,12 @@ namespace DragonLens.Content.Tools.Developer
 		/// Helper to copy files from the tmod to the cache folder
 		/// </summary>
 		/// <param name="name"></param>
-		private void CopyFile(string name)
+		private static void CopyFile(string name)
 		{
 			File.WriteAllBytes(Path.Combine(cachePath, name), ModLoader.GetMod("DragonLens").GetFileBytes($"EasyXnb/{name}"));
 		}
 
-		public bool PrepAllShaders(Mod mod)
+		public static bool PrepAllShaders(Mod mod)
 		{
 			if (Main.dedServ)
 				return false;
@@ -142,8 +143,6 @@ namespace DragonLens.Content.Tools.Developer
 			string err = process.StandardError.ReadToEnd();
 			Mod.Logger.Error(err);
 
-			Main.NewTextMultiline(output, true, Color.White);
-
 			process.WaitForExit();
 
 			Main.NewText($"Shaders for {mod.DisplayName} recompiled!", Color.SkyBlue);
@@ -165,7 +164,7 @@ namespace DragonLens.Content.Tools.Developer
 			}
 		}
 
-		public void CopyShadersBack(Mod mod)
+		public static void CopyShadersBack(Mod mod)
 		{
 			MethodInfo info = typeof(Mod).GetProperty("File", BindingFlags.NonPublic | BindingFlags.Instance).GetGetMethod(true);
 			var file = (TmodFile)info.Invoke(mod, null);
@@ -189,7 +188,7 @@ namespace DragonLens.Content.Tools.Developer
 			}
 		}
 
-		public void LoadAllShaders(Mod mod)
+		public static void LoadAllShaders(Mod mod)
 		{
 			if (Main.dedServ)
 				return;
@@ -202,19 +201,50 @@ namespace DragonLens.Content.Tools.Developer
 
 			IEnumerable<FileEntry> shaders = file.Where(n => n.Name.StartsWith("Effects/") && n.Name.Count(a => a == '/') <= 1 && n.Name.EndsWith(".xnb"));
 
+			if (shaders.Count() <= 0)
+				return;
+
 			foreach (FileEntry entry in shaders)
 			{
-				string name = entry.Name.Replace(".xnb", "").Replace("Effects/", "");
-				string path = entry.Name.Replace(".xnb", "");
-				LoadShader(name, path, mod);
+				string path = entry.Name.Replace(".xnb", "").Replace("Effects/", "Effects\\");
+				LoadShader(path, mod);
 			}
+
+			Main.NewText($"Re-loaded shaders for {mod.DisplayName}!", Color.MediumPurple);
 		}
 
-		public static void LoadShader(string name, string path, Mod mod)
+		public static void LoadShader(string path, Mod mod)
 		{
-			var screenRef = new Ref<Effect>(mod.Assets.Request<Effect>(path, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value);
-			Terraria.Graphics.Effects.Filters.Scene[name] = new Filter(new ScreenShaderData(screenRef, name + "Pass"), EffectPriority.High);
-			Terraria.Graphics.Effects.Filters.Scene[name].Load();
+			var modEffects = mod.Assets.GetLoadedAssets().OfType<ReLogic.Content.Asset<Effect>>().ToDictionary(x => x.Name);
+			var contentManager = new ContentManager(Main.instance.Content.ServiceProvider, Path.Join(ModLoader.ModPath.Replace("\\Mods", "\\ModSources"), mod.Name));
+
+			Effect originalEffect = null;
+			if (modEffects.ContainsKey(path))
+			{
+				originalEffect = modEffects[path].Value;
+			}
+
+			FieldInfo ownValueField = modEffects[path].GetType().GetField("ownValue", BindingFlags.Instance | BindingFlags.NonPublic);
+			ownValueField.SetValue(modEffects[path], contentManager.Load<Effect>(path));
+		}
+	}
+
+	/// <summary>
+	/// Allows us to reload all shaders at a safe time once they're ready
+	/// </summary>
+	public class ShaderSystem : ModSystem
+	{
+		public override void PostUpdateEverything()
+		{
+			if (ShaderCompiler.needsReload)
+			{
+				foreach (Mod mod in ModLoader.Mods)
+				{
+					ShaderCompiler.LoadAllShaders(mod);
+				}
+
+				ShaderCompiler.needsReload = false;
+			}
 		}
 	}
 }
