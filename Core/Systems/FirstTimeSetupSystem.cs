@@ -179,6 +179,14 @@ namespace DragonLens.Core.Systems
 			ToolbarHandler.activeToolbars.Clear();
 		}
 
+		public static void PanicToSetup()
+		{
+			trueFirstTime = true;
+			ThemeHandler.SetBoxProvider<SimpleBoxes>();
+			ThemeHandler.SetIconProvider<DefaultIcons>();
+			ToolbarHandler.activeToolbars.Clear();
+		}
+
 		public override void PostUpdateEverything()
 		{
 			if (trueFirstTime)

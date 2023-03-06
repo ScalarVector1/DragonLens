@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using DragonLens.Content.Themes.BoxProviders;
+using DragonLens.Content.Themes.IconProviders;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -120,6 +122,11 @@ namespace DragonLens.Core.Systems.ThemeSystem
 			{
 				SetBoxProvider(themeTag.GetString("BoxTheme"));
 				SetIconProvider(themeTag.GetString("IconTheme"));
+			}
+			else //defaults
+			{
+				SetBoxProvider<SimpleBoxes>();
+				SetIconProvider<DefaultIcons>();
 			}
 		}
 	}

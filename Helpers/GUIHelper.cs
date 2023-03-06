@@ -1,4 +1,5 @@
-﻿using DragonLens.Core.Systems.ThemeSystem;
+﻿using DragonLens.Core.Systems;
+using DragonLens.Core.Systems.ThemeSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
@@ -21,6 +22,12 @@ namespace DragonLens.Helpers
 		/// <param name="color"><the color of the box/param>
 		public static void DrawBox(SpriteBatch sb, Rectangle target, Color color = default)
 		{
+			if (ThemeHandler.currentBoxProvider is null)
+			{
+				FirstTimeSetupSystem.PanicToSetup();
+				return;
+			}
+
 			if (target.Width < 16 || target.Height < 16)
 				ThemeHandler.currentBoxProvider.DrawBoxSmall(sb, target, color);
 
@@ -35,6 +42,12 @@ namespace DragonLens.Helpers
 		/// <param name="color"><the color of the box/param>
 		public static void DrawBoxFancy(SpriteBatch sb, Rectangle target, Color color = default)
 		{
+			if (ThemeHandler.currentBoxProvider is null)
+			{
+				FirstTimeSetupSystem.PanicToSetup();
+				return;
+			}
+
 			ThemeHandler.currentBoxProvider.DrawBoxFancy(sb, target, color);
 		}
 
@@ -46,6 +59,12 @@ namespace DragonLens.Helpers
 		/// <param name="color">the color of the outline</param>
 		public static void DrawOutline(SpriteBatch sb, Rectangle target, Color color = default)
 		{
+			if (ThemeHandler.currentBoxProvider is null)
+			{
+				FirstTimeSetupSystem.PanicToSetup();
+				return;
+			}
+
 			ThemeHandler.currentBoxProvider.DrawOutline(sb, target, color);
 		}
 

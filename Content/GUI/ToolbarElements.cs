@@ -1,5 +1,6 @@
 ﻿using DragonLens.Configs;
 using DragonLens.Content.Tools;
+using DragonLens.Core.Systems;
 using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
@@ -40,7 +41,7 @@ namespace DragonLens.Content.GUI
 		{
 			if (toolbar is null)
 			{
-				Parent.RemoveChild(this);
+				FirstTimeSetupSystem.PanicToSetup();
 				return;
 			}
 
@@ -198,7 +199,7 @@ namespace DragonLens.Content.GUI
 		{
 			if (toolbar is null)
 			{
-				Parent.RemoveChild(this);
+				FirstTimeSetupSystem.PanicToSetup();
 				return;
 			}
 
@@ -257,7 +258,8 @@ namespace DragonLens.Content.GUI
 		{
 			if (toolbar is null)
 			{
-				Parent.RemoveChild(this);
+				//base.Draw(spriteBatch);
+				FirstTimeSetupSystem.PanicToSetup();
 				return;
 			}
 
