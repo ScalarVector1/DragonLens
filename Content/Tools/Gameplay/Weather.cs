@@ -208,14 +208,14 @@ namespace DragonLens.Content.Tools.Gameplay
 			dims.Inflate(-4, -4);
 			spriteBatch.Draw(tex, dims, Color.White);
 
-			var draggerTarget = new Rectangle(dims.X + (int)(progress * dims.Width) - 6, dims.Y - 8, 12, 24);
-			GUIHelper.DrawBox(spriteBatch, draggerTarget, ModContent.GetInstance<GUIConfig>().buttonColor);
-
 			var tickTarget = new Rectangle(dims.X + (int)(4 / 6f * dims.Width) - 5, dims.Y - 6, 10, 20);
 			GUIHelper.DrawBox(spriteBatch, tickTarget, Color.Red);
 
 			tickTarget = new Rectangle(dims.X + (int)(2 / 6f * dims.Width) - 5, dims.Y - 6, 10, 20);
 			GUIHelper.DrawBox(spriteBatch, tickTarget, Color.Red);
+
+			var draggerTarget = new Rectangle(dims.X + (int)(progress * dims.Width) - 6, dims.Y - 8, 12, 24);
+			GUIHelper.DrawBox(spriteBatch, draggerTarget, ModContent.GetInstance<GUIConfig>().buttonColor);
 
 			Utils.DrawBorderString(spriteBatch, "Wind strength", dims.TopLeft() + new Vector2(0, -22), Color.White, 0.8f);
 
