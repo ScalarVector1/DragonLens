@@ -73,6 +73,7 @@ namespace DragonLens.Content.GUI
 
 		public sealed override void Update(GameTime gameTime)
 		{
+			Recalculate();
 			if (!Main.mouseLeft && dragging)
 				dragging = false;
 
