@@ -130,7 +130,10 @@ namespace DragonLens.Content.Tools.Spawners
 					Main.playerInventory = true;
 
 				Main.mouseItem = item.Clone();
-				Main.mouseItem.SetDefaults(item.type);
+
+				if (!ItemID.Sets.Deprecated[item.type])
+					Main.mouseItem.SetDefaults(item.type);
+
 				Main.mouseItem.stack = Main.mouseItem.maxStack;
 			}
 		}
@@ -143,7 +146,10 @@ namespace DragonLens.Content.Tools.Spawners
 					Main.playerInventory = true;
 
 				Main.mouseItem = item.Clone();
-				Main.mouseItem.SetDefaults(item.type);
+
+				if (!ItemID.Sets.Deprecated[item.type])
+					Main.mouseItem.SetDefaults(item.type);
+
 				stackDelay = 30;
 			}
 		}
