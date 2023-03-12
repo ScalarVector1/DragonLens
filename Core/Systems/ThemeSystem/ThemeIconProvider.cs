@@ -30,6 +30,7 @@ namespace DragonLens.Core.Systems.ThemeSystem
 			"ItemSpawner",
 			"Lighting",
 			"LockCamera",
+			"Magnet",
 			"MapTeleport",
 			"Noclip",
 			"NPCDespawner",
@@ -42,6 +43,7 @@ namespace DragonLens.Core.Systems.ThemeSystem
 			"SpawnTool",
 			"TileSpawner",
 			"Time",
+			"VoidMagnet",
 			"Weather"
 		};
 
