@@ -37,6 +37,13 @@ namespace DragonLens.Content.GUI.FieldEditors
 			typing = true;
 		}
 
+		public override void RightClick(UIMouseEvent evt)
+		{
+			typing = true;
+			currentValue = "";
+			updated = true;
+		}
+
 		public override void Update(GameTime gameTime)
 		{
 			if (updated)
