@@ -356,6 +356,8 @@ namespace DragonLens.Content.GUI
 
 			CustomizeTool.customizing = false;
 
+			UILoader.GetUIState<ToolbarState>().Refresh();
+
 			Main.NewText("Layout saved!");
 		}
 

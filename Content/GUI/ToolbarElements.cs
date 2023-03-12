@@ -26,6 +26,8 @@ namespace DragonLens.Content.GUI
 		public Vector2 offset;
 		public Vector2 offsetTarget;
 
+		public Vector2 overlapAdjust;
+
 		public ToolbarElement(Toolbar toolbar)
 		{
 			this.toolbar = toolbar;
@@ -39,7 +41,7 @@ namespace DragonLens.Content.GUI
 		/// </summary>
 		public void Refresh()
 		{
-			if (toolbar is null)
+			if (toolbar is null) // We loaded a null toolbar, panic!
 			{
 				FirstTimeSetupSystem.PanicToSetup();
 				return;
@@ -144,6 +146,54 @@ namespace DragonLens.Content.GUI
 				case CollapseDirection.Floating:
 					break;
 			}
+		}
+
+		/// <summary>
+		/// Shoves this toolbar over to ensure it isnt intersecting any other toolbars
+		/// </summary>
+		public void SmartShove()
+		{
+			overlapAdjust = Vector2.Zero;
+
+			foreach (ToolbarElement potentialIntersect in ToolbarState.toolbars)
+			{
+				if (potentialIntersect == this) //Cant overlap itself
+					continue;
+
+				if (toolbar.automaticHideOption != potentialIntersect.toolbar.automaticHideOption) //Overlaps with different hide options are allowed
+					continue;
+
+				var thisDims = GetDimensions().ToRectangle();
+				var thatDims = potentialIntersect.GetDimensions().ToRectangle();
+
+				if (thisDims.Intersects(thatDims))
+				{
+					Main.NewText($"Intersection detected! Your toolbars are being automatically shifted to prevent overlapping bars...");
+
+					if (toolbar.orientation == Orientation.Horizontal)
+					{
+						if (thisDims.X > thatDims.X)
+							Left.Set(thatDims.X + thatDims.Width, 0);
+						else
+							Left.Set(thatDims.X - thisDims.Width, 0);
+
+						Recalculate();
+						toolbar.relativePosition.X = GetDimensions().Center().X / Main.screenWidth;
+					}
+					else
+					{
+						if (thisDims.Y > thatDims.Y)
+							Top.Set(thatDims.Y + thatDims.Height, 0);
+						else
+							Top.Set(thatDims.Y - thisDims.Height, 0);
+
+						Recalculate();
+						toolbar.relativePosition.Y = GetDimensions().Center().Y / Main.screenHeight;
+					}
+				}
+			}
+
+			Refresh();
 		}
 
 		/// <summary>

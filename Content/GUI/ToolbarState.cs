@@ -3,6 +3,7 @@ using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolbarSystem;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
@@ -11,6 +12,10 @@ namespace DragonLens.Content.GUI
 {
 	internal class ToolbarState : SmartUIState
 	{
+		private static readonly List<ToolbarElement> toolbarElements = new();
+
+		public static ReadOnlyCollection<ToolbarElement> toolbars = toolbarElements.AsReadOnly();
+
 		public override bool Visible => true;
 
 		public override int InsertionIndex(List<GameInterfaceLayer> layers)
@@ -30,6 +35,7 @@ namespace DragonLens.Content.GUI
 		public void Refresh()
 		{
 			RemoveAllChildren();
+			toolbarElements.Clear();
 
 			foreach (Toolbar toolbar in ToolbarHandler.activeToolbars)
 			{
@@ -38,7 +44,19 @@ namespace DragonLens.Content.GUI
 
 				var element = new ToolbarElement(toolbar);
 				element.Refresh();
+
+				toolbarElements.Add(element);
 				Append(element);
+			}
+
+			Recalculate();
+
+			//We want to shove based on size order, larger toolbars should be shoved last
+			toolbarElements.Sort((a, b) => a.toolbar.toolList.Count > b.toolbar.toolList.Count ? 1 : -1);
+
+			foreach (ToolbarElement element in toolbarElements)
+			{
+				element.SmartShove();
 			}
 
 			if (CustomizeTool.customizing)
