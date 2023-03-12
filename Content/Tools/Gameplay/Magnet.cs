@@ -46,7 +46,13 @@ namespace DragonLens.Content.Tools.Gameplay
 			if (voidActive)
 			{
 				Texture2D icon = ThemeHandler.GetIcon("VoidMagnet");
-				spriteBatch.Draw(icon, position, Color.White);
+
+				float scale = 1;
+
+				if (icon.Width > position.Width || icon.Height > position.Height)
+					scale = icon.Width > icon.Height ? position.Width / icon.Width : position.Height / icon.Height;
+
+				spriteBatch.Draw(icon, position.Center(), null, Color.White, 0, icon.Size() / 2f, scale, 0, 0);
 			}
 			else
 			{

@@ -62,7 +62,13 @@ namespace DragonLens.Content.Tools.Gameplay
 			else if (dogMode)
 			{
 				Texture2D icon = ThemeHandler.GetIcon("DogMode");
-				spriteBatch.Draw(icon, position, Color.White);
+
+				float scale = 1;
+
+				if (icon.Width > position.Width || icon.Height > position.Height)
+					scale = icon.Width > icon.Height ? position.Width / icon.Width : position.Height / icon.Height;
+
+				spriteBatch.Draw(icon, position.Center(), null, Color.White, 0, icon.Size() / 2f, scale, 0, 0);
 
 				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
 
