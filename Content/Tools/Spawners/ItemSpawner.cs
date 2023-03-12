@@ -124,7 +124,11 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void Click(UIMouseEvent evt)
 		{
-			if (Main.mouseItem.IsAir)
+			if (Main.keyState.PressingShift())
+			{
+				Main.LocalPlayer.QuickSpawnItem(Main.LocalPlayer.GetSource_FromThis(), item.type, item.maxStack);
+			}
+			else if (Main.mouseItem.IsAir)
 			{
 				if (!Main.playerInventory)
 					Main.playerInventory = true;
@@ -140,7 +144,11 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void RightMouseDown(UIMouseEvent evt)
 		{
-			if (Main.mouseItem.IsAir)
+			if (Main.keyState.PressingShift())
+			{
+				Main.LocalPlayer.QuickSpawnItem(Main.LocalPlayer.GetSource_FromThis(), item.type, 1);
+			}
+			else if (Main.mouseItem.IsAir)
 			{
 				if (!Main.playerInventory)
 					Main.playerInventory = true;
