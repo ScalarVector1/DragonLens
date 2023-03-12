@@ -141,11 +141,14 @@ namespace DragonLens.Content.Tools.Editors
 		private void BuildBasicEditor()
 		{
 			basicEditorList.Add(new IntEditor("Damage", n => item.damage = n, item.damage, () => item.damage, "How much damage this item or the projectiles it fires does."));
+			basicEditorList.Add(new IntEditor("Crit Chance", n => item.crit = n, item.crit, () => item.crit, "4% base crit chance is added to this value."));
+			basicEditorList.Add(new FloatEditor("Knockback", n => item.knockBack = n, item.knockBack, () => item.knockBack, "The amount of knockback this item causes when striking an enemy."));
+
 			basicEditorList.Add(new IntEditor("Use Style", n => item.useStyle = n, item.useStyle, () => item.useStyle, "0: None NEWLN 1: Swing NEWLN 3: Thrust NEWLN 4: HoldUp NEWLN 5: Shoot NEWLN 6: DrinkLong NEWLN 7: DrinkOld NEWLN 8: GolfPlay NEWLN 9: DrinkLiquid NEWLN 10: HiddenAnimation NEWLN 11: MowTheLawn NEWLN 12: Guitar NEWLN 13: Rapier NEWLN 14: RaiseLamp"));
 			basicEditorList.Add(new IntEditor("Use Time", n => item.useTime = n, item.useTime, () => item.useTime, "How many ticks between item uses. Ignores input."));
 			basicEditorList.Add(new IntEditor("Use Animation", n => item.useAnimation = n, item.useAnimation, () => item.useTime, "How many ticks before you can cancel this items use with input/use it again."));
 			basicEditorList.Add(new BoolEditor("Auto Reuse", n => item.autoReuse = n, item.autoReuse, () => item.autoReuse, "If this item is automatically re-used while holding LMB."));
-			basicEditorList.Add(new IntEditor("Crit Chance", n => item.crit = n, item.crit, () => item.crit, "4% base crit chance is added to this value."));
+			basicEditorList.Add(new IntEditor("Reuse Delay", n => item.reuseDelay = n, item.reuseDelay, () => item.reuseDelay, "The delay between when this item finishes being used and can be used again."));
 
 			basicEditorList.Add(new IntEditor("Pickaxe Power", n => item.pick = n, item.pick, () => item.pick, "The items ability to destroy tiles."));
 			basicEditorList.Add(new IntEditor("Axe Power", n => item.axe = n, item.axe, () => item.axe, "The items ability to destroy trees. Actual value is multiplied by 5."));
