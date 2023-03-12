@@ -46,7 +46,10 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void UpdateEquips()
 		{
 			if (InfiniteReach.active)
-				Player.blockRange = int.MaxValue;
+			{
+				Player.tileRangeX = int.MaxValue / 32 - 20;
+				Player.tileRangeY = int.MaxValue / 32 - 20;
+			}
 		}
 
 		public override bool CanUseItem(Item item)
@@ -56,7 +59,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override float UseTimeMultiplier(Item item)
 		{
-			if (InfiniteReach.active && item.createTile != -1)
+			if (InfiniteReach.active && (item.createTile != -1 || item.createWall != -1 || item.pick > 0 || item.axe > 0 || item.hammer > 0))
 				return 0.1f;
 
 			return 1;
@@ -64,7 +67,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override float UseAnimationMultiplier(Item item)
 		{
-			if (InfiniteReach.active && item.createTile != -1)
+			if (InfiniteReach.active && (item.createTile != -1 || item.createWall != -1 || item.pick > 0 || item.axe > 0 || item.hammer > 0))
 				return 0.1f;
 
 			return 1;
