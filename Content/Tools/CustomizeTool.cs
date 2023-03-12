@@ -117,7 +117,14 @@ namespace DragonLens.Content.Tools
 		{
 			Rectangle target = iconBox;
 			target.Inflate(-4, -4);
-			spriteBatch.Draw(ThemeHandler.GetIcon(tool.IconKey), target, Color.White);
+
+			Texture2D icon = ThemeHandler.GetIcon(tool.IconKey);
+			float scale = 1;
+
+			if (icon.Width > target.Width || icon.Height > target.Height)
+				scale = icon.Width > icon.Height ? target.Width / icon.Width : target.Height / icon.Height;
+
+			spriteBatch.Draw(icon, target.Center(), null, Color.White, 0, icon.Size() / 2f, scale, 0, 0);
 
 			if (IsMouseHovering)
 			{
