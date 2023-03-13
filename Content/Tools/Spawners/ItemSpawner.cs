@@ -1,8 +1,6 @@
 ﻿using DragonLens.Content.Filters;
 using DragonLens.Content.Filters.ItemFilters;
 using DragonLens.Content.GUI;
-using DragonLens.Core.Loaders.UILoading;
-using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -15,27 +13,13 @@ using Terraria.UI;
 
 namespace DragonLens.Content.Tools.Spawners
 {
-	internal class ItemSpawner : Tool
+	internal class ItemSpawner : BrowserTool<ItemBrowser>
 	{
 		public override string IconKey => "ItemSpawner";
 
 		public override string DisplayName => "Item spawner";
 
 		public override string Description => "Spawn any item in the game!";
-
-		public override void OnActivate()
-		{
-			ItemBrowser state = UILoader.GetUIState<ItemBrowser>();
-			state.visible = !state.visible;
-
-			BrowserButton.drawDelayTimer = 2;
-
-			if (!state.initialized)
-			{
-				UILoader.GetUIState<ItemBrowser>().Refresh();
-				state.initialized = true;
-			}
-		}
 	}
 
 	internal class ItemBrowser : Browser

@@ -2,8 +2,6 @@
 using DragonLens.Content.Filters.ProjectileFilters;
 using DragonLens.Content.GUI;
 using DragonLens.Content.GUI.FieldEditors;
-using DragonLens.Core.Loaders.UILoading;
-using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -16,27 +14,13 @@ using Terraria.UI;
 
 namespace DragonLens.Content.Tools.Spawners
 {
-	internal class ProjectileSpawner : Tool
+	internal class ProjectileSpawner : BrowserTool<ProjectileBrowser>
 	{
 		public override string IconKey => "ProjectileSpawner";
 
 		public override string DisplayName => "Projectile spawner";
 
 		public override string Description => "Spawn projectiles, with options for setting velocity and other parameters";
-
-		public override void OnActivate()
-		{
-			ProjectileBrowser state = UILoader.GetUIState<ProjectileBrowser>();
-			state.visible = !state.visible;
-
-			BrowserButton.drawDelayTimer = 2;
-
-			if (!state.initialized)
-			{
-				UILoader.GetUIState<ProjectileBrowser>().Refresh();
-				state.initialized = true;
-			}
-		}
 	}
 
 	internal class ProjectileBrowser : Browser

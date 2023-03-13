@@ -30,6 +30,7 @@ namespace DragonLens.Content.GUI
 		public bool initialized;
 		public bool listMode;
 		public bool filtersVisible;
+		public int buttonSize = 36;
 
 		public abstract string Name { get; }
 
@@ -274,7 +275,7 @@ namespace DragonLens.Content.GUI
 			if (drawDelayTimer > 0)
 				return;
 
-			int size = (int)MathHelper.Clamp(ModContent.GetInstance<GUIConfig>().browserButtonSize, 36, 108);
+			int size = (int)MathHelper.Clamp(parent.buttonSize, 36, 108);
 
 			var drawBox = GetDimensions().ToRectangle();
 

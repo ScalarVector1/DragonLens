@@ -2,8 +2,6 @@
 using DragonLens.Content.Filters.DustFilters;
 using DragonLens.Content.GUI;
 using DragonLens.Content.GUI.FieldEditors;
-using DragonLens.Core.Loaders.UILoading;
-using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -18,27 +16,13 @@ using Terraria.UI;
 
 namespace DragonLens.Content.Tools.Spawners
 {
-	internal class DustSpawner : Tool
+	internal class DustSpawner : BrowserTool<DustBrowser>
 	{
 		public override string IconKey => "DustSpawner";
 
 		public override string DisplayName => "Dust spawner";
 
 		public override string Description => "Spawn dust, with options to preview different spawning methods and parameters";
-
-		public override void OnActivate()
-		{
-			DustBrowser state = UILoader.GetUIState<DustBrowser>();
-			state.visible = !state.visible;
-
-			BrowserButton.drawDelayTimer = 2;
-
-			if (!state.initialized)
-			{
-				UILoader.GetUIState<DustBrowser>().Refresh();
-				state.initialized = true;
-			}
-		}
 	}
 
 	internal class DustBrowser : Browser

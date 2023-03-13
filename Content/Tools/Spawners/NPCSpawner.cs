@@ -2,8 +2,6 @@
 using DragonLens.Content.Filters;
 using DragonLens.Content.Filters.NPCFilters;
 using DragonLens.Content.GUI;
-using DragonLens.Core.Loaders.UILoading;
-using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -17,27 +15,13 @@ using static Terraria.GameContent.Bestiary.Filters;
 
 namespace DragonLens.Content.Tools.Spawners
 {
-	internal class NPCSpawner : Tool
+	internal class NPCSpawner : BrowserTool<NPCBrowser>
 	{
 		public override string IconKey => "NPCSpawner";
 
 		public override string DisplayName => "NPC spawner";
 
 		public override string Description => "Spawn NPCs, from villagers to skeletons to bosses";
-
-		public override void OnActivate()
-		{
-			NPCBrowser state = UILoader.GetUIState<NPCBrowser>();
-			state.visible = !state.visible;
-
-			BrowserButton.drawDelayTimer = 2;
-
-			if (!state.initialized)
-			{
-				UILoader.GetUIState<NPCBrowser>().Refresh();
-				state.initialized = true;
-			}
-		}
 	}
 
 	internal class NPCBrowser : Browser

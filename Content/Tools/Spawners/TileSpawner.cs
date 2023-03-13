@@ -1,8 +1,6 @@
 ﻿using DragonLens.Content.Filters;
 using DragonLens.Content.Filters.TileFilters;
 using DragonLens.Content.GUI;
-using DragonLens.Core.Loaders.UILoading;
-using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,27 +16,13 @@ using Terraria.UI;
 
 namespace DragonLens.Content.Tools.Spawners
 {
-	internal class TileSpawner : Tool
+	internal class TileSpawner : BrowserTool<TileBrowser>
 	{
 		public override string IconKey => "TileSpawner";
 
 		public override string DisplayName => "Tile spawner";
 
 		public override string Description => "Place tiles without items!";
-
-		public override void OnActivate()
-		{
-			TileBrowser state = UILoader.GetUIState<TileBrowser>();
-			state.visible = !state.visible;
-
-			BrowserButton.drawDelayTimer = 2;
-
-			if (!state.initialized)
-			{
-				UILoader.GetUIState<TileBrowser>().Refresh();
-				state.initialized = true;
-			}
-		}
 	}
 
 	internal class TileBrowser : Browser

@@ -2,8 +2,6 @@
 using DragonLens.Content.Filters.BuffFilters;
 using DragonLens.Content.GUI;
 using DragonLens.Content.GUI.FieldEditors;
-using DragonLens.Core.Loaders.UILoading;
-using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -17,27 +15,13 @@ using Terraria.UI;
 
 namespace DragonLens.Content.Tools.Spawners
 {
-	internal class BuffSpawner : Tool
+	internal class BuffSpawner : BrowserTool<BuffBrowser>
 	{
 		public override string IconKey => "BuffSpawner";
 
 		public override string DisplayName => "Buff spawner";
 
 		public override string Description => "Allows you to apply buffs to yourself or NPCs";
-
-		public override void OnActivate()
-		{
-			BuffBrowser state = UILoader.GetUIState<BuffBrowser>();
-			state.visible = !state.visible;
-
-			BrowserButton.drawDelayTimer = 2;
-
-			if (!state.initialized)
-			{
-				UILoader.GetUIState<BuffBrowser>().Refresh();
-				state.initialized = true;
-			}
-		}
 	}
 
 	internal class BuffBrowser : Browser
