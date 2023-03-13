@@ -36,7 +36,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			tag["savedRaining"] = WeatherSystem.savedRaining;
 			tag["savedSandstorm"] = WeatherSystem.savedSandstorm;
 
-			tag["weatherFrozem"] = WeatherSystem.weatherFrozen;
+			tag["weatherFrozen"] = WeatherSystem.weatherFrozen;
 		}
 
 		public override void LoadData(TagCompound tag)
