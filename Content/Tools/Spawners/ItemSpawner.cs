@@ -44,6 +44,8 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override string IconTexture => "ItemSpawner";
 
+		public override string HelpLink => "https://github.com/ScalarVector1/DragonLens/wiki/Item-spawner";
+
 		public override Vector2 DefaultPosition => new(0.3f, 0.4f);
 
 		public override void PopulateGrid(UIGrid grid)

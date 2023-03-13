@@ -1,4 +1,5 @@
 ﻿using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -13,6 +14,7 @@ namespace DragonLens.Content.GUI
 	public abstract class DraggableUIState : SmartUIState
 	{
 		private UIImageButton closeButton;
+		private UIImageButton helpButton;
 
 		/// <summary>
 		/// The top-left of the main window
@@ -44,6 +46,11 @@ namespace DragonLens.Content.GUI
 		public virtual Vector2 DefaultPosition => Vector2.Zero;
 
 		/// <summary>
+		/// The link that clicking the help button should bring you to. No help button will be created if this is left as empty string.
+		/// </summary>
+		public virtual string HelpLink => "";
+
+		/// <summary>
 		/// You should adjust the position of all child elements of your UIState here so they move when the window is being dragged.
 		/// </summary>
 		/// <param name="newPos">The new position of the base window</param>
@@ -65,6 +72,15 @@ namespace DragonLens.Content.GUI
 			closeButton.Height.Set(16, 0);
 			closeButton.OnClick += (a, b) => visible = false;
 			Append(closeButton);
+
+			if (HelpLink != "")
+			{
+				helpButton = new UIImageButton(ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Help"));
+				helpButton.Width.Set(16, 0);
+				helpButton.Height.Set(16, 0);
+				helpButton.OnClick += (a, b) => GUIHelper.OpenUrl(HelpLink);
+				Append(helpButton);
+			}
 
 			SafeOnInitialize();
 
@@ -93,6 +109,21 @@ namespace DragonLens.Content.GUI
 
 			closeButton.Left.Set(basePos.X + width - 24, 0);
 			closeButton.Top.Set(basePos.Y + 8, 0);
+
+			if (closeButton.IsMouseHovering)
+			{
+				Tooltip.SetName("Close");
+				Tooltip.SetTooltip("");
+			}
+
+			helpButton?.Left.Set(basePos.X + width - 44, 0);
+			helpButton?.Top.Set(basePos.Y + 8, 0);
+
+			if (helpButton != null && helpButton.IsMouseHovering)
+			{
+				Tooltip.SetName("User guide");
+				Tooltip.SetTooltip("Open the user guide for this tool in the browser");
+			}
 
 			AdjustPositions(basePos);
 			Recalculate();

@@ -4,7 +4,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
 using System;
+using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
@@ -146,6 +148,38 @@ namespace DragonLens.Helpers
 
 			setMod.Invoke(ui, new object[] { ModContent.GetInstance<DragonLens>(), config });
 			Main.InGameUI.SetState(ui);
+		}
+
+		/// <summary>
+		/// Opens a URL in the web browser
+		/// </summary>
+		/// <param name="url">The URL to open to</param>
+		public static void OpenUrl(string url)
+		{
+			try
+			{
+				Process.Start(url);
+			}
+			catch
+			{
+				if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+				{
+					url = url.Replace("&", "^&");
+					Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+				}
+				else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+				{
+					Process.Start("xdg-open", url);
+				}
+				else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+				{
+					Process.Start("open", url);
+				}
+				else
+				{
+					throw;
+				}
+			}
 		}
 	}
 }
