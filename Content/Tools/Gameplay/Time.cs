@@ -238,6 +238,12 @@ namespace DragonLens.Content.Tools.Gameplay
 				ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Play").Value;
 
 			spriteBatch.Draw(icon, dims.TopLeft() + Vector2.One * 5, Color.White);
+
+			if (IsMouseHovering)
+			{
+				Tooltip.SetName("Freeze time");
+				Tooltip.SetTooltip("Stop the time from changing. This will carry the time between worlds and game reloads!");
+			}
 		}
 
 		public override void Click(UIMouseEvent evt)

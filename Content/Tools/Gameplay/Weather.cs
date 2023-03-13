@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Events;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.UI;
 
 namespace DragonLens.Content.Tools.Gameplay
@@ -27,6 +28,48 @@ namespace DragonLens.Content.Tools.Gameplay
 			WeatherWindow state = UILoader.GetUIState<WeatherWindow>();
 			state.visible = !state.visible;
 		}
+
+		public override void SaveData(TagCompound tag)
+		{
+			tag["savedCloudAlpha"] = WeatherSystem.savedCloudAlpha;
+			tag["savedWind"] = WeatherSystem.savedWind;
+			tag["savedRaining"] = WeatherSystem.savedRaining;
+			tag["savedSandstorm"] = WeatherSystem.savedSandstorm;
+
+			tag["weatherFrozem"] = WeatherSystem.weatherFrozen;
+		}
+
+		public override void LoadData(TagCompound tag)
+		{
+			WeatherSystem.savedCloudAlpha = tag.GetFloat("savedCloudAlpha");
+			WeatherSystem.savedWind = tag.GetFloat("savedWind");
+			WeatherSystem.savedRaining = tag.GetBool("savedRaining");
+			WeatherSystem.savedSandstorm = tag.GetBool("savedSandstorm");
+
+			WeatherSystem.weatherFrozen = tag.GetBool("weatherFrozen");
+		}
+	}
+
+	internal class WeatherSystem : ModSystem
+	{
+		public static float savedCloudAlpha;
+		public static float savedWind;
+		public static bool savedRaining;
+		public static bool savedSandstorm;
+
+		public static bool weatherFrozen;
+
+		public override void PreUpdateWorld()
+		{
+			if (weatherFrozen)
+			{
+				Main.cloudAlpha = savedCloudAlpha;
+				Main.windSpeedCurrent = savedWind;
+				Main.windSpeedTarget = savedWind;
+				Main.raining = savedRaining;
+				Sandstorm.Happening = savedSandstorm;
+			}
+		}
 	}
 
 	internal class WeatherWindow : DraggableUIState
@@ -36,6 +79,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public RainButton rainButton;
 		public SandstormButton sandstormButton;
+		public FreezeWeatherButton freezeButton;
 
 		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 400, 32);
 
@@ -60,6 +104,9 @@ namespace DragonLens.Content.Tools.Gameplay
 			sandstormButton = new();
 			Append(sandstormButton);
 
+			freezeButton = new();
+			Append(freezeButton);
+
 			width = 400;
 			height = 170;
 		}
@@ -77,11 +124,14 @@ namespace DragonLens.Content.Tools.Gameplay
 
 			sandstormButton.Left.Set(basePos.X + 340, 0);
 			sandstormButton.Top.Set(basePos.Y + 111, 0);
+
+			freezeButton.Left.Set(basePos.X + 340, 0);
+			freezeButton.Top.Set(basePos.Y + 165, 0);
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, 400, 170), ModContent.GetInstance<GUIConfig>().backgroundColor);
+			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, 400, 260), ModContent.GetInstance<GUIConfig>().backgroundColor);
 
 			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 400, 40);
@@ -92,10 +142,8 @@ namespace DragonLens.Content.Tools.Gameplay
 
 			Utils.DrawBorderStringBig(spriteBatch, "Set weather", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
 
-			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y + 180, 400, 80), ModContent.GetInstance<GUIConfig>().backgroundColor);
-
-			string tips = "Useful combinations:\n  High Rain + Wind over 20 mph = Thunderstorm\n  Natural Rain + Snow biome = Blizzard";
-			Utils.DrawBorderString(spriteBatch, tips, basePos + new Vector2(24, 190), Color.White, 0.8f);
+			string tips = "Useful combinations:\nHigh Rain + Wind > 20 mph = Thunderstorm\nNatural Rain + Snow biome = Blizzard";
+			Utils.DrawBorderString(spriteBatch, tips, basePos + new Vector2(12, 176), Color.White, 0.8f);
 
 			base.Draw(spriteBatch);
 		}
@@ -120,6 +168,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 				Main.cloudAlpha = progress;
 				Main.maxRaining = progress;
+				WeatherSystem.savedCloudAlpha = progress;
 
 				if (!Main.mouseLeft)
 					dragging = false;
@@ -182,6 +231,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 				Main.windSpeedCurrent = (progress - 0.5f) * 2.4f;
 				Main.windSpeedTarget = (progress - 0.5f) * 2.4f;
+				WeatherSystem.savedWind = (progress - 0.5f) * 2.4f;
 
 				if (!Main.mouseLeft)
 					dragging = false;
@@ -256,13 +306,11 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void Click(UIMouseEvent evt)
 		{
 			if (!Main.raining)
-			{
 				Main.StartRain();
-			}
 			else
-			{
 				Main.raining = false;
-			}
+
+			WeatherSystem.savedRaining = Main.raining;
 		}
 	}
 
@@ -299,6 +347,51 @@ namespace DragonLens.Content.Tools.Gameplay
 				Sandstorm.StartSandstorm();
 			else
 				Sandstorm.Happening = false;
+
+			WeatherSystem.savedSandstorm = Sandstorm.Happening;
+		}
+	}
+
+	internal class FreezeWeatherButton : UIElement
+	{
+		public FreezeWeatherButton()
+		{
+			Width.Set(42, 0);
+			Height.Set(42, 0);
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			var dims = GetDimensions().ToRectangle();
+			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
+
+			Texture2D icon = WeatherSystem.weatherFrozen ?
+				ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Play").Value :
+				ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Pause").Value;
+
+			if (WeatherSystem.weatherFrozen)
+				GUIHelper.DrawOutline(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+
+			if (IsMouseHovering)
+			{
+				Tooltip.SetName("Freeze weather");
+				Tooltip.SetTooltip("Stop the weather from changing. This will carry your weather settings between worlds and game reloads!");
+			}
+
+			spriteBatch.Draw(icon, dims.Center.ToVector2(), null, Color.White, 0, icon.Size() / 2, 1, 0, 0);
+		}
+
+		public override void Click(UIMouseEvent evt)
+		{
+			WeatherSystem.weatherFrozen = !WeatherSystem.weatherFrozen;
+
+			if (WeatherSystem.weatherFrozen)
+			{
+				WeatherSystem.savedCloudAlpha = Main.cloudAlpha;
+				WeatherSystem.savedWind = Main.windSpeedCurrent;
+				WeatherSystem.savedRaining = Main.raining;
+				WeatherSystem.savedSandstorm = Sandstorm.Happening;
+			}
 		}
 	}
 }
