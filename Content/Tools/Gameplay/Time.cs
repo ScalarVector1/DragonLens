@@ -32,22 +32,28 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void SaveData(TagCompound tag)
 		{
 			tag["savedTime"] = TimePauseSystem.savedTime;
+			tag["savedDay"] = TimePauseSystem.savedDay;
 		}
 
 		public override void LoadData(TagCompound tag)
 		{
 			TimePauseSystem.savedTime = tag.GetInt("savedTime");
+			TimePauseSystem.savedDay = tag.GetBool("savedDay");
 		}
 	}
 
 	internal class TimePauseSystem : ModSystem
 	{
 		public static int savedTime = -1;
+		public static bool savedDay = false;
 
 		public override void PreUpdateTime()
 		{
 			if (savedTime != -1)
+			{
 				Main.time = savedTime;
+				Main.dayTime = savedDay;
+			}
 		}
 	}
 
@@ -147,7 +153,10 @@ namespace DragonLens.Content.Tools.Gameplay
 				}
 
 				if (TimePauseSystem.savedTime != -1) //updates time even while paused
+				{
+					TimePauseSystem.savedDay = Main.dayTime;
 					TimePauseSystem.savedTime = (int)Main.time;
+				}
 
 				if (!Main.mouseLeft)
 					dragging = false;
@@ -249,9 +258,14 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void Click(UIMouseEvent evt)
 		{
 			if (TimePauseSystem.savedTime == -1)
+			{
 				TimePauseSystem.savedTime = (int)Main.time;
+				TimePauseSystem.savedDay = Main.dayTime;
+			}
 			else
+			{
 				TimePauseSystem.savedTime = -1;
+			}
 		}
 	}
 
