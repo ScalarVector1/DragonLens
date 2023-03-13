@@ -241,7 +241,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 			if (IsMouseHovering)
 			{
-				Tooltip.SetName("Freeze time");
+				Tooltip.SetName(TimePauseSystem.savedTime == -1 ? "Freeze time" : "Resume time");
 				Tooltip.SetTooltip("Stop the time from changing. This will carry the time between worlds and game reloads!");
 			}
 		}

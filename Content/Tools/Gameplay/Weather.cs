@@ -369,12 +369,9 @@ namespace DragonLens.Content.Tools.Gameplay
 				ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Play").Value :
 				ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Pause").Value;
 
-			if (WeatherSystem.weatherFrozen)
-				GUIHelper.DrawOutline(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
-
 			if (IsMouseHovering)
 			{
-				Tooltip.SetName("Freeze weather");
+				Tooltip.SetName(WeatherSystem.weatherFrozen ? "Resume weather" : "Freeze weather");
 				Tooltip.SetTooltip("Stop the weather from changing. This will carry your weather settings between worlds and game reloads!");
 			}
 
