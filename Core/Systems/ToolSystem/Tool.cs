@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace DragonLens.Core.Systems.ToolSystem
 {
@@ -56,6 +57,10 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// What happens if this tool is right clicked. Only used if HasRightClick is true.
 		/// </summary>
 		public virtual void OnRightClick() { }
+
+		public virtual void SaveData(TagCompound tag) { }
+
+		public virtual void LoadData(TagCompound tag) { }
 
 		protected sealed override void Register()
 		{

@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.UI;
 
 namespace DragonLens.Content.Tools.Visualization
@@ -26,6 +27,44 @@ namespace DragonLens.Content.Tools.Visualization
 		{
 			HitboxWindow state = UILoader.GetUIState<HitboxWindow>();
 			state.visible = !state.visible;
+		}
+
+		public override void SaveData(TagCompound tag)
+		{
+			var npcTag = new TagCompound();
+			UILoader.GetUIState<HitboxWindow>().NPCOption.Save(npcTag);
+			tag["npcTag"] = npcTag;
+
+			var projTag = new TagCompound();
+			UILoader.GetUIState<HitboxWindow>().ProjectileOption.Save(projTag);
+			tag["projTag"] = projTag;
+
+			var playerTag = new TagCompound();
+			UILoader.GetUIState<HitboxWindow>().PlayerOption.Save(playerTag);
+			tag["playerTag"] = playerTag;
+
+			var itemTag = new TagCompound();
+			UILoader.GetUIState<HitboxWindow>().ItemOption.Save(itemTag);
+			tag["itemTag"] = itemTag;
+		}
+
+		public override void LoadData(TagCompound tag)
+		{
+			TagCompound npcTag = tag.Get<TagCompound>("npcTag");
+			if (npcTag != null)
+				UILoader.GetUIState<HitboxWindow>().NPCOption.Load(npcTag);
+
+			TagCompound projTag = tag.Get<TagCompound>("projTag");
+			if (projTag != null)
+				UILoader.GetUIState<HitboxWindow>().ProjectileOption.Load(projTag);
+
+			TagCompound playerTag = tag.Get<TagCompound>("playerTag");
+			if (playerTag != null)
+				UILoader.GetUIState<HitboxWindow>().PlayerOption.Load(playerTag);
+
+			TagCompound itemTag = tag.Get<TagCompound>("itemTag");
+			if (itemTag != null)
+				UILoader.GetUIState<HitboxWindow>().ItemOption.Load(itemTag);
 		}
 	}
 
@@ -256,6 +295,18 @@ namespace DragonLens.Content.Tools.Visualization
 			Utils.DrawBorderString(spriteBatch, text, new Vector2(dims.Center.X, dims.Y + 8), Color.White, 0.75f, 0.5f);
 
 			base.Draw(spriteBatch);
+		}
+
+		public void Save(TagCompound tag)
+		{
+			tag["color"] = slider.progress;
+			tag["setting"] = (int)boxState;
+		}
+
+		public void Load(TagCompound tag)
+		{
+			slider.progress = tag.GetFloat("color");
+			boxState = (BoxType)tag.GetInt("setting");
 		}
 	}
 

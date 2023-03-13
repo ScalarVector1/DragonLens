@@ -7,12 +7,13 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace DragonLens.Content.Tools.Gameplay
 {
 	internal class Godmode : Tool
 	{
-		public static bool godMode = ModContent.GetInstance<ToolConfig>().defaultGodmode;
+		public static bool godMode = false;
 
 		public static bool dogMode = false;
 
@@ -84,6 +85,18 @@ namespace DragonLens.Content.Tools.Gameplay
 			{
 				base.DrawIcon(spriteBatch, position);
 			}
+		}
+
+		public override void SaveData(TagCompound tag)
+		{
+			tag["godMode"] = godMode;
+			tag["dogMode"] = dogMode;
+		}
+
+		public override void LoadData(TagCompound tag)
+		{
+			godMode = tag.GetBool("godMode");
+			dogMode = tag.GetBool("dogMode");
 		}
 	}
 

@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace DragonLens.Content.Tools.Map
 {
@@ -41,6 +42,16 @@ namespace DragonLens.Content.Tools.Map
 
 				spriteBatch.Draw(tex, target, color);
 			}
+		}
+
+		public override void SaveData(TagCompound tag)
+		{
+			tag["active"] = active;
+		}
+
+		public override void LoadData(TagCompound tag)
+		{
+			active = tag.GetBool("active");
 		}
 	}
 

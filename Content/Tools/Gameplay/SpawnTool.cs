@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.UI;
 
 namespace DragonLens.Content.Tools.Gameplay
@@ -26,11 +27,21 @@ namespace DragonLens.Content.Tools.Gameplay
 			SpawnWindow state = UILoader.GetUIState<SpawnWindow>();
 			state.visible = !state.visible;
 		}
+
+		public override void SaveData(TagCompound tag)
+		{
+			tag["spawnRateModifier"] = SpawnSystem.spawnRateModifier;
+		}
+
+		public override void LoadData(TagCompound tag)
+		{
+			SpawnSystem.spawnRateModifier = tag.GetFloat("spawnRateModifier");
+		}
 	}
 
 	internal class SpawnSystem : GlobalNPC
 	{
-		public static float spawnRateModifier = ModContent.GetInstance<ToolConfig>().defaultSpawnrate;
+		public static float spawnRateModifier = 1;
 
 		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
 		{

@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace DragonLens.Content.Tools.Gameplay
 {
@@ -70,6 +71,18 @@ namespace DragonLens.Content.Tools.Gameplay
 
 				spriteBatch.Draw(tex, target, color);
 			}
+		}
+
+		public override void SaveData(TagCompound tag)
+		{
+			tag["active"] = active;
+			tag["voidActive"] = voidActive;
+		}
+
+		public override void LoadData(TagCompound tag)
+		{
+			active = tag.GetBool("active");
+			voidActive = tag.GetBool("voidActive");
 		}
 	}
 

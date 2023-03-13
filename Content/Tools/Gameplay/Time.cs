@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.UI;
 
 namespace DragonLens.Content.Tools.Gameplay
@@ -26,6 +27,16 @@ namespace DragonLens.Content.Tools.Gameplay
 		{
 			TimeWindow state = UILoader.GetUIState<TimeWindow>();
 			state.visible = !state.visible;
+		}
+
+		public override void SaveData(TagCompound tag)
+		{
+			tag["savedTime"] = TimePauseSystem.savedTime;
+		}
+
+		public override void LoadData(TagCompound tag)
+		{
+			TimePauseSystem.savedTime = tag.GetInt("savedTime");
 		}
 	}
 

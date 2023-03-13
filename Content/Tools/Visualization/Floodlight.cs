@@ -4,6 +4,7 @@ using DragonLens.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace DragonLens.Content.Tools.Visualization
 {
@@ -52,6 +53,16 @@ namespace DragonLens.Content.Tools.Visualization
 
 				spriteBatch.Draw(tex, target, color);
 			}
+		}
+
+		public override void SaveData(TagCompound tag)
+		{
+			tag["strength"] = strength;
+		}
+
+		public override void LoadData(TagCompound tag)
+		{
+			strength = tag.GetFloat("strength");
 		}
 	}
 
