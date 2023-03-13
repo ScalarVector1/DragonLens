@@ -67,6 +67,8 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override Vector2 DefaultPosition => new(0.5f, 0.5f);
 
+		public override string HelpLink => "https://github.com/ScalarVector1/DragonLens/wiki/Time-tool";
+
 		public override int InsertionIndex(List<GameInterfaceLayer> layers)
 		{
 			return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
