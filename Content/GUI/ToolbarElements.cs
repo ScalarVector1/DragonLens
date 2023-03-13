@@ -28,6 +28,8 @@ namespace DragonLens.Content.GUI
 
 		public Vector2 overlapAdjust;
 
+		public bool beingDragged;
+
 		public ToolbarElement(Toolbar toolbar)
 		{
 			this.toolbar = toolbar;
@@ -270,7 +272,8 @@ namespace DragonLens.Content.GUI
 				if (IsMouseHovering)
 					Main.LocalPlayer.mouseInterface = true;
 
-				base.Update(gameTime);
+				if (!beingDragged) // I dont know why this causes errors, but it does sometimes...
+					base.Update(gameTime);
 			}
 			else //This is here to prevent invisible toolbars from interfering with mouse interactions, since terraria is terrible about that
 			{

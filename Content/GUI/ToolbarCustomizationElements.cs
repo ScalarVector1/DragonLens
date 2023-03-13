@@ -143,6 +143,7 @@ namespace DragonLens.Content.GUI
 		{
 			dragging = true;
 			draggedElement = parent;
+			parent.beingDragged = true;
 		}
 
 		public override void MouseUp(UIMouseEvent evt)
@@ -150,6 +151,7 @@ namespace DragonLens.Content.GUI
 			dragging = false;
 			parent.Refresh();
 			parent.Customize();
+			parent.beingDragged = false;
 
 			draggedElement = null;
 		}
