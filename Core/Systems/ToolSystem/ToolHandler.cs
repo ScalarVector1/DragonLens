@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -149,10 +150,26 @@ namespace DragonLens.Core.Systems.ToolSystem
 			foreach (Tool tool in ToolHandler.Tools)
 			{
 				if (tool.keybind.JustPressed)
+				{
+					if (!PermissionHandler.CanUseTools(Main.LocalPlayer))
+					{
+						Main.NewText("You are not an admin!", Color.Red);
+						return;
+					}
+
 					tool.OnActivate();
+				}
 
 				if (tool.HasRightClick && tool.altKeybind.JustPressed)
+				{
+					if (!PermissionHandler.CanUseTools(Main.LocalPlayer))
+					{
+						Main.NewText("You are not an admin!", Color.Red);
+						return;
+					}
+
 					tool.OnRightClick();
+				}
 			}
 		}
 	}

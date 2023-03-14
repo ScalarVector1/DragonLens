@@ -2,6 +2,7 @@ using DragonLens.Configs;
 using DragonLens.Content.Tools;
 using DragonLens.Content.Tools.Spawners;
 using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Core.Systems;
 using DragonLens.Core.Systems.ToolSystem;
 using System.Diagnostics;
 using System.IO;
@@ -110,6 +111,9 @@ namespace DragonLens
 
 			if (type == "ToolPacket")
 				ToolHandler.HandlePacket(reader, whoAmI);
+
+			if (type == "AdminUpdate")
+				PermissionHandler.HandlePacket(reader, whoAmI);
 		}
 	}
 }

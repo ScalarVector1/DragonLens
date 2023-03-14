@@ -348,12 +348,24 @@ namespace DragonLens.Content.GUI
 
 		public override void Click(UIMouseEvent evt)
 		{
+			if (!PermissionHandler.CanUseTools(Main.LocalPlayer))
+			{
+				Main.NewText("You are not an admin!", Color.Red);
+				return;
+			}
+
 			if (!parent.toolbar.collapsed)
 				tool.OnActivate();
 		}
 
 		public override void RightClick(UIMouseEvent evt)
 		{
+			if (!PermissionHandler.CanUseTools(Main.LocalPlayer))
+			{
+				Main.NewText("You are not an admin!", Color.Red);
+				return;
+			}
+
 			if (!parent.toolbar.collapsed && tool.HasRightClick)
 				tool.OnRightClick();
 		}
