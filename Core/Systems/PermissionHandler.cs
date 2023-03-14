@@ -49,30 +49,19 @@ namespace DragonLens.Core.Systems
 		public static void HandlePacket(BinaryReader reader, int sender)
 		{
 			int operation = reader.ReadInt32();
-			string name = reader.ReadString();
 
-			Player player = Main.player.FirstOrDefault(n => n.name == name);
-
-			if (player is null)
+			if (operation == 0) //Set admin
 			{
-				Main.NewText($"Could not find a player by the name {name}");
-			}
-			else
-			{
-				if (operation == 0)
-				{
-					if (player == Main.LocalPlayer)
-						Main.NewText("You are now an admin!", Color.LimeGreen);
+				string name = reader.ReadString();
+				Player player = Main.player.FirstOrDefault(n => n.name == name);
 
-					admins.Add(player.name);
-				}
-				else if (operation == 1)
-				{
-					if (player == Main.LocalPlayer)
-						Main.NewText("You are no longer an admin...", Color.Red);
+				if (player is null)
+					Main.NewText($"Could not find a player by the name {name}");
 
-					admins.Remove(player.name);
-				}
+				if (player == Main.LocalPlayer)
+					Main.NewText("You are now an admin!", Color.LimeGreen);
+
+				admins.Add(player.name);
 
 				if (Main.netMode == NetmodeID.Server)
 				{
@@ -83,6 +72,52 @@ namespace DragonLens.Core.Systems
 					packet.Send();
 				}
 			}
+			else if (operation == 1) //Remove admin
+			{
+				string name = reader.ReadString();
+				Player player = Main.player.FirstOrDefault(n => n.name == name);
+
+				if (player is null)
+					Main.NewText($"Could not find a player by the name {name}");
+
+				if (player == Main.LocalPlayer)
+					Main.NewText("You are no longer an admin...", Color.Red);
+
+				admins.Remove(player.name);
+
+				if (Main.netMode == NetmodeID.Server)
+				{
+					ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
+					packet.Write("AdminUpdate");
+					packet.Write(operation);
+					packet.Write(player.name);
+					packet.Send();
+				}
+			}
+			else if (operation == 2) //Sync only
+			{
+				if (Main.netMode == NetmodeID.Server)
+				{
+					ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
+					packet.Write("AdminUpdate");
+					packet.Write(operation);
+					packet.Send();
+				}
+			}
+		}
+	}
+
+	public class PermissionPlayer : ModPlayer
+	{
+		public override void OnEnterWorld(Player player) // Send an admin list sync request on entering the server
+		{
+			ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
+			packet.Write("AdminUpdate");
+			packet.Write(2);
+			packet.Send();
+
+			if (Netplay.Connection.Socket.GetRemoteAddress().IsLocalHost()) // The host is automatically an admin!
+				PermissionHandler.AddAdmin(player);
 		}
 	}
 
@@ -98,6 +133,9 @@ namespace DragonLens.Core.Systems
 
 		public override void Action(CommandCaller caller, string input, string[] args)
 		{
+			if (caller.CommandType != CommandType.Console && !PermissionHandler.CanUseTools(caller.Player)) //Only admins or console can make more admins
+				return;
+
 			if (args.Length < 1)
 			{
 				Console.WriteLine("You must enter the name of the player to give admin powers to.");
@@ -138,6 +176,9 @@ namespace DragonLens.Core.Systems
 
 		public override void Action(CommandCaller caller, string input, string[] args)
 		{
+			if (caller.CommandType != CommandType.Console && !PermissionHandler.CanUseTools(caller.Player)) //Only admins or console can remove admins
+				return;
+
 			if (args.Length < 1)
 			{
 				Console.WriteLine("You must enter the name of the player to revoke admin powers from.");
