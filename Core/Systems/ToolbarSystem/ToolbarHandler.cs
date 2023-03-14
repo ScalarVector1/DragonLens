@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -25,6 +26,9 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 
 		public override void OnModLoad()
 		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
+
 			string currentPath = Path.Join(Main.SavePath, "DragonLensLayouts", "Current");
 
 			if (File.Exists(currentPath))

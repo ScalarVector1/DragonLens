@@ -2,7 +2,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.IO;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -14,32 +16,32 @@ namespace DragonLens.Core.Systems.ToolSystem
 	internal abstract class Tool : ModType
 	{
 		/// <summary>
-		/// The hotkey keybind for this tool
+		/// The hotkey keybind for this tool.
 		/// </summary>
 		public ModKeybind keybind;
 
 		/// <summary>
-		/// The hotkey used for the right click function of this tool
+		/// The hotkey used for the right click function of this tool.
 		/// </summary>
 		public ModKeybind altKeybind;
 
 		/// <summary>
-		/// The icon key to retrieve the icon for this tool
+		/// The icon key to retrieve the icon for this tool.
 		/// </summary>
 		public abstract string IconKey { get; }
 
 		/// <summary>
-		/// The display name of the tool to the end user
+		/// The display name of the tool to the end user.
 		/// </summary>
 		public abstract string DisplayName { get; }
 
 		/// <summary>
-		/// The description that should show up when queried for more information about this tool
+		/// The description that should show up when queried for more information about this tool.
 		/// </summary>
 		public abstract string Description { get; }
 
 		/// <summary>
-		/// What happens when the user activates this tool, either by clicking on it or using it's hotkey
+		/// What happens when the user activates this tool, either by clicking on it or using it's hotkey.
 		/// </summary>
 		public abstract void OnActivate();
 
@@ -58,9 +60,49 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// </summary>
 		public virtual void OnRightClick() { }
 
+		/// <summary>
+		/// Allows you to save persistent data for this tool.
+		/// </summary>
+		/// <param name="tag"></param>
 		public virtual void SaveData(TagCompound tag) { }
 
+		/// <summary>
+		/// Allows you to load the persistent data for this tool, if that data exists.
+		/// </summary>
+		/// <param name="tag"></param>
 		public virtual void LoadData(TagCompound tag) { }
+
+		/// <summary>
+		/// Allows you to define the data to be sent with this tools packet. Every tool gets its own packet that can be easily sent by calling NetSend.
+		/// </summary>
+		/// <param name="writer"></param>
+		public virtual void SendPacket(BinaryWriter writer) { }
+
+		/// <summary>
+		/// Allows you to define the behavior for recieving this tools packet. This should unpack the data you send in SendPacket.
+		/// </summary>
+		/// <param name="reader"></param>
+		/// <param name="sender"></param>
+		public virtual void RecievePacket(BinaryReader reader, int sender) { }
+
+		/// <summary>
+		/// This should be called when your tool needs to send its packet.
+		/// </summary>
+		public void NetSend(int toClient = -1, int ignoreClient = -1)
+		{
+			if (Main.netMode == NetmodeID.Server)
+				Mod.Logger.Info($"Sending packet for tool {DisplayName} ({Name}) from server");
+
+			if (Main.netMode == NetmodeID.MultiplayerClient)
+				Mod.Logger.Info($"Sending packet for tool {DisplayName} ({Name}) from {Main.LocalPlayer.whoAmI}");
+
+			ModPacket packet = Mod.GetPacket();
+			packet.Write("ToolPacket");
+			packet.Write(Name);
+			SendPacket(packet);
+
+			packet.Send(toClient, ignoreClient);
+		}
 
 		protected sealed override void Register()
 		{

@@ -7,8 +7,10 @@ using DragonLens.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.GameContent.Events;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
@@ -47,6 +49,43 @@ namespace DragonLens.Content.Tools.Gameplay
 			WeatherSystem.savedSandstorm = tag.GetBool("savedSandstorm");
 
 			WeatherSystem.weatherFrozen = tag.GetBool("weatherFrozen");
+		}
+
+		public override void SendPacket(BinaryWriter writer)
+		{
+			writer.Write(Main.cloudAlpha);
+			writer.Write(Main.windSpeedCurrent);
+			writer.Write(Main.raining);
+			writer.Write(Sandstorm.Happening);
+			writer.Write(WeatherSystem.weatherFrozen);
+		}
+
+		public override void RecievePacket(BinaryReader reader, int sender)
+		{
+			float clouds = reader.ReadSingle();
+			float wind = reader.ReadSingle();
+			bool raining = reader.ReadBoolean();
+			bool sandstorm = reader.ReadBoolean();
+			bool frozen = reader.ReadBoolean();
+
+			WeatherSystem.weatherFrozen = frozen;
+
+			if (frozen)
+			{
+				WeatherSystem.savedCloudAlpha = clouds;
+				WeatherSystem.savedWind = wind;
+				WeatherSystem.savedRaining = raining;
+				WeatherSystem.savedSandstorm = sandstorm;
+			}
+
+			Main.cloudAlpha = clouds;
+			Main.windSpeedCurrent = wind;
+			Main.windSpeedTarget = wind;
+			Main.raining = raining;
+			Sandstorm.Happening = sandstorm;
+
+			if (Main.netMode == NetmodeID.Server)
+				NetSend(-1, sender);
 		}
 	}
 
@@ -171,7 +210,10 @@ namespace DragonLens.Content.Tools.Gameplay
 				WeatherSystem.savedCloudAlpha = progress;
 
 				if (!Main.mouseLeft)
+				{
 					dragging = false;
+					ToolHandler.NetSend<Weather>();
+				}
 			}
 			else
 			{
@@ -234,7 +276,10 @@ namespace DragonLens.Content.Tools.Gameplay
 				WeatherSystem.savedWind = (progress - 0.5f) * 2.4f;
 
 				if (!Main.mouseLeft)
+				{
 					dragging = false;
+					ToolHandler.NetSend<Weather>();
+				}
 			}
 			else
 			{
@@ -311,6 +356,8 @@ namespace DragonLens.Content.Tools.Gameplay
 				Main.raining = false;
 
 			WeatherSystem.savedRaining = Main.raining;
+
+			ToolHandler.NetSend<Weather>();
 		}
 	}
 
@@ -349,6 +396,8 @@ namespace DragonLens.Content.Tools.Gameplay
 				Sandstorm.Happening = false;
 
 			WeatherSystem.savedSandstorm = Sandstorm.Happening;
+
+			ToolHandler.NetSend<Weather>();
 		}
 	}
 
@@ -389,6 +438,8 @@ namespace DragonLens.Content.Tools.Gameplay
 				WeatherSystem.savedRaining = Main.raining;
 				WeatherSystem.savedSandstorm = Sandstorm.Happening;
 			}
+
+			ToolHandler.NetSend<Weather>();
 		}
 	}
 }

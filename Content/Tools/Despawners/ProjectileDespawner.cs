@@ -1,5 +1,7 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
+using System.IO;
 using Terraria;
+using Terraria.ID;
 
 namespace DragonLens.Content.Tools.Despawners
 {
@@ -17,6 +19,17 @@ namespace DragonLens.Content.Tools.Despawners
 			{
 				proj.active = false;
 			}
+		}
+
+		public override void RecievePacket(BinaryReader reader, int sender)
+		{
+			foreach (Projectile proj in Main.projectile)
+			{
+				proj.active = false;
+			}
+
+			if (Main.netMode == NetmodeID.Server)
+				NetSend(-1, sender);
 		}
 	}
 }

@@ -4,6 +4,7 @@ using DragonLens.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -25,6 +26,12 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override void OnActivate()
 		{
+			if (Main.netMode != NetmodeID.SinglePlayer)
+			{
+				Main.NewText("Fast forward is disabled in multiplayer", Color.Red);
+				return;
+			}
+
 			if (speedup < 4)
 				speedup++;
 			else
@@ -33,6 +40,12 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override void OnRightClick()
 		{
+			if (Main.netMode != NetmodeID.SinglePlayer)
+			{
+				Main.NewText("Fast forward is disabled in multiplayer", Color.Red);
+				return;
+			}
+
 			if (speedup > 0)
 				speedup--;
 			else

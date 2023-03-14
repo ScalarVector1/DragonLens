@@ -1,5 +1,6 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -39,10 +40,18 @@ namespace DragonLens.Content.Tools.Gameplay
 				Main.GameMode = GameModeID.Normal;
 				Main.NewText("The game is now in normal mode.", new Color(180, 180, 255));
 			}
+
+			NetSend();
 		}
 
 		public override void OnRightClick()
 		{
+			if (Main.netMode != NetmodeID.SinglePlayer)
+			{
+				Main.NewText("Journey toggle is disabled in multiplayer", Color.Red);
+				return;
+			}
+
 			if (Main.LocalPlayer.difficulty != 3)
 			{
 				oldPlayerDifficulty = Main.LocalPlayer.difficulty;
@@ -57,6 +66,19 @@ namespace DragonLens.Content.Tools.Gameplay
 				Main.LocalPlayer.difficulty = (byte)oldPlayerDifficulty;
 				Main.NewText("Journey mode disabled.", Color.LightGray);
 			}
+		}
+
+		public override void SendPacket(BinaryWriter writer)
+		{
+			writer.Write(Main.GameMode);
+		}
+
+		public override void RecievePacket(BinaryReader reader, int sender)
+		{
+			Main.GameMode = reader.ReadInt32();
+
+			if (Main.netMode == NetmodeID.Server)
+				NetSend(-1, sender);
 		}
 	}
 

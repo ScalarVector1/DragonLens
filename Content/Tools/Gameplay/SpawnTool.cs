@@ -7,7 +7,9 @@ using DragonLens.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
@@ -36,6 +38,19 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void LoadData(TagCompound tag)
 		{
 			SpawnSystem.spawnRateModifier = tag.GetFloat("spawnRateModifier");
+		}
+
+		public override void SendPacket(BinaryWriter writer)
+		{
+			writer.Write(SpawnSystem.spawnRateModifier);
+		}
+
+		public override void RecievePacket(BinaryReader reader, int sender)
+		{
+			SpawnSystem.spawnRateModifier = reader.ReadSingle();
+
+			if (Main.netMode == NetmodeID.Server)
+				NetSend(-1, sender);
 		}
 	}
 
@@ -122,7 +137,10 @@ namespace DragonLens.Content.Tools.Gameplay
 				SpawnSystem.spawnRateModifier = progress * 10;
 
 				if (!Main.mouseLeft)
+				{
 					dragging = false;
+					ToolHandler.NetSend<SpawnTool>();
+				}
 			}
 			else
 			{

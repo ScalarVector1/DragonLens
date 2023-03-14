@@ -2,7 +2,9 @@ using DragonLens.Configs;
 using DragonLens.Content.Tools;
 using DragonLens.Content.Tools.Spawners;
 using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Core.Systems.ToolSystem;
 using System.Diagnostics;
+using System.IO;
 using System.Threading;
 using Terraria;
 using Terraria.ID;
@@ -14,6 +16,9 @@ namespace DragonLens
 	{
 		public override void PostAddRecipes()
 		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
+
 			if (ModContent.GetInstance<ToolConfig>().preloadSpawners)
 			{
 				UILoader.GetUIState<ItemBrowser>().Refresh();
@@ -97,6 +102,14 @@ namespace DragonLens
 				});
 				tileThread.Start();
 			}
+		}
+
+		public override void HandlePacket(BinaryReader reader, int whoAmI)
+		{
+			string type = reader.ReadString();
+
+			if (type == "ToolPacket")
+				ToolHandler.HandlePacket(reader, whoAmI);
 		}
 	}
 }

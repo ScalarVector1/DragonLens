@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
 
@@ -161,6 +162,9 @@ namespace DragonLens.Content.GUI
 
 		public override void PostUpdateEverything()
 		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
+
 			if (Main.UIScale != oldUIScale)
 			{
 				UILoader.GetUIState<ToolbarState>().Refresh();

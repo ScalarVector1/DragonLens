@@ -4,7 +4,9 @@ using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -53,10 +55,35 @@ namespace DragonLens.Content.Tools.Map
 		{
 			active = tag.GetBool("active");
 		}
+
+		public override void SendPacket(BinaryWriter writer)
+		{
+			writer.WriteVector2(MapTeleportSystem.lastTarget);
+			writer.Write(MapTeleportSystem.whoTeleported);
+		}
+
+		public override void RecievePacket(BinaryReader reader, int sender)
+		{
+			Vector2 target = reader.ReadVector2();
+			int who = reader.ReadInt32();
+
+			Main.player[who].Center = target;
+
+			if (Main.netMode == NetmodeID.Server)
+			{
+				MapTeleportSystem.lastTarget = target;
+				MapTeleportSystem.whoTeleported = who;
+
+				NetSend(-1, sender);
+			}
+		}
 	}
 
 	internal class MapTeleportSystem : ModSystem
 	{
+		public static Vector2 lastTarget; //These are here for MP sync purposes
+		public static int whoTeleported;
+
 		public override void Load()
 		{
 			Main.OnPostFullscreenMapDraw += TeleportFromMap;
@@ -80,6 +107,9 @@ namespace DragonLens.Content.Tools.Map
 
 					if (NoClip.active)
 						NoClip.desiredPos = target;
+
+					lastTarget = target;
+					whoTeleported = Main.LocalPlayer.whoAmI;
 
 					Main.LocalPlayer.fallStart = (int)Main.LocalPlayer.position.Y;
 				}

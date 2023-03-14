@@ -7,7 +7,9 @@ using DragonLens.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -39,6 +41,25 @@ namespace DragonLens.Content.Tools.Gameplay
 		{
 			TimePauseSystem.savedTime = tag.GetInt("savedTime");
 			TimePauseSystem.savedDay = tag.GetBool("savedDay");
+		}
+
+		public override void SendPacket(BinaryWriter writer)
+		{
+			writer.Write(Main.time);
+			writer.Write(Main.dayTime);
+			writer.Write(TimePauseSystem.savedTime);
+			writer.Write(Main.moonPhase);
+		}
+
+		public override void RecievePacket(BinaryReader reader, int sender)
+		{
+			Main.time = reader.ReadInt32();
+			Main.dayTime = reader.ReadBoolean();
+			TimePauseSystem.savedTime = reader.ReadInt32();
+			Main.moonPhase = reader.ReadInt32();
+
+			if (Main.netMode == NetmodeID.Server)
+				NetSend(-1, sender);
 		}
 	}
 
@@ -161,7 +182,10 @@ namespace DragonLens.Content.Tools.Gameplay
 				}
 
 				if (!Main.mouseLeft)
+				{
 					dragging = false;
+					ToolHandler.NetSend<Time>();
+				}
 			}
 			else
 			{
@@ -268,6 +292,8 @@ namespace DragonLens.Content.Tools.Gameplay
 			{
 				TimePauseSystem.savedTime = -1;
 			}
+
+			ToolHandler.NetSend<Time>();
 		}
 	}
 
@@ -301,6 +327,8 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void Click(UIMouseEvent evt)
 		{
 			Main.moonPhase = moonPhase;
+
+			ToolHandler.NetSend<Time>();
 		}
 	}
 }

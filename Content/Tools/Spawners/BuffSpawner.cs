@@ -2,10 +2,12 @@
 using DragonLens.Content.Filters.BuffFilters;
 using DragonLens.Content.GUI;
 using DragonLens.Content.GUI.FieldEditors;
+using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.ID;
@@ -22,6 +24,41 @@ namespace DragonLens.Content.Tools.Spawners
 		public override string DisplayName => "Buff spawner";
 
 		public override string Description => "Allows you to apply buffs to yourself or NPCs";
+
+		public override void SendPacket(BinaryWriter writer)
+		{
+			writer.WriteVector2(Main.MouseWorld);
+			writer.Write(BuffBrowser.selected);
+			writer.Write(BuffBrowser.duration);
+		}
+
+		public override void RecievePacket(BinaryReader reader, int sender)
+		{
+			Vector2 pos = reader.ReadVector2();
+			int type = reader.ReadInt32();
+			int duration = reader.ReadInt32();
+
+			foreach (NPC npc in Main.npc)
+			{
+				Rectangle clickbox = npc.Hitbox;
+				clickbox.Inflate(32, 32);
+
+				if (clickbox.Contains(pos.ToPoint()))
+				{
+					npc.AddBuff(type, duration);
+					break;
+				}
+			}
+
+			if (Main.netMode == NetmodeID.Server && sender >= 0)
+			{
+				BuffBrowser.selected = type;
+				BuffBrowser.duration = duration;
+				Main.mouseX = (int)pos.X;
+				Main.mouseY = (int)pos.Y;
+				NetSend(-1, sender);
+			}
+		}
 	}
 
 	internal class BuffBrowser : Browser
@@ -106,6 +143,8 @@ namespace DragonLens.Content.Tools.Spawners
 						break;
 					}
 				}
+
+				ToolHandler.NetSend<BuffSpawner>();
 			}
 		}
 

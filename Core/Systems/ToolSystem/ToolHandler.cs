@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.GameInput;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -27,6 +29,33 @@ namespace DragonLens.Core.Systems.ToolSystem
 		internal static void AddTool(Tool tool)
 		{
 			tools.Add(tool);
+		}
+
+		/// <summary>
+		/// Helper method for quickly sending the packet of a given tool from outside of itself
+		/// </summary>
+		/// <typeparam name="T">The type of the tool to send the packet of</typeparam>
+		public static void NetSend<T>(int toClient = -1, int ignoreClient = -1) where T : Tool
+		{
+			ModContent.GetInstance<T>().NetSend(toClient, ignoreClient);
+		}
+
+		/// <summary>
+		/// Handles network packets, sending them to the correct tool automatically
+		/// </summary>
+		/// <param name="reader"></param>
+		/// <param name="sender"></param>
+		public static void HandlePacket(BinaryReader reader, int sender)
+		{
+			string tool = reader.ReadString();
+			Tool target = Tools.FirstOrDefault(n => n.Name == tool);
+
+			ModLoader.GetMod("DragonLens").Logger.Info($"Recieved packet for tool {tool} from {sender}");
+
+			if (target != null)
+				target.RecievePacket(reader, sender);
+			else
+				ModLoader.GetMod("DragonLens").Logger.Warn($"Recieved a packet with an invalid tool path: '{tool}'! cannot route!");
 		}
 
 		/// <summary>
@@ -78,6 +107,9 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// </summary>
 		public override void OnModLoad()
 		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
+
 			string currentPath = Path.Join(Main.SavePath, "DragonLensLayouts", "ToolData", "ToolData");
 
 			if (File.Exists(currentPath))
@@ -98,6 +130,9 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// </summary>
 		public override void OnWorldUnload()
 		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
+
 			string currentPath = Path.Join(Main.SavePath, "DragonLensLayouts", "ToolData", "ToolData");
 
 			SaveToolData(currentPath);

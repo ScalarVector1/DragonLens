@@ -81,6 +81,8 @@ namespace DragonLens.Content.Tools.Spawners
 
 					WorldGen.SquareTileFrame((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
 				}
+
+				NetMessage.SendTileSquare(Main.LocalPlayer.whoAmI, (int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
 			}
 
 			if (selected != -1)

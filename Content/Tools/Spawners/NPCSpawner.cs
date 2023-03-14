@@ -2,12 +2,15 @@
 using DragonLens.Content.Filters;
 using DragonLens.Content.Filters.NPCFilters;
 using DragonLens.Content.GUI;
+using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -22,6 +25,28 @@ namespace DragonLens.Content.Tools.Spawners
 		public override string DisplayName => "NPC spawner";
 
 		public override string Description => "Spawn NPCs, from villagers to skeletons to bosses";
+
+		public override void SendPacket(BinaryWriter writer)
+		{
+			writer.Write(NPCBrowser.selected.type);
+			writer.WriteVector2(Main.MouseWorld);
+		}
+
+		public override void RecievePacket(BinaryReader reader, int sender)
+		{
+			int type = reader.ReadInt32();
+			Vector2 pos = reader.ReadVector2();
+
+			NPC.NewNPC(null, (int)pos.X, (int)pos.Y, type);
+
+			if (Main.netMode == NetmodeID.Server && sender >= 0)
+			{
+				NPCBrowser.selected.type = type;
+				Main.mouseX = (int)pos.X;
+				Main.mouseY = (int)pos.Y;
+				NetSend(-1, sender);
+			}
+		}
 	}
 
 	internal class NPCBrowser : Browser
@@ -89,7 +114,10 @@ namespace DragonLens.Content.Tools.Spawners
 			base.Click(evt);
 
 			if (selected != null)
+			{
 				NPC.NewNPC(null, (int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, selected.type);
+				ToolHandler.NetSend<NPCSpawner>();
+			}
 		}
 
 		public override void RightClick(UIMouseEvent evt)

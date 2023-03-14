@@ -2,12 +2,15 @@
 using DragonLens.Content.Filters.ProjectileFilters;
 using DragonLens.Content.GUI;
 using DragonLens.Content.GUI.FieldEditors;
+using DragonLens.Core.Systems.ToolSystem;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -21,6 +24,47 @@ namespace DragonLens.Content.Tools.Spawners
 		public override string DisplayName => "Projectile spawner";
 
 		public override string Description => "Spawn projectiles, with options for setting velocity and other parameters";
+
+		public override void SendPacket(BinaryWriter writer)
+		{
+			writer.Write(ProjectileBrowser.selected.type);
+			writer.Write(ProjectileBrowser.selected.damage);
+			writer.Write(ProjectileBrowser.selected.knockBack);
+			writer.WriteVector2(Main.MouseWorld);
+
+			writer.WriteVector2(ProjectileBrowser.velocity);
+			writer.Write(ProjectileBrowser.ai0);
+			writer.Write(ProjectileBrowser.ai1);
+		}
+
+		public override void RecievePacket(BinaryReader reader, int sender)
+		{
+			int type = reader.ReadInt32();
+			int damage = reader.ReadInt32();
+			float knockBack = reader.ReadSingle();
+			Vector2 pos = reader.ReadVector2();
+
+			Vector2 velocity = reader.ReadVector2();
+			float ai0 = reader.ReadSingle();
+			float ai1 = reader.ReadSingle();
+
+			Projectile.NewProjectile(null, Main.MouseWorld, velocity, type, damage, knockBack, Main.myPlayer, ai0, ai1);
+
+			if (Main.netMode == NetmodeID.Server && sender >= 0)
+			{
+				ProjectileBrowser.selected.type = type;
+				ProjectileBrowser.selected.damage = damage;
+				ProjectileBrowser.selected.knockBack = knockBack;
+				Main.mouseX = (int)pos.X;
+				Main.mouseY = (int)pos.Y;
+
+				ProjectileBrowser.velocity = velocity;
+				ProjectileBrowser.ai0 = ai0;
+				ProjectileBrowser.ai1 = ai1;
+
+				NetSend(-1, sender);
+			}
+		}
 	}
 
 	internal class ProjectileBrowser : Browser
@@ -115,7 +159,10 @@ namespace DragonLens.Content.Tools.Spawners
 			base.Click(evt);
 
 			if (selected != null)
+			{
 				Projectile.NewProjectile(null, Main.MouseWorld, velocity, selected.type, selected.damage, selected.knockBack, Main.myPlayer, ai0, ai1);
+				ToolHandler.NetSend<ProjectileSpawner>();
+			}
 		}
 
 		public override void RightClick(UIMouseEvent evt)
