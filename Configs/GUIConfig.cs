@@ -62,12 +62,5 @@ namespace DragonLens.Configs
 					ThemeHandler.currentIconProvider = value == IconStyle.basic ? new DefaultIcons() : new HEROsIcons();
 			}
 		}
-
-		[Label("Browser button size")]
-		[Tooltip("Modifies the size of browser buttons.\nlarger sizes may be easier to see but require more scrolling.")]
-		[Range(36, 108)]
-		[Slider]
-		[DefaultValue(36)]
-		public int browserButtonSize;
 	}
 }

@@ -1,5 +1,4 @@
-﻿using DragonLens.Configs;
-using DragonLens.Content.Filters;
+﻿using DragonLens.Content.Filters;
 using DragonLens.Content.Filters.NPCFilters;
 using DragonLens.Content.GUI;
 using DragonLens.Core.Systems.ToolSystem;
@@ -212,7 +211,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		protected override void DrawSelf(SpriteBatch spriteBatch)
 		{
-			int size = (int)MathHelper.Clamp(ModContent.GetInstance<GUIConfig>().browserButtonSize, 36, 108);
+			int size = (int)MathHelper.Clamp(parent.buttonSize, 36, 108);
 			var iconBox = GetDimensions().ToRectangle();
 
 			if (parent.listMode)

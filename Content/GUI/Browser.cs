@@ -26,6 +26,7 @@ namespace DragonLens.Content.GUI
 		private ToggleButton filterButton;
 
 		internal SearchBar searchBar;
+		internal ButtonSizeSlider sizeSlider;
 
 		public bool initialized;
 		public bool listMode;
@@ -112,6 +113,9 @@ namespace DragonLens.Content.GUI
 			searchBar.Height.Set(32, 0);
 			Append(searchBar);
 
+			sizeSlider = new(this);
+			Append(sizeSlider);
+
 			listButton = new("DragonLens/Assets/GUI/Play", () => listMode, "List view");
 			listButton.OnClick += (n, k) => listMode = !listMode;
 			Append(listButton);
@@ -146,6 +150,9 @@ namespace DragonLens.Content.GUI
 
 			searchBar.Left.Set(newPos.X + 10, 0);
 			searchBar.Top.Set(newPos.Y + 66, 0);
+
+			sizeSlider.Left.Set(newPos.X + 310, 0);
+			sizeSlider.Top.Set(newPos.Y + 74, 0);
 
 			listButton.Left.Set(newPos.X + 220, 0);
 			listButton.Top.Set(newPos.Y + 66, 0);
@@ -202,7 +209,7 @@ namespace DragonLens.Content.GUI
 
 		public BrowserButton(Browser parent)
 		{
-			int size = (int)MathHelper.Clamp(ModContent.GetInstance<GUIConfig>().browserButtonSize, 36, 108);
+			int size = (int)MathHelper.Clamp(parent.buttonSize, 36, 108);
 
 			Width.Set(size, 0);
 			Height.Set(size, 0);
@@ -235,7 +242,7 @@ namespace DragonLens.Content.GUI
 
 		private void UpdateAsGrid()
 		{
-			int size = (int)MathHelper.Clamp(ModContent.GetInstance<GUIConfig>().browserButtonSize, 36, 108);
+			int size = (int)MathHelper.Clamp(parent.buttonSize, 36, 108);
 
 			if (GetDimensions().Width != size || MarginLeft == 0)
 			{
@@ -251,7 +258,7 @@ namespace DragonLens.Content.GUI
 
 		private void UpdateAsList()
 		{
-			int size = (int)MathHelper.Clamp(ModContent.GetInstance<GUIConfig>().browserButtonSize, 36, 108);
+			int size = (int)MathHelper.Clamp(parent.buttonSize, 36, 108);
 
 			Width.Set(Parent.GetDimensions().Width - 24, 0);
 			Height.Set(size, 0);
@@ -325,6 +332,64 @@ namespace DragonLens.Content.GUI
 				displayed += "|";
 
 			Utils.DrawBorderString(spriteBatch, displayed, pos, Color.White);
+		}
+	}
+
+	internal class ButtonSizeSlider : UIElement
+	{
+		public bool dragging;
+		public float progress;
+		public Browser parent;
+
+		public ButtonSizeSlider(Browser parent)
+		{
+			Width.Set(100, 0);
+			Height.Set(16, 0);
+
+			this.parent = parent;
+		}
+
+		public override void Update(GameTime gameTime)
+		{
+			if (dragging)
+			{
+				progress = MathHelper.Clamp((Main.MouseScreen.X - GetDimensions().Position().X) / GetDimensions().Width, 0, 1);
+
+				parent.buttonSize = (int)(36 + progress * (108 - 36));
+
+				if (!Main.mouseLeft)
+					dragging = false;
+			}
+			else
+			{
+				progress = (parent.buttonSize - 36) / (108 - 36f);
+			}
+
+			base.Update(gameTime);
+		}
+
+		public override void MouseDown(UIMouseEvent evt)
+		{
+			dragging = true;
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			var dims = GetDimensions().ToRectangle();
+			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
+
+			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/AlphaScale").Value;
+			dims.Inflate(-4, -4);
+			spriteBatch.Draw(tex, dims, Color.White);
+
+			var draggerTarget = new Rectangle(dims.X + (int)(progress * dims.Width) - 5, dims.Y - 6, 10, 20);
+			GUIHelper.DrawBox(spriteBatch, draggerTarget, ModContent.GetInstance<GUIConfig>().buttonColor);
+
+			if (IsMouseHovering && !Main.mouseLeft)
+			{
+				Tooltip.SetName("Button scale");
+				Tooltip.SetTooltip("Drag to adjust the size of buttons in the browser");
+			}
 		}
 	}
 }
