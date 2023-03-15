@@ -155,6 +155,8 @@ namespace DragonLens.Content.GUI
 		/// </summary>
 		public void SmartShove()
 		{
+			return; //Temporarily disabled...
+
 			overlapAdjust = Vector2.Zero;
 
 			foreach (ToolbarElement potentialIntersect in ToolbarState.toolbars)

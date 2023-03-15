@@ -111,10 +111,17 @@ namespace DragonLens.Core.Systems
 	{
 		public override void OnEnterWorld(Player player) // Send an admin list sync request on entering the server
 		{
-			ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
-			packet.Write("AdminUpdate");
-			packet.Write(2);
-			packet.Send();
+			if (Main.netMode == NetmodeID.SinglePlayer) //single player dosent care about admins
+				return;
+
+			if (Main.netMode == NetmodeID.MultiplayerClient)
+			{
+
+				ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
+				packet.Write("AdminUpdate");
+				packet.Write(2);
+				packet.Send();
+			}
 
 			if (Netplay.Connection.Socket.GetRemoteAddress().IsLocalHost()) // The host is automatically an admin!
 				PermissionHandler.AddAdmin(player);

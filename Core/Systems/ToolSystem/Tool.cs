@@ -90,6 +90,9 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// </summary>
 		public void NetSend(int toClient = -1, int ignoreClient = -1)
 		{
+			if (Main.netMode == NetmodeID.SinglePlayer) //single player dosent care about packets
+				return;
+
 			if (Main.netMode == NetmodeID.Server)
 				Mod.Logger.Info($"Sending packet for tool {DisplayName} ({Name}) from server");
 

@@ -29,7 +29,7 @@ namespace DragonLens.Content.Tools.Developer
 
 		public override string DisplayName => "Shader Reloader";
 
-		public override string Description => "Re-compile and re-load all shaders";
+		public override string Description => "Re-compile and re-load all shaders [WORK IN PROGRESS]";
 
 		public ShaderCompiler() : base()
 		{
