@@ -65,15 +65,23 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// <param name="path">The path to the tool data file</param>
 		private void LoadToolData(string path)
 		{
-			TagCompound tag = TagIO.FromFile(path);
-
-			if (tag is null)
-				return;
-
-			foreach (Tool tool in Tools)
+			try
 			{
-				if (tag.ContainsKey(tool.Name))
-					tool.LoadData(tag.Get<TagCompound>(tool.Name));
+				TagCompound tag = TagIO.FromFile(path);
+
+				if (tag is null)
+					return;
+
+				foreach (Tool tool in Tools)
+				{
+					if (tag.ContainsKey(tool.Name))
+						tool.LoadData(tag.Get<TagCompound>(tool.Name));
+				}
+			}
+			catch
+			{
+				Mod.Logger.Error("Tool data file could not be read!");
+				return;
 			}
 		}
 
