@@ -123,6 +123,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 				Directory.CreateDirectory(dir);
 
 				File.Create(currentPath);
+				SaveToolData(currentPath);
 			}
 		}
 
