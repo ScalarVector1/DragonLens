@@ -27,9 +27,9 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SendPacket(BinaryWriter writer)
 		{
-			writer.Write(ProjectileBrowser.selected.type);
-			writer.Write(ProjectileBrowser.selected.damage);
-			writer.Write(ProjectileBrowser.selected.knockBack);
+			writer.Write(ProjectileBrowser.selected is null ? 0 : ProjectileBrowser.selected.type);
+			writer.Write(ProjectileBrowser.selected is null ? 0 : ProjectileBrowser.selected.damage);
+			writer.Write(ProjectileBrowser.selected is null ? 0 : ProjectileBrowser.selected.knockBack);
 			writer.WriteVector2(Main.MouseWorld);
 
 			writer.WriteVector2(ProjectileBrowser.velocity);

@@ -29,6 +29,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			if (Main.netMode != NetmodeID.SinglePlayer)
 			{
 				Main.NewText("Fast forward is disabled in multiplayer", Color.Red);
+				speedup = 0;
 				return;
 			}
 
@@ -43,6 +44,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			if (Main.netMode != NetmodeID.SinglePlayer)
 			{
 				Main.NewText("Fast forward is disabled in multiplayer", Color.Red);
+				speedup = 0;
 				return;
 			}
 
@@ -76,6 +78,12 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override void LoadData(TagCompound tag)
 		{
+			if (Main.netMode != NetmodeID.SinglePlayer)
+			{
+				speedup = 0;
+				return;
+			}
+
 			speedup = tag.GetInt("speedup");
 		}
 	}

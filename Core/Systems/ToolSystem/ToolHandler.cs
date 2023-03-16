@@ -127,7 +127,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// </summary>
 		public override void OnWorldLoad()
 		{
-			if (Main.netMode == NetmodeID.Server)
+			if (Main.netMode != NetmodeID.SinglePlayer)
 				return;
 
 			CreateOrLoadData();
@@ -159,7 +159,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// </summary>
 		public override void OnWorldUnload()
 		{
-			if (Main.netMode == NetmodeID.Server) // We dont want to lift the tool data from our last multiplayer session, that would be silly...
+			if (Main.netMode != NetmodeID.SinglePlayer) // We dont want to lift the tool data from our last multiplayer session, that would be silly...
 				return;
 
 			string currentPath = Path.Join(Main.SavePath, "DragonLensLayouts", "ToolData", "ToolData");

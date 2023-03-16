@@ -55,11 +55,10 @@ namespace DragonLens.Content.Tools.Editors
 		public override void LoadData(TagCompound tag)
 		{
 			IList<Item> list = tag.GetList<Item>("Items");
+			loadCache.Clear();
 
 			foreach (Item item in list)
 			{
-				AccessoryTrayUI ui = UILoader.GetUIState<AccessoryTrayUI>();
-
 				loadCache.Add(item);
 			}
 		}
@@ -71,6 +70,9 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void OnEnterWorld(Player player)
 		{
+			if (Main.netMode != NetmodeID.SinglePlayer)
+				return;
+
 			AccessoryTrayUI ui = UILoader.GetUIState<AccessoryTrayUI>();
 
 			accessories.Clear();

@@ -27,7 +27,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SendPacket(BinaryWriter writer)
 		{
-			writer.Write(NPCBrowser.selected.type);
+			writer.Write(NPCBrowser.selected is null ? 0 : NPCBrowser.selected.type);
 			writer.WriteVector2(Main.MouseWorld);
 		}
 

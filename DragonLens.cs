@@ -114,6 +114,9 @@ namespace DragonLens
 
 			if (type == "AdminUpdate")
 				PermissionHandler.HandlePacket(reader, whoAmI);
+
+			if (type == "ToolDataRequest")
+				PermissionHandler.SendToolData(reader, whoAmI);
 		}
 	}
 }

@@ -4,7 +4,9 @@ using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -83,6 +85,21 @@ namespace DragonLens.Content.Tools.Gameplay
 		{
 			active = tag.GetBool("active");
 			voidActive = tag.GetBool("voidActive");
+		}
+
+		public override void SendPacket(BinaryWriter writer)
+		{
+			writer.Write(active);
+			writer.Write(voidActive);
+		}
+
+		public override void RecievePacket(BinaryReader reader, int sender)
+		{
+			active = reader.ReadBoolean();
+			voidActive = reader.ReadBoolean();
+
+			if (Main.netMode == NetmodeID.Server)
+				NetSend(-1, sender);
 		}
 	}
 
