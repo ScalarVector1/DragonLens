@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI.Elements;
@@ -27,6 +28,12 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void OnActivate()
 		{
+			if (Main.netMode != NetmodeID.SinglePlayer)
+			{
+				Main.NewText("Accessory tray is disabled in multiplayer", Color.Red);
+				return;
+			}
+
 			AccessoryTrayUI state = UILoader.GetUIState<AccessoryTrayUI>();
 			state.visible = !state.visible;
 
@@ -82,6 +89,9 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void UpdateEquips()
 		{
+			if (Main.netMode != NetmodeID.SinglePlayer)
+				return;
+
 			accessories.ForEach(n =>
 			{
 				Player.VanillaUpdateEquip(n);
@@ -129,6 +139,9 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void AdjustPositions(Vector2 newPos)
 		{
+			if (Main.netMode != NetmodeID.SinglePlayer)
+				visible = false;
+
 			slots.Width.Set(260, 0);
 			slots.Height.Set(400, 0);
 			height = 480;

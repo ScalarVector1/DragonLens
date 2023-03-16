@@ -119,6 +119,25 @@ namespace DragonLens.Core.Systems.ToolSystem
 			if (Main.netMode == NetmodeID.Server)
 				return;
 
+			CreateOrLoadData();
+		}
+
+		/// <summary>
+		/// Load our data when we enter worlds, so that it resets after a multiplayer session
+		/// </summary>
+		public override void OnWorldLoad()
+		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
+
+			CreateOrLoadData();
+		}
+
+		/// <summary>
+		/// Checks if the tool data path exists, and if it does not, creates it and saves default data. If it does, the data from the tool path is loaded.
+		/// </summary>
+		private void CreateOrLoadData()
+		{
 			string currentPath = Path.Join(Main.SavePath, "DragonLensLayouts", "ToolData", "ToolData");
 
 			if (File.Exists(currentPath))
@@ -140,7 +159,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// </summary>
 		public override void OnWorldUnload()
 		{
-			if (Main.netMode == NetmodeID.Server)
+			if (Main.netMode == NetmodeID.Server) // We dont want to lift the tool data from our last multiplayer session, that would be silly...
 				return;
 
 			string currentPath = Path.Join(Main.SavePath, "DragonLensLayouts", "ToolData", "ToolData");
@@ -154,6 +173,10 @@ namespace DragonLens.Core.Systems.ToolSystem
 	/// </summary>
 	internal class ToolPlayer : ModPlayer
 	{
+		/// <summary>
+		/// Handles the triggers for all tool hotkeys. Also checks against admin status in multiplayer so non-admins cant use hotkeys to access tools.
+		/// </summary>
+		/// <param name="triggersSet"></param>
 		public override void ProcessTriggers(TriggersSet triggersSet)
 		{
 			foreach (Tool tool in ToolHandler.Tools)
