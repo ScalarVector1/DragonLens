@@ -394,7 +394,7 @@ namespace DragonLens.Content.GUI
 
 			tool.DrawIcon(spriteBatch, innerRect);
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && !parent.toolbar.collapsed)
 			{
 				Tooltip.SetName(tool.DisplayName);
 				Tooltip.SetTooltip(tool.Description);
