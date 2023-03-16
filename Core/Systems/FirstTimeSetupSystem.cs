@@ -46,6 +46,7 @@ namespace DragonLens.Core.Systems
 					.AddTool<FastForward>()
 					.AddTool<Time>()
 					.AddTool<Weather>()
+					.AddTool<Magnet>()
 					.AddTool<CustomizeTool>()
 					);
 
@@ -78,6 +79,7 @@ namespace DragonLens.Core.Systems
 					.AddTool<BuffSpawner>()
 					.AddTool<DustSpawner>()
 					.AddTool<TileSpawner>()
+					.AddTool<AccessoryTray>()
 					);
 
 				n.Add(
@@ -102,6 +104,7 @@ namespace DragonLens.Core.Systems
 					.AddTool<ItemEditor>()
 					.AddTool<PlayerEditorTool>()
 					.AddTool<Paint>()
+					.AddTool<Magnet>()
 					.AddTool<CustomizeTool>()
 					);
 
@@ -160,7 +163,9 @@ namespace DragonLens.Core.Systems
 						//TODO: Waypoints?
 						.AddTool<ItemDespawner>()
 						.AddTool<Paint>()
+						.AddTool<AccessoryTray>()
 						.AddTool<PlayerEditorTool>()
+						.AddTool<Magnet>()
 						.AddTool<NPCDespawner>()
 						.AddTool<SpawnTool>()
 						.AddTool<Floodlight>()
