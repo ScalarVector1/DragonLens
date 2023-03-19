@@ -208,7 +208,7 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 
 			float scale = iconBox.Width / 36f;
-			//scale = 1;
+
 			spriteBatch.Draw(tex, iconBox.Center(), new Rectangle((int)sourcePos.X, (int)sourcePos.Y, 16, 16), Color.White, 0, Vector2.One * 8, scale, 0, 0);
 
 			if (IsMouseHovering)
