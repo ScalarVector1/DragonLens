@@ -7,6 +7,7 @@ using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
@@ -119,10 +120,10 @@ namespace DragonLens.Content.Tools
 			target.Inflate(-4, -4);
 
 			Texture2D icon = ThemeHandler.GetIcon(tool.IconKey);
-			float scale = 1;
+			float scale = iconBox.Width / 52f;
 
-			if (icon.Width > target.Width || icon.Height > target.Height)
-				scale = icon.Width > icon.Height ? target.Width / icon.Width : target.Height / icon.Height;
+			if (icon.Width > 32 || icon.Height > 32)
+				scale *= 32f / Math.Max(icon.Width, icon.Height);
 
 			spriteBatch.Draw(icon, target.Center(), null, Color.White, 0, icon.Size() / 2f, scale, 0, 0);
 

@@ -206,9 +206,9 @@ namespace DragonLens.Content.Tools.Spawners
 			if (tex is null)
 				return;
 
-			float scale = 1;
+			float scale = iconBox.Width / 32f;
 			if (tex.Width > 32 || tex.Height > 32)
-				scale = 32f / Math.Max(tex.Width, tex.Height);
+				scale *= 32f / Math.Max(tex.Width, tex.Height);
 
 			spriteBatch.Draw(tex, iconBox.Center(), new Rectangle(0, 0, tex.Width, tex.Height), Color.White, 0, new Vector2(tex.Width, tex.Height) / 2, scale, 0, 0);
 

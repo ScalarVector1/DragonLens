@@ -220,9 +220,9 @@ namespace DragonLens.Content.Tools.Spawners
 
 			Rectangle frame = dust.frame;
 
-			float scale = 1;
+			float scale = iconBox.Width / 52f;
 			if (frame.Width > 32 || frame.Height > 32)
-				scale = 32f / Math.Max(frame.Width, frame.Height);
+				scale *= 32f / Math.Max(frame.Width, frame.Height);
 
 			spriteBatch.Draw(tex, iconBox.Center(), frame, Color.White, 0, new Vector2(frame.Width, frame.Height) / 2, scale, 0, 0);
 
