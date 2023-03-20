@@ -116,7 +116,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// </summary>
 		public override void OnModLoad()
 		{
-			if (Main.netMode == NetmodeID.Server)
+			if (Main.netMode != NetmodeID.SinglePlayer)
 				return;
 
 			CreateOrLoadData();
