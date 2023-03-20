@@ -56,6 +56,7 @@ namespace DragonLens
 					watch.Stop();
 					Logger.Info($"Item assets finished loading in {watch.ElapsedMilliseconds} ms");
 				});
+				itemThread.IsBackground = true;
 				itemThread.Start();
 
 				var projThread = new Thread(() =>
@@ -71,6 +72,7 @@ namespace DragonLens
 					watch.Stop();
 					Logger.Info($"Projectile assets finished loading in {watch.ElapsedMilliseconds} ms");
 				});
+				projThread.IsBackground = true;
 				projThread.Start();
 
 				var npcThread = new Thread(() =>
@@ -86,6 +88,7 @@ namespace DragonLens
 					watch.Stop();
 					Logger.Info($"NPC assets finished loading in {watch.ElapsedMilliseconds} ms");
 				});
+				npcThread.IsBackground = true;
 				npcThread.Start();
 
 				var tileThread = new Thread(() =>
@@ -101,6 +104,7 @@ namespace DragonLens
 					watch.Stop();
 					Logger.Info($"Tile assets finished loading in {watch.ElapsedMilliseconds} ms");
 				});
+				tileThread.IsBackground = true;
 				tileThread.Start();
 			}
 		}
