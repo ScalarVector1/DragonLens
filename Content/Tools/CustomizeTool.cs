@@ -5,12 +5,7 @@ using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using Terraria;
-using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
@@ -90,7 +85,7 @@ namespace DragonLens.Content.Tools
 			}
 		}
 
-		public override void SafeUpdate(GameTime gameTime)
+		public override void DraggableUdpate(GameTime gameTime)
 		{
 			// Have the browser follow expected visibility on map VS non-map bars
 			if (TrackedToolbar != null && TrackedToolbar.automaticHideOption != AutomaticHideOption.NoMapScreen && Main.mapFullscreen)
@@ -99,7 +94,7 @@ namespace DragonLens.Content.Tools
 			if (TrackedToolbar != null && TrackedToolbar.automaticHideOption == AutomaticHideOption.NoMapScreen && !Main.mapFullscreen)
 				visible = false;
 
-			base.SafeUpdate(gameTime);
+			base.DraggableUdpate(gameTime);
 		}
 	}
 
@@ -134,7 +129,7 @@ namespace DragonLens.Content.Tools
 			}
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			ToolBrowser.TrackedToolbar.AddTool(tool);
 

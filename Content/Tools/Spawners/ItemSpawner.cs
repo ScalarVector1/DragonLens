@@ -1,13 +1,9 @@
 ﻿using DragonLens.Content.Filters;
 using DragonLens.Content.Filters.ItemFilters;
 using DragonLens.Content.GUI;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
-using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
@@ -78,7 +74,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Accessory", "Accessory", "Any item that can be equipped as an accessory", n => !(n is ItemButton && (n as ItemButton).item.accessory)));
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Defense", "Armor", "Any item that can be equipped as armor", n => !(n is ItemButton && (n as ItemButton).item.defense > 0)));
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Placeable", "Placeable", "Any item that palces a tile", n => !(n is ItemButton && (n as ItemButton).item.createTile >= 0 || (n as ItemButton).item.createWall >= 0)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Placeable", "Placeable", "Any item that palces a tile", n => !(n is ItemButton && (n as ItemButton).item.createTile >= TileID.Dirt || (n as ItemButton).item.createWall >= 0)));
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Unknown", "Deprecated", "Any item that is deprecated (ItemID.Sets.Deprecated)", n => n is ItemButton ib && !ItemID.Sets.Deprecated[ib.item.type]));
 		}
 	}
@@ -108,7 +104,7 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			if (Main.keyState.PressingShift())
 			{
@@ -128,7 +124,7 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 		}
 
-		public override void RightMouseDown(UIMouseEvent evt)
+		public override void SafeRightMouseDown(UIMouseEvent evt)
 		{
 			if (Main.keyState.PressingShift())
 			{
@@ -148,9 +144,9 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
-			base.Update(gameTime);
+			base.SafeUpdate(gameTime);
 
 			// Allows for "Hold RMB to get more
 			if (IsMouseHovering && Main.mouseRight && Main.mouseItem.type == item.type)

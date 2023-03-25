@@ -1,9 +1,6 @@
 ﻿using DragonLens.Content.Tools;
 using DragonLens.Core.Loaders.UILoading;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
@@ -44,7 +41,7 @@ namespace DragonLens.Content.GUI
 			Append(button);
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
 			Recalculate();
 
@@ -53,8 +50,6 @@ namespace DragonLens.Content.GUI
 
 			if (button.IsMouseHovering && scale < 0.7f)
 				scale += 0.01f;
-
-			base.Update(gameTime);
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)

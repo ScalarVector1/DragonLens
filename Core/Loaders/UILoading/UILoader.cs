@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Terraria;
-using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace DragonLens.Core.Loaders.UILoading
@@ -108,10 +106,10 @@ namespace DragonLens.Core.Loaders.UILoading
 		/// <param name="layers"></param>
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
 		{
-			for (int k = 0; k < UILoader.UIStates.Count; k++)
+			for (int k = 0; k < UIStates.Count; k++)
 			{
-				SmartUIState state = UILoader.UIStates[k];
-				UILoader.AddLayer(layers, UILoader.UserInterfaces[k], state, state.InsertionIndex(layers), state.Visible, state.Scale);
+				SmartUIState state = UIStates[k];
+				AddLayer(layers, UserInterfaces[k], state, state.InsertionIndex(layers), state.Visible, state.Scale);
 			}
 		}
 	}

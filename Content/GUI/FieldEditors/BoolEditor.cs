@@ -1,10 +1,6 @@
 ﻿using DragonLens.Configs;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
-using Terraria;
-using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace DragonLens.Content.GUI.FieldEditors
@@ -13,7 +9,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 	{
 		public BoolEditor(string name, Action<bool> onValueChanged, bool initialValue, Func<bool> listenForUpdate = null, string description = "") : base(70, name, onValueChanged, listenForUpdate, initialValue, description) { }
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			value = !value;
 			onValueChanged(value);

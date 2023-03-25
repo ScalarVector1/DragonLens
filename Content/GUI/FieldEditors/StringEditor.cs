@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 
 namespace DragonLens.Content.GUI.FieldEditors
 {
@@ -23,7 +22,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 			entry.currentValue = newValue;
 		}
 
-		public override void SafeUpdate(GameTime gameTime)
+		public override void EditorUpdate(GameTime gameTime)
 		{
 			if (entry.updated)
 				onValueChanged(entry.currentValue);

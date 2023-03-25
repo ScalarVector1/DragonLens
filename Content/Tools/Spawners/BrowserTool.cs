@@ -35,6 +35,11 @@ namespace DragonLens.Content.Tools.Spawners
 			state.listMode = tag.GetBool("list");
 			state.filtersVisible = tag.GetBool("filtersVisible");
 			state.buttonSize = tag.GetInt("buttonSize");
+
+			if (state.filtersVisible)
+				state.filters.Width.Set(220, 0);
+			else
+				state.filters.Width.Set(0, 0);
 		}
 	}
 }

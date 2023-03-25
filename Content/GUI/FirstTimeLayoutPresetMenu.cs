@@ -3,12 +3,8 @@ using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems;
 using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.IO;
-using Terraria;
-using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace DragonLens.Content.GUI
@@ -45,10 +41,9 @@ namespace DragonLens.Content.GUI
 			Append(newButton);
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
 			Recalculate();
-			base.Update(gameTime);
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
@@ -60,7 +55,7 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
-	internal class FirstTimeLayoutButton : UIElement
+	internal class FirstTimeLayoutButton : SmartUIElement
 	{
 		private readonly string name;
 		private readonly string tooltip;
@@ -78,7 +73,7 @@ namespace DragonLens.Content.GUI
 			Height.Set(244, 0);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			ToolbarHandler.LoadFromFile(presetPath);
 

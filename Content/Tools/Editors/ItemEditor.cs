@@ -4,16 +4,12 @@ using DragonLens.Content.GUI.FieldEditors;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Terraria;
 using Terraria.GameContent.UI;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
@@ -146,7 +142,7 @@ namespace DragonLens.Content.Tools.Editors
 
 			basicEditorList.Add(new IntEditor("Use Style", n => item.useStyle = n, item.useStyle, () => item.useStyle, "0: None NEWLN 1: Swing NEWLN 3: Thrust NEWLN 4: HoldUp NEWLN 5: Shoot NEWLN 6: DrinkLong NEWLN 7: DrinkOld NEWLN 8: GolfPlay NEWLN 9: DrinkLiquid NEWLN 10: HiddenAnimation NEWLN 11: MowTheLawn NEWLN 12: Guitar NEWLN 13: Rapier NEWLN 14: RaiseLamp"));
 			basicEditorList.Add(new IntEditor("Use Time", n => item.useTime = n, item.useTime, () => item.useTime, "How many ticks between item uses. Ignores input."));
-			basicEditorList.Add(new IntEditor("Use Animation", n => item.useAnimation = n, item.useAnimation, () => item.useTime, "How many ticks before you can cancel this items use with input/use it again."));
+			basicEditorList.Add(new IntEditor("Use Animation", n => item.useAnimation = n, item.useAnimation, () => item.useAnimation, "How many ticks before you can cancel this items use with input/use it again."));
 			basicEditorList.Add(new BoolEditor("Auto Reuse", n => item.autoReuse = n, item.autoReuse, () => item.autoReuse, "If this item is automatically re-used while holding LMB."));
 			basicEditorList.Add(new IntEditor("Reuse Delay", n => item.reuseDelay = n, item.reuseDelay, () => item.reuseDelay, "The delay between when this item finishes being used and can be used again."));
 
@@ -272,7 +268,7 @@ namespace DragonLens.Content.Tools.Editors
 		}
 	}
 
-	internal class ItemEditorSlot : UIElement
+	internal class ItemEditorSlot : SmartUIElement
 	{
 		public ItemEditorState parent;
 
@@ -283,7 +279,7 @@ namespace DragonLens.Content.Tools.Editors
 			Height.Set(120, 0);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			if (!Main.mouseItem.IsAir && parent.item.IsAir)
 			{
@@ -325,7 +321,7 @@ namespace DragonLens.Content.Tools.Editors
 		}
 	}
 
-	internal class SetDefaultsButton : UIElement
+	internal class SetDefaultsButton : SmartUIElement
 	{
 		public ItemEditorState parent;
 
@@ -336,7 +332,7 @@ namespace DragonLens.Content.Tools.Editors
 			Height.Set(42, 0);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			if (!parent.item.IsAir)
 				parent.item.SetDefaults(parent.item.type);
@@ -352,7 +348,7 @@ namespace DragonLens.Content.Tools.Editors
 		}
 	}
 
-	internal class PrefixButton : UIElement
+	internal class PrefixButton : SmartUIElement
 	{
 		public ItemEditorState parent;
 		public int prefixID;
@@ -372,7 +368,7 @@ namespace DragonLens.Content.Tools.Editors
 			dummy.Prefix(prefixID);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			if (!parent.item.IsAir)
 			{

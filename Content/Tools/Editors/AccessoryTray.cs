@@ -4,12 +4,8 @@ using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -46,10 +42,16 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void SaveData(TagCompound tag)
 		{
-			Main.LocalPlayer.GetModPlayer<AcccessoryTrayPlayer>().accessories.RemoveAll(n => n.IsAir);
+			AcccessoryTrayPlayer mp = null;
+			bool? gotPlayer = Main.LocalPlayer?.TryGetModPlayer(out mp);
 
-			tag["Items"] = Main.LocalPlayer.GetModPlayer<AcccessoryTrayPlayer>().accessories;
-			loadCache = Main.LocalPlayer.GetModPlayer<AcccessoryTrayPlayer>().accessories;
+			if (mp is null || gotPlayer is null || gotPlayer == false)
+				return;
+
+			mp.accessories.RemoveAll(n => n.IsAir);
+
+			tag["Items"] = mp.accessories;
+			loadCache = mp.accessories;
 		}
 
 		public override void LoadData(TagCompound tag)
@@ -177,7 +179,7 @@ namespace DragonLens.Content.Tools.Editors
 		}
 	}
 
-	internal class AccessoryTraySlot : UIElement
+	internal class AccessoryTraySlot : SmartUIElement
 	{
 		public AccessoryTrayUI parent;
 
@@ -201,7 +203,7 @@ namespace DragonLens.Content.Tools.Editors
 			lastIndex++;
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			if (!Main.mouseItem.IsAir)
 			{

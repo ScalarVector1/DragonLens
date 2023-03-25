@@ -3,15 +3,12 @@ using DragonLens.Content.Filters.ProjectileFilters;
 using DragonLens.Content.GUI;
 using DragonLens.Content.GUI.FieldEditors;
 using DragonLens.Core.Systems.ToolSystem;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Terraria;
+using Terraria.GameInput;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
@@ -52,9 +49,13 @@ namespace DragonLens.Content.Tools.Spawners
 
 			if (Main.netMode == NetmodeID.Server && sender >= 0)
 			{
-				ProjectileBrowser.selected.type = type;
-				ProjectileBrowser.selected.damage = damage;
-				ProjectileBrowser.selected.knockBack = knockBack;
+				if (ProjectileBrowser.selected != null)
+				{
+					ProjectileBrowser.selected.type = type;
+					ProjectileBrowser.selected.damage = damage;
+					ProjectileBrowser.selected.knockBack = knockBack;
+				}
+
 				Main.mouseX = (int)pos.X;
 				Main.mouseY = (int)pos.Y;
 
@@ -146,26 +147,28 @@ namespace DragonLens.Content.Tools.Spawners
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Hostile", "Hostile", "Projectiles which by default belong to an enemy", n => !(n is ProjectileButton && (n as ProjectileButton).proj.hostile)));
 		}
 
-		public override void SafeUpdate(GameTime gameTime)
+		public override void DraggableUdpate(GameTime gameTime)
 		{
-			base.SafeUpdate(gameTime);
+			base.DraggableUdpate(gameTime);
 
 			if (selected != null)
 				Main.LocalPlayer.mouseInterface = true;
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
-			base.Click(evt);
+			base.SafeClick(evt);
 
 			if (selected != null)
 			{
+				PlayerInput.SetZoom_World();
 				Projectile.NewProjectile(null, Main.MouseWorld, velocity, selected.type, selected.damage, selected.knockBack, Main.myPlayer, ai0, ai1);
 				ToolHandler.NetSend<ProjectileSpawner>();
+				PlayerInput.SetZoom_UI();
 			}
 		}
 
-		public override void RightClick(UIMouseEvent evt)
+		public override void SafeRightClick(UIMouseEvent evt)
 		{
 			if (selected != null)
 				selected = null;
@@ -233,15 +236,15 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			ProjectileBrowser.selected = proj;
 			Main.NewText($"{proj.Name} selected, click anywhere in the world to spawn. Right click to deselect.");
 		}
 
-		public override void RightClick(UIMouseEvent evt)
+		public override void SafeRightClick(UIMouseEvent evt)
 		{
-
+			Projectile.NewProjectile(null, Main.LocalPlayer.Center, ProjectileBrowser.velocity, proj.type, proj.damage, proj.knockBack, Main.myPlayer, ProjectileBrowser.ai0, ProjectileBrowser.ai1);
 		}
 
 		public override int CompareTo(object obj)

@@ -2,15 +2,12 @@
 using DragonLens.Content.Filters.DustFilters;
 using DragonLens.Content.GUI;
 using DragonLens.Content.GUI.FieldEditors;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Terraria;
+using Terraria.GameInput;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
@@ -124,9 +121,9 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 		}
 
-		public override void SafeUpdate(GameTime gameTime)
+		public override void DraggableUdpate(GameTime gameTime)
 		{
-			base.SafeUpdate(gameTime);
+			base.DraggableUdpate(gameTime);
 
 			if (selected != null)
 			{
@@ -134,15 +131,19 @@ namespace DragonLens.Content.Tools.Spawners
 
 				if (Main.mouseLeft)
 				{
+					PlayerInput.SetZoom_World();
+
 					if (perfect)
 						Dust.NewDustPerfect(Main.MouseWorld, selected.type, velocity, alpha, color, scale);
 					else
 						Dust.NewDust(Main.MouseWorld, 16, 16, selected.type, velocity.X, velocity.Y, alpha, color, scale);
+
+					PlayerInput.SetZoom_UI();
 				}
 			}
 		}
 
-		public override void RightClick(UIMouseEvent evt)
+		public override void SafeRightClick(UIMouseEvent evt)
 		{
 			if (selected != null)
 				selected = null;
@@ -233,15 +234,10 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			DustBrowser.selected = dust;
 			Main.NewText($"{Identifier} selected, click anywhere in the world to spawn. Right click to deselect.");
-		}
-
-		public override void RightClick(UIMouseEvent evt)
-		{
-
 		}
 
 		public override int CompareTo(object obj)

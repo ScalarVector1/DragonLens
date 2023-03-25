@@ -1,3 +1,7 @@
+global using Microsoft.Xna.Framework;
+global using Microsoft.Xna.Framework.Graphics;
+global using Terraria;
+global using Terraria.ModLoader;
 using DragonLens.Configs;
 using DragonLens.Content.Tools;
 using DragonLens.Content.Tools.Spawners;
@@ -7,9 +11,7 @@ using DragonLens.Core.Systems.ToolSystem;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
-using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace DragonLens
 {
@@ -55,7 +57,10 @@ namespace DragonLens
 
 					watch.Stop();
 					Logger.Info($"Item assets finished loading in {watch.ElapsedMilliseconds} ms");
-				});
+				})
+				{
+					IsBackground = true
+				};
 				itemThread.Start();
 
 				var projThread = new Thread(() =>
@@ -70,7 +75,10 @@ namespace DragonLens
 
 					watch.Stop();
 					Logger.Info($"Projectile assets finished loading in {watch.ElapsedMilliseconds} ms");
-				});
+				})
+				{
+					IsBackground = true
+				};
 				projThread.Start();
 
 				var npcThread = new Thread(() =>
@@ -85,7 +93,10 @@ namespace DragonLens
 
 					watch.Stop();
 					Logger.Info($"NPC assets finished loading in {watch.ElapsedMilliseconds} ms");
-				});
+				})
+				{
+					IsBackground = true
+				};
 				npcThread.Start();
 
 				var tileThread = new Thread(() =>
@@ -100,7 +111,10 @@ namespace DragonLens
 
 					watch.Stop();
 					Logger.Info($"Tile assets finished loading in {watch.ElapsedMilliseconds} ms");
-				});
+				})
+				{
+					IsBackground = true
+				};
 				tileThread.Start();
 			}
 		}
@@ -113,10 +127,10 @@ namespace DragonLens
 				ToolHandler.HandlePacket(reader, whoAmI);
 
 			if (type == "AdminUpdate")
-				PermissionHandler.HandlePacket(reader, whoAmI);
+				PermissionHandler.HandlePacket(reader);
 
 			if (type == "ToolDataRequest")
-				PermissionHandler.SendToolData(reader, whoAmI);
+				PermissionHandler.SendToolData(whoAmI);
 		}
 	}
 }

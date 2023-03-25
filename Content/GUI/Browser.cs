@@ -1,13 +1,10 @@
 ﻿using DragonLens.Configs;
 using DragonLens.Content.Filters;
 using DragonLens.Content.GUI.FieldEditors;
+using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using Terraria;
-using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 using FixedUIScrollbar = Terraria.GameContent.UI.Elements.FixedUIScrollbar;
@@ -21,9 +18,9 @@ namespace DragonLens.Content.GUI
 	{
 		private UIGrid options;
 		private FixedUIScrollbar scrollBar;
-		private FilterPanel filters;
 		private ToggleButton listButton;
 		private ToggleButton filterButton;
+		public FilterPanel filters;
 
 		internal SearchBar searchBar;
 		internal ButtonSizeSlider sizeSlider;
@@ -199,7 +196,7 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
-	internal abstract class BrowserButton : UIElement
+	internal abstract class BrowserButton : SmartUIElement
 	{
 		public Browser parent;
 
@@ -217,7 +214,7 @@ namespace DragonLens.Content.GUI
 			this.parent = parent;
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
 			//Will likely need a better solution to optimize when not constantly searching
 			if (!Identifier.ToLower().Contains(parent.searchBar.currentValue.ToLower()) || parent.ShouldBeFiltered(this))
@@ -236,8 +233,6 @@ namespace DragonLens.Content.GUI
 				UpdateAsList();
 			else
 				UpdateAsGrid();
-
-			base.Update(gameTime);
 		}
 
 		private void UpdateAsGrid()
@@ -304,9 +299,9 @@ namespace DragonLens.Content.GUI
 
 	internal class SearchBar : TextField
 	{
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
-			base.Update(gameTime);
+			base.SafeUpdate(gameTime);
 
 			if (updated)
 			{
@@ -335,7 +330,7 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
-	internal class ButtonSizeSlider : UIElement
+	internal class ButtonSizeSlider : SmartUIElement
 	{
 		public bool dragging;
 		public float progress;
@@ -349,7 +344,7 @@ namespace DragonLens.Content.GUI
 			this.parent = parent;
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
 			if (dragging)
 			{
@@ -364,11 +359,9 @@ namespace DragonLens.Content.GUI
 			{
 				progress = (parent.buttonSize - 36) / (108 - 36f);
 			}
-
-			base.Update(gameTime);
 		}
 
-		public override void MouseDown(UIMouseEvent evt)
+		public override void SafeMouseDown(UIMouseEvent evt)
 		{
 			dragging = true;
 		}

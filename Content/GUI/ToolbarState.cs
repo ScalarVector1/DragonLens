@@ -1,12 +1,10 @@
 ﻿using DragonLens.Content.Tools;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolbarSystem;
-using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Terraria;
+using Terraria.GameInput;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace DragonLens.Content.GUI
@@ -24,9 +22,8 @@ namespace DragonLens.Content.GUI
 			return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
-			base.Update(gameTime);
 			Recalculate();
 		}
 
@@ -147,6 +144,11 @@ namespace DragonLens.Content.GUI
 
 		private void DrawToolbars(Vector2 arg1, float arg2)
 		{
+			int savedX = Main.mouseX; //vanilla uses something strange for mouse pos here so preserve it
+			int savedY = Main.mouseY;
+
+			PlayerInput.SetZoom_UI();
+
 			UILoader.GetUIState<ToolbarState>().UserInterface.Update(Main._drawInterfaceGameTime);
 			UILoader.GetUIState<ToolBrowser>().UserInterface.Update(Main._drawInterfaceGameTime); //We update/draw the tool browser here too to ease customization
 
@@ -158,6 +160,9 @@ namespace DragonLens.Content.GUI
 
 			UILoader.GetUIState<Tooltip>().Draw(Main.spriteBatch);
 			Main.spriteBatch.End();
+
+			Main.mouseX = savedX;
+			Main.mouseY = savedY;
 		}
 
 		public override void PostUpdateEverything()
