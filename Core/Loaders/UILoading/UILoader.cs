@@ -69,13 +69,23 @@ namespace DragonLens.Core.Loaders.UILoading
 				delegate
 				{
 					if (visible)
-					{
-						userInterface.Update(Main._drawInterfaceGameTime);
 						state.Draw(Main.spriteBatch);
-					}
 
 					return true;
 				}, scale));
+		}
+
+		/// <summary>
+		/// Handles updating the UI states correctly
+		/// </summary>
+		/// <param name="gameTime"></param>
+		public override void UpdateUI(GameTime gameTime)
+		{
+			foreach (UserInterface eachState in UserInterfaces)
+			{
+				if (eachState?.CurrentState != null && ((SmartUIState)eachState.CurrentState).Visible)
+					eachState.Update(gameTime);
+			}
 		}
 
 		/// <summary>
