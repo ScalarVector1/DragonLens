@@ -1,12 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using Terraria;
 using Terraria.GameInput;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace DragonLens.Core.Systems.ToolSystem
@@ -149,7 +146,9 @@ namespace DragonLens.Core.Systems.ToolSystem
 				string dir = Path.Join(Main.SavePath, "DragonLensLayouts", "ToolData");
 				Directory.CreateDirectory(dir);
 
-				File.Create(currentPath);
+				FileStream stream = File.Create(currentPath);
+				stream.Close();
+
 				SaveToolData(currentPath);
 			}
 		}
