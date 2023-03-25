@@ -42,9 +42,10 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void SaveData(TagCompound tag)
 		{
-			var mp = Main.LocalPlayer?.GetModPlayer<AcccessoryTrayPlayer>();
+			AcccessoryTrayPlayer mp = null;
+			bool? gotPlayer = Main.LocalPlayer?.TryGetModPlayer(out mp);
 
-			if (mp is null)
+			if (mp is null || gotPlayer is null || gotPlayer == false)
 				return;
 
 			mp.accessories.RemoveAll(n => n.IsAir);
