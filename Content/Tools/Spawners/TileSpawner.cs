@@ -5,6 +5,7 @@ using DragonLens.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.ObjectData;
@@ -63,6 +64,8 @@ namespace DragonLens.Content.Tools.Spawners
 
 			if (Main.mouseLeft && selected != -1)
 			{
+				PlayerInput.SetZoom_World();
+
 				if (Main.tileFrameImportant[selected])
 				{
 					TileObject.CanPlace((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16, selected, variant, 0, out TileObject to);
@@ -79,6 +82,8 @@ namespace DragonLens.Content.Tools.Spawners
 				}
 
 				NetMessage.SendTileSquare(Main.LocalPlayer.whoAmI, (int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
+
+				PlayerInput.SetZoom_UI();
 			}
 
 			if (selected != -1)
@@ -132,6 +137,11 @@ namespace DragonLens.Content.Tools.Spawners
 		{
 			if (selected != -1)
 			{
+				PlayerInput.SetZoom_World();
+
+				spriteBatch.End();
+				spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+
 				Main.instance.LoadTiles(selected);
 				Texture2D tex = Terraria.GameContent.TextureAssets.Tile[selected].Value;
 
@@ -162,6 +172,11 @@ namespace DragonLens.Content.Tools.Spawners
 
 				var point = (pos * 16 - Main.screenPosition).ToPoint16();
 				GUIHelper.DrawOutline(spriteBatch, new Rectangle(point.X, point.Y, width, height), Color.White);
+
+				PlayerInput.SetZoom_UI();
+
+				spriteBatch.End();
+				spriteBatch.Begin(default, default, default, default, default, default, Main.UIScaleMatrix);
 			}
 
 			base.Draw(spriteBatch);

@@ -142,7 +142,7 @@ namespace DragonLens.Content.Tools.Editors
 
 			basicEditorList.Add(new IntEditor("Use Style", n => item.useStyle = n, item.useStyle, () => item.useStyle, "0: None NEWLN 1: Swing NEWLN 3: Thrust NEWLN 4: HoldUp NEWLN 5: Shoot NEWLN 6: DrinkLong NEWLN 7: DrinkOld NEWLN 8: GolfPlay NEWLN 9: DrinkLiquid NEWLN 10: HiddenAnimation NEWLN 11: MowTheLawn NEWLN 12: Guitar NEWLN 13: Rapier NEWLN 14: RaiseLamp"));
 			basicEditorList.Add(new IntEditor("Use Time", n => item.useTime = n, item.useTime, () => item.useTime, "How many ticks between item uses. Ignores input."));
-			basicEditorList.Add(new IntEditor("Use Animation", n => item.useAnimation = n, item.useAnimation, () => item.useTime, "How many ticks before you can cancel this items use with input/use it again."));
+			basicEditorList.Add(new IntEditor("Use Animation", n => item.useAnimation = n, item.useAnimation, () => item.useAnimation, "How many ticks before you can cancel this items use with input/use it again."));
 			basicEditorList.Add(new BoolEditor("Auto Reuse", n => item.autoReuse = n, item.autoReuse, () => item.autoReuse, "If this item is automatically re-used while holding LMB."));
 			basicEditorList.Add(new IntEditor("Reuse Delay", n => item.reuseDelay = n, item.reuseDelay, () => item.reuseDelay, "The delay between when this item finishes being used and can be used again."));
 
