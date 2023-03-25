@@ -2,15 +2,11 @@
 using DragonLens.Content.Filters.NPCFilters;
 using DragonLens.Content.GUI;
 using DragonLens.Core.Systems.ToolSystem;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 using static Terraria.GameContent.Bestiary.Filters;
@@ -100,15 +96,15 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 		}
 
-		public override void SafeUpdate(GameTime gameTime)
+		public override void DraggableUdpate(GameTime gameTime)
 		{
-			base.SafeUpdate(gameTime);
+			base.DraggableUdpate(gameTime);
 
 			if (selected != null)
 				Main.LocalPlayer.mouseInterface = true;
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			base.Click(evt);
 
@@ -119,7 +115,7 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 		}
 
-		public override void RightClick(UIMouseEvent evt)
+		public override void SafeRightClick(UIMouseEvent evt)
 		{
 			if (selected != null)
 			{
@@ -191,7 +187,7 @@ namespace DragonLens.Content.Tools.Spawners
 			UseImmediateMode = true;
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
 			var info = new BestiaryUICollectionInfo
 			{
@@ -206,7 +202,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 			icon?.Update(info, GetDimensions().ToRectangle(), settings);
 
-			base.Update(gameTime);
+			base.SafeUpdate(gameTime);
 		}
 
 		protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -266,16 +262,16 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			NPCBrowser.selected = (NPC)npc.Clone();
 			NPCBrowser.preview = (UnlockableNPCEntryIcon)icon.CreateClone();
 			Main.NewText($"{Identifier} selected, click anywhere in the world to spawn. Right click to deselect.");
 		}
 
-		public override void RightClick(UIMouseEvent evt)
+		public override void SafeRightClick(UIMouseEvent evt)
 		{
-
+			NPC.NewNPC(null, (int)Main.LocalPlayer.Center.X, (int)Main.LocalPlayer.Center.Y, npc.type);
 		}
 
 		public override int CompareTo(object obj)

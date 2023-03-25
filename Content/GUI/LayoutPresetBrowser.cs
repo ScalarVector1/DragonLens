@@ -1,9 +1,6 @@
 ﻿using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolbarSystem;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.IO;
-using Terraria;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
@@ -43,7 +40,7 @@ namespace DragonLens.Content.GUI
 			this.tooltip = tooltip;
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			ToolbarHandler.LoadFromFile(presetPath);
 			UILoader.GetUIState<ToolbarState>().Refresh();

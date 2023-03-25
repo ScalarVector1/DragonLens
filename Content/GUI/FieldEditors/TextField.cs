@@ -1,11 +1,8 @@
 ﻿using DragonLens.Configs;
+using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Text.RegularExpressions;
-using Terraria;
 using Terraria.GameInput;
-using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace DragonLens.Content.GUI.FieldEditors
@@ -17,7 +14,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 		number
 	}
 
-	internal class TextField : UIElement
+	internal class TextField : SmartUIElement
 	{
 		public bool typing;
 		public bool updated;
@@ -32,19 +29,19 @@ namespace DragonLens.Content.GUI.FieldEditors
 			Height.Set(24, 0);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			typing = true;
 		}
 
-		public override void RightClick(UIMouseEvent evt)
+		public override void SafeRightClick(UIMouseEvent evt)
 		{
 			typing = true;
 			currentValue = "";
 			updated = true;
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
 			if (updated)
 				updated = false;

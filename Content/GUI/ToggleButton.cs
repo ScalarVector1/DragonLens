@@ -1,18 +1,14 @@
 ﻿using DragonLens.Configs;
+using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.UI;
 
 namespace DragonLens.Content.GUI
 {
 	/// <summary>
 	/// A simple button used for on/off states
 	/// </summary>
-	internal class ToggleButton : UIElement
+	internal class ToggleButton : SmartUIElement
 	{
 		/// <summary>
 		/// The texture of the icon to draw on the button

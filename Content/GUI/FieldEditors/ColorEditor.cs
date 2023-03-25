@@ -1,10 +1,7 @@
 ﻿using DragonLens.Configs;
+using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
-using Terraria;
-using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace DragonLens.Content.GUI.FieldEditors
@@ -82,7 +79,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 		}
 	}
 
-	internal class Slider : UIElement
+	internal class Slider : SmartUIElement
 	{
 		public bool dragging;
 		public float progress;
@@ -99,7 +96,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 			this.onChanged = onChanged;
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
 			if (dragging)
 			{
@@ -109,11 +106,9 @@ namespace DragonLens.Content.GUI.FieldEditors
 				if (!Main.mouseLeft)
 					dragging = false;
 			}
-
-			base.Update(gameTime);
 		}
 
-		public override void MouseDown(UIMouseEvent evt)
+		public override void SafeMouseDown(UIMouseEvent evt)
 		{
 			dragging = true;
 		}

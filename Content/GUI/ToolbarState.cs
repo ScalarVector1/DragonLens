@@ -1,12 +1,9 @@
 ﻿using DragonLens.Content.Tools;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolbarSystem;
-using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace DragonLens.Content.GUI
@@ -24,9 +21,8 @@ namespace DragonLens.Content.GUI
 			return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
-			base.Update(gameTime);
 			Recalculate();
 		}
 

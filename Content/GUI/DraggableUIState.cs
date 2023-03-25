@@ -1,10 +1,6 @@
 ﻿using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
 using Terraria.GameContent.UI.Elements;
-using Terraria.ModLoader;
 
 namespace DragonLens.Content.GUI
 {
@@ -58,10 +54,7 @@ namespace DragonLens.Content.GUI
 
 		public virtual void SafeOnInitialize() { }
 
-		public virtual void SafeUpdate(GameTime gameTime)
-		{
-			base.Update(gameTime);
-		}
+		public virtual void DraggableUdpate(GameTime gameTime) { }
 
 		public sealed override void OnInitialize()
 		{
@@ -87,7 +80,7 @@ namespace DragonLens.Content.GUI
 			base.OnInitialize();
 		}
 
-		public sealed override void Update(GameTime gameTime)
+		public sealed override void SafeUpdate(GameTime gameTime)
 		{
 			Recalculate();
 			if (!Main.mouseLeft && dragging)
@@ -131,7 +124,7 @@ namespace DragonLens.Content.GUI
 			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
 				Main.LocalPlayer.mouseInterface = true;
 
-			SafeUpdate(gameTime);
+			DraggableUdpate(gameTime);
 		}
 	}
 }

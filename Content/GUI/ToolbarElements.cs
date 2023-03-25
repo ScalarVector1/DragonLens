@@ -1,13 +1,10 @@
 ﻿using DragonLens.Configs;
 using DragonLens.Content.Tools;
+using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems;
 using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Core.Systems.ToolSystem;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
-using Terraria;
-using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace DragonLens.Content.GUI
@@ -15,7 +12,7 @@ namespace DragonLens.Content.GUI
 	/// <summary>
 	/// This element is the frontend display half for a Toolbar, displaying the buttons
 	/// </summary>
-	internal class ToolbarElement : UIElement
+	internal class ToolbarElement : SmartUIElement
 	{
 		/// <summary>
 		/// The toolbar that this UI is tracking and should draw
@@ -249,7 +246,7 @@ namespace DragonLens.Content.GUI
 			Append(element);
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
 			if (toolbar is null)
 			{
@@ -275,7 +272,7 @@ namespace DragonLens.Content.GUI
 					Main.LocalPlayer.mouseInterface = true;
 
 				if (!beingDragged) // I dont know why this causes errors, but it does sometimes...
-					base.Update(gameTime);
+					base.SafeUpdate(gameTime);
 			}
 			else //This is here to prevent invisible toolbars from interfering with mouse interactions, since terraria is terrible about that
 			{
@@ -331,7 +328,7 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
-	internal class ToolButton : UIElement
+	internal class ToolButton : SmartUIElement
 	{
 		public Tool tool;
 
@@ -348,7 +345,7 @@ namespace DragonLens.Content.GUI
 			this.parent = parent;
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			if (!PermissionHandler.CanUseTools(Main.LocalPlayer))
 			{
@@ -360,7 +357,7 @@ namespace DragonLens.Content.GUI
 				tool.OnActivate();
 		}
 
-		public override void RightClick(UIMouseEvent evt)
+		public override void SafeRightClick(UIMouseEvent evt)
 		{
 			if (!PermissionHandler.CanUseTools(Main.LocalPlayer))
 			{
@@ -404,7 +401,7 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
-	internal class HideTab : UIElement
+	internal class HideTab : SmartUIElement
 	{
 		public ToolbarElement parent;
 
@@ -415,7 +412,7 @@ namespace DragonLens.Content.GUI
 			this.parent = parent;
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			if (CustomizeTool.customizing)
 				return;

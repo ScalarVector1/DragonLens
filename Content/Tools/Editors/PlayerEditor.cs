@@ -185,7 +185,7 @@ namespace DragonLens.Content.Tools.Editors
 		}
 	}
 
-	internal class ModPlayerSeperator : UIElement
+	internal class ModPlayerSeperator : SmartUIElement
 	{
 		string message;
 
@@ -206,7 +206,7 @@ namespace DragonLens.Content.Tools.Editors
 		}
 	}
 
-	internal class ModPlayerContainer : UIElement
+	internal class ModPlayerContainer : SmartUIElement
 	{
 		public UIGrid modPlayerEditorList;
 

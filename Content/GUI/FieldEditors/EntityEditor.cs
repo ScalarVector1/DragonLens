@@ -1,10 +1,7 @@
 ﻿using DragonLens.Configs;
+using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
-using Terraria;
-using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace DragonLens.Content.GUI.FieldEditors
@@ -29,7 +26,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 		/// <returns></returns>
 		public abstract T OnSelect();
 
-		public override void SafeUpdate(GameTime gameTime)
+		public override void EditorUpdate(GameTime gameTime)
 		{
 			if (Main.mouseRight)
 				selecting = false;
@@ -68,7 +65,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 		}
 	}
 
-	internal class SelectorButton<T> : UIElement where T : Entity
+	internal class SelectorButton<T> : SmartUIElement where T : Entity
 	{
 		public EntityEditor<T> parent;
 
@@ -79,7 +76,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 			Height.Set(60, 0);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			parent.selecting = true;
 			Main.NewText("Click on an entity in the world to select it. Right click to cancel.");

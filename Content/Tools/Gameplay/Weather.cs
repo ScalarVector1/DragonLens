@@ -4,14 +4,10 @@ using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.IO;
-using Terraria;
 using Terraria.GameContent.Events;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
 
@@ -188,7 +184,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		}
 	}
 
-	internal class CloudSlider : UIElement
+	internal class CloudSlider : SmartUIElement
 	{
 		public bool dragging;
 		public float progress;
@@ -199,7 +195,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			Height.Set(16, 0);
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
 			if (dragging)
 			{
@@ -219,11 +215,9 @@ namespace DragonLens.Content.Tools.Gameplay
 			{
 				progress = Main.cloudAlpha;
 			}
-
-			base.Update(gameTime);
 		}
 
-		public override void MouseDown(UIMouseEvent evt)
+		public override void SafeMouseDown(UIMouseEvent evt)
 		{
 			dragging = true;
 		}
@@ -254,7 +248,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		}
 	}
 
-	internal class WindSlider : UIElement
+	internal class WindSlider : SmartUIElement
 	{
 		public bool dragging;
 		public float progress;
@@ -265,7 +259,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			Height.Set(16, 0);
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
 			if (dragging)
 			{
@@ -285,11 +279,9 @@ namespace DragonLens.Content.Tools.Gameplay
 			{
 				progress = (Main.windSpeedCurrent + 1.2f) / 2.4f;
 			}
-
-			base.Update(gameTime);
 		}
 
-		public override void MouseDown(UIMouseEvent evt)
+		public override void SafeMouseDown(UIMouseEvent evt)
 		{
 			dragging = true;
 		}
@@ -321,7 +313,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		}
 	}
 
-	internal class RainButton : UIElement
+	internal class RainButton : SmartUIElement
 	{
 		public RainButton()
 		{
@@ -348,7 +340,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			spriteBatch.Draw(icon, dims.Center.ToVector2(), null, Color.White, 0, icon.Size() / 2, 1, 0, 0);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			if (!Main.raining)
 				Main.StartRain();
@@ -361,7 +353,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		}
 	}
 
-	internal class SandstormButton : UIElement
+	internal class SandstormButton : SmartUIElement
 	{
 		public SandstormButton()
 		{
@@ -388,7 +380,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			spriteBatch.Draw(icon, dims.Center.ToVector2(), null, Color.White, 0, icon.Size() / 2, 1, 0, 0);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			if (!Sandstorm.Happening)
 				Sandstorm.StartSandstorm();
@@ -401,7 +393,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		}
 	}
 
-	internal class FreezeWeatherButton : UIElement
+	internal class FreezeWeatherButton : SmartUIElement
 	{
 		public FreezeWeatherButton()
 		{
@@ -427,7 +419,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			spriteBatch.Draw(icon, dims.Center.ToVector2(), null, Color.White, 0, icon.Size() / 2, 1, 0, 0);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			WeatherSystem.weatherFrozen = !WeatherSystem.weatherFrozen;
 

@@ -4,16 +4,12 @@ using DragonLens.Content.GUI.FieldEditors;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Terraria;
 using Terraria.GameContent.UI;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
@@ -272,7 +268,7 @@ namespace DragonLens.Content.Tools.Editors
 		}
 	}
 
-	internal class ItemEditorSlot : UIElement
+	internal class ItemEditorSlot : SmartUIElement
 	{
 		public ItemEditorState parent;
 
@@ -283,7 +279,7 @@ namespace DragonLens.Content.Tools.Editors
 			Height.Set(120, 0);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			if (!Main.mouseItem.IsAir && parent.item.IsAir)
 			{
@@ -325,7 +321,7 @@ namespace DragonLens.Content.Tools.Editors
 		}
 	}
 
-	internal class SetDefaultsButton : UIElement
+	internal class SetDefaultsButton : SmartUIElement
 	{
 		public ItemEditorState parent;
 
@@ -336,7 +332,7 @@ namespace DragonLens.Content.Tools.Editors
 			Height.Set(42, 0);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			if (!parent.item.IsAir)
 				parent.item.SetDefaults(parent.item.type);
@@ -352,7 +348,7 @@ namespace DragonLens.Content.Tools.Editors
 		}
 	}
 
-	internal class PrefixButton : UIElement
+	internal class PrefixButton : SmartUIElement
 	{
 		public ItemEditorState parent;
 		public int prefixID;
@@ -372,7 +368,7 @@ namespace DragonLens.Content.Tools.Editors
 			dummy.Prefix(prefixID);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			if (!parent.item.IsAir)
 			{

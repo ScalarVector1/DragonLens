@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using Terraria;
+﻿using System;
 
 namespace DragonLens.Content.GUI.FieldEditors
 {
@@ -35,7 +32,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 			yEntry.currentValue = newValue.Y.ToString();
 		}
 
-		public override void SafeUpdate(GameTime gameTime)
+		public override void EditorUpdate(GameTime gameTime)
 		{
 			if (xEntry.updated || yEntry.updated)
 			{

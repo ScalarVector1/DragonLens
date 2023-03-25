@@ -1,16 +1,13 @@
 ﻿using DragonLens.Configs;
 using DragonLens.Content.Filters;
+using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
 namespace DragonLens.Content.GUI
 {
-	internal class FilterPanel : UIElement
+	internal class FilterPanel : SmartUIElement
 	{
 		public Browser parent;
 
@@ -78,7 +75,7 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
-	internal class FilterButton : UIElement
+	internal class FilterButton : SmartUIElement
 	{
 		public Browser parent;
 		public Filter filter;
@@ -93,7 +90,7 @@ namespace DragonLens.Content.GUI
 			this.filter = filter;
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			active = !active;
 
@@ -136,7 +133,7 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
-	internal class FilterSeperator : UIElement
+	internal class FilterSeperator : SmartUIElement
 	{
 		public string name;
 
