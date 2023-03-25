@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Input;
 using System.IO;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader.IO;
 
 namespace DragonLens.Core.Systems.ToolSystem
@@ -110,12 +109,12 @@ namespace DragonLens.Core.Systems.ToolSystem
 			ToolHandler.AddTool(this);
 
 			keybind = KeybindLoader.RegisterKeybind(Mod, DisplayName, Keys.None);
-			LanguageManager.Instance.GetOrRegister(keybind.DisplayName.Key, () => DisplayName);
+			keybind.DisplayName.SetDefault(DisplayName);
 
 			if (HasRightClick)
 			{
 				altKeybind = KeybindLoader.RegisterKeybind(Mod, RightClickName, Keys.None);
-				LanguageManager.Instance.GetOrRegister(altKeybind.DisplayName.Key, () => RightClickName);
+				altKeybind.DisplayName.SetDefault(RightClickName);
 			}
 		}
 
