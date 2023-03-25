@@ -156,7 +156,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SafeClick(UIMouseEvent evt)
 		{
-			base.Click(evt);
+			base.SafeClick(evt);
 
 			if (selected != null)
 			{

@@ -108,7 +108,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SafeClick(UIMouseEvent evt)
 		{
-			base.Click(evt);
+			base.SafeClick(evt);
 
 			if (selected != null)
 			{
@@ -236,7 +236,9 @@ namespace DragonLens.Content.Tools.Spawners
 			newClip.Offset(offset);
 
 			Rectangle oldRect = spriteBatch.GraphicsDevice.ScissorRectangle;
-			spriteBatch.GraphicsDevice.ScissorRectangle = newClip;
+			var finalRect = Rectangle.Intersect(newClip, oldRect);
+
+			spriteBatch.GraphicsDevice.ScissorRectangle = finalRect;
 
 			if (icon != null)
 			{
