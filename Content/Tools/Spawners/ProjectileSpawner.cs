@@ -48,13 +48,13 @@ namespace DragonLens.Content.Tools.Spawners
 
 			if (Main.netMode == NetmodeID.Server && sender >= 0)
 			{
-				if(ProjectileBrowser.selected != null)
+				if (ProjectileBrowser.selected != null)
 				{
 					ProjectileBrowser.selected.type = type;
 					ProjectileBrowser.selected.damage = damage;
 					ProjectileBrowser.selected.knockBack = knockBack;
 				}
-				
+
 				Main.mouseX = (int)pos.X;
 				Main.mouseY = (int)pos.Y;
 

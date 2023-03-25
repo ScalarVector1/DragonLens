@@ -14,7 +14,7 @@ namespace DragonLens.Content.Tools.Map
 		public override string Description => "Resets the world map";
 
 		private FieldInfo tilesArray;
-		
+
 		public override void Load()
 		{
 			base.Load();
