@@ -219,11 +219,15 @@ namespace DragonLens.Content.Tools.Spawners
 			Main.instance.LoadProjectile(proj.type);
 			Texture2D tex = Terraria.GameContent.TextureAssets.Projectile[proj.type].Value;
 
-			float scale = 1;
-			if (tex.Width > 32 || tex.Height > 32)
-				scale = 32f / Math.Max(tex.Width, tex.Height);
+			Rectangle frame = tex.Frame(verticalFrames: Main.projFrames[proj.type]);
+			if (tex.Width > tex.Height)
+				frame = tex.Frame(horizontalFrames: Main.projFrames[proj.type]);
 
-			spriteBatch.Draw(tex, iconBox.Center(), new Rectangle(0, 0, tex.Width, tex.Height), Color.White, 0, new Vector2(tex.Width, tex.Height) / 2, scale, 0, 0);
+			float scale = iconBox.Width / 52f;
+			if (frame.Width > 32 || frame.Height > 32)
+				scale *= 32f / Math.Max(frame.Width, frame.Height);
+
+			spriteBatch.Draw(tex, iconBox.Center(), frame, Color.White, 0, frame.Size() / 2, scale, 0, 0);
 
 			if (IsMouseHovering)
 			{

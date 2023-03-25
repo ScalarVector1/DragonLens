@@ -218,7 +218,9 @@ namespace DragonLens.Content.Tools.Spawners
 					sourcePos.Y = tod.CoordinateFullHeight * TileBrowser.variant;
 			}
 
-			spriteBatch.Draw(tex, iconBox.Center(), new Rectangle((int)sourcePos.X, (int)sourcePos.Y, 16, 16), Color.White, 0, Vector2.One * 8, 1, 0, 0);
+			float scale = iconBox.Width / 36f;
+
+			spriteBatch.Draw(tex, iconBox.Center(), new Rectangle((int)sourcePos.X, (int)sourcePos.Y, 16, 16), Color.White, 0, Vector2.One * 8, scale, 0, 0);
 
 			if (IsMouseHovering)
 			{
