@@ -46,6 +46,9 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void SaveData(TagCompound tag)
 		{
+			if (Main.gameMenu)
+				return;
+
 			Main.LocalPlayer.GetModPlayer<AcccessoryTrayPlayer>().accessories.RemoveAll(n => n.IsAir);
 
 			tag["Items"] = Main.LocalPlayer.GetModPlayer<AcccessoryTrayPlayer>().accessories;
