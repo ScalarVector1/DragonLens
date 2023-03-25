@@ -80,7 +80,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			}
 
 			sampleButton = new("DragonLens/Assets/GUI/Picker", () => selecting, "Create structure");
-			sampleButton.OnClick += (a, b) => selecting = !selecting;
+			sampleButton.OnLeftClick += (a, b) => selecting = !selecting;
 			Append(sampleButton);
 
 			structureScroll = new(UserInterface);
@@ -269,7 +269,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			closeButton.Left.Set(120, 0);
 			closeButton.Top.Set(4, 0);
 
-			closeButton.OnClick += (a, b) =>
+			closeButton.OnLeftClick += (a, b) =>
 			{
 				preview.Dispose();
 				preview = null;
@@ -327,7 +327,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			closeButton.Height.Set(16, 0);
 			closeButton.Left.Set(186, 0);
 			closeButton.Top.Set(8, 0);
-			closeButton.OnClick += (a, b) => Remove();
+			closeButton.OnLeftClick += (a, b) => Remove();
 			Append(closeButton);
 		}
 

@@ -70,7 +70,7 @@ namespace DragonLens.Content.Tools.Editors
 	{
 		public readonly List<Item> accessories = new() { new Item() };
 
-		public override void OnEnterWorld(Player player)
+		public override void OnEnterWorld()
 		{
 			if (Main.netMode != NetmodeID.SinglePlayer)
 				return;
@@ -98,7 +98,7 @@ namespace DragonLens.Content.Tools.Editors
 
 			accessories.ForEach(n =>
 			{
-				Player.VanillaUpdateEquip(n);
+				Player.VanillaUpdateEquip(n)/* tModPorter Note: Removed. Use either GrantPrefixBenefits (if Item.accessory) or GrantArmorBenefits (for armor slots) */;
 				Player.ApplyEquipFunctional(n, false);
 			});
 		}

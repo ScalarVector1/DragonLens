@@ -92,10 +92,10 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public override void Load()
 		{
-			On.Terraria.Main.DoUpdate += UpdateExtraTimes;
+			Terraria.On_Main.DoUpdate += UpdateExtraTimes;
 		}
 
-		private void UpdateExtraTimes(On.Terraria.Main.orig_DoUpdate orig, Main self, ref GameTime gameTime)
+		private void UpdateExtraTimes(Terraria.On_Main.orig_DoUpdate orig, Main self, ref GameTime gameTime)
 		{
 			orig(self, ref gameTime);
 

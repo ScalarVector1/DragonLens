@@ -147,7 +147,7 @@ namespace DragonLens.Core.Systems
 	/// </summary>
 	public class PermissionPlayer : ModPlayer
 	{
-		public override void OnEnterWorld(Player player) // Send an admin list sync request on entering the server
+		public override void OnEnterWorld() // Send an admin list sync request on entering the server
 		{
 			if (Main.netMode == NetmodeID.SinglePlayer) //single player dosent care about admins
 				return;
@@ -163,7 +163,7 @@ namespace DragonLens.Core.Systems
 
 			if (Netplay.Connection.Socket.GetRemoteAddress().IsLocalHost()) // The host is automatically an admin!
 			{
-				PermissionHandler.AddAdmin(player);
+				PermissionHandler.AddAdmin(Player);
 
 				foreach (Tool tool in ToolHandler.Tools) // The hosts settings get applied
 				{

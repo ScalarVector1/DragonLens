@@ -87,9 +87,9 @@ namespace DragonLens.Content.Tools.Gameplay
 	/// </summary>
 	internal class JourneySafetyPlayer : ModPlayer
 	{
-		public override void OnEnterWorld(Player player)
+		public override void OnEnterWorld()
 		{
-			if (player.difficulty == 3)
+			if (Player.difficulty == 3)
 				Difficulty.originallyJourney = true;
 		}
 

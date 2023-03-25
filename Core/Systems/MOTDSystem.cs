@@ -9,7 +9,7 @@ namespace DragonLens.Core.Systems
 	/// </summary>
 	internal class MOTDPlayer : ModPlayer
 	{
-		public override void OnEnterWorld(Player player)
+		public override void OnEnterWorld()
 		{
 			string MOTD = $"Thank you for using DragonLens V.{Mod.Version}!\n\n" +
 				$"Be sure to check the customize tool (wrench icon) to set up the mod with the tools you need.\n\n" +

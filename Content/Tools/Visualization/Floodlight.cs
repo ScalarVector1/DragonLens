@@ -71,10 +71,10 @@ namespace DragonLens.Content.Tools.Visualization
 
 		public override void Load()
 		{
-			On.Terraria.Graphics.Light.TileLightScanner.GetTileLight += HackLight;
+			Terraria.Graphics.Light.On_TileLightScanner.GetTileLight += HackLight;
 		}
 
-		private void HackLight(On.Terraria.Graphics.Light.TileLightScanner.orig_GetTileLight orig, Terraria.Graphics.Light.TileLightScanner self, int x, int y, out Vector3 outputColor)
+		private void HackLight(Terraria.Graphics.Light.On_TileLightScanner.orig_GetTileLight orig, Terraria.Graphics.Light.TileLightScanner self, int x, int y, out Vector3 outputColor)
 		{
 			orig(self, x, y, out outputColor);
 

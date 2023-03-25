@@ -68,10 +68,10 @@ namespace DragonLens.Content.Tools.Visualization
 	{
 		public override void Load()
 		{
-			On.Terraria.Main.DrawInterface += DrawHitboxes;
+			Terraria.On_Main.DrawInterface += DrawHitboxes;
 		}
 
-		private void DrawHitboxes(On.Terraria.Main.orig_DrawInterface orig, Main self, GameTime gameTime)
+		private void DrawHitboxes(Terraria.On_Main.orig_DrawInterface orig, Main self, GameTime gameTime)
 		{
 			HitboxWindow state = UILoader.GetUIState<HitboxWindow>();
 
@@ -247,19 +247,19 @@ namespace DragonLens.Content.Tools.Visualization
 			var button = new ToggleButton("DragonLens/Assets/GUI/NoBox", () => boxState == BoxType.none);
 			button.Left.Set(10, 0);
 			button.Top.Set(28, 0);
-			button.OnClick += (a, b) => boxState = BoxType.none;
+			button.OnLeftClick += (a, b) => boxState = BoxType.none;
 			Append(button);
 
 			button = new ToggleButton("DragonLens/Assets/GUI/BorderBox", () => boxState == BoxType.outline);
 			button.Left.Set(46, 0);
 			button.Top.Set(28, 0);
-			button.OnClick += (a, b) => boxState = BoxType.outline;
+			button.OnLeftClick += (a, b) => boxState = BoxType.outline;
 			Append(button);
 
 			button = new ToggleButton("DragonLens/Assets/GUI/FillBox", () => boxState == BoxType.filled);
 			button.Left.Set(82, 0);
 			button.Top.Set(28, 0);
-			button.OnClick += (a, b) => boxState = BoxType.filled;
+			button.OnLeftClick += (a, b) => boxState = BoxType.filled;
 			Append(button);
 		}
 

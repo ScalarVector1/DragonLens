@@ -203,7 +203,7 @@ namespace DragonLens.Content.GUI
 		private void AddCollapseTab()
 		{
 			var collapseButton = new HideTab(this);
-			collapseButton.OnClick += (UIMouseEvent mouseEvent, UIElement element) => toolbar.collapsed = !toolbar.collapsed;
+			collapseButton.OnLeftClick += (UIMouseEvent mouseEvent, UIElement element) => toolbar.collapsed = !toolbar.collapsed;
 
 			AddTabButton(collapseButton, 0.5f);
 

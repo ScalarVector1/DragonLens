@@ -114,11 +114,11 @@ namespace DragonLens.Content.GUI
 			Append(sizeSlider);
 
 			listButton = new("DragonLens/Assets/GUI/Play", () => listMode, "List view");
-			listButton.OnClick += (n, k) => listMode = !listMode;
+			listButton.OnLeftClick += (n, k) => listMode = !listMode;
 			Append(listButton);
 
 			filterButton = new("DragonLens/Assets/GUI/Filter", () => filtersVisible, "Filters");
-			filterButton.OnClick += (n, k) =>
+			filterButton.OnLeftClick += (n, k) =>
 			{
 				filtersVisible = !filtersVisible;
 				if (filtersVisible)

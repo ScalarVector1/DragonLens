@@ -30,7 +30,7 @@ namespace DragonLens.Content.GUI
 			button.TextOriginX = 0.5f;
 			button.TextOriginY = 0.5f;
 
-			button.OnClick += (a, b) =>
+			button.OnLeftClick += (a, b) =>
 			{
 				CustomizeTool.customizing = true;
 				UILoader.GetUIState<ToolbarState>().Customize();
