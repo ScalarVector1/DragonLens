@@ -18,9 +18,9 @@ namespace DragonLens.Content.GUI
 	{
 		private UIGrid options;
 		private FixedUIScrollbar scrollBar;
-		private FilterPanel filters;
 		private ToggleButton listButton;
 		private ToggleButton filterButton;
+		public FilterPanel filters;
 
 		internal SearchBar searchBar;
 		internal ButtonSizeSlider sizeSlider;
