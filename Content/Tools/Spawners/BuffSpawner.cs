@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -132,12 +133,16 @@ namespace DragonLens.Content.Tools.Spawners
 					Rectangle clickbox = npc.Hitbox;
 					clickbox.Inflate(32, 32);
 
+					PlayerInput.SetZoom_World();
+
 					if (clickbox.Contains(Main.MouseWorld.ToPoint()))
 					{
 						npc.AddBuff(selected, duration);
 						Main.NewText($"Applied {Lang.GetBuffName(selected)} to {npc.FullName}");
 						break;
 					}
+
+					PlayerInput.SetZoom_UI();
 				}
 
 				ToolHandler.NetSend<BuffSpawner>();
@@ -161,6 +166,11 @@ namespace DragonLens.Content.Tools.Spawners
 
 				float alpha = 0.5f;
 
+				PlayerInput.SetZoom_World();
+
+				spriteBatch.End();
+				spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+
 				foreach (NPC npc in Main.npc)
 				{
 					Rectangle clickbox = npc.Hitbox;
@@ -176,6 +186,11 @@ namespace DragonLens.Content.Tools.Spawners
 						break;
 					}
 				}
+
+				spriteBatch.End();
+				spriteBatch.Begin(default, default, default, default, default, default, Main.UIScaleMatrix);
+
+				PlayerInput.SetZoom_UI();
 
 				spriteBatch.Draw(tex, Main.MouseScreen + Vector2.One * 8, new Rectangle(0, 0, tex.Width, tex.Height), Color.White * alpha, 0, default, 1, 0, 0);
 			}

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -108,12 +109,14 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SafeClick(UIMouseEvent evt)
 		{
-			base.Click(evt);
+			base.SafeClick(evt);
 
 			if (selected != null)
 			{
+				PlayerInput.SetZoom_World();
 				NPC.NewNPC(null, (int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, selected.type);
 				ToolHandler.NetSend<NPCSpawner>();
+				PlayerInput.SetZoom_UI();
 			}
 		}
 

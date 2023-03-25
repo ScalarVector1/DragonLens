@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -130,10 +131,14 @@ namespace DragonLens.Content.Tools.Spawners
 
 				if (Main.mouseLeft)
 				{
+					PlayerInput.SetZoom_World();
+
 					if (perfect)
 						Dust.NewDustPerfect(Main.MouseWorld, selected.type, velocity, alpha, color, scale);
 					else
 						Dust.NewDust(Main.MouseWorld, 16, 16, selected.type, velocity.X, velocity.Y, alpha, color, scale);
+
+					PlayerInput.SetZoom_UI();
 				}
 			}
 		}
