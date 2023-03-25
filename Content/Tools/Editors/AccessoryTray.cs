@@ -42,13 +42,15 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void SaveData(TagCompound tag)
 		{
-			if (Main.gameMenu)
+			var mp = Main.LocalPlayer?.GetModPlayer<AcccessoryTrayPlayer>();
+
+			if (mp is null)
 				return;
 
-			Main.LocalPlayer.GetModPlayer<AcccessoryTrayPlayer>().accessories.RemoveAll(n => n.IsAir);
+			mp.accessories.RemoveAll(n => n.IsAir);
 
-			tag["Items"] = Main.LocalPlayer.GetModPlayer<AcccessoryTrayPlayer>().accessories;
-			loadCache = Main.LocalPlayer.GetModPlayer<AcccessoryTrayPlayer>().accessories;
+			tag["Items"] = mp.accessories;
+			loadCache = mp.accessories;
 		}
 
 		public override void LoadData(TagCompound tag)
