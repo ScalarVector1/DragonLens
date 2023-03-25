@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -160,8 +161,10 @@ namespace DragonLens.Content.Tools.Spawners
 
 			if (selected != null)
 			{
+				PlayerInput.SetZoom_World();
 				Projectile.NewProjectile(null, Main.MouseWorld, velocity, selected.type, selected.damage, selected.knockBack, Main.myPlayer, ai0, ai1);
 				ToolHandler.NetSend<ProjectileSpawner>();
+				PlayerInput.SetZoom_UI();
 			}
 		}
 
