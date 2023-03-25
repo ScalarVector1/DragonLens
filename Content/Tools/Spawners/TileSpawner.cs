@@ -139,6 +139,9 @@ namespace DragonLens.Content.Tools.Spawners
 			{
 				PlayerInput.SetZoom_World();
 
+				spriteBatch.End();
+				spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+
 				Main.instance.LoadTiles(selected);
 				Texture2D tex = Terraria.GameContent.TextureAssets.Tile[selected].Value;
 
@@ -171,6 +174,9 @@ namespace DragonLens.Content.Tools.Spawners
 				GUIHelper.DrawOutline(spriteBatch, new Rectangle(point.X, point.Y, width, height), Color.White);
 
 				PlayerInput.SetZoom_UI();
+
+				spriteBatch.End();
+				spriteBatch.Begin(default, default, default, default, default, default, Main.UIScaleMatrix);
 			}
 
 			base.Draw(spriteBatch);
