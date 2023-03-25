@@ -3,16 +3,12 @@ using DragonLens.Content.Tools;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolbarSystem;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.IO;
-using Terraria;
-using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace DragonLens.Content.GUI
 {
-	internal class RemoveButton : UIElement
+	internal class RemoveButton : SmartUIElement
 	{
 		private readonly ToolButton parent;
 
@@ -24,7 +20,7 @@ namespace DragonLens.Content.GUI
 			Height.Set(16, 0);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			parent.parent.toolbar.toolList.Remove(parent.tool);
 			UILoader.GetUIState<ToolbarState>().Refresh();
@@ -45,7 +41,7 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
-	internal class AddButton : UIElement
+	internal class AddButton : SmartUIElement
 	{
 		public ToolbarElement parent;
 
@@ -56,7 +52,7 @@ namespace DragonLens.Content.GUI
 			this.parent = parent;
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			ToolBrowser.OpenForToolbar(parent);
 		}
@@ -84,7 +80,7 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
-	internal class RemoveToolbarButton : UIElement
+	internal class RemoveToolbarButton : SmartUIElement
 	{
 		public ToolbarElement parent;
 
@@ -95,7 +91,7 @@ namespace DragonLens.Content.GUI
 			this.parent = parent;
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			ToolbarHandler.activeToolbars.Remove(Toolbar);
 			UILoader.GetUIState<ToolbarState>().Refresh();
@@ -124,7 +120,7 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
-	internal class DragButton : UIElement
+	internal class DragButton : SmartUIElement
 	{
 		public ToolbarElement parent;
 
@@ -139,14 +135,14 @@ namespace DragonLens.Content.GUI
 			this.parent = parent;
 		}
 
-		public override void MouseDown(UIMouseEvent evt)
+		public override void SafeMouseDown(UIMouseEvent evt)
 		{
 			dragging = true;
 			draggedElement = parent;
 			parent.beingDragged = true;
 		}
 
-		public override void MouseUp(UIMouseEvent evt)
+		public override void SafeMouseUp(UIMouseEvent evt)
 		{
 			dragging = false;
 			parent.Refresh();
@@ -156,7 +152,7 @@ namespace DragonLens.Content.GUI
 			draggedElement = null;
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
 			if (dragging && draggedElement != null)
 			{
@@ -229,7 +225,7 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
-	internal class HideOptionButton : UIElement
+	internal class HideOptionButton : SmartUIElement
 	{
 		public ToolbarElement parent;
 
@@ -240,7 +236,7 @@ namespace DragonLens.Content.GUI
 			this.parent = parent;
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			Toolbar.automaticHideOption++;
 
@@ -298,7 +294,7 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
-	internal class NewBarButton : UIElement
+	internal class NewBarButton : SmartUIElement
 	{
 		public NewBarButton()
 		{
@@ -306,14 +302,14 @@ namespace DragonLens.Content.GUI
 			Height.Set(48, 0);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			ToolbarHandler.activeToolbars.Add(new Toolbar(new Vector2(0.5f, 0.6f), Orientation.Horizontal, Main.mapFullscreen ? AutomaticHideOption.NoMapScreen : AutomaticHideOption.Never));
 
 			UILoader.GetUIState<ToolbarState>().Refresh();
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
 			if (IsMouseHovering)
 				Main.LocalPlayer.mouseInterface = true;
@@ -341,7 +337,7 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
-	internal class SaveLayoutButton : UIElement
+	internal class SaveLayoutButton : SmartUIElement
 	{
 		public SaveLayoutButton()
 		{
@@ -349,7 +345,7 @@ namespace DragonLens.Content.GUI
 			Height.Set(48, 0);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			UILoader.GetUIState<ToolbarState>().FinishCustomize();
 			ToolbarHandler.ExportToFile(Path.Join(Main.SavePath, "DragonLensLayouts", "Current"));
@@ -363,7 +359,7 @@ namespace DragonLens.Content.GUI
 			Main.NewText("Layout saved!");
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
 			if (IsMouseHovering)
 				Main.LocalPlayer.mouseInterface = true;
@@ -386,7 +382,7 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
-	internal class LoadLayoutButton : UIElement
+	internal class LoadLayoutButton : SmartUIElement
 	{
 		public LoadLayoutButton()
 		{
@@ -394,7 +390,7 @@ namespace DragonLens.Content.GUI
 			Height.Set(48, 0);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			LayoutPresetBrowser state = UILoader.GetUIState<LayoutPresetBrowser>();
 			state.visible = !state.visible;
@@ -408,7 +404,7 @@ namespace DragonLens.Content.GUI
 			}
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
 			if (IsMouseHovering)
 				Main.LocalPlayer.mouseInterface = true;
@@ -426,12 +422,10 @@ namespace DragonLens.Content.GUI
 				Tooltip.SetName("Load layout");
 				Tooltip.SetTooltip("Load an existing layout");
 			}
-
-			base.Draw(spriteBatch);
 		}
 	}
 
-	internal class VisualConfigButton : UIElement
+	internal class VisualConfigButton : SmartUIElement
 	{
 		public VisualConfigButton()
 		{
@@ -439,12 +433,12 @@ namespace DragonLens.Content.GUI
 			Height.Set(48, 0);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			Helpers.GUIHelper.OpenConfig(ModContent.GetInstance<GUIConfig>());
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
 			if (IsMouseHovering)
 				Main.LocalPlayer.mouseInterface = true;
@@ -467,7 +461,7 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
-	internal class FunctionalConfigButton : UIElement
+	internal class FunctionalConfigButton : SmartUIElement
 	{
 		public FunctionalConfigButton()
 		{
@@ -475,12 +469,12 @@ namespace DragonLens.Content.GUI
 			Height.Set(48, 0);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			Helpers.GUIHelper.OpenConfig(ModContent.GetInstance<ToolConfig>());
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
 			if (IsMouseHovering)
 				Main.LocalPlayer.mouseInterface = true;

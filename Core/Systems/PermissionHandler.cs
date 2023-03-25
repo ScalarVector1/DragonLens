@@ -1,12 +1,9 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
-using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace DragonLens.Core.Systems
 {
@@ -65,7 +62,7 @@ namespace DragonLens.Core.Systems
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="sender"></param>
-		public static void SendToolData(BinaryReader reader, int sender)
+		public static void SendToolData(int sender)
 		{
 			if (Main.netMode != NetmodeID.Server)
 			{
@@ -84,7 +81,7 @@ namespace DragonLens.Core.Systems
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="sender"></param>
-		public static void HandlePacket(BinaryReader reader, int sender)
+		public static void HandlePacket(BinaryReader reader)
 		{
 			int operation = reader.ReadInt32(); //First read the operation type
 

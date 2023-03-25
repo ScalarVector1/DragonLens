@@ -4,16 +4,12 @@ using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Steamworks;
 using StructureHelper.Util;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Terraria;
 using Terraria.DataStructures;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.Social.Steam;
@@ -114,7 +110,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			structureButtons.Top.Set(newPos.Y + 80, 0);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			if (selecting && !sampleButton.IsMouseHovering) //otherwise the first point is always the select button lol
 			{
@@ -148,13 +144,13 @@ namespace DragonLens.Content.Tools.Gameplay
 			}
 		}
 
-		public override void RightClick(UIMouseEvent evt)
+		public override void SafeRightClick(UIMouseEvent evt)
 		{
 			if (structure != null)
 				structure = null;
 		}
 
-		public override void ScrollWheel(UIScrollWheelEvent evt)
+		public override void SafeScrollWheel(UIScrollWheelEvent evt)
 		{
 			if (structure != null)
 			{
@@ -165,7 +161,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			}
 		}
 
-		public override void SafeUpdate(GameTime gameTime)
+		public override void DraggableUdpate(GameTime gameTime)
 		{
 			if (selecting || structure != null)
 				Main.LocalPlayer.mouseInterface = true;
@@ -249,7 +245,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		}
 	}
 
-	internal class StructureButton : UIElement
+	internal class StructureButton : SmartUIElement
 	{
 		public PaintWindow parent;
 		public TagCompound strucutre;
@@ -283,7 +279,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			Append(closeButton);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			if (!closeButton.IsMouseHovering)
 			{
@@ -314,7 +310,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		}
 	}
 
-	internal class AdPanel : UIElement
+	internal class AdPanel : SmartUIElement
 	{
 		public AdPanel()
 		{
@@ -353,7 +349,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		}
 	}
 
-	internal class AdButton : UIElement
+	internal class AdButton : SmartUIElement
 	{
 		public AdButton()
 		{
@@ -361,7 +357,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			Height.Set(88, 0);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			MethodInfo method = typeof(SteamedWraps).GetMethod("Download", BindingFlags.Static | BindingFlags.NonPublic);
 

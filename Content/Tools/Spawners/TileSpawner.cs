@@ -2,14 +2,10 @@
 using DragonLens.Content.Filters.TileFilters;
 using DragonLens.Content.GUI;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.ObjectData;
 using Terraria.UI;
@@ -61,9 +57,9 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 		}
 
-		public override void SafeUpdate(GameTime gameTime)
+		public override void DraggableUdpate(GameTime gameTime)
 		{
-			base.SafeUpdate(gameTime);
+			base.DraggableUdpate(gameTime);
 
 			if (Main.mouseLeft && selected != -1)
 			{
@@ -89,7 +85,7 @@ namespace DragonLens.Content.Tools.Spawners
 				Main.LocalPlayer.mouseInterface = true;
 		}
 
-		public override void ScrollWheel(UIScrollWheelEvent evt)
+		public override void SafeScrollWheel(UIScrollWheelEvent evt)
 		{
 			if (selected == -1)
 				return;
@@ -123,7 +119,7 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 		}
 
-		public override void RightClick(UIMouseEvent evt)
+		public override void SafeRightClick(UIMouseEvent evt)
 		{
 			if (selected != -1)
 			{
@@ -216,16 +212,11 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			TileBrowser.selected = tileType;
 			TileBrowser.variant = 0;
 			Main.NewText($"{Identifier} selected, click anywhere in the world to place. Right click to deselect.");
-		}
-
-		public override void RightClick(UIMouseEvent evt)
-		{
-
 		}
 
 		public override int CompareTo(object obj)

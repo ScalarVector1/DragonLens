@@ -4,12 +4,8 @@ using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -180,7 +176,7 @@ namespace DragonLens.Content.Tools.Editors
 		}
 	}
 
-	internal class AccessoryTraySlot : UIElement
+	internal class AccessoryTraySlot : SmartUIElement
 	{
 		public AccessoryTrayUI parent;
 
@@ -204,7 +200,7 @@ namespace DragonLens.Content.Tools.Editors
 			lastIndex++;
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			if (!Main.mouseItem.IsAir)
 			{

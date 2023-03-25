@@ -1,18 +1,14 @@
 ﻿using DragonLens.Configs;
+using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.UI;
 
 namespace DragonLens.Content.GUI.FieldEditors
 {
 	/// <summary>
 	/// A UI element for changing the value of 'something'. 
 	/// </summary>
-	internal abstract class FieldEditor<T> : UIElement
+	internal abstract class FieldEditor<T> : SmartUIElement
 	{
 		/// <summary>
 		/// The name that gets displated above the panel to the user
@@ -68,7 +64,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 		/// <param name="newValue">The new value that was recieved</param>
 		public virtual void OnRecieveNewValue(T newValue) { }
 
-		public sealed override void Update(GameTime gameTime)
+		public sealed override void SafeUpdate(GameTime gameTime)
 		{
 			if (!Editing && listenForUpdate != null)
 			{
@@ -77,11 +73,10 @@ namespace DragonLens.Content.GUI.FieldEditors
 				value = newValue;
 			}
 
-			base.Update(gameTime);
-			SafeUpdate(gameTime);
+			EditorUpdate(gameTime);
 		}
 
-		public virtual void SafeUpdate(GameTime gameTime) { }
+		public virtual void EditorUpdate(GameTime gameTime) { }
 
 		public sealed override void Draw(SpriteBatch spriteBatch)
 		{

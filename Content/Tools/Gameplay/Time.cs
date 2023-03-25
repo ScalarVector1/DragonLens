@@ -4,14 +4,10 @@ using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.IO;
-using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
 
@@ -147,7 +143,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		}
 	}
 
-	internal class TimeSlider : UIElement
+	internal class TimeSlider : SmartUIElement
 	{
 		public bool dragging;
 		public float progress;
@@ -158,7 +154,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			Height.Set(16, 0);
 		}
 
-		public override void Update(GameTime gameTime)
+		public override void SafeUpdate(GameTime gameTime)
 		{
 			if (dragging)
 			{
@@ -194,11 +190,9 @@ namespace DragonLens.Content.Tools.Gameplay
 				else
 					progress = (float)(0.5f + Main.time / Main.nightLength / 2);
 			}
-
-			base.Update(gameTime);
 		}
 
-		public override void MouseDown(UIMouseEvent evt)
+		public override void SafeMouseDown(UIMouseEvent evt)
 		{
 			dragging = true;
 		}
@@ -255,7 +249,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		}
 	}
 
-	internal class TimePauseButton : UIElement
+	internal class TimePauseButton : SmartUIElement
 	{
 		public TimePauseButton()
 		{
@@ -281,7 +275,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			}
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			if (TimePauseSystem.savedTime == -1)
 			{
@@ -297,7 +291,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		}
 	}
 
-	internal class MoonPhaseButton : UIElement
+	internal class MoonPhaseButton : SmartUIElement
 	{
 		readonly int moonPhase;
 
@@ -324,7 +318,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			spriteBatch.Draw(icon, dims.Center(), source, Color.White, 0, Vector2.One * 25, 0.65f, 0, 0);
 		}
 
-		public override void Click(UIMouseEvent evt)
+		public override void SafeClick(UIMouseEvent evt)
 		{
 			Main.moonPhase = moonPhase;
 
