@@ -127,10 +127,10 @@ namespace DragonLens
 				ToolHandler.HandlePacket(reader, whoAmI);
 
 			if (type == "AdminUpdate")
-				PermissionHandler.HandlePacket(reader, whoAmI);
+				PermissionHandler.HandlePacket(reader);
 
 			if (type == "ToolDataRequest")
-				PermissionHandler.SendToolData(reader, whoAmI);
+				PermissionHandler.SendToolData(whoAmI);
 		}
 	}
 }

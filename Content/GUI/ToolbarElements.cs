@@ -219,7 +219,7 @@ namespace DragonLens.Content.GUI
 			}
 		}
 
-		private void AddTabButton(UIElement element, float offset, int size = 30)
+		private void AddTabButton(UIElement element, float offset)
 		{
 			element.Width.Set(30, 0);
 			element.Height.Set(30, 0);
