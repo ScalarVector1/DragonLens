@@ -1,6 +1,5 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
 using System.IO;
-using Terraria;
 using Terraria.ID;
 
 namespace DragonLens.Content.Tools.Despawners
@@ -38,7 +37,7 @@ namespace DragonLens.Content.Tools.Despawners
 			foreach (NPC npc in Main.npc)
 			{
 				if (!npc.friendly || Main.keyState.PressingShift())
-					npc.StrikeNPC(int.MaxValue, 0, 0);
+					npc.StrikeNPC(new NPC.HitInfo() { Damage = int.MaxValue });
 			}
 
 			lastUsedClear = 1;
@@ -70,7 +69,7 @@ namespace DragonLens.Content.Tools.Despawners
 				foreach (NPC npc in Main.npc)
 				{
 					if (!npc.friendly || clearFriendly)
-						npc.StrikeNPC(int.MaxValue, 0, 0);
+						npc.StrikeNPC(new NPC.HitInfo() { Damage = int.MaxValue });
 				}
 			}
 

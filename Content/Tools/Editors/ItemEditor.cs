@@ -383,7 +383,7 @@ namespace DragonLens.Content.Tools.Editors
 			{
 				Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
 
-				string name = PrefixID.Search.ContainsId(prefixID) ? PrefixID.Search.GetName(prefixID) : PrefixLoader.GetPrefix(prefixID).DisplayName.GetDefault();
+				string name = PrefixID.Search.ContainsId(prefixID) ? PrefixID.Search.GetName(prefixID) : PrefixLoader.GetPrefix(prefixID).DisplayName.Value;
 
 				Utils.DrawBorderString(spriteBatch, name, GetDimensions().Center(), ItemRarity.GetColor(dummy.rare), 1, 0.5f, 0.5f);
 

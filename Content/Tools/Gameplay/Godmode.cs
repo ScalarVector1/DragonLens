@@ -2,11 +2,7 @@
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
 using Terraria.DataStructures;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace DragonLens.Content.Tools.Gameplay
@@ -111,12 +107,9 @@ namespace DragonLens.Content.Tools.Gameplay
 			}
 		}
 
-		public override void ModifyHurt(ref Player.HurtModifiers modifiers)/* tModPorter Override ImmuneTo, FreeDodge or ConsumableDodge instead to prevent taking damage */
+		public override bool ImmuneTo(PlayerDeathReason damageSource, int cooldownCounter, bool dodgeable)
 		{
-			if (Godmode.godMode)
-				return false;
-
-			return true;
+			return Godmode.godMode;
 		}
 
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
