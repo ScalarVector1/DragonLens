@@ -2,46 +2,46 @@
 Mods: {
 	DragonLens: {
 		Keybinds: {
-			"Customize tool.DisplayName": Mods.DragonLens.Keybinds.Customize tool.DisplayName
-			"Clear buffs.DisplayName": Mods.DragonLens.Keybinds.Clear buffs.DisplayName
-			"Clear dusts.DisplayName": Mods.DragonLens.Keybinds.Clear dusts.DisplayName
-			"Clear gores.DisplayName": Mods.DragonLens.Keybinds.Clear gores.DisplayName
-			"Clear items.DisplayName": Mods.DragonLens.Keybinds.Clear items.DisplayName
-			"Clear NPCs.DisplayName": Mods.DragonLens.Keybinds.Clear NPCs.DisplayName
-			"Traditional butcher.DisplayName": Mods.DragonLens.Keybinds.Traditional butcher.DisplayName
-			"Clear projectiles.DisplayName": Mods.DragonLens.Keybinds.Clear projectiles.DisplayName
-			"Shader Reloader.DisplayName": Mods.DragonLens.Keybinds.Shader Reloader.DisplayName
-			"Accessory tray.DisplayName": Mods.DragonLens.Keybinds.Accessory tray.DisplayName
-			"Item Editor.DisplayName": Mods.DragonLens.Keybinds.Item Editor.DisplayName
-			"Player Editor.DisplayName": Mods.DragonLens.Keybinds.Player Editor.DisplayName
-			"Difficulty switcher.DisplayName": Mods.DragonLens.Keybinds.Difficulty switcher.DisplayName
-			"Toggle journey mode.DisplayName": Mods.DragonLens.Keybinds.Toggle journey mode.DisplayName
-			"Fast forward.DisplayName": Mods.DragonLens.Keybinds.Fast forward.DisplayName
-			"Decrease fast forward rate.DisplayName": Mods.DragonLens.Keybinds.Decrease fast forward rate.DisplayName
-			"God mode.DisplayName": Mods.DragonLens.Keybinds.God mode.DisplayName
-			"Dogmode (Godmode + hits allowed).DisplayName": Mods.DragonLens.Keybinds.Dogmode (Godmode + hits allowed).DisplayName
-			"Omnipotent building.DisplayName": Mods.DragonLens.Keybinds.Omnipotent building.DisplayName
-			"Item magnet.DisplayName": Mods.DragonLens.Keybinds.Item magnet.DisplayName
-			"Void magnet (destroys items on pickup).DisplayName": Mods.DragonLens.Keybinds.Void magnet (destroys items on pickup).DisplayName
-			Noclip.DisplayName: Mods.DragonLens.Keybinds.Noclip.DisplayName
-			"Tile painter.DisplayName": Mods.DragonLens.Keybinds.Tile painter.DisplayName
-			"Enemy spawn adjuster.DisplayName": Mods.DragonLens.Keybinds.Enemy spawn adjuster.DisplayName
-			"Time tool.DisplayName": Mods.DragonLens.Keybinds.Time tool.DisplayName
-			"Weather tool.DisplayName": Mods.DragonLens.Keybinds.Weather tool.DisplayName
-			"Hide map.DisplayName": Mods.DragonLens.Keybinds.Hide map.DisplayName
-			"Map teleportation.DisplayName": Mods.DragonLens.Keybinds.Map teleportation.DisplayName
-			"Reveal map.DisplayName": Mods.DragonLens.Keybinds.Reveal map.DisplayName
-			"Buff spawner.DisplayName": Mods.DragonLens.Keybinds.Buff spawner.DisplayName
-			"Dust spawner.DisplayName": Mods.DragonLens.Keybinds.Dust spawner.DisplayName
-			"Item spawner.DisplayName": Mods.DragonLens.Keybinds.Item spawner.DisplayName
-			"NPC spawner.DisplayName": Mods.DragonLens.Keybinds.NPC spawner.DisplayName
-			"Projectile spawner.DisplayName": Mods.DragonLens.Keybinds.Projectile spawner.DisplayName
-			"Tile spawner.DisplayName": Mods.DragonLens.Keybinds.Tile spawner.DisplayName
-			"Mass Illumination.DisplayName": Mods.DragonLens.Keybinds.Mass Illumination.DisplayName
-			"Decrease Mass Illumination.DisplayName": Mods.DragonLens.Keybinds.Decrease Mass Illumination.DisplayName
-			"Free camera.DisplayName": Mods.DragonLens.Keybinds.Free camera.DisplayName
-			"Hitbox visualizer.DisplayName": Mods.DragonLens.Keybinds.Hitbox visualizer.DisplayName
-			"Lock camera.DisplayName": Mods.DragonLens.Keybinds.Lock camera.DisplayName
+			"Customize tool.DisplayName": Customize tool
+			"Clear buffs.DisplayName": Clear buffs
+			"Clear dusts.DisplayName": Clear dusts
+			"Clear gores.DisplayName": Clear gores
+			"Clear items.DisplayName": Clear items
+			"Clear NPCs.DisplayName": Clear NPCs
+			"Traditional butcher.DisplayName": Traditional butcher
+			"Clear projectiles.DisplayName": Clear projectiles
+			"Shader Reloader.DisplayName": Shader Reloader
+			"Accessory tray.DisplayName": Accessory tray
+			"Item Editor.DisplayName": Item Editor
+			"Player Editor.DisplayName": Player Editor
+			"Difficulty switcher.DisplayName": Difficulty switcher
+			"Toggle journey mode.DisplayName": Toggle journey mode
+			"Fast forward.DisplayName": Fast forward
+			"Decrease fast forward rate.DisplayName": Decrease fast forward rate
+			"God mode.DisplayName": God mode
+			"Dogmode (Godmode + hits allowed).DisplayName": Dogmode (Godmode + hits allowed)
+			"Omnipotent building.DisplayName": Omnipotent building
+			"Item magnet.DisplayName": Item magnet
+			"Void magnet (destroys items on pickup).DisplayName": Void magnet (destroys items on pickup)
+			Noclip.DisplayName: Noclip
+			"Tile painter.DisplayName": Tile painter
+			"Enemy spawn adjuster.DisplayName": Enemy spawn adjuster
+			"Time tool.DisplayName": Time tool
+			"Weather tool.DisplayName": Weather tool
+			"Hide map.DisplayName": Hide map
+			"Map teleportation.DisplayName": Map teleportation
+			"Reveal map.DisplayName": Reveal map
+			"Buff spawner.DisplayName": Buff spawner
+			"Dust spawner.DisplayName": Dust spawner
+			"Item spawner.DisplayName": Item spawner
+			"NPC spawner.DisplayName": NPC spawner
+			"Projectile spawner.DisplayName": Projectile spawner
+			"Tile spawner.DisplayName": Tile spawner
+			"Mass Illumination.DisplayName": Mass Illumination
+			"Decrease Mass Illumination.DisplayName": Decrease Mass Illumination
+			"Free camera.DisplayName": Free camera
+			"Hitbox visualizer.DisplayName": Hitbox visualizer
+			"Lock camera.DisplayName": Lock camera
 		}
 	}
 }
