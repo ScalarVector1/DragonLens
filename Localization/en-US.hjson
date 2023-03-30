@@ -42,6 +42,7 @@ Mods: {
 			"Free camera.DisplayName": Free camera
 			"Hitbox visualizer.DisplayName": Hitbox visualizer
 			"Lock camera.DisplayName": Lock camera
+			"Collapse All.DisplayName": Collapse all toolbars
 		}
 	}
 }

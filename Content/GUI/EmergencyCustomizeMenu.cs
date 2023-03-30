@@ -23,8 +23,8 @@ namespace DragonLens.Content.GUI
 		public override void OnInitialize()
 		{
 			button = new("Customize toolbars", scale, false);
-			button.Left.Set(-210, 1f);
-			button.Top.Set(-90, 1f);
+			button.Left.Set(-410, 1f);
+			button.Top.Set(-37, 1f);
 			button.Width.Set(200, 0);
 			button.Height.Set(32, 0);
 			button.TextOriginX = 0.5f;
