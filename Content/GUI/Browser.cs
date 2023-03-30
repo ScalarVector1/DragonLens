@@ -317,6 +317,7 @@ namespace DragonLens.Content.GUI
 			if (typing)
 			{
 				GUIHelper.DrawOutline(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				HandleText();
 			}
 
 			Vector2 pos = GetDimensions().Position() + Vector2.One * 4;
