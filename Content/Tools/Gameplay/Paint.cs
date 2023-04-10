@@ -274,6 +274,9 @@ namespace DragonLens.Content.Tools.Gameplay
 				preview.Dispose();
 				preview = null;
 				parent.structureButtons.Remove(this);
+
+				if (parent.structure == this)
+					parent.structure = null;
 			};
 
 			Append(closeButton);
