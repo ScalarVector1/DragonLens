@@ -63,6 +63,11 @@ namespace DragonLens.Content.GUI
 			Recalculate();
 		}
 
+		public void UpdateCollapse()
+		{
+			toolbarElements.ForEach(n => n.UpdateTargetOffset());
+		}
+
 		public void Customize()
 		{
 			foreach (UIElement child in Children)
