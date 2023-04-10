@@ -202,8 +202,10 @@ namespace DragonLens.Content.GUI
 		/// </summary>
 		private void AddCollapseTab()
 		{
+			if (toolbar.CollapseDirection == CollapseDirection.Floating)
+				return;
+			
 			var collapseButton = new HideTab(this);
-			collapseButton.OnClick += (UIMouseEvent mouseEvent, UIElement element) => toolbar.collapsed = !toolbar.collapsed;
 
 			AddTabButton(collapseButton, 0.5f);
 
@@ -417,8 +419,7 @@ namespace DragonLens.Content.GUI
 			if (CustomizeTool.customizing)
 				return;
 
-			if (Toolbar.CollapseDirection != CollapseDirection.Floating)
-				Toolbar.collapsed = !Toolbar.collapsed;
+			Toolbar.collapsed = !Toolbar.collapsed;
 
 			parent.UpdateTargetOffset();
 			parent.Recalculate();
