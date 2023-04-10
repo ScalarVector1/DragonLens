@@ -18,6 +18,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 	{
 		public bool typing;
 		public bool updated;
+		public bool reset;
 		public InputType inputType;
 
 		public string currentValue = "";
@@ -43,8 +44,14 @@ namespace DragonLens.Content.GUI.FieldEditors
 
 		public override void SafeUpdate(GameTime gameTime)
 		{
-			if (updated)
+			if (reset)
+			{
 				updated = false;
+				reset = false;
+			}
+
+			if (updated)
+				reset = true;
 
 			if (Main.mouseLeft && !IsMouseHovering)
 				typing = false;
