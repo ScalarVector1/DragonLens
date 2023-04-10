@@ -48,40 +48,40 @@ namespace DragonLens.Content.GUI.FieldEditors
 
 			if (Main.mouseLeft && !IsMouseHovering)
 				typing = false;
+		}
+		
+		public void HandleText()
+		{
+			if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape))
+				typing = false;
 
-			if (typing)
+			PlayerInput.WritingText = true;
+			Main.instance.HandleIME();
+
+			string newText = Main.GetInputText(currentValue);
+
+			if (inputType == InputType.integer && Regex.IsMatch(newText, "[0-9]*$"))
 			{
-				if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape))
-					typing = false;
-
-				PlayerInput.WritingText = true;
-				Main.instance.HandleIME();
-
-				string newText = Main.GetInputText(currentValue);
-
-				if (inputType == InputType.integer && Regex.IsMatch(newText, "[0-9]*$"))
+				if (newText != currentValue)
 				{
-					if (newText != currentValue)
-					{
-						currentValue = newText;
-						updated = true;
-					}
+					currentValue = newText;
+					updated = true;
 				}
-				else if (inputType == InputType.number && Regex.IsMatch(newText, "(?<=^| )[0-9]+(.[0-9]+)?(?=$| )|(?<=^| ).[0-9]+(?=$| )")) //I found this regex on SO so no idea if it works right lol
+			}
+			else if (inputType == InputType.number && Regex.IsMatch(newText, "(?<=^| )[0-9]+(.[0-9]+)?(?=$| )|(?<=^| ).[0-9]+(?=$| )")) //I found this regex on SO so no idea if it works right lol
+			{
+				if (newText != currentValue)
 				{
-					if (newText != currentValue)
-					{
-						currentValue = newText;
-						updated = true;
-					}
+					currentValue = newText;
+					updated = true;
 				}
-				else
+			}
+			else
+			{
+				if (newText != currentValue)
 				{
-					if (newText != currentValue)
-					{
-						currentValue = newText;
-						updated = true;
-					}
+					currentValue = newText;
+					updated = true;
 				}
 			}
 		}
@@ -93,6 +93,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 			if (typing)
 			{
 				GUIHelper.DrawOutline(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				HandleText();
 			}
 
 			Vector2 pos = GetDimensions().Position() + Vector2.One * 4;
