@@ -15,10 +15,6 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override string IconKey => "InfiniteReach";
 
-		public override string DisplayName => "Omnipotent building";
-
-		public override string Description => "You have infinite reach and can place blocks super quickly";
-
 		public override void OnActivate()
 		{
 			active = !active;

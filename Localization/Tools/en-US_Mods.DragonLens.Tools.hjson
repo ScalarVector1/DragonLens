@@ -1,0 +1,262 @@
+BuffDespawner: {
+	DisplayName: Clear buffs
+	Description: Removes all buffs and debuffs from yourself
+}
+
+DustDespawner: {
+	DisplayName: Clear dusts
+	Description: Removes all dust currently in the world
+}
+
+GoreDespawner: {
+	DisplayName: Clear gores
+	Description: Removes all gores currently in the world
+}
+
+ItemDespawner: {
+	DisplayName: Clear items
+	Description: Removes all items on the ground
+}
+
+NPCDespawner: {
+	DisplayName: Clear NPCs
+	Description: Removes all hostile NPCs currently in the world. Right click for a more traditional 'butcher'. NEWBLOCK hold SHIFT to clear/butcher friendly NPCs aswell
+	RightClickName: Traditional butcher
+}
+
+ProjectileDespawner: {
+	DisplayName: Clear projectiles
+	Description: Removes all projectiles currently in the world
+}
+
+ShaderCompiler: {
+	DisplayName: Shader Reloader
+	Description: Re-compile and re-load all shaders [WORK IN PROGRESS]
+	Busy: Shader compiler is busy! Please wait...
+	Triggered: Triggered shader re-compile...
+	Completed: Shader re-compilation completed in {0} ms
+	Recompiled: Shaders for {0} recompiled!
+}
+
+AccessoryTray: {
+	DisplayName: Accessory tray
+	Description: A virtually infinite collection of extra accessory slots!
+	MpDisabled: Accessory tray is disabled in multiplayer
+	PlaceAccHere: Place an accessory here!
+}
+
+ItemEditor: {
+	DisplayName: Item Editor
+	Description: Change the stats (and other fields) of items!
+	AutogenMsg: This field editor was auto-generated via reflection. Changing it may have unknowable consequences depending on what the mod this item is from uses it for.
+	VanillaFields: Vanilla Fields
+	Modded: Modded
+	Prefixes: Prefixes
+	PlaceItemHere:
+		'''
+		Place item
+		here!
+		'''
+	SetDefaults: Reset (SetDefaults)
+
+	Editors: {
+		Damage: {
+			Name: Damage
+			Description: How much damage this item or the projectiles it fires does.
+		}
+
+		CritChance: {
+			Name: Crit Chance
+			Description: 4% base crit chance is added to this value.
+		}
+
+		Knockback: {
+			Name: Knockback
+			Description: The amount of knockback this item causes when striking an enemy.
+		}
+
+		UseStyle: {
+			Name: Use Style
+			Description: 0: None NEWLN 1: Swing NEWLN 3: Thrust NEWLN 4: HoldUp NEWLN 5: Shoot NEWLN 6: DrinkLong NEWLN 7: DrinkOld NEWLN 8: GolfPlay NEWLN 9: DrinkLiquid NEWLN 10: HiddenAnimation NEWLN 11: MowTheLawn NEWLN 12: Guitar NEWLN 13: Rapier NEWLN 14: RaiseLamp
+		}
+
+		UseTime: {
+			Name: Use Time
+			Description: How many ticks between item uses. Ignores input.
+		}
+
+		UseAnimation: {
+			Name: Use Animation
+			Description: How many ticks before you can cancel this items use with input/use it again.
+		}
+
+		AutoReuse: {
+			Name: Auto Reuse
+			Description: If this item is automatically re-used while holding LMB.
+		}
+
+		ReuseDelay: {
+			Name: Reuse Delay
+			Description: The delay between when this item finishes being used and can be used again.
+		}
+
+		PickaxePower: {
+			Name: Pickaxe Power
+			Description: The items ability to destroy tiles.
+		}
+
+		AxePower: {
+			Name: Axe Power
+			Description: The items ability to destroy trees. Actual value is multiplied by 5.
+		}
+
+		HammerPower: {
+			Name: Hammer Power
+			Description: The items ability to destroy walls.
+		}
+
+		Rarity: {
+			Name: Rarity
+			Description: The color of this item's name.
+		}
+
+		Value: {
+			Name: Value
+			Description: Sell price in copper coins.
+		}
+
+		ProjectileType: {
+			Name: Projectile Type
+			Description: The kind of projectile this item will shoot on use. NEWBLOCK Use the projectile spawner to preview differnet projectile types.
+		}
+
+		ShootSpeed: {
+			Name: Shoot speed
+			Description: The velocity at which this item fires projectiles.
+		}
+
+		Color: {
+			Name: Color
+			Description: The color of this item's sprite.
+		}
+	}
+}
+
+PlayerEditor: {
+	DisplayName: Player Editor
+	Description: Change the stats (and other fields) of players!
+	AutogenMsg: This property editor was auto-generated via reflection. Changing it may have unknowable consequences depending on what the mod this player is from uses it for.
+	VanillaFields: Vanilla Fields
+	ModPlayers: Mod Players
+
+	Editors: {
+		MaxLife: {
+			Name: Max Life
+			Description: The players max life via permanent vanilla sources. Changing this below 20 or above 500 might have odd effects.
+		}
+
+		MaxMana: {
+			Name: Max Mana
+			Description: The players max mana via permanent vanilla sources. Changing this below 20 or above 200 might have odd effects.
+		}
+
+		ExtraLife: {
+			Name: Extra Life
+			Description: Allows you to give yourself an arbitrary amount of extra life.
+		}
+
+		ExtraMana: {
+			Name: Extra Mana
+			Description: Allows you to give yourself an arbitrary amount of extra mana.
+		}
+
+		ExtraDefense: {
+			Name: Extra Defense
+			Description: Allows you to give yourself an arbitrary amount of extra defense.
+		}
+
+		ExtraEndurance: {
+			Name: Extra Endurance
+			Description: Allows you to give yourself an arbitrary amount of extra endurance (damage reduction).
+		}
+
+		ExtraMinionSlots: {
+			Name: Extra minion slots
+			Description: Extra minion slots ontop of what your gear provides you!
+		}
+
+		ExtraSpeed: {
+			Name: Extra speed
+			Description: Speed yourself up!
+		}
+	}
+}
+
+Difficulty: {
+	DisplayName: Difficulty switcher
+	Description: Cycle through the 3 main game difficulties NEWBLOCK Right click to toggle journey mode
+	RightClickName: Toggle journey mode
+	GameInNormalMode: The game is now in normal mode
+	GameInExpertMode: The game is now in expert mode
+	GameInMasterMode: The game is now in master mode
+	JourneyToggleDisabled: Journey toggle is disabled in multiplayer
+	JourneyEnabled: Journey mode enabled.
+	JourneyDisabled: Journey mode disabled.
+}
+
+FastForward: {
+	DisplayName: Fast forward
+	Description: Click to speed up the game, up to 4x. Right click to move backwards through speeds.
+	RightClickName: Decrease fast forward rate
+	MultiplayerDisabled: Fast forward is disabled in multiplayer
+}
+
+Godmode: {
+	DisplayName: God mode
+	Description: You cannot be hit, lose mana, or die while active. Right click to allow being hit but disallow dying instead
+	RightClickName: Dogmode (Godmode + hits allowed)
+	PreventedDeath: Godmode prevented death with reason: {0}
+}
+
+InfiniteReach: {
+	DisplayName: Omnipotent building
+	Description: You have infinite reach and can place blocks super quickly
+}
+
+Magnet: {
+	DisplayName: Item magnet
+	Description: Toggle to pull all items in the world to you. Right click to enable the void magnet, which will automatically destroy items instead.
+	RightClickName: Void magnet (destroys items on pickup)
+}
+
+NoClip: {
+	DisplayName: Noclip
+	Description: You can move without any inhibition
+}
+
+Paint: {
+	DisplayName: Tile painter
+	Description: Copy/paste regions of the world
+	CreateStructure: Create structure
+	FirstPointSet: First point set!
+	StructureSaved: Structure saved to paint menu!
+	TempStructure: Temporary structure {0}
+
+	Advertise: {
+		Title:
+			'''
+			Download
+			  Now!
+			'''
+		Content:
+			'''
+			For more useful features, check out the full Structure Helper mod!
+			You'll be able to: NEWLN
+			> Export structures to files! NEWLN
+			> Use null tiles to generate non-square structures! NEWLN
+			> Place chests with custom, random loot pools! NEWLN
+			> Generate structures in your own mods from files!
+			'''
+		Downloaded: StructureHelper is being downloaded. Return to the main menu and go to the workshop menu to enable it!
+	}
+}

@@ -16,10 +16,6 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override string IconKey => "Noclip";
 
-		public override string DisplayName => "Noclip";
-
-		public override string Description => "You can move without any inhibition";
-
 		public override void OnActivate()
 		{
 			active = !active;

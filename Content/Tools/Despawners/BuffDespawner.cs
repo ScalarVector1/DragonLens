@@ -7,10 +7,6 @@ namespace DragonLens.Content.Tools.Despawners
 	{
 		public override string IconKey => "BuffDespawner";
 
-		public override string DisplayName => "Clear buffs";
-
-		public override string Description => "Removes all buffs and debuffs from yourself";
-
 		public override void OnActivate()
 		{
 			for (int k = 0; k < Player.MaxBuffs; k++)

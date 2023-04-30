@@ -9,10 +9,6 @@ namespace DragonLens.Content.Tools.Despawners
 	{
 		public override string IconKey => "ItemDespawner";
 
-		public override string DisplayName => "Clear items";
-
-		public override string Description => "Removes all items on the ground";
-
 		public override void OnActivate()
 		{
 			foreach (Item item in Main.item)

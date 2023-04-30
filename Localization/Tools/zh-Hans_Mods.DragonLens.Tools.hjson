@@ -1,0 +1,262 @@
+BuffDespawner: {
+	DisplayName: 清除Buff
+	Description: 清除你身上所有的Buff和Debuff
+}
+
+DustDespawner: {
+	DisplayName: 清除粒子
+	Description: 清除目前世界上所有的粒子
+}
+
+GoreDespawner: {
+	DisplayName: 清除血污
+	Description: 清除目前世界上所有的血污
+}
+
+ItemDespawner: {
+	DisplayName: 清除物品
+	Description: 清除世界上的所有物品
+}
+
+NPCDespawner: {
+	DisplayName: 清除NPC
+	Description: 清除目前世界上所有的敌对NPC，右键点击则以击杀的形式清除NPC NEWBLOCK 按住Shift以一并清除/击杀友好NPC
+	RightClickName: 击杀NPC
+}
+
+ProjectileDespawner: {
+	DisplayName: 清除射弹
+	Description: 清除目前世界上所有的射弹
+}
+
+ShaderCompiler: {
+	DisplayName: 重加载Shader
+	Description: 重新编译并加载所有的Shader [未完成]
+	Busy: Shader编译器正在运行中！请稍等...
+	Triggered: Shader已开始重新编译...
+	Completed: Shader重新编译已在{0}毫秒内完成
+	Recompiled: "{0}模组的Shader已重新编译！"
+}
+
+AccessoryTray: {
+	DisplayName: 饰品托盘
+	Description: 几乎无限的额外饰品栏！
+	MpDisabled: 饰品托盘在多人游戏中被禁用
+	PlaceAccHere: 在此处放置饰品！
+}
+
+ItemEditor: {
+	DisplayName: 编辑物品
+	Description: 更改物品的数据和其它字段！
+	AutogenMsg: 此字段编辑器是通过反射自动生成的。更改它可能会产生不可预知的后果，具体取决于这个物品所属模组的功能。
+	VanillaFields: 原版字段
+	Modded: 模组字段
+	Prefixes: 修饰语
+	PlaceItemHere:
+		'''
+		在此处
+		放置物品！
+		'''
+	SetDefaults: 重置 (SetDefaults)
+
+	Editors: {
+		Damage: {
+			Name: 伤害
+			Description: 这个物品或它的射弹造成的伤害。
+		}
+
+		CritChance: {
+			Name: 暴击率
+			Description: 实际暴击率为该值加上4%的基础暴击率。
+		}
+
+		Knockback: {
+			Name: 击退
+			Description: 这个物品在攻击敌人时会造成的击退。
+		}
+
+		UseStyle: {
+			Name: 使用类型
+			Description: 数值对应英文ID如下 NEWLN 0: None NEWLN 1: Swing NEWLN 3: Thrust NEWLN 4: HoldUp NEWLN 5: Shoot NEWLN 6: DrinkLong NEWLN 7: DrinkOld NEWLN 8: GolfPlay NEWLN 9: DrinkLiquid NEWLN 10: HiddenAnimation NEWLN 11: MowTheLawn NEWLN 12: Guitar NEWLN 13: Rapier NEWLN 14: RaiseLamp
+		}
+
+		UseTime: {
+			// Name: Use Time
+			Description: 物品使用之间的时间间隔。以Tick为单位。
+		}
+
+		UseAnimation: {
+			// Name: Use Animation
+			Description: 在你能够停止这个使用这个物品或再次使用之前需要等待的时间间隔，以Tick为单位。
+		}
+
+		AutoReuse: {
+			Name: 自动挥舞
+			Description: 这个物品在按住鼠标左键时是否会自动重复使用。
+		}
+
+		ReuseDelay: {
+			// Name: Reuse Delay
+			Description: 这个物品使用完成后，再次使用之前的延迟时间。
+		}
+
+		PickaxePower: {
+			Name: 镐力
+			Description: 这个物品破坏物块的能力。
+		}
+
+		AxePower: {
+			Name: 斧力
+			Description: 这个物品砍伐树木的能力。实际值为该值的5倍。
+		}
+
+		HammerPower: {
+			Name: 锤力
+			Description: 这个物品破坏墙的能力。
+		}
+
+		Rarity: {
+			Name: 稀有度
+			Description: 物品名字的颜色。 NEWLN -13: Master NEWLN -12: Expert NEWLN -11: Quest NEWLN -1: Gray NEWLN 0: White NEWLN 1: Blue NEWLN 2: Green NEWLN 3: Orange NEWLN 4: LightRed NEWLN 5: Pink NEWLN 6: LightPurple NEWLN 7: Lime NEWLN 8: Yellow NEWLN 9: Cyan NEWLN 10: Red NEWLN 11: Purple
+		}
+
+		Value: {
+			Name: 价值
+			Description: 这个物品出售的价格，以铜币为单位
+		}
+
+		ProjectileType: {
+			Name: Projectile Type
+			Description: 这个物品在使用时会发射的射弹的ID。 NEWBLOCK 使用“射弹生成器”来预览不同的射弹。
+		}
+
+		ShootSpeed: {
+			Name: Shoot speed
+			Description: 这个物品发射射弹的速度。
+		}
+
+		Color: {
+			Name: 颜色
+			Description: 这个物品贴图的颜色
+		}
+	}
+}
+
+PlayerEditor: {
+	DisplayName: 编辑玩家
+	Description: 更改玩家的数据和其它字段！
+	AutogenMsg: 这个属性编辑器是通过反射自动生成的。更改它可能会产生不可预知的后果，具体取决于这个ModPlayer所属模组的功能。
+	VanillaFields: 原版字段
+	ModPlayers: 模组字段
+
+	Editors: {
+		MaxLife: {
+			Name: 最大生命值
+			Description: 玩家通过原版的永久生命加成物品所获得的最大生命值(即statLifeMax)。将其更改为低于20或高于500可能会产生奇怪的效果。
+		}
+
+		MaxMana: {
+			Name: 最大魔力值
+			Description: 玩家通过原版的永久魔力加成物品所获得的最大魔力值(即statManaMax)。将其更改为低于20或高于200可能会产生奇怪的效果。
+		}
+
+		ExtraLife: {
+			Name: 额外生命值
+			Description: 允许你给自己增加任意数量的额外生命值。
+		}
+
+		ExtraMana: {
+			Name: 额外魔力值
+			Description: 允许你给自己增加任意数量的额外魔力值。
+		}
+
+		ExtraDefense: {
+			Name: 额外防御值
+			Description: 允许你给自己增加任意数量的额外防御值。
+		}
+
+		ExtraEndurance: {
+			Name: 额外伤害抗性
+			Description: 允许你给自己增加任意数量的额外减伤。
+		}
+
+		ExtraMinionSlots: {
+			Name: 额外召唤物容量
+			Description: 在你的装备提供的召唤物容量的基础上额外增加的容量！
+		}
+
+		ExtraSpeed: {
+			Name: 额外速度
+			Description: 冲冲冲！
+		}
+	}
+}
+
+Difficulty: {
+	DisplayName: 切换难度
+	Description: 在三种游戏难度之间切换 NEWBLOCK 右键以开关旅行模式
+	RightClickName: 开关旅行模式
+	GameInNormalMode: 游戏已切换至经典模式。
+	GameInExpertMode: 游戏已切换至专家模式。
+	GameInMasterMode: 游戏已切换至大师模式。
+	JourneyToggleDisabled: 多人模式下无法开关旅途模式。
+	JourneyEnabled: 旅途模式已开启。
+	JourneyDisabled: 旅途模式已关闭。
+}
+
+FastForward: {
+	// DisplayName: Fast forward
+	// Description: Click to speed up the game, up to 4x. Right click to move backwards through speeds.
+	// RightClickName: Decrease fast forward rate
+	// MultiplayerDisabled: Fast forward is disabled in multiplayer
+}
+
+Godmode: {
+	// DisplayName: God mode
+	// Description: You cannot be hit, lose mana, or die while active. Right click to allow being hit but disallow dying instead
+	// RightClickName: Dogmode (Godmode + hits allowed)
+	// PreventedDeath: Godmode prevented death with reason: {0}
+}
+
+InfiniteReach: {
+	// DisplayName: Omnipotent building
+	// Description: You have infinite reach and can place blocks super quickly
+}
+
+Magnet: {
+	// DisplayName: Item magnet
+	// Description: Toggle to pull all items in the world to you. Right click to enable the void magnet, which will automatically destroy items instead.
+	// RightClickName: Void magnet (destroys items on pickup)
+}
+
+NoClip: {
+	// DisplayName: Noclip
+	// Description: You can move without any inhibition
+}
+
+Paint: {
+	DisplayName: 绘制工具
+	Description: 复制/粘贴世界上的区域
+	CreateStructure: 创建结构
+	FirstPointSet: 初始点已设置！
+	StructureSaved: 结构已保存至绘制菜单！
+	TempStructure: 暂存结构 {0}
+
+	Advertise: {
+		Title:
+			'''
+			  立刻
+			  下载!
+			'''
+		Content:
+			'''
+			如需更多有用的功能，请使用完整的 Structure Helper 模组！
+			你将能够： NEWLN
+			> 将结构导出到文件！ NEWLN
+			> 使用空方块生成非方形结构！ NEWLN
+			> 放置装有自定义随机战利品池的箱子！ NEWLN
+			> 通过文件生成你自己的模组中的结构！
+			'''
+		Downloaded: 正在下载 StructureHelper，马上返回主菜单并进入创意工坊页面开启吧！
+	}
+}

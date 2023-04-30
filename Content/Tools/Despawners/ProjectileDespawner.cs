@@ -9,10 +9,6 @@ namespace DragonLens.Content.Tools.Despawners
 	{
 		public override string IconKey => "ProjectileDespawner";
 
-		public override string DisplayName => "Clear projectiles";
-
-		public override string Description => "Removes all projectiles currently in the world";
-
 		public override void OnActivate()
 		{
 			foreach (Projectile proj in Main.projectile)

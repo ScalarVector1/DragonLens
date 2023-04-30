@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -90,20 +91,59 @@ namespace DragonLens.Helpers
 		/// <returns>Input text with linebreaks inserted so it obeys the width constraint.</returns>
 		public static string WrapString(string input, int length, DynamicSpriteFont font, float scale)
 		{
+			// If the character is a CJK character (Chinese, Korean and Japanese), which should be treated as a single word
+			static bool IsCjk(char a) => a >= 0x4E00 && a <= 0x9FFF || a >= 0x3000 && a <= 0x303F;
+				
 			string output = "";
-			string[] words = input.Split();
+
+			// In case input is empty and causes an error, we put an empty string to the list
+			var words = new List<string> {""};
+
+			// Word splitting, with CJK characters being treated as a single word
+			string cacheString = "";
+			for (int i = 0; i < input.Length; i++)
+			{
+				// By doing this we split words, and make the first character of words always a space
+				// while as well split between CJK characters and non-CJK characters
+				if (cacheString != string.Empty && char.IsWhiteSpace(input[i]))
+				{
+					words.Add(cacheString);
+					cacheString = "";
+				}
+				
+				// Single CJK character just get directly added to the list
+				if (IsCjk(input[i]))
+				{
+					if (cacheString != string.Empty)
+					{
+						words.Add(cacheString);
+						cacheString = "";
+					}
+					
+					words.Add(input[i].ToString());
+					continue;
+				}
+
+				cacheString += input[i];
+			}
+			
+			// Add the last word
+			if (!string.IsNullOrEmpty(cacheString))
+			{
+				words.Add(cacheString);
+			}
 
 			string line = "";
 			foreach (string str in words)
 			{
-				if (str == "NEWBLOCK")
+				if (str == " NEWBLOCK")
 				{
 					output += "\n\n";
 					line = "";
 					continue;
 				}
 
-				if (str == "NEWLN")
+				if (str == " NEWLN")
 				{
 					output += "\n";
 					line = "";
@@ -112,17 +152,18 @@ namespace DragonLens.Helpers
 
 				if (font.MeasureString(line).X * scale < length)
 				{
-					output += " " + str;
-					line += " " + str;
+					output += str;
+					line += str;
 				}
 				else
 				{
-					output += "\n" + str;
+					// We don't want the first character of a line to be a space
+					output += "\n" + str.TrimStart();
 					line = str;
 				}
 			}
 
-			return output[1..];
+			return output;
 		}
 
 		/// <summary>

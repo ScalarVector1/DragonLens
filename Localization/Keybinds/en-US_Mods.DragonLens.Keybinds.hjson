@@ -1,0 +1,89 @@
+"Customize tool.DisplayName": Customize tool
+"Clear buffs.DisplayName": Clear buffs
+"Clear dusts.DisplayName": Clear dusts
+"Clear gores.DisplayName": Clear gores
+"Clear items.DisplayName": Clear items
+"Clear NPCs.DisplayName": Clear NPCs
+"Traditional butcher.DisplayName": Traditional butcher
+"Clear projectiles.DisplayName": Clear projectiles
+"Shader Reloader.DisplayName": Shader Reloader
+"Accessory tray.DisplayName": Accessory tray
+"Item Editor.DisplayName": Item Editor
+"Player Editor.DisplayName": Player Editor
+"Difficulty switcher.DisplayName": Difficulty switcher
+"Toggle journey mode.DisplayName": Toggle journey mode
+"Fast forward.DisplayName": Fast forward
+"Decrease fast forward rate.DisplayName": Decrease fast forward rate
+"God mode.DisplayName": God mode
+"Dogmode (Godmode + hits allowed).DisplayName": Dogmode (Godmode + hits allowed)
+"Omnipotent building.DisplayName": Omnipotent building
+"Item magnet.DisplayName": Item magnet
+"Void magnet (destroys items on pickup).DisplayName": Void magnet (destroys items on pickup)
+Noclip.DisplayName: Noclip
+"Tile painter.DisplayName": Tile painter
+"Enemy spawn adjuster.DisplayName": Enemy spawn adjuster
+"Time tool.DisplayName": Time tool
+"Weather tool.DisplayName": Weather tool
+"Hide map.DisplayName": Hide map
+"Map teleportation.DisplayName": Map teleportation
+"Reveal map.DisplayName": Reveal map
+"Buff spawner.DisplayName": Buff spawner
+"Dust spawner.DisplayName": Dust spawner
+"Item spawner.DisplayName": Item spawner
+"NPC spawner.DisplayName": NPC spawner
+"Projectile spawner.DisplayName": Projectile spawner
+"Tile spawner.DisplayName": Tile spawner
+"Mass Illumination.DisplayName": Mass Illumination
+"Decrease Mass Illumination.DisplayName": Decrease Mass Illumination
+"Free camera.DisplayName": Free camera
+"Hitbox visualizer.DisplayName": Hitbox visualizer
+"Lock camera.DisplayName": Lock camera
+"Collapse All.DisplayName": Collapse all toolbars
+
+Mods: {
+	DragonLens: {
+		Tools: {
+			BuffDespawner.DisplayName.DisplayName: Mods. Dragon Lens. Tools. Buff Despawner. Display Name
+			DustDespawner.DisplayName.DisplayName: Mods. Dragon Lens. Tools. Dust Despawner. Display Name
+			GoreDespawner.DisplayName.DisplayName: Mods. Dragon Lens. Tools. Gore Despawner. Display Name
+			ItemDespawner.DisplayName.DisplayName: Mods. Dragon Lens. Tools. Item Despawner. Display Name
+
+			NPCDespawner: {
+				DisplayName.DisplayName: Mods. Dragon Lens. Tools. N P C Despawner. Display Name
+				RightClickName.DisplayName: Mods. Dragon Lens. Tools. N P C Despawner. Right Click Name
+			}
+
+			ProjectileDespawner.DisplayName.DisplayName: Mods. Dragon Lens. Tools. Projectile Despawner. Display Name
+			ShaderCompiler.DisplayName.DisplayName: Mods. Dragon Lens. Tools. Shader Compiler. Display Name
+			AccessoryTray.DisplayName.DisplayName: Mods. Dragon Lens. Tools. Accessory Tray. Display Name
+			ItemEditor.DisplayName.DisplayName: Mods. Dragon Lens. Tools. Item Editor. Display Name
+			PlayerEditorTool.DisplayName.DisplayName: Mods. Dragon Lens. Tools. Player Editor Tool. Display Name
+			PlayerEditor.DisplayName.DisplayName: Mods. Dragon Lens. Tools. Player Editor. Display Name
+
+			Difficulty: {
+				DisplayName.DisplayName: Mods. Dragon Lens. Tools. Difficulty. Display Name
+				RightClickName.DisplayName: Mods. Dragon Lens. Tools. Difficulty. Right Click Name
+			}
+
+			FastForward: {
+				DisplayName.DisplayName: Mods. Dragon Lens. Tools. Fast Forward. Display Name
+				RightClickName.DisplayName: Mods. Dragon Lens. Tools. Fast Forward. Right Click Name
+			}
+
+			Godmode: {
+				DisplayName.DisplayName: Mods. Dragon Lens. Tools. Godmode. Display Name
+				RightClickName.DisplayName: Mods. Dragon Lens. Tools. Godmode. Right Click Name
+			}
+
+			InfiniteReach.DisplayName.DisplayName: Mods. Dragon Lens. Tools. Infinite Reach. Display Name
+
+			Magnet: {
+				DisplayName.DisplayName: Mods. Dragon Lens. Tools. Magnet. Display Name
+				RightClickName.DisplayName: Mods. Dragon Lens. Tools. Magnet. Right Click Name
+			}
+
+			NoClip.DisplayName.DisplayName: Mods. Dragon Lens. Tools. No Clip. Display Name
+			Paint.DisplayName.DisplayName: Mods. Dragon Lens. Tools. Paint. Display Name
+		}
+	}
+}
