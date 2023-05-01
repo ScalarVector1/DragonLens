@@ -118,13 +118,14 @@ namespace DragonLens.Core.Systems.ToolSystem
 			ModTypeLookup<Tool>.Register(this);
 			ToolHandler.AddTool(this);
 
-			Language.GetOrRegister($"Mods.{Mod.Name}.Keybinds.{LocalizationKey}.{nameof(DisplayName)}", () => $"\"{{$Mods.{Mod.Name}.Tools.{LocalizationKey}.DisplayName}}\"");
 			keybind = KeybindLoader.RegisterKeybind(Mod, LocalizationKey, Keys.None);
+			Language.GetOrRegister($"Mods.{Mod.Name}.Tools.{LocalizationKey}.DisplayName", () => Name);
+			Language.GetOrRegister($"Mods.{Mod.Name}.Tools.{LocalizationKey}.Description", () => "The tool has no description! Add one in .hjson files!");
 
 			if (HasRightClick)
 			{
-				Language.GetOrRegister($"Mods.{Mod.Name}.Keybinds.{LocalizationKey}RightClick.{nameof(DisplayName)}", () => $"\"{{$Mods.{Mod.Name}.Tools.{LocalizationKey}.RightClickName}}\"");
 				altKeybind = KeybindLoader.RegisterKeybind(Mod, $"{LocalizationKey}RightClick", Keys.None);
+				Language.GetOrRegister($"Mods.{Mod.Name}.Tools.{LocalizationKey}.RightClickName", () => $"{Name} Right Click");
 			}
 		}
 

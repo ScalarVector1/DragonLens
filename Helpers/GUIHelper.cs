@@ -104,7 +104,6 @@ namespace DragonLens.Helpers
 			for (int i = 0; i < input.Length; i++)
 			{
 				// By doing this we split words, and make the first character of words always a space
-				// while as well split between CJK characters and non-CJK characters
 				if (cacheString != string.Empty && char.IsWhiteSpace(input[i]))
 				{
 					words.Add(cacheString);
