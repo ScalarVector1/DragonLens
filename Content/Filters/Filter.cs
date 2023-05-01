@@ -1,4 +1,5 @@
 ﻿using DragonLens.Content.GUI;
+using DragonLens.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -40,6 +41,8 @@ namespace DragonLens.Content.Filters
 			this.description = description;
 			this.shouldFilter = shouldFilter;
 		}
+		
+		public Filter(string texture, string localizationKey, FilterDelegate shouldFilter) : this(texture, LocalizationHelper.GetText($"{localizationKey}.Name"), LocalizationHelper.GetText($"{localizationKey}.Description"), shouldFilter) { }
 
 		/// <summary>
 		/// Allows you to change how the filter's icon should draw

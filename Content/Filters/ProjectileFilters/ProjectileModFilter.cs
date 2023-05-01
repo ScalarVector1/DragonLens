@@ -12,7 +12,7 @@ namespace DragonLens.Content.Filters.ProjectileFilters
 	{
 		public Mod mod;
 
-		public ProjectileModFilter(Mod mod) : base("", mod.DisplayName, $"Projectiles added by the mod {mod.DisplayName}", n => FilterByMod(n, mod))
+		public ProjectileModFilter(Mod mod) : base("", mod.DisplayName, ProjectileSpawner.GetText("Filters.Mod.Description", mod.DisplayName), n => FilterByMod(n, mod))
 		{
 			this.mod = mod;
 		}

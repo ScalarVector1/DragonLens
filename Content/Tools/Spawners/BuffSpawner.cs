@@ -3,6 +3,7 @@ using DragonLens.Content.Filters.BuffFilters;
 using DragonLens.Content.GUI;
 using DragonLens.Content.GUI.FieldEditors;
 using DragonLens.Core.Systems.ToolSystem;
+using DragonLens.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,10 +18,6 @@ namespace DragonLens.Content.Tools.Spawners
 	internal class BuffSpawner : BrowserTool<BuffBrowser>
 	{
 		public override string IconKey => "BuffSpawner";
-
-		public override string DisplayName => "Buff spawner";
-
-		public override string Description => "Allows you to apply buffs to yourself or NPCs";
 
 		public override void SendPacket(BinaryWriter writer)
 		{
@@ -56,6 +53,11 @@ namespace DragonLens.Content.Tools.Spawners
 				NetSend(-1, sender);
 			}
 		}
+
+		public static string GetText(string key, params object[] args)
+		{
+			return LocalizationHelper.GetText($"Tools.BuffSpawner.{key}", args);
+		}
 	}
 
 	internal class BuffBrowser : Browser
@@ -66,7 +68,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		IntEditor durationEditor;
 
-		public override string Name => "Buff spawner";
+		public override string Name => BuffSpawner.GetText("DisplayName");
 
 		public override string IconTexture => "BuffSpawner";
 
@@ -74,7 +76,8 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void PostInitialize()
 		{
-			durationEditor = new IntEditor("Duration (ticks)", n => duration = n, 180);
+			string name = BuffSpawner.GetText("DurationEditor");
+			durationEditor = new IntEditor(name, n => duration = n, 180);
 			Append(durationEditor);
 		}
 
@@ -101,17 +104,17 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SetupFilters(FilterPanel filters)
 		{
-			filters.AddSeperator("Mod filters");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Vanilla", "Buffs from vanilla", n => !(n is BuffButton && (n as BuffButton).type <= BuffID.Count)));
+			filters.AddSeperatorLocalized("Tools.BuffSpawner.FilterCategories.Mod");
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.BuffSpawner.Filters.Vanilla", n => !(n is BuffButton && (n as BuffButton).type <= BuffID.Count)));
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModBuff>().Count() > 0))
 			{
 				filters.AddFilter(new BuffModFilter(mod));
 			}
 
-			filters.AddSeperator("Buff type filters");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Friendly", "Buff", "Buffs with positive effects", n => !(n is BuffButton && !Main.debuff[(n as BuffButton).type])));
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Hostile", "Debuff", "Buffs with negative effects", n => !(n is BuffButton && Main.debuff[(n as BuffButton).type])));
+			filters.AddSeperatorLocalized("Tools.BuffSpawner.FilterCategories.Buff");
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Friendly", "Tools.BuffSpawner.Filters.Buff", n => !(n is BuffButton && !Main.debuff[(n as BuffButton).type])));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Hostile", "Tools.BuffSpawner.Filters.Debuff", n => !(n is BuffButton && Main.debuff[(n as BuffButton).type])));
 		}
 
 		public override void DraggableUdpate(GameTime gameTime)
@@ -138,7 +141,7 @@ namespace DragonLens.Content.Tools.Spawners
 					if (clickbox.Contains(Main.MouseWorld.ToPoint()))
 					{
 						npc.AddBuff(selected, duration);
-						Main.NewText($"Applied {Lang.GetBuffName(selected)} to {npc.FullName}");
+						Main.NewText(BuffSpawner.GetText("Applied", Lang.GetBuffName(selected), npc.FullName));
 						break;
 					}
 
@@ -233,13 +236,13 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void SafeClick(UIMouseEvent evt)
 		{
 			BuffBrowser.selected = type;
-			Main.NewText($"{Lang.GetBuffName(type)} selected, click an NPC to apply it to them. Right click to deselect. You can right click a buff in the browser to apply it to yourself instead.");
+			Main.NewText(BuffSpawner.GetText("Selected", Lang.GetBuffName(type)));
 		}
 
 		public override void SafeRightClick(UIMouseEvent evt)
 		{
 			Main.LocalPlayer.AddBuff(type, BuffBrowser.duration);
-			Main.NewText($"Applied {Lang.GetBuffName(type)} to {Main.LocalPlayer.name}");
+			Main.NewText(BuffSpawner.GetText("Applied", Lang.GetBuffName(type), Main.LocalPlayer.name));
 		}
 
 		public override int CompareTo(object obj)

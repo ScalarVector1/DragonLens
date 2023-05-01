@@ -118,13 +118,13 @@ namespace DragonLens.Core.Systems.ToolSystem
 			ModTypeLookup<Tool>.Register(this);
 			ToolHandler.AddTool(this);
 
-			keybind = KeybindLoader.RegisterKeybind(Mod, DisplayName, Keys.None);
-			keybind.DisplayName.SetDefault(DisplayName);
+			Language.GetOrRegister($"Mods.{Mod.Name}.Keybinds.{LocalizationKey}.{nameof(DisplayName)}", () => $"\"{{$Mods.{Mod.Name}.Tools.{LocalizationKey}.DisplayName}}\"");
+			keybind = KeybindLoader.RegisterKeybind(Mod, LocalizationKey, Keys.None);
 
 			if (HasRightClick)
 			{
-				altKeybind = KeybindLoader.RegisterKeybind(Mod, RightClickName, Keys.None);
-				altKeybind.DisplayName.SetDefault(RightClickName);
+				Language.GetOrRegister($"Mods.{Mod.Name}.Keybinds.{LocalizationKey}RightClick.{nameof(DisplayName)}", () => $"\"{{$Mods.{Mod.Name}.Tools.{LocalizationKey}.RightClickName}}\"");
+				altKeybind = KeybindLoader.RegisterKeybind(Mod, $"{LocalizationKey}RightClick", Keys.None);
 			}
 		}
 

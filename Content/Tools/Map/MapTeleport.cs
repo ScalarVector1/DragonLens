@@ -18,10 +18,6 @@ namespace DragonLens.Content.Tools.Map
 
 		public override string IconKey => "MapTeleport";
 
-		public override string DisplayName => "Map teleportation";
-
-		public override string Description => "Toggles the ability to teleport on the map. Right click anywhere on the map to teleport.";
-
 		public override void OnActivate()
 		{
 			active = !active;
@@ -115,7 +111,7 @@ namespace DragonLens.Content.Tools.Map
 				}
 				else
 				{
-					Main.NewText("You cant teleport outside of the world!");
+					Main.NewText(LocalizationHelper.GetText("Tools.MapTeleport.OutsideWorldWarning"));
 				}
 			}
 		}

@@ -12,7 +12,7 @@ namespace DragonLens.Content.Filters.BuffFilters
 	{
 		public Mod mod;
 
-		public BuffModFilter(Mod mod) : base("", mod.DisplayName, $"Buffs added by the mod {mod.DisplayName}", n => FilterByMod(n, mod))
+		public BuffModFilter(Mod mod) : base("", mod.DisplayName, BuffSpawner.GetText("Filters.Mod.Description", mod.DisplayName), n => FilterByMod(n, mod))
 		{
 			this.mod = mod;
 		}

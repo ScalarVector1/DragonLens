@@ -12,7 +12,7 @@ namespace DragonLens.Content.Filters.ItemFilters
 	{
 		public Mod mod;
 
-		public ItemModFilter(Mod mod) : base("", mod.DisplayName, $"Item added by the mod {mod.DisplayName}", n => FilterByMod(n, mod))
+		public ItemModFilter(Mod mod) : base("", mod.DisplayName, ItemSpawner.GetText("Filters.Mod.Description", mod.DisplayName), n => FilterByMod(n, mod))
 		{
 			this.mod = mod;
 		}

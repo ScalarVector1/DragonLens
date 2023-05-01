@@ -205,33 +205,33 @@ Difficulty: {
 }
 
 FastForward: {
-	// DisplayName: Fast forward
-	// Description: Click to speed up the game, up to 4x. Right click to move backwards through speeds.
-	// RightClickName: Decrease fast forward rate
-	// MultiplayerDisabled: Fast forward is disabled in multiplayer
+	DisplayName: 游戏快进
+	Description: 点击以加快游戏速度，最高可达4倍。右键点击以回退速度。
+	RightClickName: 降低快进倍率
+	MultiplayerDisabled: 多人模式下无法使用游戏快进功能
 }
 
 Godmode: {
-	// DisplayName: God mode
-	// Description: You cannot be hit, lose mana, or die while active. Right click to allow being hit but disallow dying instead
-	// RightClickName: Dogmode (Godmode + hits allowed)
-	// PreventedDeath: Godmode prevented death with reason: {0}
+	DisplayName: 上帝模式
+	Description: 开启后，你无法受到攻击、失去魔力值或死亡。右键点击以允许受到攻击，但不会死亡。
+	RightClickName: 帝上模式 (上帝模式+允许受击)
+	PreventedDeath: 上帝模式阻止了一次死亡，死亡信息: {0}
 }
 
 InfiniteReach: {
-	// DisplayName: Omnipotent building
-	// Description: You have infinite reach and can place blocks super quickly
+	DisplayName: 建筑大师
+	Description: 无限物块放置范围且能够快速地放置方块。
 }
 
 Magnet: {
-	// DisplayName: Item magnet
-	// Description: Toggle to pull all items in the world to you. Right click to enable the void magnet, which will automatically destroy items instead.
-	// RightClickName: Void magnet (destroys items on pickup)
+	DisplayName: 物品磁铁
+	Description: 开启后，世界上的所有物品会自动飞到你身上。右键点击启用虚空磁铁，自动销毁吸取到的物品。
+	RightClickName: 虚空磁铁 (捡起时销毁物品)
 }
 
 NoClip: {
-	// DisplayName: Noclip
-	// Description: You can move without any inhibition
+	DisplayName: 穿墙
+	Description: 你可以无视任何阻碍
 }
 
 Paint: {
@@ -259,4 +259,312 @@ Paint: {
 			'''
 		Downloaded: 正在下载 StructureHelper，马上返回主菜单并进入创意工坊页面开启吧！
 	}
+}
+
+SpawnTool: {
+	DisplayName: 刷怪速率
+	Description: 改变敌怪生成的速率，也可以完全禁用敌怪自然生成。
+	EnemySpawnRate: 刷怪速率
+	SpawnRate: 当前速率: {0}x
+}
+
+Time: {
+	DisplayName: 时间工具
+	Description: 调整或停止昼夜循环。
+	UITitle: 设置时间
+	Day: 白天
+	Night: 黑夜
+	CurrentTime: ({0}: {1}/{2} 帧)
+	Resume: 恢复时间流动
+	Freeze: 停止时间流动
+	FreezeTooltip: 使该世界停止时间流动，在世界和游戏重新加载后仍有效。
+}
+
+Weather: {
+	DisplayName: 天气工具
+	Description: 修改天气
+	UITitle: 设置天气
+	Combinations:
+		'''
+		天气组合:
+		大雨 + 风速 > 20 mph = 雷雨
+		下雨 + 雪原环境 = 暴雪
+		'''
+	RainIntensity: 降雨强度
+	RainLow: 小雨
+	RainMedium: 中雨
+	RainHigh: 暴雨
+	WindStrength: 风力
+	WindSixtyWest: 60西
+	WindSixtyEast: 60东
+	WindTwentyWest: 20西
+	WindTwentyEast: 20东
+
+	RainButton: {
+		Name: 降雨
+		Tooltip: 启用或禁用自然降雨。请注意，在自然降雨事件的“淡出”期间，仍然可能会有零星几滴雨水。
+	}
+
+	SandstormButton: {
+		Name: 沙尘暴
+		Tooltip: 开始或停止一场沙尘暴，仅在沙漠可见。
+	}
+
+	FreezeWeatherButton: {
+		Freeze: 停止天气改变
+		Resume: 恢复天气改变
+		Tooltip: 使世界的天气保持不变，在世界和游戏重新加载后仍有效。
+	}
+}
+
+HideMap: {
+	// DisplayName: Hide map
+	// Description: Resets the world map
+}
+
+MapTeleport: {
+	// DisplayName: Map teleportation
+	// Description: Toggles the ability to teleport on the map. Right click anywhere on the map to teleport.
+	// OutsideWorldWarning: You cant teleport outside of the world!
+}
+
+RevealMap: {
+	// DisplayName: Reveal map
+	// Description: Reveals the entire world map
+}
+
+BuffSpawner: {
+	// DisplayName: Buff spawner
+	// Description: Allows you to apply buffs to yourself or NPCs
+	// DurationEditor: Duration (ticks)
+	// Applied: Applied {0} to {1}
+	// Selected: "{0} selected, click an NPC to apply it to them. Right click to deselect. You can right click a buff in the browser to apply it to yourself instead."
+
+	FilterCategories: {
+		// Mod: Mod filters
+		// Buff: Buff type filters
+	}
+
+	Filters: {
+		// Mod.Description: Buffs added by the mod {0}
+
+		Vanilla: {
+			// Name: Vanilla
+			// Description: Buffs from vanilla
+		}
+
+		Buff: {
+			// Name: Buff
+			// Description: Buffs with positive effects
+		}
+
+		Debuff: {
+			// Name: Debuff
+			// Description: Buffs with negative effects
+		}
+	}
+}
+
+DustSpawner: {
+	// DisplayName: Dust spawner
+	// Description: Spawn dust, with options to preview different spawning methods and parameters
+	// DustType: Type: {0}
+	// Selected: "{0} selected, click anywhere in the world to spawn. Right click to deselect."
+
+	FieldEditors: {
+		// NewDustPerfect: Use NewDustPerfect
+		// Scale: Scale
+		// Alpha: Alpha
+		// Velocity: Velocity
+		// Color: Color
+	}
+
+	// FilterCategories.Mod: Mod filters
+
+	Filters: {
+		// Mod.Description: Dust added by the mod {0}
+
+		Vanilla: {
+			// Name: Vanilla
+			// Description: Dusts from the base game
+		}
+	}
+}
+
+ItemSpawner: {
+	// DisplayName: Item spawner
+	// Description: Spawn any item in the game!
+
+	FilterCategories: {
+		// Mod: Mod filters
+		// Damage: Damage filters
+		// Misc: Misc filters
+	}
+
+	Filters: {
+		// DamageClass.Description: Items with {0}
+		// Mod.Description: Items added by the mod {0}
+
+		Vanilla: {
+			// Name: Vanilla
+			// Description: Items from the base game
+		}
+
+		AnyDamage: {
+			// Name: Any damage
+			// Description: Any item that deals damage
+		}
+
+		Accessory: {
+			// Name: Accessory
+			// Description: Any item that can be equipped as an accessory
+		}
+
+		Armor: {
+			// Name: Armor
+			// Description: Any item that can be equipped as armor
+		}
+
+		Placeable: {
+			// Name: Placeable
+			// Description: Any item that palces a tile
+		}
+
+		Deprecated: {
+			// Name: Deprecated
+			// Description: Any item that is deprecated (ItemID.Sets.Deprecated)
+		}
+	}
+}
+
+NPCSpawner: {
+	// DisplayName: NPC spawner
+	// Description: Spawn NPCs, from villagers to skeletons to bosses
+	// NameExceptionMessage: A NPCs ({0}) name threw an exception while getting it! Report to {1} developers!
+	// NameException: This NPCs name threw an exception while getting it! Report to {0} developers!
+	// BestiaryEntryException: An NPC ({0}) throws an exception while drawing its bestiary entry! Report to {1} developers!
+	// NPCType: Type: {0}
+	// Selected: "{0} selected, click anywhere in the world to spawn. Right click to deselect."
+
+	FilterCategories: {
+		// Mod: Mod filters
+		// Type: Type filters
+		// Hostility: Hostility filters
+		// Bestiary: Bestiary filters
+	}
+
+	Filters: {
+		// Bestiary.Description: NPCs with the bestiary attribute {0}
+		// Mod.Description: NPCs added by the mod {0}
+
+		Vanilla: {
+			// Name: Vanilla
+			// Description: NPCs from the base game
+		}
+
+		Boss: {
+			// Name: Boss
+			// Description: NPCs which are bosses
+		}
+
+		Critter: {
+			// Name: Critter
+			// Description: NPCs which count as critters
+		}
+
+		Friendly: {
+			// Name: Friendly
+			// Description: NPCs which are friendly
+		}
+
+		Hostile: {
+			// Name: Hostile
+			// Description: Enemy NPCs
+		}
+	}
+}
+
+ProjectileSpawner: {
+	// DisplayName: Projectile spawner
+	// Description: Spawn projectiles, with options for setting velocity and other parameters
+	// NameExceptionMessage: A Projectiles ({0}) name threw an exception while getting it! Report to {1} developers!
+	// NameException: This Projectiles name threw an exception while getting it! Report to {0} developers!
+	// ProjectileType: Type: {0}
+	// Selected: "{0} selected, click anywhere in the world to spawn. Right click to deselect."
+	// FieldEditors.Velocity: Velocity
+
+	FilterCategories: {
+		// Mod: Mod filters
+		// Hostility: Friendly/Hostile filters
+	}
+
+	Filters: {
+		// Mod.Description: Projectiles added by the mod {0}
+
+		Vanilla: {
+			// Name: Vanilla
+			// Description: Projectiles from the base game
+		}
+
+		Friendly: {
+			// Name: Friendly
+			// Description: Projectiles which by default belong to a player
+		}
+
+		Hostile: {
+			// Name: Hostile
+			// Description: Projectiles which by default belong to an enemy
+		}
+	}
+}
+
+TileSpawner: {
+	// DisplayName: Tile spawner
+	// Description: Place tiles without items!
+	// TileType: Type: {0}
+	// Selected: "{0} selected, click anywhere in the world to spawn. Right click to deselect."
+	// FilterCategories.Mod: Mod filters
+
+	Filters: {
+		// Mod.Description: Tiles added by the mod {0}
+
+		Vanilla: {
+			// Name: Vanilla
+			// Description: Tiles from the base game
+		}
+	}
+}
+
+Floodlight: {
+	// DisplayName: Mass Illumination
+	// Description: Light up the entire screen!
+	// RightClickName: Decrease Mass Illumination
+}
+
+FreeCamera: {
+	// DisplayName: Free camera
+	// Description: You can move the camera around freely with your movement keys. Hold SHIFT to speed up and CTRL to slow down while moving. Mutually exclusive with lock camera.
+}
+
+Hitboxes: {
+	// DisplayName: Hitboxes
+	// Description: Shows the hitboxes of various entities
+
+	Options: {
+		// NPC: NPC Hitboxes
+		// Projectile: Projectile Hitboxes
+		// Player: Player Hitboxes
+		// Item: Item Hitboxes
+	}
+}
+
+LockCamera: {
+	// DisplayName: Lock camera
+	// Description: Lock the camera to it's current position. Mutually exclusive with free camera.
+}
+
+CustomizeTool: {
+	// DisplayName: Customize tool
+	// Description: Customize your toolbar layout!
+	// ToolBrowser: Add tool
 }

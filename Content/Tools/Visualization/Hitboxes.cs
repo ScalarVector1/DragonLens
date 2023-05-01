@@ -15,10 +15,6 @@ namespace DragonLens.Content.Tools.Visualization
 	{
 		public override string IconKey => "Hitboxes";
 
-		public override string DisplayName => "Hitbox visualizer";
-
-		public override string Description => "Shows the hitboxes of various entities";
-
 		public override void OnActivate()
 		{
 			HitboxWindow state = UILoader.GetUIState<HitboxWindow>();
@@ -124,7 +120,7 @@ namespace DragonLens.Content.Tools.Visualization
 				}
 
 				return list;
-			}, "NPC Hitboxes", 0);
+			}, "NPC", 0);
 			Append(NPCOption);
 
 			ProjectileOption = new HitboxOption(() =>
@@ -142,7 +138,7 @@ namespace DragonLens.Content.Tools.Visualization
 				}
 
 				return list;
-			}, "Projectile Hitboxes", 0.1f);
+			}, "Projectile", 0.1f);
 			Append(ProjectileOption);
 
 			PlayerOption = new HitboxOption(() =>
@@ -160,7 +156,7 @@ namespace DragonLens.Content.Tools.Visualization
 				}
 
 				return list;
-			}, "Player Hitboxes", 0.5f);
+			}, "Player", 0.5f);
 			Append(PlayerOption);
 
 			ItemOption = new HitboxOption(() =>
@@ -178,7 +174,7 @@ namespace DragonLens.Content.Tools.Visualization
 				}
 
 				return list;
-			}, "Item Hitboxes", 0.6f);
+			}, "Item", 0.6f);
 			Append(ItemOption);
 		}
 
@@ -208,7 +204,7 @@ namespace DragonLens.Content.Tools.Visualization
 			Texture2D icon = ThemeHandler.GetIcon("Hitboxes");
 			spriteBatch.Draw(icon, basePos + Vector2.One * 12, Color.White);
 
-			Utils.DrawBorderStringBig(spriteBatch, "Hitboxes", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
+			Utils.DrawBorderStringBig(spriteBatch, LocalizationHelper.GetText("Tools.Hitboxes.DisplayName"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
 
 			base.Draw(spriteBatch);
 		}
@@ -231,10 +227,10 @@ namespace DragonLens.Content.Tools.Visualization
 
 		public Color BoxColor => slider != null ? slider.Color : Color.Red;
 
-		public HitboxOption(Func<List<Rectangle>> getBoxes, string text, float defaultColor)
+		public HitboxOption(Func<List<Rectangle>> getBoxes, string localizationKey, float defaultColor)
 		{
 			this.getBoxes = getBoxes;
-			this.text = text;
+			this.text = LocalizationHelper.GetText($"Tools.Hitboxes.Options.{localizationKey}");
 
 			Width.Set(122, 0);
 			Height.Set(90, 0);

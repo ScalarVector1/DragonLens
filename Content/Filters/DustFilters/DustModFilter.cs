@@ -13,7 +13,7 @@ namespace DragonLens.Content.Filters.DustFilters
 	{
 		public Mod mod;
 
-		public DustModFilter(Mod mod) : base("", mod.DisplayName, $"Dust added by the mod {mod.DisplayName}", n => FilterByMod(n, mod))
+		public DustModFilter(Mod mod) : base("", mod.DisplayName, DustSpawner.GetText("Filters.Mod.Description", mod.DisplayName), n => FilterByMod(n, mod))
 		{
 			this.mod = mod;
 		}

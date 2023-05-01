@@ -73,6 +73,15 @@ namespace DragonLens.Content.GUI
 			};
 			filters.Add(seperator);
 		}
+
+		public void AddSeperatorLocalized(string localizationKey)
+		{
+			var seperator = new FilterSeperator(LocalizationHelper.GetText(localizationKey))
+			{
+				order = lastOrder++
+			};
+			filters.Add(seperator);
+		}
 	}
 
 	internal class FilterButton : SmartUIElement

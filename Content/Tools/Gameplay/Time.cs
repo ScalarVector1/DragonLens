@@ -17,10 +17,6 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public override string IconKey => "Time";
 
-		public override string DisplayName => "Time tool";
-
-		public override string Description => "Adjust or pause the day/night cycle";
-
 		public override void OnActivate()
 		{
 			TimeWindow state = UILoader.GetUIState<TimeWindow>();
@@ -137,7 +133,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			Texture2D icon = ThemeHandler.GetIcon("Time");
 			spriteBatch.Draw(icon, basePos + Vector2.One * 12, Color.White);
 
-			Utils.DrawBorderStringBig(spriteBatch, "Set time", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
+			Utils.DrawBorderStringBig(spriteBatch, LocalizationHelper.GetText("Tools.Time.UITitle"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
 
 			base.Draw(spriteBatch);
 		}
@@ -241,11 +237,12 @@ namespace DragonLens.Content.Tools.Gameplay
 			var draggerTarget = new Rectangle(dims.X + (int)(progress * dims.Width) - 6, dims.Y - 8, 12, 24);
 			GUIHelper.DrawBox(spriteBatch, draggerTarget, ModContent.GetInstance<GUIConfig>().buttonColor);
 
-			string dayString = Main.dayTime ? "Day" : "Night";
+			string dayString = LocalizationHelper.GetText($"Tools.Time.{(Main.dayTime ? "Day" : "Night")}");
 			int maxTicks = Main.dayTime ? (int)Main.dayLength : (int)Main.nightLength;
+			string curTimeString = LocalizationHelper.GetText("Tools.Time.CurrentTime", dayString, (int)Main.time, maxTicks);
 
 			Utils.DrawBorderString(spriteBatch, GetTimeString(), dims.TopLeft() + new Vector2(0, 20), Color.White, 0.8f);
-			Utils.DrawBorderString(spriteBatch, $"({dayString}: {(int)Main.time}/{maxTicks} frames)", dims.TopLeft() + new Vector2(0, 36), Color.White, 0.8f);
+			Utils.DrawBorderString(spriteBatch, curTimeString, dims.TopLeft() + new Vector2(0, 36), Color.White, 0.8f);
 		}
 	}
 
@@ -270,8 +267,9 @@ namespace DragonLens.Content.Tools.Gameplay
 
 			if (IsMouseHovering)
 			{
-				Tooltip.SetName(TimePauseSystem.savedTime == -1 ? "Freeze time" : "Resume time");
-				Tooltip.SetTooltip("Stop the time from changing. This will carry the time between worlds and game reloads!");
+				string name = LocalizationHelper.GetText($"Tools.Time.{(TimePauseSystem.savedTime == -1 ? "Freeze" : "Resume")}");
+				Tooltip.SetName(name);
+				Tooltip.SetTooltip(LocalizationHelper.GetText("Tools.Time.FreezeTooltip"));
 			}
 		}
 

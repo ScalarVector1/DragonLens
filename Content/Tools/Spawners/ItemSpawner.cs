@@ -1,6 +1,7 @@
 ﻿using DragonLens.Content.Filters;
 using DragonLens.Content.Filters.ItemFilters;
 using DragonLens.Content.GUI;
+using DragonLens.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria.ID;
@@ -13,14 +14,15 @@ namespace DragonLens.Content.Tools.Spawners
 	{
 		public override string IconKey => "ItemSpawner";
 
-		public override string DisplayName => "Item spawner";
-
-		public override string Description => "Spawn any item in the game!";
+		public static string GetText(string key, params object[] args)
+		{
+			return LocalizationHelper.GetText($"Tools.ItemSpawner.{key}", args);
+		}
 	}
 
 	internal class ItemBrowser : Browser
 	{
-		public override string Name => "Item spawner";
+		public override string Name => ItemSpawner.GetText("DisplayName");
 
 		public override string IconTexture => "ItemSpawner";
 
@@ -54,28 +56,28 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SetupFilters(FilterPanel filters)
 		{
-			filters.AddSeperator("Mod filters");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Vanilla", "Items from the base game", n => !(n is ItemButton && (n as ItemButton).item.ModItem is null)));
+			filters.AddSeperatorLocalized("Tools.ItemSpawner.FilterCategories.Mod");
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.ItemSpawner.Filters.Vanilla", n => !(n is ItemButton && (n as ItemButton).item.ModItem is null)));
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModItem>().Count() > 0))
 			{
 				filters.AddFilter(new ItemModFilter(mod));
 			}
 
-			filters.AddSeperator("Damage filters");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Unknown", "Any damage", "Any item that deals damage", n => !(n is ItemButton && (n as ItemButton).item.damage > 0)));
+			filters.AddSeperatorLocalized("Tools.ItemSpawner.FilterCategories.Damage");
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Unknown", "Tools.ItemSpawner.Filters.AnyDamage", n => !(n is ItemButton && (n as ItemButton).item.damage > 0)));
 			filters.AddFilter(new DamageClassFilter(DamageClass.Melee, "DragonLens/Assets/Filters/Melee"));
 			filters.AddFilter(new DamageClassFilter(DamageClass.Ranged, "DragonLens/Assets/Filters/Ranged"));
 			filters.AddFilter(new DamageClassFilter(DamageClass.Magic, "DragonLens/Assets/Filters/Magic"));
 			filters.AddFilter(new DamageClassFilter(DamageClass.Summon, "DragonLens/Assets/Filters/Summon"));
 			filters.AddFilter(new DamageClassFilter(DamageClass.Throwing, "DragonLens/Assets/Filters/Throwing"));
 
-			filters.AddSeperator("Misc filters");
+			filters.AddSeperatorLocalized("Tools.ItemSpawner.FilterCategories.Misc");
 
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Accessory", "Accessory", "Any item that can be equipped as an accessory", n => !(n is ItemButton && (n as ItemButton).item.accessory)));
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Defense", "Armor", "Any item that can be equipped as armor", n => !(n is ItemButton && (n as ItemButton).item.defense > 0)));
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Placeable", "Placeable", "Any item that palces a tile", n => !(n is ItemButton && (n as ItemButton).item.createTile >= TileID.Dirt || (n as ItemButton).item.createWall >= 0)));
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Unknown", "Deprecated", "Any item that is deprecated (ItemID.Sets.Deprecated)", n => n is ItemButton ib && !ItemID.Sets.Deprecated[ib.item.type]));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Accessory", "Tools.ItemSpawner.Filters.Accessory", n => !(n is ItemButton && (n as ItemButton).item.accessory)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Defense", "Tools.ItemSpawner.Filters.Armor", n => !(n is ItemButton && (n as ItemButton).item.defense > 0)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Placeable", "Tools.ItemSpawner.Filters.Placeable", n => !(n is ItemButton && (n as ItemButton).item.createTile >= TileID.Dirt || (n as ItemButton).item.createWall >= 0)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Unknown", "Tools.ItemSpawner.Filters.Deprecated", n => n is ItemButton ib && !ItemID.Sets.Deprecated[ib.item.type]));
 		}
 	}
 

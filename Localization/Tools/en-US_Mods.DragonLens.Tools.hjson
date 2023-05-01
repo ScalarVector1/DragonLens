@@ -260,3 +260,311 @@ Paint: {
 		Downloaded: StructureHelper is being downloaded. Return to the main menu and go to the workshop menu to enable it!
 	}
 }
+
+SpawnTool: {
+	DisplayName: Enemy spawn adjuster
+	Description: Change the rate at which enemies spawn, or disable natural spawns altogether
+	EnemySpawnRate: Enemy spawn rate
+	SpawnRate: Spawn rate: {0}x
+}
+
+Time: {
+	DisplayName: Time tool
+	Description: Adjust or pause the day/night cycle
+	UITitle: Set time
+	Day: Day
+	Night: Night
+	CurrentTime: ({0}: {1}/{2} frames)
+	Resume: Resume time
+	Freeze: Freeze time
+	FreezeTooltip: Stop the time from changing. This will carry the time between worlds and game reloads!
+}
+
+Weather: {
+	DisplayName: Weather tool
+	Description: Adjust the weather
+	UITitle: Set weather
+	Combinations:
+		'''
+		Useful combinations:
+		High Rain + Wind > 20 mph = Thunderstorm
+		Natural Rain + Snow biome = Blizzard
+		'''
+	RainIntensity: Rain intensity
+	RainLow: low
+	RainMedium: med
+	RainHigh: high
+	WindStrength: Wind strength
+	WindSixtyWest: 60w
+	WindSixtyEast: 60e
+	WindTwentyWest: 20w
+	WindTwentyEast: 20e
+
+	RainButton: {
+		Name: Rain
+		Tooltip: Enables or disables natural rain. Note that you may still see residual rain during the 'fade-out' of a natural rain event.
+	}
+
+	SandstormButton: {
+		Name: Sandstorm
+		Tooltip: Start or stop a sandstorm. Only visible in the desert.
+	}
+
+	FreezeWeatherButton: {
+		Freeze: Freeze weather
+		Resume: Resume weather
+		Tooltip: Stop the weather from changing. This will carry your weather settings between worlds and game reloads!
+	}
+}
+
+HideMap: {
+	DisplayName: Hide map
+	Description: Resets the world map
+}
+
+MapTeleport: {
+	DisplayName: Map teleportation
+	Description: Toggles the ability to teleport on the map. Right click anywhere on the map to teleport.
+	OutsideWorldWarning: You cant teleport outside of the world!
+}
+
+RevealMap: {
+	DisplayName: Reveal map
+	Description: Reveals the entire world map
+}
+
+BuffSpawner: {
+	DisplayName: Buff spawner
+	Description: Allows you to apply buffs to yourself or NPCs
+	DurationEditor: Duration (ticks)
+	Applied: Applied {0} to {1}
+	Selected: "{0} selected, click an NPC to apply it to them. Right click to deselect. You can right click a buff in the browser to apply it to yourself instead."
+
+	FilterCategories: {
+		Mod: Mod filters
+		Buff: Buff type filters
+	}
+
+	Filters: {
+		Mod.Description: Buffs added by the mod {0}
+
+		Vanilla: {
+			Name: Vanilla
+			Description: Buffs from vanilla
+		}
+
+		Buff: {
+			Name: Buff
+			Description: Buffs with positive effects
+		}
+
+		Debuff: {
+			Name: Debuff
+			Description: Buffs with negative effects
+		}
+	}
+}
+
+DustSpawner: {
+	DisplayName: Dust spawner
+	Description: Spawn dust, with options to preview different spawning methods and parameters
+	DustType: Type: {0}
+	Selected: "{0} selected, click anywhere in the world to spawn. Right click to deselect."
+
+	FieldEditors: {
+		NewDustPerfect: Use NewDustPerfect
+		Scale: Scale
+		Alpha: Alpha
+		Velocity: Velocity
+		Color: Color
+	}
+
+	FilterCategories.Mod: Mod filters
+
+	Filters: {
+		Mod.Description: Dust added by the mod {0}
+
+		Vanilla: {
+			Name: Vanilla
+			Description: Dusts from the base game
+		}
+	}
+}
+
+ItemSpawner: {
+	DisplayName: Item spawner
+	Description: Spawn any item in the game!
+
+	FilterCategories: {
+		Mod: Mod filters
+		Damage: Damage filters
+		Misc: Misc filters
+	}
+
+	Filters: {
+		DamageClass.Description: Items with {0}
+		Mod.Description: Items added by the mod {0}
+
+		Vanilla: {
+			Name: Vanilla
+			Description: Items from the base game
+		}
+
+		AnyDamage: {
+			Name: Any damage
+			Description: Any item that deals damage
+		}
+
+		Accessory: {
+			Name: Accessory
+			Description: Any item that can be equipped as an accessory
+		}
+
+		Armor: {
+			Name: Armor
+			Description: Any item that can be equipped as armor
+		}
+
+		Placeable: {
+			Name: Placeable
+			Description: Any item that palces a tile
+		}
+
+		Deprecated: {
+			Name: Deprecated
+			Description: Any item that is deprecated (ItemID.Sets.Deprecated)
+		}
+	}
+}
+
+NPCSpawner: {
+	DisplayName: NPC spawner
+	Description: Spawn NPCs, from villagers to skeletons to bosses
+	NameExceptionMessage: A NPCs ({0}) name threw an exception while getting it! Report to {1} developers!
+	NameException: This NPCs name threw an exception while getting it! Report to {0} developers!
+	BestiaryEntryException: An NPC ({0}) throws an exception while drawing its bestiary entry! Report to {1} developers!
+	NPCType: Type: {0}
+	Selected: "{0} selected, click anywhere in the world to spawn. Right click to deselect."
+
+	FilterCategories: {
+		Mod: Mod filters
+		Type: Type filters
+		Hostility: Hostility filters
+		Bestiary: Bestiary filters
+	}
+
+	Filters: {
+		Bestiary.Description: NPCs with the bestiary attribute {0}
+		Mod.Description: NPCs added by the mod {0}
+
+		Vanilla: {
+			Name: Vanilla
+			Description: NPCs from the base game
+		}
+
+		Boss: {
+			Name: Boss
+			Description: NPCs which are bosses
+		}
+
+		Critter: {
+			Name: Critter
+			Description: NPCs which count as critters
+		}
+
+		Friendly: {
+			Name: Friendly
+			Description: NPCs which are friendly
+		}
+
+		Hostile: {
+			Name: Hostile
+			Description: Enemy NPCs
+		}
+	}
+}
+
+ProjectileSpawner: {
+	DisplayName: Projectile spawner
+	Description: Spawn projectiles, with options for setting velocity and other parameters
+	NameExceptionMessage: A Projectiles ({0}) name threw an exception while getting it! Report to {1} developers!
+	NameException: This Projectiles name threw an exception while getting it! Report to {0} developers!
+	ProjectileType: Type: {0}
+	Selected: "{0} selected, click anywhere in the world to spawn. Right click to deselect."
+	FieldEditors.Velocity: Velocity
+
+	FilterCategories: {
+		Mod: Mod filters
+		Hostility: Friendly/Hostile filters
+	}
+
+	Filters: {
+		Mod.Description: Projectiles added by the mod {0}
+
+		Vanilla: {
+			Name: Vanilla
+			Description: Projectiles from the base game
+		}
+
+		Friendly: {
+			Name: Friendly
+			Description: Projectiles which by default belong to a player
+		}
+
+		Hostile: {
+			Name: Hostile
+			Description: Projectiles which by default belong to an enemy
+		}
+	}
+}
+
+TileSpawner: {
+	DisplayName: Tile spawner
+	Description: Place tiles without items!
+	TileType: Type: {0}
+	Selected: "{0} selected, click anywhere in the world to spawn. Right click to deselect."
+	FilterCategories.Mod: Mod filters
+
+	Filters: {
+		Mod.Description: Tiles added by the mod {0}
+
+		Vanilla: {
+			Name: Vanilla
+			Description: Tiles from the base game
+		}
+	}
+}
+
+Floodlight: {
+	DisplayName: Mass Illumination
+	Description: Light up the entire screen!
+	RightClickName: Decrease Mass Illumination
+}
+
+FreeCamera: {
+	DisplayName: Free camera
+	Description: You can move the camera around freely with your movement keys. Hold SHIFT to speed up and CTRL to slow down while moving. Mutually exclusive with lock camera.
+}
+
+Hitboxes: {
+	DisplayName: Hitboxes
+	Description: Shows the hitboxes of various entities
+
+	Options: {
+		NPC: NPC Hitboxes
+		Projectile: Projectile Hitboxes
+		Player: Player Hitboxes
+		Item: Item Hitboxes
+	}
+}
+
+LockCamera: {
+	DisplayName: Lock camera
+	Description: Lock the camera to it's current position. Mutually exclusive with free camera.
+}
+
+CustomizeTool: {
+	DisplayName: Customize tool
+	Description: Customize your toolbar layout!
+	ToolBrowser: Add tool
+}
