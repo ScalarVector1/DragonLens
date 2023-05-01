@@ -5,12 +5,12 @@ BuffDespawner: {
 
 DustDespawner: {
 	DisplayName: 清除粒子
-	Description: 清除目前世界上所有的粒子
+	Description: 清除世界上所有的粒子
 }
 
 GoreDespawner: {
 	DisplayName: 清除血污
-	Description: 清除目前世界上所有的血污
+	Description: 清除世界上所有的血污
 }
 
 ItemDespawner: {
@@ -20,13 +20,13 @@ ItemDespawner: {
 
 NPCDespawner: {
 	DisplayName: 清除NPC
-	Description: 清除目前世界上所有的敌对NPC，右键点击则以击杀的形式清除NPC NEWBLOCK 按住Shift以一并清除/击杀友好NPC
+	Description: 清除世界上所有的敌对NPC，右键点击则以击杀的形式清除NPC NEWBLOCK 按住Shift以一并清除/击杀友好NPC
 	RightClickName: 击杀NPC
 }
 
 ProjectileDespawner: {
 	DisplayName: 清除射弹
-	Description: 清除目前世界上所有的射弹
+	Description: 清除世界上所有的射弹
 }
 
 ShaderCompiler: {
@@ -62,7 +62,7 @@ ItemEditor: {
 	Editors: {
 		Damage: {
 			Name: 伤害
-			Description: 这个物品或它的射弹造成的伤害。
+			Description: 这个物品或它的射弹的伤害。
 		}
 
 		CritChance: {
@@ -72,7 +72,7 @@ ItemEditor: {
 
 		Knockback: {
 			Name: 击退
-			Description: 这个物品在攻击敌人时会造成的击退。
+			Description: 这个物品在攻击敌人时的击退。
 		}
 
 		UseStyle: {
