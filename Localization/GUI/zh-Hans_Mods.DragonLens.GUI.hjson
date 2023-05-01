@@ -1,0 +1,139 @@
+Browser: {
+	ListView: 列表视图
+	Filters: 筛选
+
+	ButtonSizeSlider: {
+		Name: 按钮尺寸
+		Tooltip: 拖动以调整按钮大小
+	}
+}
+
+DraggableUIState: {
+	Close: 关闭
+
+	UserGuide: {
+		Name: 使用指南
+		Tooltip: 在浏览器中打开此工具的使用指南
+	}
+}
+
+EmergencyCustomizeMenu: {
+	CustomizeToolbars: 自定义工具栏
+	CustomizeTools: 自定义工具
+}
+
+FirstTimeLayoutPresetMenu: {
+	Welcome: 欢迎使用DragonLens！
+	SelectLayout: 请选择一个布局以开始使用
+	Selected: 已选择“{0}”布局！使用自定义工具（扳手图标）来自定义布局或加载不同的预设。
+}
+
+LayoutPresetBrowser: {
+	Name: 布局预设
+	LoadedLayout: 已加载布局: {0}
+}
+
+Layout: {
+	Simple: {
+		Name: 简单
+		Tooltip: 简洁的布局，适合玩家或模组测试人员。
+	}
+
+	Advanced: {
+		Name: 高级
+		Tooltip: 包含所有可用工具的高级布局。非常适合Mod开发者或服务器管理员。
+	}
+
+	HEROsMod: {
+		Name: 模拟HERO's Mod
+		Tooltip: 与HERO's Mod相似的布局。
+	}
+
+	Cheatsheet: {
+		Name: 模拟Cheatsheet
+		Tooltip: 与Cheatsheet相似的布局。
+	}
+
+	Empty: {
+		Name: 空
+		Tooltip: 用于构建你自己的布局。
+	}
+}
+
+ToggleButton: {
+	On: 开启
+	Off: 关闭
+}
+
+ToolbarCustomizationElements: {
+	RemoveButton: {
+		// Name: Remove tool
+		// Tooltip: You can always re-add it from the add tool menu (green tab)!
+	}
+
+	AddButton: {
+		// Name: Add tool
+		// Tooltip: Click to add tools to this toolbar
+	}
+
+	RemoveToolbarButton: {
+		// Name: Remove toolbar
+		// Tooltip: Remove this entire toolbar!
+	}
+
+	DragButton: {
+		// Name: Move toolbar
+		// Tooltip: Click and drag to re-position this toolbar. The toolbar will automatically snap to the edges of the screen if close enough. Right click while dragging to rotate the toolbar.
+	}
+
+	HideOptionButton: {
+		// Name: Auto-hide: {0}
+		// Tooltip: Allows you to set visibility rules for this toolbar. NEWBLOCK {0} NEWBLOCK Clicking will change to: {1}
+
+		Never: {
+			// Name: Normal
+			// Tip: Always visible during normal gameplay
+		}
+
+		InventoryOpen: {
+			// Name: Inventory closed only
+			// Tip: Only visible if your inventory is closed
+		}
+
+		InventoryClosed: {
+			// Name: Inventory open only
+			// Tip: Only visible if your inventory is open
+		}
+
+		NoMapScreen: {
+			// Name: Map only
+			// Tip: Visible on the map -- note: tools which open other windows will require you to close the map to use them!
+		}
+	}
+
+	NewBarButton: {
+		Name: 新工具栏
+		Tooltip: 创建一个全新的空工具栏！
+	}
+
+	SaveLayoutButton: {
+		// Name: Save layout
+		// Tooltip: Finish customizing and save your layout
+		// LayoutSaved: Layout saved!
+	}
+
+	LoadLayoutButton: {
+		// Name: Load layout
+		// Tooltip: Load an existing layout
+	}
+
+	VisualConfigButton: {
+		// Name: Change style
+		// Tooltip: Open the configuration to change the visual style of the GUI
+	}
+
+	FunctionalConfigButton: {
+		// Name: Tool options
+		// Tooltip: Open the configuration to change tool functionality/defaults
+	}
+}
