@@ -39,11 +39,11 @@ namespace DragonLens.Content.Tools.Developer
 		{
 			if (busy)
 			{
-				Main.NewText(LocalizationHelper.GetText("Tools.ShaderCompiler.Busy"), Color.Orange);
+				Main.NewText(LocalizationHelper.GetToolText("ShaderCompiler.Busy"), Color.Orange);
 				return;
 			}
 
-			Main.NewText(LocalizationHelper.GetText("Tools.ShaderCompiler.Triggered"));
+			Main.NewText(LocalizationHelper.GetToolText("ShaderCompiler.Triggered"));
 			busy = true;
 
 			Stopwatch watch = new();
@@ -62,7 +62,7 @@ namespace DragonLens.Content.Tools.Developer
 				}
 
 				watch.Stop();
-				Main.NewText(LocalizationHelper.GetText("Tools.ShaderCompiler.Completed", watch.ElapsedMilliseconds));
+				Main.NewText(LocalizationHelper.GetToolText("ShaderCompiler.Completed", watch.ElapsedMilliseconds));
 				needsReload = true;
 				busy = false;
 			});
@@ -143,7 +143,7 @@ namespace DragonLens.Content.Tools.Developer
 
 			process.WaitForExit();
 
-			Main.NewText(LocalizationHelper.GetText("Tools.ShaderCompiler.Recompiled", mod.DisplayName), Color.SkyBlue);
+			Main.NewText(LocalizationHelper.GetToolText("ShaderCompiler.Recompiled", mod.DisplayName), Color.SkyBlue);
 
 			if (!Directory.Exists(Path.Combine(cachePath, mod.Name)))
 				Directory.CreateDirectory(Path.Combine(cachePath, mod.Name));

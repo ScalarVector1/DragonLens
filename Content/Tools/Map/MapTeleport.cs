@@ -111,7 +111,7 @@ namespace DragonLens.Content.Tools.Map
 				}
 				else
 				{
-					Main.NewText(LocalizationHelper.GetText("Tools.MapTeleport.OutsideWorldWarning"));
+					Main.NewText(LocalizationHelper.GetToolText("MapTeleport.OutsideWorldWarning"));
 				}
 			}
 		}

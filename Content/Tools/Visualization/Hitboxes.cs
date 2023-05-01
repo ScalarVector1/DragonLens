@@ -204,7 +204,7 @@ namespace DragonLens.Content.Tools.Visualization
 			Texture2D icon = ThemeHandler.GetIcon("Hitboxes");
 			spriteBatch.Draw(icon, basePos + Vector2.One * 12, Color.White);
 
-			Utils.DrawBorderStringBig(spriteBatch, LocalizationHelper.GetText("Tools.Hitboxes.DisplayName"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
+			Utils.DrawBorderStringBig(spriteBatch, LocalizationHelper.GetToolText("Hitboxes.DisplayName"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
 
 			base.Draw(spriteBatch);
 		}

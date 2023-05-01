@@ -200,7 +200,7 @@ namespace DragonLens.Content.Tools.Editors
 		{
 			if (t.FieldType == typeof(T))
 			{
-				string message = LocalizationHelper.GetText("Tools.ItemEditor.AutogenMsg");
+				string message = LocalizationHelper.GetToolText("ItemEditor.AutogenMsg");
 
 				var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(item.ModItem, n)), (T)t.GetValue(item.ModItem), () => (T)t.GetValue(item.ModItem), message });
 				modItemEditorList.Add(newEditor);
@@ -211,7 +211,7 @@ namespace DragonLens.Content.Tools.Editors
 		{
 			if (t.PropertyType == typeof(T))
 			{
-				string message = LocalizationHelper.GetText("Tools.ItemEditor.AutogenMsg");
+				string message = LocalizationHelper.GetToolText("ItemEditor.AutogenMsg");
 
 				var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(item.ModItem, n)), (T)t.GetValue(item.ModItem), () => (T)t.GetValue(item.ModItem), message });
 				modItemEditorList.Add(newEditor);
@@ -317,7 +317,7 @@ namespace DragonLens.Content.Tools.Editors
 			}
 			else
 			{
-				Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetText("Tools.ItemEditor.PlaceItemHere"), GetDimensions().Center(), Color.LightGray, 1, 0.5f, 0.5f);
+				Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetToolText("ItemEditor.PlaceItemHere"), GetDimensions().Center(), Color.LightGray, 1, 0.5f, 0.5f);
 			}
 		}
 	}
@@ -344,7 +344,7 @@ namespace DragonLens.Content.Tools.Editors
 			if (!parent.item.IsAir)
 			{
 				Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
-				Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetText("Tools.ItemEditor.SetDefaults"), GetDimensions().Center(), Color.LightGray, 1, 0.5f, 0.5f);
+				Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetToolText("ItemEditor.SetDefaults"), GetDimensions().Center(), Color.LightGray, 1, 0.5f, 0.5f);
 			}
 		}
 	}

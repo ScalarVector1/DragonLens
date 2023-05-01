@@ -22,7 +22,7 @@ namespace DragonLens.Content.Tools.Editors
 		{
 			if (Main.netMode != NetmodeID.SinglePlayer)
 			{
-				Main.NewText(LocalizationHelper.GetText("Tools.AccessoryTray.MpDisabled"), Color.Red);
+				Main.NewText(LocalizationHelper.GetToolText("AccessoryTray.MpDisabled"), Color.Red);
 				return;
 			}
 
@@ -169,7 +169,7 @@ namespace DragonLens.Content.Tools.Editors
 			bgDims.Inflate(4, 4);
 			spriteBatch.Draw(background, bgDims, Color.Black * 0.25f);
 
-			Utils.DrawBorderStringBig(spriteBatch, LocalizationHelper.GetText("Tools.AccessoryTray.DisplayName"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
+			Utils.DrawBorderStringBig(spriteBatch, LocalizationHelper.GetToolText("AccessoryTray.DisplayName"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
 
 			base.Draw(spriteBatch);
 		}
@@ -253,7 +253,7 @@ namespace DragonLens.Content.Tools.Editors
 			{
 				Main.LocalPlayer.mouseInterface = true;
 				Main.HoverItem = item;
-				Main.hoverItemName = LocalizationHelper.GetText("Tools.AccessoryTray.PlaceAccHere");
+				Main.hoverItemName = LocalizationHelper.GetToolText("AccessoryTray.PlaceAccHere");
 			}
 		}
 

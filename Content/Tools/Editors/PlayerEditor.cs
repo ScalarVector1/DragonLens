@@ -272,7 +272,7 @@ namespace DragonLens.Content.Tools.Editors
 		{
 			if (t.FieldType == typeof(T))
 			{
-				string message = LocalizationHelper.GetText("Tools.PlayerEditor.AutogenMsg");
+				string message = LocalizationHelper.GetToolText("PlayerEditor.AutogenMsg");
 
 				var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(p, n)), (T)t.GetValue(p), () => (T)t.GetValue(p), message });
 				modPlayerEditorList.Add(newEditor);
@@ -295,7 +295,7 @@ namespace DragonLens.Content.Tools.Editors
 		{
 			if (t.PropertyType == typeof(T))
 			{
-				string message = LocalizationHelper.GetText("Tools.PlayerEditor.AutogenMsg");
+				string message = LocalizationHelper.GetToolText("PlayerEditor.AutogenMsg");
 
 				var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(p, n)), (T)t.GetValue(p), () => (T)t.GetValue(p), message });
 				modPlayerEditorList.Add(newEditor);

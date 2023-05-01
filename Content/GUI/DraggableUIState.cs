@@ -105,7 +105,7 @@ namespace DragonLens.Content.GUI
 
 			if (closeButton.IsMouseHovering)
 			{
-				Tooltip.SetName("Close");
+				Tooltip.SetName(LocalizationHelper.GetGUIText("DraggableUIState.Close"));
 				Tooltip.SetTooltip("");
 			}
 
@@ -114,8 +114,8 @@ namespace DragonLens.Content.GUI
 
 			if (helpButton != null && helpButton.IsMouseHovering)
 			{
-				Tooltip.SetName("User guide");
-				Tooltip.SetTooltip("Open the user guide for this tool in the browser");
+				Tooltip.SetName(LocalizationHelper.GetGUIText("DraggableUIState.UserGuide.Name"));
+				Tooltip.SetTooltip(LocalizationHelper.GetGUIText("DraggableUIState.UserGuide.Tooltip"));
 			}
 
 			AdjustPositions(basePos);

@@ -23,17 +23,17 @@ namespace DragonLens.Content.Tools.Gameplay
 			if (!Main.expertMode)
 			{
 				Main.GameMode = GameModeID.Expert;
-				Main.NewText(LocalizationHelper.GetText("Tools.Difficulty.GameInExpertMode"), new Color(255, 150, 0));
+				Main.NewText(LocalizationHelper.GetToolText("Difficulty.GameInExpertMode"), new Color(255, 150, 0));
 			}
 			else if (!Main.masterMode)
 			{
 				Main.GameMode = GameModeID.Master;
-				Main.NewText(LocalizationHelper.GetText("Tools.Difficulty.GameInMasterMode"), new Color(255, 0, 0));
+				Main.NewText(LocalizationHelper.GetToolText("Difficulty.GameInMasterMode"), new Color(255, 0, 0));
 			}
 			else
 			{
 				Main.GameMode = GameModeID.Normal;
-				Main.NewText(LocalizationHelper.GetText("Tools.Difficulty.GameInNormalMode"), new Color(180, 180, 255));
+				Main.NewText(LocalizationHelper.GetToolText("Difficulty.GameInNormalMode"), new Color(180, 180, 255));
 			}
 
 			NetSend();
@@ -43,7 +43,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		{
 			if (Main.netMode != NetmodeID.SinglePlayer)
 			{
-				Main.NewText(LocalizationHelper.GetText("Tools.Difficulty.JourneyToggleDisabled"), Color.Red);
+				Main.NewText(LocalizationHelper.GetToolText("Difficulty.JourneyToggleDisabled"), Color.Red);
 				return;
 			}
 
@@ -51,7 +51,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			{
 				oldPlayerDifficulty = Main.LocalPlayer.difficulty;
 				Main.LocalPlayer.difficulty = 3;
-				Main.NewText(LocalizationHelper.GetText("Tools.Difficulty.JourneyEnabled"), Main.creativeModeColor);
+				Main.NewText(LocalizationHelper.GetToolText("Difficulty.JourneyEnabled"), Main.creativeModeColor);
 			}
 			else
 			{
@@ -59,7 +59,7 @@ namespace DragonLens.Content.Tools.Gameplay
 					oldPlayerDifficulty = 0;
 
 				Main.LocalPlayer.difficulty = (byte)oldPlayerDifficulty;
-				Main.NewText(LocalizationHelper.GetText("Tools.Difficulty.JourneyDisabled"), Color.LightGray);
+				Main.NewText(LocalizationHelper.GetToolText("Difficulty.JourneyDisabled"), Color.LightGray);
 			}
 		}
 

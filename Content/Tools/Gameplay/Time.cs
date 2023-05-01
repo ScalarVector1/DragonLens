@@ -133,7 +133,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			Texture2D icon = ThemeHandler.GetIcon("Time");
 			spriteBatch.Draw(icon, basePos + Vector2.One * 12, Color.White);
 
-			Utils.DrawBorderStringBig(spriteBatch, LocalizationHelper.GetText("Tools.Time.UITitle"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
+			Utils.DrawBorderStringBig(spriteBatch, LocalizationHelper.GetToolText("Time.UITitle"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
 
 			base.Draw(spriteBatch);
 		}
@@ -239,7 +239,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 			string dayString = LocalizationHelper.GetText($"Tools.Time.{(Main.dayTime ? "Day" : "Night")}");
 			int maxTicks = Main.dayTime ? (int)Main.dayLength : (int)Main.nightLength;
-			string curTimeString = LocalizationHelper.GetText("Tools.Time.CurrentTime", dayString, (int)Main.time, maxTicks);
+			string curTimeString = LocalizationHelper.GetToolText("Time.CurrentTime", dayString, (int)Main.time, maxTicks);
 
 			Utils.DrawBorderString(spriteBatch, GetTimeString(), dims.TopLeft() + new Vector2(0, 20), Color.White, 0.8f);
 			Utils.DrawBorderString(spriteBatch, curTimeString, dims.TopLeft() + new Vector2(0, 36), Color.White, 0.8f);
@@ -269,7 +269,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			{
 				string name = LocalizationHelper.GetText($"Tools.Time.{(TimePauseSystem.savedTime == -1 ? "Freeze" : "Resume")}");
 				Tooltip.SetName(name);
-				Tooltip.SetTooltip(LocalizationHelper.GetText("Tools.Time.FreezeTooltip"));
+				Tooltip.SetTooltip(LocalizationHelper.GetToolText("Time.FreezeTooltip"));
 			}
 		}
 

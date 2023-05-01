@@ -53,7 +53,7 @@ namespace DragonLens.Content.Tools
 
 		public static Toolbar TrackedToolbar => trackedElement?.toolbar;
 
-		public override string Name => LocalizationHelper.GetText("Tools.CustomizeTool.ToolBrowser");
+		public override string Name => LocalizationHelper.GetToolText("CustomizeTool.ToolBrowser");
 
 		public override string IconTexture => "Customize";
 

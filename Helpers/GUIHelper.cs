@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
@@ -92,7 +93,10 @@ namespace DragonLens.Helpers
 		public static string WrapString(string input, int length, DynamicSpriteFont font, float scale)
 		{
 			// If the character is a CJK character (Chinese, Korean and Japanese), which should be treated as a single word
-			static bool IsCjk(char a) => a >= 0x4E00 && a <= 0x9FFF || a >= 0x3000 && a <= 0x303F;
+			static bool IsCjkPunctuation(char a) => Regex.IsMatch(a.ToString(), @"\p{IsCJKSymbolsandPunctuation}|\p{IsHalfwidthandFullwidthForms}");
+			static bool IsCjkUnifiedIdeographs(char a) => Regex.IsMatch(a.ToString(), @"\p{IsCJKUnifiedIdeographs}");
+			static bool IsRightCloseCjkPunctuation(char a) => a is '（' or '【' or '《' or '｛' or '｢' or '［' or '｟' or '“';
+			static bool IsCjk(char a) => IsCjkUnifiedIdeographs(a) || IsCjkPunctuation(a);
 				
 			string output = "";
 
@@ -118,8 +122,18 @@ namespace DragonLens.Helpers
 						words.Add(cacheString);
 						cacheString = "";
 					}
-					
-					words.Add(input[i].ToString());
+
+					// If the next character is a CJK punctuation, we add both characters as a single word
+					// Unless the next character is a right close CJK punctuation (e.g. left brackets), in which case we add only the current character
+					if (i + 1 < input.Length && IsCjkPunctuation(input[i + 1]) && !IsRightCloseCjkPunctuation(input[i + 1]))
+					{
+						words.Add(input[i].ToString() + input[i + 1]);
+						i++;
+					}
+					else
+					{
+						words.Add(input[i].ToString());
+					}
 					continue;
 				}
 

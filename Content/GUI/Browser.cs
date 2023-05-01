@@ -116,11 +116,11 @@ namespace DragonLens.Content.GUI
 			sizeSlider = new(this);
 			Append(sizeSlider);
 
-			listButton = new("DragonLens/Assets/GUI/Play", () => listMode, "List view");
+			listButton = new("DragonLens/Assets/GUI/Play", () => listMode, LocalizationHelper.GetGUIText("Browser.ListView"));
 			listButton.OnLeftClick += (n, k) => listMode = !listMode;
 			Append(listButton);
 
-			filterButton = new("DragonLens/Assets/GUI/Filter", () => filtersVisible, "Filters");
+			filterButton = new("DragonLens/Assets/GUI/Filter", () => filtersVisible, LocalizationHelper.GetGUIText("Browser.Filters"));
 			filterButton.OnLeftClick += (n, k) =>
 			{
 				filtersVisible = !filtersVisible;
@@ -401,8 +401,8 @@ namespace DragonLens.Content.GUI
 
 			if (IsMouseHovering && !Main.mouseLeft)
 			{
-				Tooltip.SetName("Button scale");
-				Tooltip.SetTooltip("Drag to adjust the size of buttons in the browser");
+				Tooltip.SetName(LocalizationHelper.GetGUIText("Browser.ButtonSizeSlider.Name"));
+				Tooltip.SetTooltip(LocalizationHelper.GetGUIText("Browser.ButtonSizeSlider.Tooltip"));
 			}
 		}
 	}

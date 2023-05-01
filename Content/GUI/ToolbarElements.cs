@@ -4,6 +4,7 @@ using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems;
 using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Core.Systems.ToolSystem;
+using DragonLens.Helpers;
 using System;
 using Terraria.UI;
 
@@ -351,7 +352,7 @@ namespace DragonLens.Content.GUI
 		{
 			if (!PermissionHandler.CanUseTools(Main.LocalPlayer))
 			{
-				Main.NewText("You are not an admin!", Color.Red);
+				Main.NewText(LocalizationHelper.GetCommonText("NotAdmin"), Color.Red);
 				return;
 			}
 
@@ -363,7 +364,7 @@ namespace DragonLens.Content.GUI
 		{
 			if (!PermissionHandler.CanUseTools(Main.LocalPlayer))
 			{
-				Main.NewText("You are not an admin!", Color.Red);
+				Main.NewText(LocalizationHelper.GetCommonText("NotAdmin"), Color.Red);
 				return;
 			}
 

@@ -14,5 +14,20 @@ namespace DragonLens.Helpers
 		{
 			return Language.GetTextValue($"Mods.DragonLens.{key}", args);
 		}
+		
+		public static string GetGUIText(string key, params object[] args)
+		{
+			return Language.GetTextValue($"Mods.DragonLens.GUI.{key}", args);
+		}
+		
+		public static string GetToolText(string key, params object[] args)
+		{
+			return Language.GetTextValue($"Mods.DragonLens.Tools.{key}", args);
+		}
+		
+		public static string GetCommonText(string key, params object[] args)
+		{
+			return Language.GetTextValue($"Mods.DragonLens.Common.{key}", args);
+		}
 	}
 }

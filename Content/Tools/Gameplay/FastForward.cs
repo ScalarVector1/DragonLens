@@ -18,7 +18,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		{
 			if (Main.netMode != NetmodeID.SinglePlayer)
 			{
-				Main.NewText(LocalizationHelper.GetText("Tools.Difficulty.MultiplayerDisabled"), Color.Red);
+				Main.NewText(LocalizationHelper.GetToolText("Difficulty.MultiplayerDisabled"), Color.Red);
 				speedup = 0;
 				return;
 			}
@@ -33,7 +33,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		{
 			if (Main.netMode != NetmodeID.SinglePlayer)
 			{
-				Main.NewText(LocalizationHelper.GetText("Tools.Difficulty.MultiplayerDisabled"), Color.Red);
+				Main.NewText(LocalizationHelper.GetToolText("Difficulty.MultiplayerDisabled"), Color.Red);
 				speedup = 0;
 				return;
 			}

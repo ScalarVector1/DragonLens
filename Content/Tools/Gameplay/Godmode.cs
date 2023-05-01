@@ -113,7 +113,7 @@ namespace DragonLens.Content.Tools.Gameplay
 				playSound = false;
 				genGore = false;
 
-				Main.NewText(LocalizationHelper.GetText("Tools.Godmode.PreventedDeath", damageSource.GetDeathText(Player.name)));
+				Main.NewText(LocalizationHelper.GetToolText("Godmode.PreventedDeath", damageSource.GetDeathText(Player.name)));
 				Player.statLife = Player.statLifeMax2;
 				return false;
 			}
