@@ -87,12 +87,13 @@ namespace DragonLens.Core.Systems
 					.AddTool<ItemDespawner>()
 					.AddTool<ProjectileDespawner>()
 					.AddTool<NPCDespawner>()
+					.AddTool<BuffDespawner>()
 					.AddTool<GoreDespawner>()
 					.AddTool<DustDespawner>()
 					);
 
 				n.Add(
-					new Toolbar(new Vector2(0.5f, 1f), Orientation.Horizontal, AutomaticHideOption.Never)
+					new Toolbar(new Vector2(0.45f, 1f), Orientation.Horizontal, AutomaticHideOption.Never)
 					.AddTool<Godmode>()
 					.AddTool<InfiniteReach>()
 					.AddTool<NoClip>()
@@ -109,7 +110,7 @@ namespace DragonLens.Core.Systems
 					);
 
 				n.Add(
-					new Toolbar(new Vector2(0.7f, 1f), Orientation.Horizontal, AutomaticHideOption.Never)
+					new Toolbar(new Vector2(0.75f, 1f), Orientation.Horizontal, AutomaticHideOption.Never)
 					.AddTool<Floodlight>()
 					.AddTool<Hitboxes>()
 					.AddTool<FreeCamera>()

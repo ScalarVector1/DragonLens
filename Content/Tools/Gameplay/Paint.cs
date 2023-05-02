@@ -167,7 +167,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			if (selecting || structure != null)
 				Main.LocalPlayer.mouseInterface = true;
 
-			if (Main.mouseLeft && structure != null)
+			if (Main.mouseLeft && structure != null && !BoundingBox.Contains(Main.MouseScreen.ToPoint()))
 			{
 				//Prevents re-placing the same structure in the same place which could cause lag
 				if (PlaceTarget != lastPlaced)
@@ -259,7 +259,13 @@ namespace DragonLens.Content.Tools.Gameplay
 			this.parent = parent;
 			strucutre = tag;
 
+			// StructurePreview constructor requires a spritebatch to be active
+			Main.spriteBatch.Begin();
+
 			preview = new(Paint.GetTextValue("TempStructure", strucutre.GetHashCode()), tag);
+
+			// End the spritebatch after the preview is created
+			Main.spriteBatch.End();
 
 			Width.Set(140, 0);
 			Height.Set(140, 0);

@@ -63,7 +63,7 @@ namespace DragonLens.Content.Tools.Spawners
 		{
 			base.DraggableUdpate(gameTime);
 
-			if (Main.mouseLeft && selected != -1)
+			if (Main.mouseLeft && selected != -1 && !BoundingBox.Contains(Main.MouseScreen.ToPoint()) && !filters.IsMouseHovering)
 			{
 				PlayerInput.SetZoom_World();
 
