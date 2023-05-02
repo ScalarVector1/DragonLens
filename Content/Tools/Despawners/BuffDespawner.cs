@@ -15,7 +15,8 @@ namespace DragonLens.Content.Tools.Despawners
 		{
 			for (int k = 0; k < Player.MaxBuffs; k++)
 			{
-				Main.LocalPlayer.DelBuff(k);
+				Main.LocalPlayer.buffTime[k] = 0;
+				Main.LocalPlayer.buffType[k] = 0;
 			}
 		}
 	}

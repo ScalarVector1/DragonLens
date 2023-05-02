@@ -166,31 +166,36 @@ namespace DragonLens.Content.Tools.Spawners
 
 				float alpha = 0.5f;
 
-				PlayerInput.SetZoom_World();
-
-				spriteBatch.End();
-				spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
-
-				foreach (NPC npc in Main.npc)
+				if (!BoundingBox.Contains(Main.MouseScreen.ToPoint()) && !filters.IsMouseHovering && !durationEditor.IsMouseHovering)
 				{
-					Rectangle clickbox = npc.Hitbox;
-					clickbox.Inflate(32, 32);
 
-					if (clickbox.Contains(Main.MouseWorld.ToPoint()))
+					PlayerInput.SetZoom_World();
+
+					spriteBatch.End();
+					spriteBatch.Begin(default, default, default, default, default, default,
+						Main.GameViewMatrix.TransformationMatrix);
+
+					foreach (NPC npc in Main.npc)
 					{
-						alpha = 1;
-						Rectangle offset = clickbox;
-						offset.Offset((-Main.screenPosition).ToPoint());
-						Helpers.GUIHelper.DrawOutline(spriteBatch, offset, Color.Red);
+						Rectangle clickbox = npc.Hitbox;
+						clickbox.Inflate(32, 32);
 
-						break;
+						if (clickbox.Contains(Main.MouseWorld.ToPoint()))
+						{
+							alpha = 1;
+							Rectangle offset = clickbox;
+							offset.Offset((-Main.screenPosition).ToPoint());
+							Helpers.GUIHelper.DrawOutline(spriteBatch, offset, Color.Red);
+
+							break;
+						}
 					}
+
+					spriteBatch.End();
+					spriteBatch.Begin(default, default, default, default, default, default, Main.UIScaleMatrix);
+
+					PlayerInput.SetZoom_UI();
 				}
-
-				spriteBatch.End();
-				spriteBatch.Begin(default, default, default, default, default, default, Main.UIScaleMatrix);
-
-				PlayerInput.SetZoom_UI();
 
 				spriteBatch.Draw(tex, Main.MouseScreen + Vector2.One * 8, new Rectangle(0, 0, tex.Width, tex.Height), Color.White * alpha, 0, default, 1, 0, 0);
 			}

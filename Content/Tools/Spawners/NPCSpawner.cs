@@ -111,7 +111,7 @@ namespace DragonLens.Content.Tools.Spawners
 		{
 			base.SafeClick(evt);
 
-			if (selected != null)
+			if (selected != null && !BoundingBox.Contains(Main.MouseScreen.ToPoint()) && !filters.IsMouseHovering)
 			{
 				PlayerInput.SetZoom_World();
 				NPC.NewNPC(null, (int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, selected.type);

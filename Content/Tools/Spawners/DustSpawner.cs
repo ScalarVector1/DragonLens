@@ -129,7 +129,7 @@ namespace DragonLens.Content.Tools.Spawners
 			{
 				Main.LocalPlayer.mouseInterface = true;
 
-				if (Main.mouseLeft)
+				if (Main.mouseLeft && !BoundingBox.Contains(Main.MouseScreen.ToPoint()) && !perfectEditor.IsMouseHovering && !scaleEditor.IsMouseHovering && !alphaEditor.IsMouseHovering && !velocityEditor.IsMouseHovering && !colorEditor.IsMouseHovering)
 				{
 					PlayerInput.SetZoom_World();
 
