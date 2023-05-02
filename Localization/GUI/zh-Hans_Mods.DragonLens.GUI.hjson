@@ -25,7 +25,7 @@ EmergencyCustomizeMenu: {
 FirstTimeLayoutPresetMenu: {
 	Welcome: 欢迎使用DragonLens！
 	SelectLayout: 请选择一个布局以开始使用
-	Selected: 已选择“{0}”布局！使用自定义工具（扳手图标）来自定义布局或加载不同的预设。
+	Selected: 已选择“{0}”布局！使用自定义工具（扳手图标）来自定义布局或加载不同预设。
 }
 
 LayoutPresetBrowser: {
@@ -38,21 +38,21 @@ Layout: {
 
 	Simple: {
 		Name: 简单
-		Tooltip: 简洁的布局，适合玩家或模组测试人员。
+		Tooltip: 简洁的布局，适合玩家或模组测试员。
 	}
 
 	Advanced: {
 		Name: 高级
-		Tooltip: 包含所有可用工具的高级布局。非常适合Mod开发者或服务器管理员。
+		Tooltip: 包含所有可用工具的高级布局。 非常适合模组开发者或服务器管理员。
 	}
 
 	HEROsMod: {
-		Name: 模拟HERO's Mod
+		Name: 仿HERO's Mod
 		Tooltip: 与HERO's Mod相似的布局。
 	}
 
 	Cheatsheet: {
-		Name: 模拟Cheatsheet
+		Name: 仿Cheatsheet
 		Tooltip: 与Cheatsheet相似的布局。
 	}
 
@@ -70,7 +70,7 @@ ToggleButton: {
 ToolbarCustomizationElements: {
 	RemoveButton: {
 		Name: 移除工具
-		Tooltip: 你随时可以从添加工具菜单(绿色标签)重新添加它！
+		Tooltip: 你随时可以从添加工具菜单（绿色标签）重新添加它！
 	}
 
 	AddButton: {
@@ -85,12 +85,12 @@ ToolbarCustomizationElements: {
 
 	DragButton: {
 		Name: 移动工具栏
-		Tooltip: 点击并拖动以重新定位此工具栏。 靠近屏幕边缘时，工具栏将自动吸附。 拖动时右键单击以旋转工具栏。
+		Tooltip: 点击并拖动以移动此工具栏。靠近屏幕边缘时，工具栏将自动吸附。拖动时右键单击以旋转工具栏。
 	}
 
 	HideOptionButton: {
 		Name: "{0}"
-		Tooltip: 允许您为此工具栏设置可见性规则。 NEWBLOCK {0} NEWBLOCK 点击将更改为：{1}。
+		Tooltip: 允许您为此工具栏设置可见性规则。 NEWBLOCK {0} NEWBLOCK 点此改为：{1}。
 
 		Never: {
 			Name: 始终可见
@@ -120,7 +120,7 @@ ToolbarCustomizationElements: {
 
 	SaveLayoutButton: {
 		Name: 保存布局
-		Tooltip: 完成自定义并保存您的布局。
+		Tooltip: 保存您的自定义布局。
 		LayoutSaved: 布局已保存！
 	}
 
@@ -141,6 +141,6 @@ ToolbarCustomizationElements: {
 }
 
 EntityEditor: {
-	LiveReaction: "{0} 实时跟踪"
-	Select: 点击实体以选择，右键单击取消。
+	LiveReaction: "{0} 实时跟拍"
+	Select: 左键单击以选中实体，右键单击以取消。
 }
