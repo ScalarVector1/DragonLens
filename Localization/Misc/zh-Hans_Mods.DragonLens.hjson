@@ -1,0 +1,33 @@
+Permission: {
+	NotAdmin: 你没有管理员权限！
+	// PlayerNotFound: Could not find a player by the name {0}
+	// AdminGiven: You are now an admin!
+	// AdminTaken: You are no longer an admin...
+
+	AdminCommand: {
+		// Usage: /DLAdmin [player name]
+		// Description: Adds a user to the admin list for DragonLens, allowing them to use the mods cheat tools.
+		// NameNotEntered: You must enter the name of the player to give admin powers to.
+		// AlreadyAdmin: That user is already an admin.
+		// AdminGiven: "{0} is now an admin."
+	}
+
+	DeAdminCommand: {
+		// Usage: /DLRemoveAdmin [player name]
+		// Description: Removes a user from the admin list for DragonLens, disallowing them from using the mods cheat tools.
+		// NameNotEntered: You must enter the name of the player to revoke admin powers from.
+		// NotAdmin: That user is not an admin.
+		// AdminTaken: "{0} is no longer an admin."
+	}
+
+	// AdminListCommand.Description: List all players that can use DragonLens cheat tools.
+}
+
+/* MOTD:
+	'''
+	Thank you for using DragonLens V.{0}!
+
+	Be sure to check the customize tool (wrench icon) to set up the mod with the tools you need.
+
+	Additional documentation can be found at https://github.com/ScalarVector1/DragonLens/wiki
+	''' */

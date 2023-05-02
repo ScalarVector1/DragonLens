@@ -352,7 +352,7 @@ namespace DragonLens.Content.GUI
 		{
 			if (!PermissionHandler.CanUseTools(Main.LocalPlayer))
 			{
-				Main.NewText(LocalizationHelper.GetCommonText("NotAdmin"), Color.Red);
+				Main.NewText(LocalizationHelper.GetText("Permission.NotAdmin"), Color.Red);
 				return;
 			}
 
@@ -364,7 +364,7 @@ namespace DragonLens.Content.GUI
 		{
 			if (!PermissionHandler.CanUseTools(Main.LocalPlayer))
 			{
-				Main.NewText(LocalizationHelper.GetCommonText("NotAdmin"), Color.Red);
+				Main.NewText(LocalizationHelper.GetText("Permission.NotAdmin"), Color.Red);
 				return;
 			}
 

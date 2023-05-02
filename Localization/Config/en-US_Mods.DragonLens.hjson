@@ -1,0 +1,43 @@
+BoxStyle: {
+	simple: simple
+	vanilla: vanilla
+}
+
+IconStyle: {
+	basic: basic
+	HEROs: HEROs
+}
+
+GUIConfig: {
+	backgroundColor: {
+		Label: Background color
+		Tooltip: The color of DragonLens' backgrounds
+	}
+
+	buttonColor: {
+		Label: Button color
+		Tooltip: The color of DragonLens' buttons
+	}
+
+	boxStyle: {
+		Label: Box style
+		Tooltip: The style of DragonLens' boxes
+	}
+
+	iconStyle: {
+		Label: Icon pack
+		Tooltip: The icon pack to use for tools
+	}
+}
+
+ToolConfig: {
+	preloadSpawners: {
+		Label: Preload spawners
+		Tooltip: Load entries for spawners at mod load instead of when used. Prevents in-game freezes but may increase load time.
+	}
+
+	preloadAssets: {
+		Label: Preload assets
+		Tooltip: Load assets for spawners at mod load instead of when used. Prevents in-game freezes but may increase load time.
+	}
+}

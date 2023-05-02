@@ -185,7 +185,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 				{
 					if (!PermissionHandler.CanUseTools(Main.LocalPlayer))
 					{
-						Main.NewText(LocalizationHelper.GetCommonText("NotAdmin"), Color.Red);
+						Main.NewText(LocalizationHelper.GetText("Permission.NotAdmin"), Color.Red);
 						return;
 					}
 
@@ -196,7 +196,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 				{
 					if (!PermissionHandler.CanUseTools(Main.LocalPlayer))
 					{
-						Main.NewText(LocalizationHelper.GetCommonText("NotAdmin"), Color.Red);
+						Main.NewText(LocalizationHelper.GetText("Permission.NotAdmin"), Color.Red);
 						return;
 					}
 

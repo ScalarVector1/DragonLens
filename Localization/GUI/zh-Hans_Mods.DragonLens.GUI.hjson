@@ -34,6 +34,8 @@ LayoutPresetBrowser: {
 }
 
 Layout: {
+	// Invalid: Your saved layout is invalid or corrupted!
+
 	Simple: {
 		Name: 简单
 		Tooltip: 简洁的布局，适合玩家或模组测试人员。
@@ -87,27 +89,27 @@ ToolbarCustomizationElements: {
 	}
 
 	HideOptionButton: {
-		// Name: Auto-hide: {0}
-		// Tooltip: Allows you to set visibility rules for this toolbar. NEWBLOCK {0} NEWBLOCK Clicking will change to: {1}
+		Name: "{0}"
+		Tooltip: 允许您为此工具栏设置可见性规则。 NEWBLOCK {0} NEWBLOCK 点击将更改为：{1}。
 
 		Never: {
-			// Name: Normal
-			// Tip: Always visible during normal gameplay
+			Name: 始终可见
+			Tip: 在正常游戏过程中始终可见。
 		}
 
 		InventoryOpen: {
-			// Name: Inventory closed only
-			// Tip: Only visible if your inventory is closed
+			Name: 仅在物品栏关闭时可见
+			Tip: 仅在物品栏关闭时可见。
 		}
 
 		InventoryClosed: {
-			// Name: Inventory open only
-			// Tip: Only visible if your inventory is open
+			Name: 仅在物品栏开启时可见
+			Tip: 仅在物品栏开启时可见。
 		}
 
 		NoMapScreen: {
-			// Name: Map only
-			// Tip: Visible on the map -- note: tools which open other windows will require you to close the map to use them!
+			Name: 仅在打开地图时可见
+			Tip: 在全屏地图界面中可见。 注意：会打开其他窗口的工具需要关闭地图才能使用！
 		}
 	}
 
@@ -136,4 +138,9 @@ ToolbarCustomizationElements: {
 		// Name: Tool options
 		// Tooltip: Open the configuration to change tool functionality/defaults
 	}
+}
+
+EntityEditor: {
+	LiveReaction: "{0} 实时跟踪"
+	Select: 点击实体以选择，右键单击取消。
 }

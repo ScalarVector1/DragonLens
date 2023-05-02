@@ -34,6 +34,8 @@ LayoutPresetBrowser: {
 }
 
 Layout: {
+	Invalid: Your saved layout is invalid or corrupted!
+
 	Simple: {
 		Name: Simple
 		Tooltip: A simplified layout, perfect for players or mod testers.
@@ -136,4 +138,9 @@ ToolbarCustomizationElements: {
 		Name: Tool options
 		Tooltip: Open the configuration to change tool functionality/defaults
 	}
+}
+
+EntityEditor: {
+	LiveReaction: Live {0} Reaction
+	Select: Click on an entity in the world to select it. Right click to cancel.
 }

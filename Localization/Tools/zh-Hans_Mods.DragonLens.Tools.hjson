@@ -225,7 +225,7 @@ InfiniteReach: {
 
 Magnet: {
 	DisplayName: 物品磁铁
-	Description: 开启后，世界上的所有物品会自动飞到你身上。右键点击启用虚空磁铁，自动销毁吸取到的物品。
+	Description: 开启后，世界上所有的物品会被你吸取。 右键点击启用虚空磁铁，自动销毁吸取到的物品。
 	RightClickName: 虚空磁铁 (捡起时销毁物品)
 }
 
