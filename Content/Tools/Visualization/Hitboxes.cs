@@ -223,14 +223,14 @@ namespace DragonLens.Content.Tools.Visualization
 
 		public BoxType boxState;
 		public Func<List<Rectangle>> getBoxes;
-		public string text;
+		public string localizationKey;
 
 		public Color BoxColor => slider != null ? slider.Color : Color.Red;
 
 		public HitboxOption(Func<List<Rectangle>> getBoxes, string localizationKey, float defaultColor)
 		{
 			this.getBoxes = getBoxes;
-			this.text = LocalizationHelper.GetText($"Tools.Hitboxes.Options.{localizationKey}");
+			this.localizationKey = localizationKey;
 
 			Width.Set(122, 0);
 			Height.Set(90, 0);
@@ -284,7 +284,7 @@ namespace DragonLens.Content.Tools.Visualization
 			var dims = GetDimensions().ToRectangle();
 
 			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
-			Utils.DrawBorderString(spriteBatch, text, new Vector2(dims.Center.X, dims.Y + 8), Color.White, 0.75f, 0.5f);
+			Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetText($"Tools.Hitboxes.Options.{localizationKey}"), new Vector2(dims.Center.X, dims.Y + 8), Color.White, 0.75f, 0.5f);
 
 			base.Draw(spriteBatch);
 		}

@@ -318,253 +318,253 @@ Weather: {
 }
 
 HideMap: {
-	// DisplayName: Hide map
-	// Description: Resets the world map
+	DisplayName: 隐藏地图
+	Description: 重置世界地图探索进度
 }
 
 MapTeleport: {
-	// DisplayName: Map teleportation
-	// Description: Toggles the ability to teleport on the map. Right click anywhere on the map to teleport.
-	// OutsideWorldWarning: You cant teleport outside of the world!
+	DisplayName: 全图传送
+	Description: 开关在地图上传送的能力。 在地图上任意位置右键单击以传送。
+	OutsideWorldWarning: 你不能传送到世界之外！
 }
 
 RevealMap: {
-	// DisplayName: Reveal map
-	// Description: Reveals the entire world map
+	DisplayName: 显示地图
+	Description: 显示整个世界的地图
 }
 
 BuffSpawner: {
-	// DisplayName: Buff spawner
-	// Description: Allows you to apply buffs to yourself or NPCs
-	// DurationEditor: Duration (ticks)
-	// Applied: Applied {0} to {1}
-	// Selected: "{0} selected, click an NPC to apply it to them. Right click to deselect. You can right click a buff in the browser to apply it to yourself instead."
+	DisplayName: Buff生成器
+	Description: 允许你为自己或NPC提供Buff。
+	DurationEditor: 持续时间 (帧)
+	Applied: 已将{0}应用到{1}
+	Selected: 已选择{0}，点击NPC以将其应用于NPC，右键取消选择。 右键单击一个Buff以将其应用于自己。
 
 	FilterCategories: {
-		// Mod: Mod filters
-		// Buff: Buff type filters
+		Mod: 按模组筛选
+		Buff: 按类别筛选
 	}
 
 	Filters: {
-		// Mod.Description: Buffs added by the mod {0}
+		Mod.Description: 由{0}模组添加的Buff
 
 		Vanilla: {
-			// Name: Vanilla
-			// Description: Buffs from vanilla
+			Name: 原版
+			Description: 原版Buff
 		}
 
 		Buff: {
-			// Name: Buff
-			// Description: Buffs with positive effects
+			Name: 增益
+			Description: 有正面效果的Buff
 		}
 
 		Debuff: {
-			// Name: Debuff
-			// Description: Buffs with negative effects
+			Name: 减益
+			Description: 有负面效果的Buff
 		}
 	}
 }
 
 DustSpawner: {
-	// DisplayName: Dust spawner
-	// Description: Spawn dust, with options to preview different spawning methods and parameters
-	// DustType: Type: {0}
-	// Selected: "{0} selected, click anywhere in the world to spawn. Right click to deselect."
+	DisplayName: 粒子生成器
+	Description: 生成粒子，可以预览不同的生成方式和参数选项。
+	DustType: Type: {0}
+	Selected: 已选择 {0}，单击世界中的任意位置生成。 右键单击取消选择。
 
 	FieldEditors: {
-		// NewDustPerfect: Use NewDustPerfect
-		// Scale: Scale
-		// Alpha: Alpha
-		// Velocity: Velocity
-		// Color: Color
+		NewDustPerfect: 使用NewDustPerfect
+		Scale: 尺寸
+		Alpha: 透明度
+		Velocity: 速度
+		Color: 颜色
 	}
 
-	// FilterCategories.Mod: Mod filters
+	FilterCategories.Mod: 按模组筛选
 
 	Filters: {
-		// Mod.Description: Dust added by the mod {0}
+		Mod.Description: 由{0}模组添加的粒子
 
 		Vanilla: {
-			// Name: Vanilla
-			// Description: Dusts from the base game
+			Name: 原版
+			Description: 原版粒子
 		}
 	}
 }
 
 ItemSpawner: {
-	// DisplayName: Item spawner
-	// Description: Spawn any item in the game!
+	DisplayName: 物品生成器
+	Description: 生成任意物品！
 
 	FilterCategories: {
-		// Mod: Mod filters
-		// Damage: Damage filters
-		// Misc: Misc filters
+		Mod: 按模组筛选
+		Damage: 按伤害类型筛选
+		Misc: 其他筛选项
 	}
 
 	Filters: {
-		// DamageClass.Description: Items with {0}
-		// Mod.Description: Items added by the mod {0}
+		DamageClass.Description: 伤害类型为{0}的物品
+		Mod.Description: 由{0}模组添加的物品
 
 		Vanilla: {
-			// Name: Vanilla
-			// Description: Items from the base game
+			Name: 原版
+			Description: 原版物品
 		}
 
 		AnyDamage: {
-			// Name: Any damage
-			// Description: Any item that deals damage
+			Name: 任意伤害
+			Description: 会造成伤害的物品
 		}
 
 		Accessory: {
-			// Name: Accessory
-			// Description: Any item that can be equipped as an accessory
+			Name: 饰品
+			Description: 可以放在饰品栏的物品
 		}
 
 		Armor: {
-			// Name: Armor
-			// Description: Any item that can be equipped as armor
+			Name: 盔甲
+			Description: 可以放在盔甲栏的物品
 		}
 
 		Placeable: {
-			// Name: Placeable
-			// Description: Any item that palces a tile
+			Name: 物块
+			Description: 可以被放置为物块的物品
 		}
 
 		Deprecated: {
-			// Name: Deprecated
-			// Description: Any item that is deprecated (ItemID.Sets.Deprecated)
+			Name: 弃用
+			Description: 被弃用的物品 (ItemID.Sets.Deprecated)
 		}
 	}
 }
 
 NPCSpawner: {
-	// DisplayName: NPC spawner
-	// Description: Spawn NPCs, from villagers to skeletons to bosses
-	// NameExceptionMessage: A NPCs ({0}) name threw an exception while getting it! Report to {1} developers!
-	// NameException: This NPCs name threw an exception while getting it! Report to {0} developers!
-	// BestiaryEntryException: An NPC ({0}) throws an exception while drawing its bestiary entry! Report to {1} developers!
-	// NPCType: Type: {0}
-	// Selected: "{0} selected, click anywhere in the world to spawn. Right click to deselect."
+	DisplayName: NPC生成器
+	Description: 生成NPC。 小到城镇NPC大到Boss。
+	NameExceptionMessage: 一个NPC({0})的名称在获取时引发了异常！请向{1}的开发人员报告！
+	NameException: 这个NPC的名称在获取时引发了异常！请向{0}的开发人员报告！
+	BestiaryEntryException: 一个NPC({0})的图鉴条目在绘制时引发了异常！请向{1}的开发人员报告！
+	NPCType: ID: {0}
+	Selected: 已选择 {0}，单击世界中的任意位置生成。 右键单击取消选择。
 
 	FilterCategories: {
-		// Mod: Mod filters
-		// Type: Type filters
-		// Hostility: Hostility filters
-		// Bestiary: Bestiary filters
+		Mod: 按模组筛选
+		Type: 按类别筛选
+		Hostility: 按友好/敌对筛选
+		Bestiary: 按图鉴分类筛选
 	}
 
 	Filters: {
-		// Bestiary.Description: NPCs with the bestiary attribute {0}
-		// Mod.Description: NPCs added by the mod {0}
+		Bestiary.Description: 在图鉴中被归类于“{0}”的NPC
+		Mod.Description: 由{0}模组添加的NPC
 
 		Vanilla: {
-			// Name: Vanilla
-			// Description: NPCs from the base game
+			Name: 原版
+			Description: 原版NPC
 		}
 
 		Boss: {
-			// Name: Boss
-			// Description: NPCs which are bosses
+			Name: Boss
+			Description: 属于Boss的NPC
 		}
 
 		Critter: {
-			// Name: Critter
-			// Description: NPCs which count as critters
+			Name: 小动物
+			Description: 属于小动物的NPC
 		}
 
 		Friendly: {
-			// Name: Friendly
-			// Description: NPCs which are friendly
+			Name: 友好
+			Description: 友好NPC
 		}
 
 		Hostile: {
-			// Name: Hostile
-			// Description: Enemy NPCs
+			Name: 敌对
+			Description: 敌对NPC
 		}
 	}
 }
 
 ProjectileSpawner: {
-	// DisplayName: Projectile spawner
-	// Description: Spawn projectiles, with options for setting velocity and other parameters
-	// NameExceptionMessage: A Projectiles ({0}) name threw an exception while getting it! Report to {1} developers!
-	// NameException: This Projectiles name threw an exception while getting it! Report to {0} developers!
-	// ProjectileType: Type: {0}
-	// Selected: "{0} selected, click anywhere in the world to spawn. Right click to deselect."
-	// FieldEditors.Velocity: Velocity
+	DisplayName: 射弹生成器
+	Description: 生成射弹，可调节速度和其他参数。
+	NameExceptionMessage: 一个射弹({0})的名称在获取时引发了异常！请向{1}的开发人员报告！
+	NameException: 这个射弹的名称在获取时引发了异常！请向{0}的开发人员报告！
+	ProjectileType: ID: {0}
+	Selected: 已选择 {0}，单击世界中的任意位置生成。 右键单击取消选择。
+	FieldEditors.Velocity: 速度
 
 	FilterCategories: {
-		// Mod: Mod filters
-		// Hostility: Friendly/Hostile filters
+		Mod: 按模组筛选
+		Hostility: 按友好/敌对筛选
 	}
 
 	Filters: {
-		// Mod.Description: Projectiles added by the mod {0}
+		Mod.Description: 由{0}模组添加的射弹
 
 		Vanilla: {
-			// Name: Vanilla
-			// Description: Projectiles from the base game
+			Name: 原版
+			Description: 原版射弹
 		}
 
 		Friendly: {
-			// Name: Friendly
-			// Description: Projectiles which by default belong to a player
+			Name: 友好
+			Description: 默认情况下属于玩家的射弹
 		}
 
 		Hostile: {
-			// Name: Hostile
-			// Description: Projectiles which by default belong to an enemy
+			Name: 敌对
+			Description: 默认情况下属于敌怪的射弹
 		}
 	}
 }
 
 TileSpawner: {
-	// DisplayName: Tile spawner
-	// Description: Place tiles without items!
-	// TileType: Type: {0}
-	// Selected: "{0} selected, click anywhere in the world to spawn. Right click to deselect."
-	// FilterCategories.Mod: Mod filters
+	DisplayName: 物块生成器
+	Description: 无需物品即可放置物块！
+	TileType: ID: {0}
+	Selected: 已选择 {0}，单击世界中的任意位置生成。 右键单击取消选择。
+	FilterCategories.Mod: 按模组筛选
 
 	Filters: {
-		// Mod.Description: Tiles added by the mod {0}
+		Mod.Description: 由模组 {0} 添加的物块
 
 		Vanilla: {
-			// Name: Vanilla
-			// Description: Tiles from the base game
+			Name: 原版
+			Description: 原版中的物块
 		}
 	}
 }
 
 Floodlight: {
-	// DisplayName: Mass Illumination
-	// Description: Light up the entire screen!
-	// RightClickName: Decrease Mass Illumination
+	DisplayName: 全局光照
+	Description: 将整个屏幕照亮！
+	RightClickName: 减少全局光照
 }
 
 FreeCamera: {
-	// DisplayName: Free camera
-	// Description: You can move the camera around freely with your movement keys. Hold SHIFT to speed up and CTRL to slow down while moving. Mutually exclusive with lock camera.
+	DisplayName: 自由相机
+	Description: 您可以使用移动键自由移动相机。移动时按住Shift键加速，按住Ctrl键减速。与锁定相机互斥。
 }
 
 Hitboxes: {
-	// DisplayName: Hitboxes
-	// Description: Shows the hitboxes of various entities
+	DisplayName: 碰撞箱
+	Description: 显示多种实体的碰撞箱。
 
 	Options: {
-		// NPC: NPC Hitboxes
-		// Projectile: Projectile Hitboxes
-		// Player: Player Hitboxes
-		// Item: Item Hitboxes
+		NPC: NPC 碰撞箱
+		Projectile: 射弹碰撞箱
+		Player: 玩家碰撞箱
+		Item: 物品碰撞箱
 	}
 }
 
 LockCamera: {
-	// DisplayName: Lock camera
-	// Description: Lock the camera to it's current position. Mutually exclusive with free camera.
+	DisplayName: 锁定相机
+	Description: 将相机锁定在其当前位置。与自由相机互斥。
 }
 
 CustomizeTool: {
-	// DisplayName: Customize tool
-	// Description: Customize your toolbar layout!
-	// ToolBrowser: Add tool
+	DisplayName: 自定义工具
+	Description: 自定义你的工具栏布局！
+	ToolBrowser: 添加工具
 }

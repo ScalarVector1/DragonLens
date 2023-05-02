@@ -7,7 +7,7 @@ namespace DragonLens.Content.Filters.ItemFilters
 	{
 		public DamageClass damageClass;
 
-		public DamageClassFilter(DamageClass damageClass, string texture) : base(texture, damageClass.DisplayName.Value, ItemSpawner.GetText("Filters.DamageClass.Description", damageClass.DisplayName.Value), n => FilterByDamageClass(n, damageClass))
+		public DamageClassFilter(DamageClass damageClass, string texture) : base(texture, damageClass.DisplayName.Value.Trim(), ItemSpawner.GetText("Filters.DamageClass.Description", damageClass.DisplayName.Value.Trim()), n => FilterByDamageClass(n, damageClass))
 		{
 			this.damageClass = damageClass;
 		}

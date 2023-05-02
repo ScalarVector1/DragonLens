@@ -34,7 +34,7 @@ LayoutPresetBrowser: {
 }
 
 Layout: {
-	// Invalid: Your saved layout is invalid or corrupted!
+	Invalid: 您保存的布局无效或已损坏！
 
 	Simple: {
 		Name: 简单
@@ -69,23 +69,23 @@ ToggleButton: {
 
 ToolbarCustomizationElements: {
 	RemoveButton: {
-		// Name: Remove tool
-		// Tooltip: You can always re-add it from the add tool menu (green tab)!
+		Name: 移除工具
+		Tooltip: 你随时可以从添加工具菜单(绿色标签)重新添加它！
 	}
 
 	AddButton: {
-		// Name: Add tool
-		// Tooltip: Click to add tools to this toolbar
+		Name: 添加工具
+		Tooltip: 为这个工具栏添加工具
 	}
 
 	RemoveToolbarButton: {
-		// Name: Remove toolbar
-		// Tooltip: Remove this entire toolbar!
+		Name: 移除工具栏
+		Tooltip: 移除整个工具栏！
 	}
 
 	DragButton: {
-		// Name: Move toolbar
-		// Tooltip: Click and drag to re-position this toolbar. The toolbar will automatically snap to the edges of the screen if close enough. Right click while dragging to rotate the toolbar.
+		Name: 移动工具栏
+		Tooltip: 点击并拖动以重新定位此工具栏。 靠近屏幕边缘时，工具栏将自动吸附。 拖动时右键单击以旋转工具栏。
 	}
 
 	HideOptionButton: {
@@ -119,24 +119,24 @@ ToolbarCustomizationElements: {
 	}
 
 	SaveLayoutButton: {
-		// Name: Save layout
-		// Tooltip: Finish customizing and save your layout
-		// LayoutSaved: Layout saved!
+		Name: 保存布局
+		Tooltip: 完成自定义并保存您的布局。
+		LayoutSaved: 布局已保存！
 	}
 
 	LoadLayoutButton: {
-		// Name: Load layout
-		// Tooltip: Load an existing layout
+		Name: 加载布局
+		Tooltip: 加载已有的布局
 	}
 
 	VisualConfigButton: {
-		// Name: Change style
-		// Tooltip: Open the configuration to change the visual style of the GUI
+		Name: 更改风格
+		Tooltip: 打开配置选项以更改UI的视觉风格
 	}
 
 	FunctionalConfigButton: {
-		// Name: Tool options
-		// Tooltip: Open the configuration to change tool functionality/defaults
+		Name: 工具选项
+		Tooltip: 打开配置选项以更改工具功能/默认设置
 	}
 }
 

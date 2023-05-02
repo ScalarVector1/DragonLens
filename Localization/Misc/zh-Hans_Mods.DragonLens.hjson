@@ -1,33 +1,33 @@
 Permission: {
 	NotAdmin: 你没有管理员权限！
-	// PlayerNotFound: Could not find a player by the name {0}
-	// AdminGiven: You are now an admin!
-	// AdminTaken: You are no longer an admin...
+	PlayerNotFound: 无法找到名为{0}的玩家
+	AdminGiven: 你已成为管理员！
+	AdminTaken: 你不再是管理员了...
 
 	AdminCommand: {
-		// Usage: /DLAdmin [player name]
-		// Description: Adds a user to the admin list for DragonLens, allowing them to use the mods cheat tools.
-		// NameNotEntered: You must enter the name of the player to give admin powers to.
-		// AlreadyAdmin: That user is already an admin.
-		// AdminGiven: "{0} is now an admin."
+		Usage: /DLAdmin [玩家名字]
+		Description: 将用户添加到DragonLens的管理员列表中，以允许他们使用作弊工具。
+		NameNotEntered: 你必须输入要赋予管理员权限的玩家名称。
+		AlreadyAdmin: 这个玩家已经是管理员了。
+		AdminGiven: "{0}已成为管理员"
 	}
 
 	DeAdminCommand: {
-		// Usage: /DLRemoveAdmin [player name]
-		// Description: Removes a user from the admin list for DragonLens, disallowing them from using the mods cheat tools.
-		// NameNotEntered: You must enter the name of the player to revoke admin powers from.
-		// NotAdmin: That user is not an admin.
-		// AdminTaken: "{0} is no longer an admin."
+		Usage: /DLRemoveAdmin [player name]
+		Description: 将用户从DragonLens的管理员列表中移除，以禁止他们使用作弊工具。
+		NameNotEntered: 你必须输入要撤销管理员权限的玩家名称。
+		NotAdmin: 这个玩家不是管理员。
+		AdminTaken: "{0}不再是管理员"
 	}
 
-	// AdminListCommand.Description: List all players that can use DragonLens cheat tools.
+	AdminListCommand.Description: 列出所有可以使用DragonLens作弊工具的玩家。
 }
 
-/* MOTD:
+MOTD:
 	'''
-	Thank you for using DragonLens V.{0}!
+	感谢使用 DragonLens V.{0}!
 
-	Be sure to check the customize tool (wrench icon) to set up the mod with the tools you need.
+	请务必使用自定义工具(扳手图标)来设置你想要的工具。
 
-	Additional documentation can be found at https://github.com/ScalarVector1/DragonLens/wiki
-	''' */
+	详细文档可在 https://github.com/ScalarVector1/DragonLens/wiki 查看。
+	'''
