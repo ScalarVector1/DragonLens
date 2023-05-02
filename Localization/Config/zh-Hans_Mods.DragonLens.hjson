@@ -9,7 +9,7 @@ IconStyle: {
 }
 
 GUIConfig: {
-	Title: GUI 配置
+	Title: GUI配置
 
 	backgroundColor: {
 		Label: 背景颜色
@@ -22,8 +22,8 @@ GUIConfig: {
 	}
 
 	boxStyle: {
-		Label: 界面风格
-		Tooltip: 界面的风格
+		Label: UI框风格
+		Tooltip: UI框的风格
 	}
 
 	iconStyle: {
@@ -36,12 +36,12 @@ ToolConfig: {
 	Title: 工具配置
 
 	preloadSpawners: {
-		Label: 预加载生成器
-		Tooltip: 在模组加载时而不是使用时为生成器加载条目。可避免游戏中打开生成器时的卡顿，但可能会增加模组加载时间。
+		Label: 预加载生成器条目
+		Tooltip: 在模组加载时为生成器加载条目，而不是使用时。 可减少游戏中打开生成器时的卡顿，但可能会增加模组加载时间。
 	}
 
 	preloadAssets: {
-		Label: 预加载资源
-		Tooltip: 在模组加载时而不是使用时为生成器加载资源。可避免游戏中打开生成器时的卡顿，但可能会增加模组加载时间。
+		Label: 预加载生成器资源
+		Tooltip: 在模组加载时为生成器加载资源，而不是使用时。 可减少游戏中打开生成器时的卡顿，但可能会增加模组加载时间。
 	}
 }

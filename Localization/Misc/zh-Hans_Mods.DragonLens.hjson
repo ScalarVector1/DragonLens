@@ -5,19 +5,19 @@ Permission: {
 	AdminTaken: 你不再是管理员了...
 
 	AdminCommand: {
-		Usage: /DLAdmin [玩家名字]
-		Description: 将用户添加到DragonLens的管理员列表中，以允许他们使用作弊工具。
-		NameNotEntered: 你必须输入要赋予管理员权限的玩家名称。
+		Usage: /DLAdmin [玩家名]
+		Description: 将用户添加到DragonLens的管理员列表中，允许他们使用作弊工具。
+		NameNotEntered: 你必须输入要赋予管理员权限的玩家的名称。
 		AlreadyAdmin: 这个玩家已经是管理员了。
-		AdminGiven: "{0}已成为管理员"
+		AdminGiven: "{0}已成为管理员。"
 	}
 
 	DeAdminCommand: {
-		Usage: /DLRemoveAdmin [player name]
-		Description: 将用户从DragonLens的管理员列表中移除，以禁止他们使用作弊工具。
-		NameNotEntered: 你必须输入要撤销管理员权限的玩家名称。
+		Usage: /DLRemoveAdmin [玩家名]
+		Description: 将用户从DragonLens的管理员列表中移除，禁止他们使用作弊工具。
+		NameNotEntered: 你必须输入要撤销管理员权限的玩家的名称。
 		NotAdmin: 这个玩家不是管理员。
-		AdminTaken: "{0}不再是管理员"
+		AdminTaken: "{0}不再是管理员了。"
 	}
 
 	AdminListCommand.Description: 列出所有可以使用DragonLens作弊工具的玩家。
@@ -25,9 +25,9 @@ Permission: {
 
 MOTD:
 	'''
-	感谢使用 DragonLens V.{0}!
+	感谢您使用 DragonLens V.{0}!
 
-	请务必使用自定义工具(扳手图标)来设置你想要的工具。
+	请考虑使用自定义工具（扳手图标）来配置你所需的工具。
 
-	详细文档可在 https://github.com/ScalarVector1/DragonLens/wiki 查看。
+	详细文档可在 https://github.com/ScalarVector1/DragonLens/wiki 上查看。
 	'''
