@@ -48,7 +48,7 @@ AccessoryTray: {
 ItemEditor: {
 	DisplayName: 编辑物品
 	Description: 更改物品的数据和其它字段！
-	AutogenMsg: 此字段编辑器是通过反射自动生成的。更改它可能会产生不可预知的后果，具体取决于这个物品所属模组的功能。
+	AutogenMsg: 此字段编辑器是通过反射自动生成的。 更改它可能会产生不可预知的后果，具体取决于字段在模组中的用途。
 	VanillaFields: 原版字段
 	Modded: 模组字段
 	Prefixes: 修饰语
@@ -62,82 +62,82 @@ ItemEditor: {
 	Editors: {
 		Damage: {
 			Name: 伤害
-			Description: 这个物品或它的射弹的伤害。
+			Description: 该物品或它的射弹的伤害。
 		}
 
 		CritChance: {
 			Name: 暴击率
-			Description: 实际暴击率为该值加上4%的基础暴击率。
+			Description: 该物品的暴击率，实为该值加上4%的基础暴击率。
 		}
 
 		Knockback: {
 			Name: 击退
-			Description: 这个物品在攻击敌人时的击退。
+			Description: 该物品在攻击敌人时的击退。
 		}
 
 		UseStyle: {
 			Name: 使用类型
-			Description: 数值对应英文ID如下 NEWLN 0: None NEWLN 1: Swing NEWLN 3: Thrust NEWLN 4: HoldUp NEWLN 5: Shoot NEWLN 6: DrinkLong NEWLN 7: DrinkOld NEWLN 8: GolfPlay NEWLN 9: DrinkLiquid NEWLN 10: HiddenAnimation NEWLN 11: MowTheLawn NEWLN 12: Guitar NEWLN 13: Rapier NEWLN 14: RaiseLamp
+			Description: 数值对应的英文ID如下 NEWLN 0: None NEWLN 1: Swing NEWLN 3: Thrust NEWLN 4: HoldUp NEWLN 5: Shoot NEWLN 6: DrinkLong NEWLN 7: DrinkOld NEWLN 8: GolfPlay NEWLN 9: DrinkLiquid NEWLN 10: HiddenAnimation NEWLN 11: MowTheLawn NEWLN 12: Guitar NEWLN 13: Rapier NEWLN 14: RaiseLamp
 		}
 
 		UseTime: {
 			// Name: Use Time
-			Description: 物品使用之间的时间间隔。以Tick为单位。
+			Description: 物品使用之间的时间间隔，以Tick为单位。
 		}
 
 		UseAnimation: {
 			// Name: Use Animation
-			Description: 在你能够停止这个使用这个物品或再次使用之前需要等待的时间间隔，以Tick为单位。
+			Description: 在你能够停用该物品或再次使用之前需要等待的时间，以Tick为单位。
 		}
 
 		AutoReuse: {
 			Name: 自动挥舞
-			Description: 这个物品在按住鼠标左键时是否会自动重复使用。
+			Description: 该物品在按住鼠标左键时是否会自动重复使用。
 		}
 
 		ReuseDelay: {
 			// Name: Reuse Delay
-			Description: 这个物品使用完成后，再次使用之前的延迟时间。
+			Description: 使用完该物品后，能再次使用之前的延迟，以Tick为单位。
 		}
 
 		PickaxePower: {
 			Name: 镐力
-			Description: 这个物品破坏物块的能力。
+			Description: 该物品破坏物块的能力。
 		}
 
 		AxePower: {
 			Name: 斧力
-			Description: 这个物品砍伐树木的能力。实际值为该值的5倍。
+			Description: 该物品砍伐树木的能力。 实际值为该值的5倍。
 		}
 
 		HammerPower: {
 			Name: 锤力
-			Description: 这个物品破坏墙的能力。
+			Description: 该物品破坏墙的能力。
 		}
 
 		Rarity: {
 			Name: 稀有度
-			Description: 物品名字的颜色。 NEWLN -13: Master NEWLN -12: Expert NEWLN -11: Quest NEWLN -1: Gray NEWLN 0: White NEWLN 1: Blue NEWLN 2: Green NEWLN 3: Orange NEWLN 4: LightRed NEWLN 5: Pink NEWLN 6: LightPurple NEWLN 7: Lime NEWLN 8: Yellow NEWLN 9: Cyan NEWLN 10: Red NEWLN 11: Purple
+			Description: 物品名的颜色。 NEWLN -13: Master NEWLN -12: Expert NEWLN -11: Quest NEWLN -1: Gray NEWLN 0: White NEWLN 1: Blue NEWLN 2: Green NEWLN 3: Orange NEWLN 4: LightRed NEWLN 5: Pink NEWLN 6: LightPurple NEWLN 7: Lime NEWLN 8: Yellow NEWLN 9: Cyan NEWLN 10: Red NEWLN 11: Purple
 		}
 
 		Value: {
 			Name: 价值
-			Description: 这个物品出售的价格，以铜币为单位
+			Description: 该物品出售的价格，以铜币为单位。
 		}
 
 		ProjectileType: {
 			Name: Projectile Type
-			Description: 这个物品在使用时会发射的射弹的ID。 NEWBLOCK 使用“射弹生成器”来预览不同的射弹。
+			Description: 该物品在使用时会发射的射弹的ID。 NEWBLOCK 使用“射弹生成器”来预览不同的射弹。
 		}
 
 		ShootSpeed: {
 			Name: Shoot speed
-			Description: 这个物品发射射弹的速度。
+			Description: 该物品发射射弹的速度。
 		}
 
 		Color: {
 			Name: 颜色
-			Description: 这个物品贴图的颜色
+			Description: 该物品贴图的颜色
 		}
 	}
 }
@@ -145,44 +145,44 @@ ItemEditor: {
 PlayerEditor: {
 	DisplayName: 编辑玩家
 	Description: 更改玩家的数据和其它字段！
-	AutogenMsg: 这个属性编辑器是通过反射自动生成的。更改它可能会产生不可预知的后果，具体取决于这个ModPlayer所属模组的功能。
+	AutogenMsg: 这个属性编辑器是通过反射自动生成的。 更改它可能会产生不可预知的后果，具体取决于字段在模组中的用途。
 	VanillaFields: 原版字段
 	ModPlayers: 模组字段
 
 	Editors: {
 		MaxLife: {
-			Name: 最大生命值
-			Description: 玩家通过原版的永久生命加成物品所获得的最大生命值(即statLifeMax)。将其更改为低于20或高于500可能会产生奇怪的效果。
+			Name: 生命上限
+			Description: 玩家通过原版的永久生命加成物品所获得的生命上限（即statLifeMax）。 将其更改为低于20或高于500可能会产生奇怪的效果。
 		}
 
 		MaxMana: {
-			Name: 最大魔力值
-			Description: 玩家通过原版的永久魔力加成物品所获得的最大魔力值(即statManaMax)。将其更改为低于20或高于200可能会产生奇怪的效果。
+			Name: 魔力上限
+			Description: 玩家通过原版的永久魔力加成物品所获得的魔力上限（即statManaMax）。 将其更改为低于20或高于200可能会产生奇怪的效果。
 		}
 
 		ExtraLife: {
-			Name: 额外生命值
-			Description: 允许你给自己增加任意数量的额外生命值。
+			Name: 额外生命
+			Description: 允许你给自己增加任意额外生命。
 		}
 
 		ExtraMana: {
-			Name: 额外魔力值
-			Description: 允许你给自己增加任意数量的额外魔力值。
+			Name: 额外魔力
+			Description: 允许你给自己增加任意额外魔力。
 		}
 
 		ExtraDefense: {
-			Name: 额外防御值
-			Description: 允许你给自己增加任意数量的额外防御值。
+			Name: 额外防御
+			Description: 允许你给自己增加任意额外防御。
 		}
 
 		ExtraEndurance: {
-			Name: 额外伤害抗性
-			Description: 允许你给自己增加任意数量的额外减伤。
+			Name: 额外伤害减免
+			Description: 允许你给自己增加任意额外减伤。
 		}
 
 		ExtraMinionSlots: {
-			Name: 额外召唤物容量
-			Description: 在你的装备提供的召唤物容量的基础上额外增加的容量！
+			Name: 额外召唤物栏位
+			Description: 在你的装备提供的召唤物栏位上增加额外栏位！
 		}
 
 		ExtraSpeed: {
@@ -194,7 +194,7 @@ PlayerEditor: {
 
 Difficulty: {
 	DisplayName: 切换难度
-	Description: 在三种游戏难度之间切换 NEWBLOCK 右键以开关旅行模式
+	Description: 在三种游戏难度之间切换 NEWBLOCK 右键单击以开关旅行模式
 	RightClickName: 开关旅行模式
 	GameInNormalMode: 游戏已切换至经典模式。
 	GameInExpertMode: 游戏已切换至专家模式。
@@ -206,26 +206,26 @@ Difficulty: {
 
 FastForward: {
 	DisplayName: 游戏快进
-	Description: 点击以加快游戏速度，最高可达4倍。右键点击以回退速度。
+	Description: 左键单击以加快游戏速度，最高可达4倍。 右键单击以回退速度。
 	RightClickName: 降低快进倍率
 	MultiplayerDisabled: 多人模式下无法使用游戏快进功能
 }
 
 Godmode: {
 	DisplayName: 上帝模式
-	Description: 开启后，你无法受到攻击、失去魔力值或死亡。右键点击以允许受到攻击，但不会死亡。
-	RightClickName: 帝上模式 (上帝模式+允许受击)
+	Description: 开启后，你无法受击、失去魔力或死亡。 右键单击以允许你受击，但不会死亡。
+	RightClickName: 帝上模式（上帝模式+允许受击）
 	PreventedDeath: 上帝模式阻止了一次死亡，死亡信息: {0}
 }
 
 InfiniteReach: {
 	DisplayName: 建筑大师
-	Description: 无限物块放置范围且能够快速地放置方块。
+	Description: 你拥有无限的放置范围且能够快速地放置物块。
 }
 
 Magnet: {
 	DisplayName: 物品磁铁
-	Description: 开启后，世界上所有的物品会被你吸取。 右键点击启用虚空磁铁，自动销毁吸取到的物品。
+	Description: 开启后，世界上所有的物品会被你吸取。 右键单击以启用虚空磁铁，自动销毁吸取到的物品。
 	RightClickName: 虚空磁铁 (捡起时销毁物品)
 }
 
@@ -238,7 +238,7 @@ Paint: {
 	DisplayName: 绘制工具
 	Description: 复制/粘贴世界上的区域
 	CreateStructure: 创建结构
-	FirstPointSet: 初始点已设置！
+	FirstPointSet: 起始点已设置！
 	StructureSaved: 结构已保存至绘制菜单！
 	TempStructure: 暂存结构 {0}
 
@@ -263,9 +263,9 @@ Paint: {
 
 SpawnTool: {
 	DisplayName: 刷怪速率
-	Description: 改变敌怪生成的速率，也可以完全禁用敌怪自然生成。
+	Description: 改变敌怪生成的速率，也可以完全禁止敌怪自然生成。
 	EnemySpawnRate: 刷怪速率
-	SpawnRate: 当前速率: {0}x
+	SpawnRate: 当前速率：{0}x
 }
 
 Time: {
@@ -274,7 +274,7 @@ Time: {
 	UITitle: 设置时间
 	Day: 白天
 	Night: 黑夜
-	CurrentTime: ({0}: {1}/{2} 帧)
+	CurrentTime: ({0}：{1}/{2} 帧)
 	Resume: 恢复时间流动
 	Freeze: 停止时间流动
 	FreezeTooltip: 使该世界停止时间流动，在世界和游戏重新加载后仍有效。
@@ -302,7 +302,7 @@ Weather: {
 
 	RainButton: {
 		Name: 降雨
-		Tooltip: 启用或禁用自然降雨。请注意，在自然降雨事件的“淡出”期间，仍然可能会有零星几滴雨水。
+		Tooltip: 启用或禁用自然降雨。 请注意，在自然降雨事件的“淡出”期间，仍然可能会有零星几滴雨水。
 	}
 
 	SandstormButton: {
@@ -324,21 +324,21 @@ HideMap: {
 
 MapTeleport: {
 	DisplayName: 全图传送
-	Description: 开关在地图上传送的能力。 在地图上任意位置右键单击以传送。
+	Description: 开关在地图上传送的能力。 在地图上右键单击任意位置以传送。
 	OutsideWorldWarning: 你不能传送到世界之外！
 }
 
 RevealMap: {
-	DisplayName: 显示地图
-	Description: 显示整个世界的地图
+	DisplayName: 点亮全图
+	Description: 点亮整个世界的地图
 }
 
 BuffSpawner: {
 	DisplayName: Buff生成器
-	Description: 允许你为自己或NPC提供Buff。
-	DurationEditor: 持续时间 (帧)
-	Applied: 已将{0}应用到{1}
-	Selected: 已选择{0}，点击NPC以将其应用于NPC，右键取消选择。 右键单击一个Buff以将其应用于自己。
+	Description: 允许你为自己或NPC施加Buff。
+	DurationEditor: 持续时间 (Tick)
+	Applied: 已将{0}施加到{1}
+	Selected: 已选中{0}，左键单击NPC以将其施加于NPC，右键单击以取消。 右键单击Buff则将其施加于自身。
 
 	FilterCategories: {
 		Mod: 按模组筛选
@@ -368,8 +368,8 @@ BuffSpawner: {
 DustSpawner: {
 	DisplayName: 粒子生成器
 	Description: 生成粒子，可以预览不同的生成方式和参数选项。
-	DustType: Type: {0}
-	Selected: 已选择 {0}，单击世界中的任意位置生成。 右键单击取消选择。
+	DustType: Type：{0}
+	Selected: 已选中{0}，左键单击世界中的任意位置以生成。 右键单击以取消。
 
 	FieldEditors: {
 		NewDustPerfect: 使用NewDustPerfect
@@ -443,8 +443,8 @@ NPCSpawner: {
 	NameExceptionMessage: 一个NPC({0})的名称在获取时引发了异常！请向{1}的开发人员报告！
 	NameException: 这个NPC的名称在获取时引发了异常！请向{0}的开发人员报告！
 	BestiaryEntryException: 一个NPC({0})的图鉴条目在绘制时引发了异常！请向{1}的开发人员报告！
-	NPCType: ID: {0}
-	Selected: 已选择 {0}，单击世界中的任意位置生成。 右键单击取消选择。
+	NPCType: ID：{0}
+	Selected: 已选中{0}，左键单击世界中的任意位置以生成。 右键单击以取消。
 
 	FilterCategories: {
 		Mod: 按模组筛选
@@ -489,8 +489,8 @@ ProjectileSpawner: {
 	Description: 生成射弹，可调节速度和其他参数。
 	NameExceptionMessage: 一个射弹({0})的名称在获取时引发了异常！请向{1}的开发人员报告！
 	NameException: 这个射弹的名称在获取时引发了异常！请向{0}的开发人员报告！
-	ProjectileType: ID: {0}
-	Selected: 已选择 {0}，单击世界中的任意位置生成。 右键单击取消选择。
+	ProjectileType: ID：{0}
+	Selected: 已选中{0}，左键单击世界中的任意位置以生成。 右键单击以取消。
 	FieldEditors.Velocity: 速度
 
 	FilterCategories: {
@@ -520,17 +520,17 @@ ProjectileSpawner: {
 
 TileSpawner: {
 	DisplayName: 物块生成器
-	Description: 无需物品即可放置物块！
-	TileType: ID: {0}
-	Selected: 已选择 {0}，单击世界中的任意位置生成。 右键单击取消选择。
+	Description: 无需物品也可放置物块！
+	TileType: ID：{0}
+	Selected: 已选中{0}，单击世界中的任意位置生成。 右键单击取消选择。
 	FilterCategories.Mod: 按模组筛选
 
 	Filters: {
-		Mod.Description: 由模组 {0} 添加的物块
+		Mod.Description: 由{0}模组添加的物块
 
 		Vanilla: {
 			Name: 原版
-			Description: 原版中的物块
+			Description: 原版物块
 		}
 	}
 }
@@ -543,7 +543,7 @@ Floodlight: {
 
 FreeCamera: {
 	DisplayName: 自由相机
-	Description: 您可以使用移动键自由移动相机。移动时按住Shift键加速，按住Ctrl键减速。与锁定相机互斥。
+	Description: 您可以使用移动键自由移动相机。 移动时按住Shift键加速，按住Ctrl键减速。 与锁定相机互斥。
 }
 
 Hitboxes: {
@@ -551,7 +551,7 @@ Hitboxes: {
 	Description: 显示多种实体的碰撞箱。
 
 	Options: {
-		NPC: NPC 碰撞箱
+		NPC: NPC碰撞箱
 		Projectile: 射弹碰撞箱
 		Player: 玩家碰撞箱
 		Item: 物品碰撞箱
@@ -560,7 +560,7 @@ Hitboxes: {
 
 LockCamera: {
 	DisplayName: 锁定相机
-	Description: 将相机锁定在其当前位置。与自由相机互斥。
+	Description: 将相机锁定在其当前位置。 与自由相机互斥。
 }
 
 CustomizeTool: {
