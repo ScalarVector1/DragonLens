@@ -85,7 +85,7 @@ ToolbarCustomizationElements: {
 
 	DragButton: {
 		Name: 移动工具栏
-		Tooltip: 点击并拖动以移动此工具栏。靠近屏幕边缘时，工具栏将自动吸附。拖动时右键单击以旋转工具栏。
+		Tooltip: 点击并拖动以移动此工具栏。 靠近屏幕边缘时，工具栏将自动吸附。 拖动时右键单击以旋转工具栏。
 	}
 
 	HideOptionButton: {
