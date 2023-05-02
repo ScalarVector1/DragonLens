@@ -77,7 +77,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SetupFilters(FilterPanel filters)
 		{
-			filters.AddSeperatorLocalized("Tools.NPCSpawner.FilterCategories.Mod");
+			filters.AddSeperator("Tools.NPCSpawner.FilterCategories.Mod");
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.NPCSpawner.Filters.Vanilla", n => !(n is NPCButton && (n as NPCButton).npc.ModNPC is null)));
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModNPC>().Count() > 0))
@@ -85,15 +85,15 @@ namespace DragonLens.Content.Tools.Spawners
 				filters.AddFilter(new NPCModFilter(mod));
 			}
 
-			filters.AddSeperatorLocalized("Tools.NPCSpawner.FilterCategories.Type");
+			filters.AddSeperator("Tools.NPCSpawner.FilterCategories.Type");
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Boss", "Tools.NPCSpawner.Filters.Boss", n => !(n is NPCButton && (n as NPCButton).npc.boss)));
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Critter", "Critter", "NPCs which count as critters", n => !(n is NPCButton && (n as NPCButton).npc.CountsAsACritter)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Critter", "Tools.NPCSpawner.Filters.Critter", n => !(n is NPCButton && (n as NPCButton).npc.CountsAsACritter)));
 
-			filters.AddSeperatorLocalized("Tools.NPCSpawner.FilterCategories.Hostility");
+			filters.AddSeperator("Tools.NPCSpawner.FilterCategories.Hostility");
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Friendly", "Tools.NPCSpawner.Filters.Friendly", n => !(n is NPCButton && (n as NPCButton).npc.friendly)));
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Hostile", "Tools.NPCSpawner.Filters.Hostile", n => !(n is NPCButton && !(n as NPCButton).npc.friendly)));
 
-			filters.AddSeperatorLocalized("Tools.NPCSpawner.FilterCategories.Bestiary");
+			filters.AddSeperator("Tools.NPCSpawner.FilterCategories.Bestiary");
 
 			foreach (IBestiaryEntryFilter bestiary in Main.BestiaryDB.Filters.Where(n => n is ByInfoElement))
 			{

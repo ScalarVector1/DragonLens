@@ -13,10 +13,14 @@ namespace DragonLens.Content.Filters.DustFilters
 	{
 		public Mod mod;
 
-		public DustModFilter(Mod mod) : base("", mod.DisplayName, DustSpawner.GetText("Filters.Mod.Description", mod.DisplayName), n => FilterByMod(n, mod))
+		public DustModFilter(Mod mod) : base("", "", n => FilterByMod(n, mod))
 		{
 			this.mod = mod;
 		}
+
+		public override string Name => mod.DisplayName;
+
+		public override string Description => DustSpawner.GetText("Filters.Mod.Description", mod.DisplayName);
 
 		public static bool FilterByMod(BrowserButton button, Mod mod)
 		{

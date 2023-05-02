@@ -9,6 +9,8 @@ IconStyle: {
 }
 
 GUIConfig: {
+	Title: GUI Config
+
 	backgroundColor: {
 		Label: Background color
 		Tooltip: The color of DragonLens' backgrounds
@@ -31,6 +33,8 @@ GUIConfig: {
 }
 
 ToolConfig: {
+	Title: Tool Config
+
 	preloadSpawners: {
 		Label: Preload spawners
 		Tooltip: Load entries for spawners at mod load instead of when used. Prevents in-game freezes but may increase load time.

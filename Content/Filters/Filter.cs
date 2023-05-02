@@ -20,29 +20,31 @@ namespace DragonLens.Content.Filters
 		public string texture;
 
 		/// <summary>
+		/// The localization key of this filter, used to get localized text for name and description
+		/// </summary>
+		public string localizationKey;
+
+		/// <summary>
 		/// The name of this filter, shown on the tooltip to the user when hovered over.
 		/// </summary>
-		public string name;
+		public virtual string Name => LocalizationHelper.GetText($"{localizationKey}.Name");
 
 		/// <summary>
 		/// The description of this filter, shown on the tooltip to the user when hovered over.
 		/// </summary>
-		public string description;
+		public virtual string Description => LocalizationHelper.GetText($"{localizationKey}.Description");
 
 		/// <summary>
 		/// Defines which elements should be filtered by this filter. Return true to filter out, false to leave in.
 		/// </summary>
 		public FilterDelegate shouldFilter;
 
-		public Filter(string texture, string name, string description, FilterDelegate shouldFilter)
+		public Filter(string texture, string localizationKey, FilterDelegate shouldFilter)
 		{
 			this.texture = texture;
-			this.name = name;
-			this.description = description;
+			this.localizationKey = localizationKey;
 			this.shouldFilter = shouldFilter;
 		}
-		
-		public Filter(string texture, string localizationKey, FilterDelegate shouldFilter) : this(texture, LocalizationHelper.GetText($"{localizationKey}.Name"), LocalizationHelper.GetText($"{localizationKey}.Description"), shouldFilter) { }
 
 		/// <summary>
 		/// Allows you to change how the filter's icon should draw

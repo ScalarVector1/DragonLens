@@ -56,7 +56,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SetupFilters(FilterPanel filters)
 		{
-			filters.AddSeperatorLocalized("Tools.ItemSpawner.FilterCategories.Mod");
+			filters.AddSeperator("Tools.ItemSpawner.FilterCategories.Mod");
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.ItemSpawner.Filters.Vanilla", n => !(n is ItemButton && (n as ItemButton).item.ModItem is null)));
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModItem>().Count() > 0))
@@ -64,7 +64,7 @@ namespace DragonLens.Content.Tools.Spawners
 				filters.AddFilter(new ItemModFilter(mod));
 			}
 
-			filters.AddSeperatorLocalized("Tools.ItemSpawner.FilterCategories.Damage");
+			filters.AddSeperator("Tools.ItemSpawner.FilterCategories.Damage");
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Unknown", "Tools.ItemSpawner.Filters.AnyDamage", n => !(n is ItemButton && (n as ItemButton).item.damage > 0)));
 			filters.AddFilter(new DamageClassFilter(DamageClass.Melee, "DragonLens/Assets/Filters/Melee"));
 			filters.AddFilter(new DamageClassFilter(DamageClass.Ranged, "DragonLens/Assets/Filters/Ranged"));
@@ -72,7 +72,7 @@ namespace DragonLens.Content.Tools.Spawners
 			filters.AddFilter(new DamageClassFilter(DamageClass.Summon, "DragonLens/Assets/Filters/Summon"));
 			filters.AddFilter(new DamageClassFilter(DamageClass.Throwing, "DragonLens/Assets/Filters/Throwing"));
 
-			filters.AddSeperatorLocalized("Tools.ItemSpawner.FilterCategories.Misc");
+			filters.AddSeperator("Tools.ItemSpawner.FilterCategories.Misc");
 
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Accessory", "Tools.ItemSpawner.Filters.Accessory", n => !(n is ItemButton && (n as ItemButton).item.accessory)));
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Defense", "Tools.ItemSpawner.Filters.Armor", n => !(n is ItemButton && (n as ItemButton).item.defense > 0)));

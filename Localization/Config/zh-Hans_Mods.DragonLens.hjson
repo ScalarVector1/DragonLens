@@ -9,6 +9,8 @@ IconStyle: {
 }
 
 GUIConfig: {
+	Title: GUI 配置
+
 	backgroundColor: {
 		Label: 背景颜色
 		Tooltip: UI面板的背景颜色
@@ -31,6 +33,8 @@ GUIConfig: {
 }
 
 ToolConfig: {
+	Title: 工具配置
+
 	preloadSpawners: {
 		Label: 预加载生成器
 		Tooltip: 在模组加载时而不是使用时为生成器加载条目。可避免游戏中打开生成器时的卡顿，但可能会增加模组加载时间。

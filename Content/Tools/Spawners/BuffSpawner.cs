@@ -76,8 +76,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void PostInitialize()
 		{
-			string name = BuffSpawner.GetText("DurationEditor");
-			durationEditor = new IntEditor(name, n => duration = n, 180);
+			durationEditor = new IntEditor(BuffSpawner.GetText("DurationEditor"), n => duration = n, 180);
 			Append(durationEditor);
 		}
 
@@ -104,7 +103,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SetupFilters(FilterPanel filters)
 		{
-			filters.AddSeperatorLocalized("Tools.BuffSpawner.FilterCategories.Mod");
+			filters.AddSeperator("Tools.BuffSpawner.FilterCategories.Mod");
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.BuffSpawner.Filters.Vanilla", n => !(n is BuffButton && (n as BuffButton).type <= BuffID.Count)));
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModBuff>().Count() > 0))
@@ -112,7 +111,7 @@ namespace DragonLens.Content.Tools.Spawners
 				filters.AddFilter(new BuffModFilter(mod));
 			}
 
-			filters.AddSeperatorLocalized("Tools.BuffSpawner.FilterCategories.Buff");
+			filters.AddSeperator("Tools.BuffSpawner.FilterCategories.Buff");
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Friendly", "Tools.BuffSpawner.Filters.Buff", n => !(n is BuffButton && !Main.debuff[(n as BuffButton).type])));
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Hostile", "Tools.BuffSpawner.Filters.Debuff", n => !(n is BuffButton && Main.debuff[(n as BuffButton).type])));
 		}
@@ -197,6 +196,10 @@ namespace DragonLens.Content.Tools.Spawners
 
 				spriteBatch.Draw(tex, Main.MouseScreen + Vector2.One * 8, new Rectangle(0, 0, tex.Width, tex.Height), Color.White * alpha, 0, default, 1, 0, 0);
 			}
+
+			// Set name here to receive game language selection changes in real time
+			// This is a bit of a hack, but it works
+			durationEditor.name = BuffSpawner.GetText("DurationEditor");
 
 			base.Draw(spriteBatch);
 		}

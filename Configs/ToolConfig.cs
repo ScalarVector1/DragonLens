@@ -3,6 +3,7 @@ using Terraria.ModLoader.Config;
 
 namespace DragonLens.Configs
 {
+	[Label("$Mods.DragonLens.ToolConfig.Title")]
 	public class ToolConfig : ModConfig
 	{
 		public override ConfigScope Mode => ConfigScope.ClientSide;

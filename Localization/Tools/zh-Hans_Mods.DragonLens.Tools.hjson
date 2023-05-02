@@ -373,7 +373,7 @@ DustSpawner: {
 
 	FieldEditors: {
 		NewDustPerfect: 使用NewDustPerfect
-		Scale: 尺寸
+		Scale: 大小
 		Alpha: 透明度
 		Velocity: 速度
 		Color: 颜色
@@ -412,7 +412,7 @@ ItemSpawner: {
 
 		AnyDamage: {
 			Name: 任意伤害
-			Description: 会造成伤害的物品
+			Description: 具有伤害的物品
 		}
 
 		Accessory: {
@@ -427,7 +427,7 @@ ItemSpawner: {
 
 		Placeable: {
 			Name: 物块
-			Description: 可以被放置为物块的物品
+			Description: 可以作为物块放置的物品
 		}
 
 		Deprecated: {

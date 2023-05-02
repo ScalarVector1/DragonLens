@@ -136,7 +136,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SetupFilters(FilterPanel filters)
 		{
-			filters.AddSeperatorLocalized("Tools.ProjectileSpawner.FilterCategories.Mod");
+			filters.AddSeperator("Tools.ProjectileSpawner.FilterCategories.Mod");
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.ProjectileSpawner.Filters.Vanilla", n => !(n is ProjectileButton && (n as ProjectileButton).proj.ModProjectile is null)));
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModProjectile>().Count() > 0))
@@ -144,7 +144,7 @@ namespace DragonLens.Content.Tools.Spawners
 				filters.AddFilter(new ProjectileModFilter(mod));
 			}
 
-			filters.AddSeperatorLocalized("Tools.ProjectileSpawner.FilterCategories.Hostility");
+			filters.AddSeperator("Tools.ProjectileSpawner.FilterCategories.Hostility");
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Friendly", "Tools.ProjectileSpawner.Filters.Friendly", n => !(n is ProjectileButton && (n as ProjectileButton).proj.friendly)));
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Hostile", "Tools.ProjectileSpawner.Filters.Hostile", n => !(n is ProjectileButton && (n as ProjectileButton).proj.hostile)));
 		}
@@ -189,6 +189,10 @@ namespace DragonLens.Content.Tools.Spawners
 
 				spriteBatch.Draw(tex, Main.MouseScreen + Vector2.One * 8 + tex.Size(), new Rectangle(0, 0, tex.Width, tex.Height), Color.White * 0.5f, 0, new Vector2(tex.Width, tex.Height) / 2, scale, 0, 0);
 			}
+
+			// Set name here to receive game language selection changes in real time
+			// This is a bit of a hack, but it works
+			velocityEditor.name = ProjectileSpawner.GetText("FieldEditors.Velocity");
 
 			base.Draw(spriteBatch);
 		}

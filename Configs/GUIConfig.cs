@@ -20,6 +20,7 @@ namespace DragonLens.Configs
 		[Label("$Mods.DragonLens.IconStyle.HEROs")] HEROs
 	}
 
+	[Label("$Mods.DragonLens.GUIConfig.Title")]
 	public class GUIConfig : ModConfig
 	{
 		public override ConfigScope Mode => ConfigScope.ClientSide;

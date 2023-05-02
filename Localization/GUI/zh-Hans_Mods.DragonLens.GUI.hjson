@@ -3,7 +3,7 @@ Browser: {
 	Filters: 筛选
 
 	ButtonSizeSlider: {
-		Name: 按钮尺寸
+		Name: 按钮大小
 		Tooltip: 拖动以调整按钮大小
 	}
 }

@@ -114,7 +114,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SetupFilters(FilterPanel filters)
 		{
-			filters.AddSeperatorLocalized("Tools.DustSpawner.FilterCategories.Mod");
+			filters.AddSeperator("Tools.DustSpawner.FilterCategories.Mod");
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.DustSpawner.Filters.Vanilla", n => !(n is DustButton && (n as DustButton).dust.type <= DustID.Count)));
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModDust>().Count() > 0))
@@ -157,6 +157,14 @@ namespace DragonLens.Content.Tools.Spawners
 			{
 
 			}
+
+			// Set name here to receive game language selection changes in real time
+			// This is a bit of a hack, but it works
+			perfectEditor.name = DustSpawner.GetText("FieldEditors.NewDustPerfect");
+			scaleEditor.name = DustSpawner.GetText("FieldEditors.Scale");
+			alphaEditor.name = DustSpawner.GetText("FieldEditors.Alpha");
+			velocityEditor.name = DustSpawner.GetText("FieldEditors.Velocity");
+			colorEditor.name = DustSpawner.GetText("FieldEditors.Color");
 
 			base.Draw(spriteBatch);
 		}
