@@ -92,12 +92,6 @@ namespace DragonLens.Helpers
 		/// <returns>Input text with linebreaks inserted so it obeys the width constraint.</returns>
 		public static string WrapString(string input, int length, DynamicSpriteFont font, float scale)
 		{
-			// If the character is a CJK character (Chinese, Korean and Japanese), which should be treated as a single word
-			static bool IsCjkPunctuation(char a) => Regex.IsMatch(a.ToString(), @"\p{IsCJKSymbolsandPunctuation}|\p{IsHalfwidthandFullwidthForms}");
-			static bool IsCjkUnifiedIdeographs(char a) => Regex.IsMatch(a.ToString(), @"\p{IsCJKUnifiedIdeographs}");
-			static bool IsRightCloseCjkPunctuation(char a) => a is '（' or '【' or '《' or '｛' or '｢' or '［' or '｟' or '“';
-			static bool IsCjk(char a) => IsCjkUnifiedIdeographs(a) || IsCjkPunctuation(a);
-				
 			string output = "";
 
 			// In case input is empty and causes an error, we put an empty string to the list
@@ -115,7 +109,7 @@ namespace DragonLens.Helpers
 				}
 				
 				// Single CJK character just get directly added to the list
-				if (IsCjk(input[i]))
+				if (LocalizationHelper.IsCjkCharacter(input[i]))
 				{
 					if (cacheString != string.Empty)
 					{
@@ -125,7 +119,7 @@ namespace DragonLens.Helpers
 
 					// If the next character is a CJK punctuation, we add both characters as a single word
 					// Unless the next character is a right close CJK punctuation (e.g. left brackets), in which case we add only the current character
-					if (i + 1 < input.Length && IsCjkPunctuation(input[i + 1]) && !IsRightCloseCjkPunctuation(input[i + 1]))
+					if (i + 1 < input.Length && LocalizationHelper.IsCjkPunctuation(input[i + 1]) && !LocalizationHelper.IsRightCloseCjkPunctuation(input[i + 1]))
 					{
 						words.Add(input[i].ToString() + input[i + 1]);
 						i++;
