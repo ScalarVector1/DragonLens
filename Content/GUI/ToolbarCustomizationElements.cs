@@ -3,12 +3,28 @@ using DragonLens.Content.Tools;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolbarSystem;
+using DragonLens.Helpers;
 using System.IO;
 using Terraria.UI;
 
 namespace DragonLens.Content.GUI
 {
-	internal class RemoveButton : SmartUIElement
+	// used for easier localization code
+	internal abstract class ToolbarCustomizationElement : SmartUIElement
+	{
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			if (IsMouseHovering)
+			{
+				Tooltip.SetName(LocalizationHelper.GetGUIText($"ToolbarCustomizationElements.{GetType().Name}.Name"));
+				Tooltip.SetTooltip(LocalizationHelper.GetGUIText($"ToolbarCustomizationElements.{GetType().Name}.Tooltip"));
+			}
+
+			base.Draw(spriteBatch);
+		}
+	}
+
+	internal class RemoveButton : ToolbarCustomizationElement
 	{
 		private readonly ToolButton parent;
 
@@ -31,17 +47,11 @@ namespace DragonLens.Content.GUI
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Remove").Value;
 			spriteBatch.Draw(tex, GetDimensions().Position(), Color.White);
 
-			if (IsMouseHovering)
-			{
-				Tooltip.SetName("Remove tool");
-				Tooltip.SetTooltip("You can always re-add it from the add tool menu (green tab)!");
-			}
-
 			base.Draw(spriteBatch);
 		}
 	}
 
-	internal class AddButton : SmartUIElement
+	internal class AddButton : ToolbarCustomizationElement
 	{
 		public ToolbarElement parent;
 
@@ -70,17 +80,11 @@ namespace DragonLens.Content.GUI
 
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.LimeGreen, rotation, tex.Size() / 2f, 1, 0, 0);
 
-			if (IsMouseHovering)
-			{
-				Tooltip.SetName("Add tool");
-				Tooltip.SetTooltip("Click to add tools to this toolbar");
-			}
-
 			base.Draw(spriteBatch);
 		}
 	}
 
-	internal class RemoveToolbarButton : SmartUIElement
+	internal class RemoveToolbarButton : ToolbarCustomizationElement
 	{
 		public ToolbarElement parent;
 
@@ -110,17 +114,11 @@ namespace DragonLens.Content.GUI
 
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Red, rotation, tex.Size() / 2f, 1, 0, 0);
 
-			if (IsMouseHovering)
-			{
-				Tooltip.SetName("Remove toolbar");
-				Tooltip.SetTooltip("Remove this entire toolbar!");
-			}
-
 			base.Draw(spriteBatch);
 		}
 	}
 
-	internal class DragButton : SmartUIElement
+	internal class DragButton : ToolbarCustomizationElement
 	{
 		public ToolbarElement parent;
 
@@ -215,12 +213,6 @@ namespace DragonLens.Content.GUI
 
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Blue, rotation, tex.Size() / 2f, 1, 0, 0);
 
-			if (IsMouseHovering)
-			{
-				Tooltip.SetName("Move toolbar");
-				Tooltip.SetTooltip("Click and drag to re-position this toolbar. The toolbar will automatically snap to the edges of the screen if close enough. Right click while dragging to rotate the toolbar.");
-			}
-
 			base.Draw(spriteBatch);
 		}
 	}
@@ -259,42 +251,22 @@ namespace DragonLens.Content.GUI
 
 			if (IsMouseHovering)
 			{
-				string hideOption = Toolbar.automaticHideOption switch
-				{
-					AutomaticHideOption.Never => "Normal",
-					AutomaticHideOption.InventoryOpen => "Inventory closed only",
-					AutomaticHideOption.InventoryClosed => "Inventory open only",
-					AutomaticHideOption.NoMapScreen => "Map only",
-					_ => "ERROR"
-				};
+				string hideOption = LocalizationHelper.GetGUIText($"ToolbarCustomizationElements.HideOptionButton.{Toolbar.automaticHideOption.ToString()}.Name");
 
-				string hideTip = Toolbar.automaticHideOption switch
-				{
-					AutomaticHideOption.Never => "Always visible during normal gameplay",
-					AutomaticHideOption.InventoryOpen => "Only visible if your inventory is closed",
-					AutomaticHideOption.InventoryClosed => "Only visible if your inventory is open",
-					AutomaticHideOption.NoMapScreen => "Visible on the map -- note: tools which open other windows will require you to close the map to use them!",
-					_ => "ERROR"
-				};
+				string hideTip = LocalizationHelper.GetGUIText($"ToolbarCustomizationElements.HideOptionButton.{Toolbar.automaticHideOption.ToString()}.Tip");
 
-				string nextOption = Toolbar.automaticHideOption switch
-				{
-					AutomaticHideOption.Never => "Inventory closed only",
-					AutomaticHideOption.InventoryOpen => "Inventory open only",
-					AutomaticHideOption.InventoryClosed => "Map only",
-					AutomaticHideOption.NoMapScreen => "Normal",
-					_ => "ERROR"
-				};
+				var nextOptionEnum = (AutomaticHideOption)(((int)Toolbar.automaticHideOption + 1) % 4);
+				string nextOption = LocalizationHelper.GetGUIText($"ToolbarCustomizationElements.HideOptionButton.{nextOptionEnum.ToString()}.Name");
 
-				Tooltip.SetName($"Auto-hide: {hideOption}");
-				Tooltip.SetTooltip($"Allows you to set visibility rules for this toolbar. NEWBLOCK {hideTip} NEWBLOCK Clicking will change to: {nextOption}");
+				Tooltip.SetName(LocalizationHelper.GetGUIText("ToolbarCustomizationElements.HideOptionButton.Name", hideOption));
+				Tooltip.SetTooltip(LocalizationHelper.GetGUIText("ToolbarCustomizationElements.HideOptionButton.Tooltip", hideTip, nextOption));
 			}
 
 			base.Draw(spriteBatch);
 		}
 	}
 
-	internal class NewBarButton : SmartUIElement
+	internal class NewBarButton : ToolbarCustomizationElement
 	{
 		public NewBarButton()
 		{
@@ -327,17 +299,11 @@ namespace DragonLens.Content.GUI
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/NewBar").Value;
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
 
-			if (IsMouseHovering)
-			{
-				Tooltip.SetName("New toolbar");
-				Tooltip.SetTooltip("Create a brand new empty toolbar!");
-			}
-
 			base.Draw(spriteBatch);
 		}
 	}
 
-	internal class SaveLayoutButton : SmartUIElement
+	internal class SaveLayoutButton : ToolbarCustomizationElement
 	{
 		public SaveLayoutButton()
 		{
@@ -356,7 +322,7 @@ namespace DragonLens.Content.GUI
 
 			UILoader.GetUIState<ToolbarState>().Refresh();
 
-			Main.NewText("Layout saved!");
+			Main.NewText(LocalizationHelper.GetGUIText("ToolbarCustomizationElements.SaveLayoutButton.LayoutSaved"));
 		}
 
 		public override void SafeUpdate(GameTime gameTime)
@@ -372,17 +338,11 @@ namespace DragonLens.Content.GUI
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/SaveLayout").Value;
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
 
-			if (IsMouseHovering)
-			{
-				Tooltip.SetName("Save layout");
-				Tooltip.SetTooltip("Finish customizing and save your layout");
-			}
-
 			base.Draw(spriteBatch);
 		}
 	}
 
-	internal class LoadLayoutButton : SmartUIElement
+	internal class LoadLayoutButton : ToolbarCustomizationElement
 	{
 		public LoadLayoutButton()
 		{
@@ -416,16 +376,12 @@ namespace DragonLens.Content.GUI
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/LoadLayout").Value;
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
-
-			if (IsMouseHovering)
-			{
-				Tooltip.SetName("Load layout");
-				Tooltip.SetTooltip("Load an existing layout");
-			}
+			
+			base.Draw(spriteBatch);
 		}
 	}
 
-	internal class VisualConfigButton : SmartUIElement
+	internal class VisualConfigButton : ToolbarCustomizationElement
 	{
 		public VisualConfigButton()
 		{
@@ -451,17 +407,11 @@ namespace DragonLens.Content.GUI
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/StyleButton").Value;
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
 
-			if (IsMouseHovering)
-			{
-				Tooltip.SetName("Change style");
-				Tooltip.SetTooltip("Open the configuration to change the visual style of the GUI");
-			}
-
 			base.Draw(spriteBatch);
 		}
 	}
 
-	internal class FunctionalConfigButton : SmartUIElement
+	internal class FunctionalConfigButton : ToolbarCustomizationElement
 	{
 		public FunctionalConfigButton()
 		{
@@ -486,12 +436,6 @@ namespace DragonLens.Content.GUI
 
 			Texture2D tex = ThemeHandler.GetIcon("Customize");
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
-
-			if (IsMouseHovering)
-			{
-				Tooltip.SetName("Tool options");
-				Tooltip.SetTooltip("Open the configuration to change tool functionality/defaults");
-			}
 
 			base.Draw(spriteBatch);
 		}

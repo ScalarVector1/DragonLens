@@ -3,6 +3,7 @@ using DragonLens.Content.Filters.ProjectileFilters;
 using DragonLens.Content.GUI;
 using DragonLens.Content.GUI.FieldEditors;
 using DragonLens.Core.Systems.ToolSystem;
+using DragonLens.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,10 +18,6 @@ namespace DragonLens.Content.Tools.Spawners
 	internal class ProjectileSpawner : BrowserTool<ProjectileBrowser>
 	{
 		public override string IconKey => "ProjectileSpawner";
-
-		public override string DisplayName => "Projectile spawner";
-
-		public override string Description => "Spawn projectiles, with options for setting velocity and other parameters";
 
 		public override void SendPacket(BinaryWriter writer)
 		{
@@ -69,6 +66,11 @@ namespace DragonLens.Content.Tools.Spawners
 				NetSend(-1, sender);
 			}
 		}
+
+		public static string GetText(string key, params object[] args)
+		{
+			return LocalizationHelper.GetText($"Tools.ProjectileSpawner.{key}", args);
+		}
 	}
 
 	internal class ProjectileBrowser : Browser
@@ -87,7 +89,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public static float ai2;
 		public static FloatEditor ai2Editor;
 
-		public override string Name => "Projectile spawner";
+		public override string Name => ProjectileSpawner.GetText("DisplayName");
 
 		public override string IconTexture => "ProjectileSpawner";
 
@@ -95,7 +97,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void PostInitialize()
 		{
-			velocityEditor = new("Velocity", n => velocity = n, Vector2.Zero);
+			velocityEditor = new(ProjectileSpawner.GetText("FieldEditors.Velocity"), n => velocity = n, Vector2.Zero);
 			Append(velocityEditor);
 
 			ai0Editor = new("ai 0", n => ai0 = n, 0);
@@ -147,17 +149,17 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SetupFilters(FilterPanel filters)
 		{
-			filters.AddSeperator("Mod filters");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Vanilla", "Projectiles from the base game", n => !(n is ProjectileButton && (n as ProjectileButton).proj.ModProjectile is null)));
+			filters.AddSeperator("Tools.ProjectileSpawner.FilterCategories.Mod");
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.ProjectileSpawner.Filters.Vanilla", n => !(n is ProjectileButton && (n as ProjectileButton).proj.ModProjectile is null)));
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModProjectile>().Count() > 0))
 			{
 				filters.AddFilter(new ProjectileModFilter(mod));
 			}
 
-			filters.AddSeperator("Friendly/Hostile filters");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Friendly", "Friendly", "Projectiles which by default belong to a player", n => !(n is ProjectileButton && (n as ProjectileButton).proj.friendly)));
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Hostile", "Hostile", "Projectiles which by default belong to an enemy", n => !(n is ProjectileButton && (n as ProjectileButton).proj.hostile)));
+			filters.AddSeperator("Tools.ProjectileSpawner.FilterCategories.Hostility");
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Friendly", "Tools.ProjectileSpawner.Filters.Friendly", n => !(n is ProjectileButton && (n as ProjectileButton).proj.friendly)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Hostile", "Tools.ProjectileSpawner.Filters.Hostile", n => !(n is ProjectileButton && (n as ProjectileButton).proj.hostile)));
 		}
 
 		public override void DraggableUdpate(GameTime gameTime)
@@ -201,6 +203,10 @@ namespace DragonLens.Content.Tools.Spawners
 				spriteBatch.Draw(tex, Main.MouseScreen + Vector2.One * 8 + tex.Size(), new Rectangle(0, 0, tex.Width, tex.Height), Color.White * 0.5f, 0, new Vector2(tex.Width, tex.Height) / 2, scale, 0, 0);
 			}
 
+			// Set name here to receive game language selection changes in real time
+			// This is a bit of a hack, but it works
+			velocityEditor.name = ProjectileSpawner.GetText("FieldEditors.Velocity");
+
 			base.Draw(spriteBatch);
 		}
 	}
@@ -222,8 +228,8 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 			catch
 			{
-				Main.NewText($"A Projectiles ({proj.ModProjectile.Name}) name threw an exception while getting it! Report to {proj.ModProjectile.Mod.DisplayName} developers!");
-				name = $"This Projectiles name threw an exception while getting it! Report to {proj.ModProjectile.Mod.DisplayName} developers!";
+				Main.NewText(ProjectileSpawner.GetText("NameExceptionMessage", proj.ModProjectile.Name, proj.ModProjectile.Mod.DisplayName));
+				name = ProjectileSpawner.GetText("NameException", proj.ModProjectile.Mod.DisplayName);
 			}
 		}
 
@@ -245,14 +251,14 @@ namespace DragonLens.Content.Tools.Spawners
 			if (IsMouseHovering)
 			{
 				Tooltip.SetName(proj.Name);
-				Tooltip.SetTooltip($"Type: {proj.type}");
+				Tooltip.SetTooltip(ProjectileSpawner.GetText("ProjectileType", proj.type));
 			}
 		}
 
 		public override void SafeClick(UIMouseEvent evt)
 		{
 			ProjectileBrowser.selected = proj;
-			Main.NewText($"{proj.Name} selected, click anywhere in the world to spawn. Right click to deselect.");
+			Main.NewText(ProjectileSpawner.GetText("Selected", Identifier));
 		}
 
 		public override void SafeRightClick(UIMouseEvent evt)

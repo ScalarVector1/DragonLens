@@ -1,0 +1,146 @@
+Browser: {
+	ListView: List view
+	Filters: Filters
+
+	ButtonSizeSlider: {
+		Name: Button scale
+		Tooltip: Drag to adjust the size of buttons in the browser
+	}
+}
+
+DraggableUIState: {
+	Close: Close
+
+	UserGuide: {
+		Name: User guide
+		Tooltip: Open the user guide for this tool in the browser
+	}
+}
+
+EmergencyCustomizeMenu: {
+	CustomizeToolbars: Customize toolbars
+	CustomizeTools: Customize tools
+}
+
+FirstTimeLayoutPresetMenu: {
+	Welcome: Welcome to DragonLens!
+	SelectLayout: Please select a layout to get started
+	Selected: "{0} selected! Use the customize tool (wrench icon) to customize your layout or load a different preset."
+}
+
+LayoutPresetBrowser: {
+	Name: Layout Presets
+	LoadedLayout: Loaded layout: {0}
+}
+
+Layout: {
+	Invalid: Your saved layout is invalid or corrupted!
+
+	Simple: {
+		Name: Simple
+		Tooltip: A simplified layout, perfect for players or mod testers.
+	}
+
+	Advanced: {
+		Name: Advanced
+		Tooltip: An advanced layout with every tool available. Perfect for mod developers or power users.
+	}
+
+	HEROsMod: {
+		Name: HEROs Mod imitation
+		Tooltip: A layout attempting to mimic HEROs mod as closely as possible.
+	}
+
+	Cheatsheet: {
+		Name: Cheatsheet imitation
+		Tooltip: A layout attempting to mimic Cheatsheet as closely as possible.
+	}
+
+	Empty: {
+		Name: Empty
+		Tooltip: A clean slate to build your own layout.
+	}
+}
+
+ToggleButton: {
+	On: On
+	Off: Off
+}
+
+ToolbarCustomizationElements: {
+	RemoveButton: {
+		Name: Remove tool
+		Tooltip: You can always re-add it from the add tool menu (green tab)!
+	}
+
+	AddButton: {
+		Name: Add tool
+		Tooltip: Click to add tools to this toolbar
+	}
+
+	RemoveToolbarButton: {
+		Name: Remove toolbar
+		Tooltip: Remove this entire toolbar!
+	}
+
+	DragButton: {
+		Name: Move toolbar
+		Tooltip: Click and drag to re-position this toolbar. The toolbar will automatically snap to the edges of the screen if close enough. Right click while dragging to rotate the toolbar.
+	}
+
+	HideOptionButton: {
+		Name: Auto-hide: {0}
+		Tooltip: Allows you to set visibility rules for this toolbar. NEWBLOCK {0} NEWBLOCK Clicking will change to: {1}
+
+		Never: {
+			Name: Normal
+			Tip: Always visible during normal gameplay
+		}
+
+		InventoryOpen: {
+			Name: Inventory closed only
+			Tip: Only visible if your inventory is closed
+		}
+
+		InventoryClosed: {
+			Name: Inventory open only
+			Tip: Only visible if your inventory is open
+		}
+
+		NoMapScreen: {
+			Name: Map only
+			Tip: Visible on the map -- note: tools which open other windows will require you to close the map to use them!
+		}
+	}
+
+	NewBarButton: {
+		Name: New toolbar
+		Tooltip: Create a brand new empty toolbar!
+	}
+
+	SaveLayoutButton: {
+		Name: Save layout
+		Tooltip: Finish customizing and save your layout
+		LayoutSaved: Layout saved!
+	}
+
+	LoadLayoutButton: {
+		Name: Load layout
+		Tooltip: Load an existing layout
+	}
+
+	VisualConfigButton: {
+		Name: Change style
+		Tooltip: Open the configuration to change the visual style of the GUI
+	}
+
+	FunctionalConfigButton: {
+		Name: Tool options
+		Tooltip: Open the configuration to change tool functionality/defaults
+	}
+}
+
+EntityEditor: {
+	LiveReaction: Live {0} Reaction
+	Select: Click on an entity in the world to select it. Right click to cancel.
+}

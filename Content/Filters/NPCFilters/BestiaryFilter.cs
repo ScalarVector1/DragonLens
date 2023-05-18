@@ -17,10 +17,14 @@ namespace DragonLens.Content.Filters.NPCFilters
 
 		public IBestiaryEntryFilter bestiaryFilter;
 
-		public BestiaryFilter(IBestiaryEntryFilter bestiaryFilter) : base("", Language.GetTextValue(bestiaryFilter.GetDisplayNameKey()), $"NPCs with the bestiary attribute {Language.GetTextValue(bestiaryFilter.GetDisplayNameKey())}", n => FilterByBestiary(n, bestiaryFilter))
+		public BestiaryFilter(IBestiaryEntryFilter bestiaryFilter) : base("", "", n => FilterByBestiary(n, bestiaryFilter))
 		{
 			this.bestiaryFilter = bestiaryFilter;
 		}
+
+		public override string Name => Language.GetTextValue(bestiaryFilter.GetDisplayNameKey());
+
+		public override string Description => NPCSpawner.GetText("Filters.Bestiary.Description", Language.GetTextValue(bestiaryFilter.GetDisplayNameKey()));
 
 		public static bool FilterByBestiary(BrowserButton button, IBestiaryEntryFilter bestiaryFilter)
 		{

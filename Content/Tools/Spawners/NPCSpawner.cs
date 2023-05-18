@@ -2,6 +2,7 @@
 using DragonLens.Content.Filters.NPCFilters;
 using DragonLens.Content.GUI;
 using DragonLens.Core.Systems.ToolSystem;
+using DragonLens.Helpers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,10 +18,6 @@ namespace DragonLens.Content.Tools.Spawners
 	internal class NPCSpawner : BrowserTool<NPCBrowser>
 	{
 		public override string IconKey => "NPCSpawner";
-
-		public override string DisplayName => "NPC spawner";
-
-		public override string Description => "Spawn NPCs, from villagers to skeletons to bosses";
 
 		public override void SendPacket(BinaryWriter writer)
 		{
@@ -45,6 +42,11 @@ namespace DragonLens.Content.Tools.Spawners
 				NetSend(-1, sender);
 			}
 		}
+
+		public static string GetText(string key, params object[] args)
+		{
+			return LocalizationHelper.GetText($"Tools.NPCSpawner.{key}", args);
+		}
 	}
 
 	internal class NPCBrowser : Browser
@@ -52,7 +54,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public static NPC selected;
 		public static UnlockableNPCEntryIcon preview;
 
-		public override string Name => "NPC spawner";
+		public override string Name => NPCSpawner.GetText("DisplayName");
 
 		public override string IconTexture => "NPCSpawner";
 
@@ -75,23 +77,23 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SetupFilters(FilterPanel filters)
 		{
-			filters.AddSeperator("Mod filters");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Vanilla", "NPCs from the base game", n => !(n is NPCButton && (n as NPCButton).npc.ModNPC is null)));
+			filters.AddSeperator("Tools.NPCSpawner.FilterCategories.Mod");
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.NPCSpawner.Filters.Vanilla", n => !(n is NPCButton && (n as NPCButton).npc.ModNPC is null)));
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModNPC>().Count() > 0))
 			{
 				filters.AddFilter(new NPCModFilter(mod));
 			}
 
-			filters.AddSeperator("Type filters");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Boss", "Boss", "NPCs which are bosses", n => !(n is NPCButton && (n as NPCButton).npc.boss)));
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Critter", "Critter", "NPCs which count as critters", n => !(n is NPCButton && (n as NPCButton).npc.CountsAsACritter)));
+			filters.AddSeperator("Tools.NPCSpawner.FilterCategories.Type");
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Boss", "Tools.NPCSpawner.Filters.Boss", n => !(n is NPCButton && (n as NPCButton).npc.boss)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Critter", "Tools.NPCSpawner.Filters.Critter", n => !(n is NPCButton && (n as NPCButton).npc.CountsAsACritter)));
 
-			filters.AddSeperator("Hostility filters");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Friendly", "Friendly", "NPCs which are friendly", n => !(n is NPCButton && (n as NPCButton).npc.friendly)));
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Hostile", "Hostile", "Enemy NPCs", n => !(n is NPCButton && !(n as NPCButton).npc.friendly)));
+			filters.AddSeperator("Tools.NPCSpawner.FilterCategories.Hostility");
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Friendly", "Tools.NPCSpawner.Filters.Friendly", n => !(n is NPCButton && (n as NPCButton).npc.friendly)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Hostile", "Tools.NPCSpawner.Filters.Hostile", n => !(n is NPCButton && !(n as NPCButton).npc.friendly)));
 
-			filters.AddSeperator("Bestiary filters");
+			filters.AddSeperator("Tools.NPCSpawner.FilterCategories.Bestiary");
 
 			foreach (IBestiaryEntryFilter bestiary in Main.BestiaryDB.Filters.Where(n => n is ByInfoElement))
 			{
@@ -180,8 +182,8 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 			catch
 			{
-				Main.NewText($"A NPCs ({npc.ModNPC.Name}) name threw an exception while getting it! Report to {npc.ModNPC.Mod.DisplayName} developers!");
-				name = $"This NPCs name threw an exception while getting it! Report to {npc.ModNPC.Mod.DisplayName} developers!";
+				Main.NewText(NPCSpawner.GetText("NameExceptionMessage", npc.ModNPC.Name, npc.ModNPC.Mod.DisplayName));
+				name = NPCSpawner.GetText("NameException", npc.ModNPC.Mod.DisplayName);
 			}
 
 			icon = new(npc.type);
@@ -253,7 +255,7 @@ namespace DragonLens.Content.Tools.Spawners
 				catch
 				{
 					icon = null;
-					Main.NewText($"An NPC ({npc.ModNPC.Name}) throws an exception while drawing its bestiary entry! Report to {npc.ModNPC.Mod.DisplayName} developers!");
+					Main.NewText(NPCSpawner.GetText("BestiaryEntryException", npc.ModNPC.Name, npc.ModNPC.Mod.DisplayName));
 				}
 			}
 
@@ -265,7 +267,7 @@ namespace DragonLens.Content.Tools.Spawners
 			if (IsMouseHovering)
 			{
 				Tooltip.SetName(Identifier);
-				Tooltip.SetTooltip($"Type: {npc.type}");
+				Tooltip.SetTooltip(NPCSpawner.GetText("NPCType", npc.type));
 			}
 		}
 
@@ -273,7 +275,7 @@ namespace DragonLens.Content.Tools.Spawners
 		{
 			NPCBrowser.selected = (NPC)npc.Clone();
 			NPCBrowser.preview = (UnlockableNPCEntryIcon)icon.CreateClone();
-			Main.NewText($"{Identifier} selected, click anywhere in the world to spawn. Right click to deselect.");
+			Main.NewText(NPCSpawner.GetText("Selected", Identifier));
 		}
 
 		public override void SafeRightClick(UIMouseEvent evt)

@@ -65,9 +65,9 @@ namespace DragonLens.Content.GUI
 			filters.Add(button);
 		}
 
-		public void AddSeperator(string name)
+		public void AddSeperator(string localizationKey)
 		{
-			var seperator = new FilterSeperator(name)
+			var seperator = new FilterSeperator(localizationKey)
 			{
 				order = lastOrder++
 			};
@@ -117,8 +117,8 @@ namespace DragonLens.Content.GUI
 			if (IsMouseHovering)
 			{
 				Main.LocalPlayer.mouseInterface = true;
-				Tooltip.SetName(filter.name);
-				Tooltip.SetTooltip(filter.description);
+				Tooltip.SetName(filter.Name);
+				Tooltip.SetTooltip(filter.Description);
 			}
 		}
 
@@ -135,13 +135,13 @@ namespace DragonLens.Content.GUI
 
 	internal class FilterSeperator : SmartUIElement
 	{
-		public string name;
+		public string localizationKey;
 
 		public int order;
 
-		public FilterSeperator(string name)
+		public FilterSeperator(string localizationKey)
 		{
-			this.name = name;
+			this.localizationKey = localizationKey;
 
 			Width.Set(180, 0);
 			Height.Set(24, 0);
@@ -153,7 +153,7 @@ namespace DragonLens.Content.GUI
 			var backTarget = GetDimensions().ToRectangle();
 			spriteBatch.Draw(back, backTarget, Color.Black * 0.5f);
 
-			Utils.DrawBorderString(spriteBatch, name, GetDimensions().Position() + new Vector2(12, 4), Color.White, 0.8f);
+			Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetText(localizationKey), GetDimensions().Position() + new Vector2(12, 4), Color.White, 0.8f);
 		}
 
 		public override int CompareTo(object obj)

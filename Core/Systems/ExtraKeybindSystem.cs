@@ -12,8 +12,7 @@ namespace DragonLens.Core.Systems
 
 		public override void Load()
 		{
-			collapseAll = KeybindLoader.RegisterKeybind(Mod, "Collapse All", Keys.None);
-			collapseAll.DisplayName.SetDefault("Collapse All");
+			collapseAll = KeybindLoader.RegisterKeybind(Mod, "CollapseAll", Keys.None);
 		}
 
 		public override void ProcessTriggers(TriggersSet triggersSet)

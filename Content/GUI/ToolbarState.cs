@@ -111,7 +111,7 @@ namespace DragonLens.Content.GUI
 				if (child is ToolbarElement)
 					(child as ToolbarElement).FinishCustomize();
 
-				if (child is NewBarButton || child is SaveLayoutButton || child is LoadLayoutButton || child is VisualConfigButton || child is FunctionalConfigButton) //TODO: Make these buttons have a common parent class?
+				if (child is NewBarButton || child is SaveLayoutButton || child is LoadLayoutButton || child is VisualConfigButton || child is FunctionalConfigButton)
 					toRemove.Add(child);
 			}
 

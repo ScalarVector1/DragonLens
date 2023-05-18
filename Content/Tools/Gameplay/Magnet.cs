@@ -20,13 +20,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override string IconKey => "Magnet";
 
-		public override string DisplayName => "Item magnet";
-
-		public override string Description => "Toggle to pull all items in the world to you. Right click to enable the void magnet, which will automatically destroy items instead.";
-
 		public override bool HasRightClick => true;
-
-		public override string RightClickName => "Void magnet (destroys items on pickup)";
 
 		public override void OnActivate()
 		{

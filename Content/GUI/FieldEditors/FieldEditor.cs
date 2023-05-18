@@ -13,12 +13,12 @@ namespace DragonLens.Content.GUI.FieldEditors
 		/// <summary>
 		/// The name that gets displated above the panel to the user
 		/// </summary>
-		public readonly string name;
+		public string name;
 
 		/// <summary>
 		/// The info sown when hovering over this panel
 		/// </summary>
-		public readonly string description;
+		public string description;
 
 		/// <summary>
 		/// The current value this editor believes the field its tied to to have. This wont update in real time so be careful

@@ -51,7 +51,7 @@ namespace DragonLens.Content.GUI
 			if (IsMouseHovering && tooltip != "")
 			{
 				Tooltip.SetName(tooltip);
-				Tooltip.SetTooltip(isOn() ? "On" : "Off");
+				Tooltip.SetTooltip(LocalizationHelper.GetGUIText($"ToggleButton.{(isOn() ? "On" : "Off")}"));
 			}
 		}
 	}

@@ -4,6 +4,7 @@ using DragonLens.Content.GUI.FieldEditors;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
+using DragonLens.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +19,6 @@ namespace DragonLens.Content.Tools.Editors
 	internal class ItemEditor : Tool
 	{
 		public override string IconKey => "ItemEditor";
-
-		public override string DisplayName => "Item Editor";
-
-		public override string Description => "Change the stats (and other fields) of items!";
 
 		public override void OnActivate()
 		{
@@ -136,27 +133,29 @@ namespace DragonLens.Content.Tools.Editors
 
 		private void BuildBasicEditor()
 		{
-			basicEditorList.Add(new IntEditor("Damage", n => item.damage = n, item.damage, () => item.damage, "How much damage this item or the projectiles it fires does."));
-			basicEditorList.Add(new IntEditor("Crit Chance", n => item.crit = n, item.crit, () => item.crit, "4% base crit chance is added to this value."));
-			basicEditorList.Add(new FloatEditor("Knockback", n => item.knockBack = n, item.knockBack, () => item.knockBack, "The amount of knockback this item causes when striking an enemy."));
+			string GetLocalizedText(string text) => LocalizationHelper.GetText($"Tools.ItemEditor.Editors.{text}");
+			
+			basicEditorList.Add(new IntEditor(GetLocalizedText("Damage.Name"), n => item.damage = n, item.damage, () => item.damage, GetLocalizedText("Damage.Description")));
+			basicEditorList.Add(new IntEditor(GetLocalizedText("CritChance.Name"), n => item.crit = n, item.crit, () => item.crit, GetLocalizedText("CritChance.Description")));
+			basicEditorList.Add(new FloatEditor(GetLocalizedText("Knockback.Name"), n => item.knockBack = n, item.knockBack, () => item.knockBack, GetLocalizedText("Knockback.Description")));
 
-			basicEditorList.Add(new IntEditor("Use Style", n => item.useStyle = n, item.useStyle, () => item.useStyle, "0: None NEWLN 1: Swing NEWLN 3: Thrust NEWLN 4: HoldUp NEWLN 5: Shoot NEWLN 6: DrinkLong NEWLN 7: DrinkOld NEWLN 8: GolfPlay NEWLN 9: DrinkLiquid NEWLN 10: HiddenAnimation NEWLN 11: MowTheLawn NEWLN 12: Guitar NEWLN 13: Rapier NEWLN 14: RaiseLamp"));
-			basicEditorList.Add(new IntEditor("Use Time", n => item.useTime = n, item.useTime, () => item.useTime, "How many ticks between item uses. Ignores input."));
-			basicEditorList.Add(new IntEditor("Use Animation", n => item.useAnimation = n, item.useAnimation, () => item.useAnimation, "How many ticks before you can cancel this items use with input/use it again."));
-			basicEditorList.Add(new BoolEditor("Auto Reuse", n => item.autoReuse = n, item.autoReuse, () => item.autoReuse, "If this item is automatically re-used while holding LMB."));
-			basicEditorList.Add(new IntEditor("Reuse Delay", n => item.reuseDelay = n, item.reuseDelay, () => item.reuseDelay, "The delay between when this item finishes being used and can be used again."));
+			basicEditorList.Add(new IntEditor(GetLocalizedText("UseStyle.Name"), n => item.useStyle = n, item.useStyle, () => item.useStyle, GetLocalizedText("UseStyle.Description")));
+			basicEditorList.Add(new IntEditor(GetLocalizedText("UseTime.Name"), n => item.useTime = n, item.useTime, () => item.useTime, GetLocalizedText("UseTime.Description")));
+			basicEditorList.Add(new IntEditor(GetLocalizedText("UseAnimation.Name"), n => item.useAnimation = n, item.useAnimation, () => item.useAnimation, GetLocalizedText("UseAnimation.Description")));
+			basicEditorList.Add(new BoolEditor(GetLocalizedText("AutoReuse.Name"), n => item.autoReuse = n, item.autoReuse, () => item.autoReuse, GetLocalizedText("AutoReuse.Description")));
+			basicEditorList.Add(new IntEditor(GetLocalizedText("ReuseDelay.Name"), n => item.reuseDelay = n, item.reuseDelay, () => item.reuseDelay, GetLocalizedText("ReuseDelay.Description")));
 
-			basicEditorList.Add(new IntEditor("Pickaxe Power", n => item.pick = n, item.pick, () => item.pick, "The items ability to destroy tiles."));
-			basicEditorList.Add(new IntEditor("Axe Power", n => item.axe = n, item.axe, () => item.axe, "The items ability to destroy trees. Actual value is multiplied by 5."));
-			basicEditorList.Add(new IntEditor("Hammer Power", n => item.hammer = n, item.hammer, () => item.hammer, "The items ability to destroy walls."));
+			basicEditorList.Add(new IntEditor(GetLocalizedText("PickaxePower.Name"), n => item.pick = n, item.pick, () => item.pick, GetLocalizedText("PickaxePower.Description")));
+			basicEditorList.Add(new IntEditor(GetLocalizedText("AxePower.Name"), n => item.axe = n, item.axe, () => item.axe, GetLocalizedText("AxePower.Description")));
+			basicEditorList.Add(new IntEditor(GetLocalizedText("HammerPower.Name"), n => item.hammer = n, item.hammer, () => item.hammer, GetLocalizedText("HammerPower.Description")));
 
-			basicEditorList.Add(new IntEditor("Rarity", n => item.rare = n, item.rare, () => item.rare, "The color of this item's name."));
-			basicEditorList.Add(new IntEditor("Value", n => item.value = n, item.value, () => item.value, "Sell price in copper coins."));
+			basicEditorList.Add(new IntEditor(GetLocalizedText("Rarity.Name"), n => item.rare = n, item.rare, () => item.rare, GetLocalizedText("Rarity.Description")));
+			basicEditorList.Add(new IntEditor(GetLocalizedText("Value.Name"), n => item.value = n, item.value, () => item.value, GetLocalizedText("Value.Description")));
 
-			basicEditorList.Add(new IntEditor("Projectile type", n => item.shoot = n, item.shoot, () => item.shoot, "The kind of projectile this item will shoot on use. NEWBLOCK Use the projectile spawner to preview differnet projectile types."));
-			basicEditorList.Add(new FloatEditor("Shoot speed", n => item.shootSpeed = n, item.shootSpeed, () => item.shootSpeed, "The velocity at which this item fires projectiles."));
+			basicEditorList.Add(new IntEditor(GetLocalizedText("ProjectileType.Name"), n => item.shoot = n, item.shoot, () => item.shoot, GetLocalizedText("ProjectileType.Description")));
+			basicEditorList.Add(new FloatEditor(GetLocalizedText("ShootSpeed.Name"), n => item.shootSpeed = n, item.shootSpeed, () => item.shootSpeed, GetLocalizedText("ShootSpeed.Description")));
 
-			basicEditorList.Add(new ColorEditor("Color", n => item.color = n, item.color, () => item.color, "The color of this item's sprite."));
+			basicEditorList.Add(new ColorEditor(GetLocalizedText("Color.Name"), n => item.color = n, item.color, () => item.color, GetLocalizedText("Color.Description")));
 
 			//TODO: Prefix dropdown
 		}
@@ -201,7 +200,7 @@ namespace DragonLens.Content.Tools.Editors
 		{
 			if (t.FieldType == typeof(T))
 			{
-				string message = "This field editor was auto-generated via reflection. Changing it may have unknowable consequences depending on what the mod this item is from uses it for.";
+				string message = LocalizationHelper.GetToolText("ItemEditor.AutogenMsg");
 
 				var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(item.ModItem, n)), (T)t.GetValue(item.ModItem), () => (T)t.GetValue(item.ModItem), message });
 				modItemEditorList.Add(newEditor);
@@ -212,7 +211,7 @@ namespace DragonLens.Content.Tools.Editors
 		{
 			if (t.PropertyType == typeof(T))
 			{
-				string message = "This property editor was auto-generated via reflection. Changing it may have unknowable consequences depending on what the mod this item is from uses it for.";
+				string message = LocalizationHelper.GetToolText("ItemEditor.AutogenMsg");
 
 				var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(item.ModItem, n)), (T)t.GetValue(item.ModItem), () => (T)t.GetValue(item.ModItem), message });
 				modItemEditorList.Add(newEditor);
@@ -242,6 +241,8 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
+			string GetLocalizedText(string text) => LocalizationHelper.GetText($"Tools.ItemEditor.{text}");
+
 			Helpers.GUIHelper.DrawBox(spriteBatch, BoundingBox, ModContent.GetInstance<GUIConfig>().backgroundColor);
 
 			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
@@ -251,12 +252,12 @@ namespace DragonLens.Content.Tools.Editors
 			Texture2D icon = ThemeHandler.GetIcon("ItemEditor");
 			spriteBatch.Draw(icon, basePos + Vector2.One * 16, Color.White);
 
-			Utils.DrawBorderStringBig(spriteBatch, "Item Editor", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.6f);
+			Utils.DrawBorderStringBig(spriteBatch, GetLocalizedText("DisplayName"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.6f);
 
 			Vector2 pos = basePos;
-			Utils.DrawBorderString(spriteBatch, "Vanilla Fields", pos + new Vector2(120, 80), Color.White, 1, 0f, 0.5f);
-			Utils.DrawBorderString(spriteBatch, "Modded", pos + new Vector2(320 + 70, 80), Color.White, 1, 0f, 0.5f);
-			Utils.DrawBorderString(spriteBatch, "Prefixes", pos + new Vector2(320 + 130 + 170, 80), Color.White, 1, 0f, 0.5f);
+			Utils.DrawBorderString(spriteBatch, GetLocalizedText("VanillaFields"), pos + new Vector2(120, 80), Color.White, 1, 0f, 0.5f);
+			Utils.DrawBorderString(spriteBatch, GetLocalizedText("Modded"), pos + new Vector2(320 + 70, 80), Color.White, 1, 0f, 0.5f);
+			Utils.DrawBorderString(spriteBatch, GetLocalizedText("Prefixes"), pos + new Vector2(320 + 130 + 170, 80), Color.White, 1, 0f, 0.5f);
 
 			Texture2D background = Terraria.GameContent.TextureAssets.MagicPixel.Value;
 
@@ -316,7 +317,7 @@ namespace DragonLens.Content.Tools.Editors
 			}
 			else
 			{
-				Utils.DrawBorderString(spriteBatch, "Place item\nhere!", GetDimensions().Center(), Color.LightGray, 1, 0.5f, 0.5f);
+				Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetToolText("ItemEditor.PlaceItemHere"), GetDimensions().Center(), Color.LightGray, 1, 0.5f, 0.5f);
 			}
 		}
 	}
@@ -343,7 +344,7 @@ namespace DragonLens.Content.Tools.Editors
 			if (!parent.item.IsAir)
 			{
 				Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
-				Utils.DrawBorderString(spriteBatch, "Reset (SetDefaults)", GetDimensions().Center(), Color.LightGray, 1, 0.5f, 0.5f);
+				Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetToolText("ItemEditor.SetDefaults"), GetDimensions().Center(), Color.LightGray, 1, 0.5f, 0.5f);
 			}
 		}
 	}

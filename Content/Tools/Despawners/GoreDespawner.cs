@@ -7,10 +7,6 @@ namespace DragonLens.Content.Tools.Despawners
 	{
 		public override string IconKey => "GoreDespawner";
 
-		public override string DisplayName => "Clear gores";
-
-		public override string Description => "Removes all gores currently in the world";
-
 		public override void OnActivate()
 		{
 			foreach (Gore gore in Main.gore)

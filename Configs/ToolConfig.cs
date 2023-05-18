@@ -3,17 +3,18 @@ using Terraria.ModLoader.Config;
 
 namespace DragonLens.Configs
 {
+	[Label("$Mods.DragonLens.ToolConfig.Title")]
 	public class ToolConfig : ModConfig
 	{
 		public override ConfigScope Mode => ConfigScope.ClientSide;
 
-		[Label("Preload spawners")]
-		[Tooltip("Load entries for spawners at mod load instead of when used. Prevents in-game freezes but may increase load time.")]
+		[Label("$Mods.DragonLens.ToolConfig.preloadSpawners.Label")]
+		[Tooltip("$Mods.DragonLens.ToolConfig.preloadSpawners.Tooltip")]
 		[DefaultValue(true)]
 		public bool preloadSpawners;
 
-		[Label("Preload assets")]
-		[Tooltip("Load assets for spawners at mod load instead of when used. Prevents in-game freezes but may increase load time.")]
+		[Label("$Mods.DragonLens.ToolConfig.preloadAssets.Label")]
+		[Tooltip("$Mods.DragonLens.ToolConfig.preloadAssets.Tooltip")]
 		[DefaultValue(true)]
 		public bool preloadAssets;
 	}

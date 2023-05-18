@@ -12,10 +12,14 @@ namespace DragonLens.Content.Filters.TileFilters
 	{
 		public Mod mod;
 
-		public TileModFilter(Mod mod) : base("", mod.DisplayName, $"Tiles added by the mod {mod.DisplayName}", n => FilterByMod(n, mod))
+		public TileModFilter(Mod mod) : base("", "", n => FilterByMod(n, mod))
 		{
 			this.mod = mod;
 		}
+
+		public override string Name => mod.DisplayName;
+
+		public override string Description => TileSpawner.GetText("Filters.Mod.Description", mod.DisplayName);
 
 		public static bool FilterByMod(BrowserButton button, Mod mod)
 		{
