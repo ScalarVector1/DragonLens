@@ -9,6 +9,7 @@ using Terraria.GameContent.Events;
 using Terraria.ID;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
+
 namespace DragonLens.Content.Tools.Gameplay
 {
 	internal class Weather : Tool

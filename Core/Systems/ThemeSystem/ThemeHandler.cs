@@ -3,6 +3,7 @@ using DragonLens.Content.Themes.IconProviders;
 using System;
 using System.Collections.Generic;
 using Terraria.ModLoader.IO;
+
 namespace DragonLens.Core.Systems.ThemeSystem
 {
 	internal class ThemeHandler : ModSystem

@@ -1,5 +1,6 @@
 ﻿using DragonLens.Core.Systems.ThemeSystem;
 using System;
+
 namespace DragonLens.Content.Themes.BoxProviders
 {
 	internal class VanillaBoxes : ThemeBoxProvider

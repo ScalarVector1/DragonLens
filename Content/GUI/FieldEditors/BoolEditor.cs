@@ -2,6 +2,7 @@
 using DragonLens.Helpers;
 using System;
 using Terraria.UI;
+
 namespace DragonLens.Content.GUI.FieldEditors
 {
 	internal class BoolEditor : FieldEditor<bool>

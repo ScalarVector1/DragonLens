@@ -4,6 +4,7 @@ using DragonLens.Helpers;
 using System.IO;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
+
 namespace DragonLens.Content.GUI
 {
 	internal class LayoutPresetBrowser : Browser

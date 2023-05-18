@@ -1,6 +1,7 @@
 ﻿using DragonLens.Content.GUI;
 using DragonLens.Content.Tools.Spawners;
 using DragonLens.Core.Systems.ThemeSystem;
+
 namespace DragonLens.Content.Filters.BuffFilters
 {
 	internal class BuffModFilter : Filter

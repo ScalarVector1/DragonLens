@@ -8,6 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
+
 namespace DragonLens.Content.Tools.Editors
 {
 	internal class AccessoryTray : Tool

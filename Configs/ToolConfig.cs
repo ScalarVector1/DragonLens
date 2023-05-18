@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using Terraria.ModLoader.Config;
+
 namespace DragonLens.Configs
 {
 	[Label("$Mods.DragonLens.ToolConfig.Title")]

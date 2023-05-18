@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria.ID;
+
 namespace DragonLens.Core.Systems
 {
 	internal class PermissionHandler : ModSystem

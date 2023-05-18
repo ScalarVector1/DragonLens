@@ -6,6 +6,7 @@ using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Helpers;
 using System.IO;
 using Terraria.UI;
+
 namespace DragonLens.Content.GUI
 {
 	// used for easier localization code

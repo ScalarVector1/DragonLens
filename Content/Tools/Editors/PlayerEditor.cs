@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
+
 namespace DragonLens.Content.Tools.Editors
 {
 	internal class PlayerEditorTool : Tool

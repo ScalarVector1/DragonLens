@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.UI;
+
 namespace DragonLens.Content.GUI
 {
 	internal class ToolbarState : SmartUIState

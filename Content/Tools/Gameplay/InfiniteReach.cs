@@ -2,6 +2,7 @@
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using Terraria.ModLoader.IO;
+
 namespace DragonLens.Content.Tools.Gameplay
 {
 	internal class InfiniteReach : Tool

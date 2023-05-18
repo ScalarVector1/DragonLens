@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
+
 namespace DragonLens.Content.Tools
 {
 	internal class CustomizeTool : Tool

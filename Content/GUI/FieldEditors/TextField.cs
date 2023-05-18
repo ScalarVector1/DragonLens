@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using Terraria.GameContent;
 using Terraria.GameInput;
 using Terraria.UI;
+
 namespace DragonLens.Content.GUI.FieldEditors
 {
 	public enum InputType

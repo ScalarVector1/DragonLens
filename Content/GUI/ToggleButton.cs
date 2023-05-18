@@ -2,6 +2,7 @@
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
 using System;
+
 namespace DragonLens.Content.GUI
 {
 	/// <summary>

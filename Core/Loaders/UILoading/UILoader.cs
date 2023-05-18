@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Terraria.UI;
+
 namespace DragonLens.Core.Loaders.UILoading
 {
 	/// <summary>

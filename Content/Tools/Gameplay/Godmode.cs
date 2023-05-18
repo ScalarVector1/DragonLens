@@ -3,6 +3,7 @@ using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
+
 namespace DragonLens.Content.Tools.Gameplay
 {
 	internal class Godmode : Tool

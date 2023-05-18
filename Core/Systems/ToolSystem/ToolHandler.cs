@@ -6,6 +6,7 @@ using System.Linq;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader.IO;
+
 namespace DragonLens.Core.Systems.ToolSystem
 {
 	/// <summary>

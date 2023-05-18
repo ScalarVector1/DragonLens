@@ -9,6 +9,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
+
 namespace DragonLens.Content.Tools.Gameplay
 {
 	internal class Time : Tool

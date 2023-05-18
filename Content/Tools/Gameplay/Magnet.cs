@@ -4,6 +4,7 @@ using DragonLens.Helpers;
 using System.IO;
 using Terraria.ID;
 using Terraria.ModLoader.IO;
+
 namespace DragonLens.Content.Tools.Gameplay
 {
 	internal class Magnet : Tool

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+
 namespace DragonLens.Core.Systems.ThemeSystem
 {
 	public abstract class ThemeIconProvider

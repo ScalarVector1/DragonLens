@@ -1,6 +1,7 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
 using System.Reflection;
 using Terraria.Map;
+
 namespace DragonLens.Content.Tools.Map
 {
 	internal class HideMap : Tool

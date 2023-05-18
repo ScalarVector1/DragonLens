@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Terraria.UI;
+
 namespace DragonLens.Core.Loaders.UILoading
 {
 	/// <summary>

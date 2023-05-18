@@ -4,6 +4,7 @@ using System.Reflection;
 using Terraria.GameContent.Bestiary;
 using Terraria.Localization;
 using static Terraria.GameContent.Bestiary.Filters;
+
 namespace DragonLens.Content.Filters.NPCFilters
 {
 	internal class BestiaryFilter : Filter

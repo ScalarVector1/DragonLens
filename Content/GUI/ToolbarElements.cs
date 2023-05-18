@@ -7,6 +7,7 @@ using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using System;
 using Terraria.UI;
+
 namespace DragonLens.Content.GUI
 {
 	/// <summary>

@@ -1,4 +1,5 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
+
 namespace DragonLens.Content.Tools.Map
 {
 	internal class RevealMap : Tool

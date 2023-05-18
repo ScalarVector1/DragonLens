@@ -11,6 +11,7 @@ using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
+
 namespace DragonLens.Content.Tools.Spawners
 {
 	internal class DustSpawner : BrowserTool<DustBrowser>

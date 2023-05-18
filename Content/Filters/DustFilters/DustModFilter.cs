@@ -2,6 +2,7 @@
 using DragonLens.Content.Tools.Spawners;
 using DragonLens.Core.Systems.ThemeSystem;
 using Terraria.ID;
+
 namespace DragonLens.Content.Filters.DustFilters
 {
 	internal class DustModFilter : Filter

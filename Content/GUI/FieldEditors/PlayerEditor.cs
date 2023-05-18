@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+
 namespace DragonLens.Content.GUI.FieldEditors
 {
 	internal class PlayerEditor : EntityEditor<Player>

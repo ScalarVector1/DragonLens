@@ -4,6 +4,7 @@ using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
+
 namespace DragonLens.Content.GUI
 {
 	internal class FilterPanel : SmartUIElement

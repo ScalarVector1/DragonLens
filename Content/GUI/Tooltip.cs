@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Terraria.UI;
 using Terraria.UI.Chat;
+
 namespace DragonLens.Content.GUI
 {
 	/// <summary>

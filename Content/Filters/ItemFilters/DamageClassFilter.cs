@@ -1,5 +1,6 @@
 ﻿using DragonLens.Content.GUI;
 using DragonLens.Content.Tools.Spawners;
+
 namespace DragonLens.Content.Filters.ItemFilters
 {
 	internal class DamageClassFilter : Filter

@@ -1,4 +1,5 @@
 ﻿using DragonLens.Content.GUI;
+
 namespace DragonLens.Core.Systems
 {
 	/// <summary>

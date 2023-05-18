@@ -2,6 +2,7 @@
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolSystem;
 using Terraria.ModLoader.IO;
+
 namespace DragonLens.Content.Tools.Spawners
 {
 	internal abstract class BrowserTool<T> : Tool where T : Browser

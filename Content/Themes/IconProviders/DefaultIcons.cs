@@ -1,6 +1,7 @@
 ﻿using DragonLens.Core.Systems.ThemeSystem;
 using ReLogic.Content;
 using System.Collections.Generic;
+
 namespace DragonLens.Content.Themes.IconProviders
 {
 	internal class DefaultIcons : ThemeIconProvider

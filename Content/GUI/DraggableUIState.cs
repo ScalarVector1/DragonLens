@@ -1,6 +1,7 @@
 ﻿using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Helpers;
 using Terraria.GameContent.UI.Elements;
+
 namespace DragonLens.Content.GUI
 {
 	/// <summary>

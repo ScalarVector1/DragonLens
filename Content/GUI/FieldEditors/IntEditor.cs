@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace DragonLens.Content.GUI.FieldEditors
 {
 	internal class IntEditor : FieldEditor<int>

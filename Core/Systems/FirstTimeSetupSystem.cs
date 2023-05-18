@@ -9,6 +9,7 @@ using DragonLens.Content.Tools.Spawners;
 using DragonLens.Content.Tools.Visualization;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolbarSystem;
+
 namespace DragonLens.Core.Systems
 {
 	internal class FirstTimeSetupSystem : ModSystem

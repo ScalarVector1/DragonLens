@@ -6,6 +6,7 @@ using DragonLens.Helpers;
 using System.Collections.Generic;
 using System.IO;
 using Terraria.UI;
+
 namespace DragonLens.Content.GUI
 {
 	internal class FirstTimeLayoutPresetMenu : SmartUIState

@@ -10,6 +10,7 @@ using Terraria.GameContent;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 using FixedUIScrollbar = Terraria.GameContent.UI.Elements.FixedUIScrollbar;
+
 namespace DragonLens.Content.GUI
 {
 	/// <summary>

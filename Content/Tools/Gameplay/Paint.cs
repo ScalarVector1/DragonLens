@@ -13,6 +13,7 @@ using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.Social.Steam;
 using Terraria.UI;
+
 namespace DragonLens.Content.Tools.Gameplay
 {
 	internal class Paint : Tool

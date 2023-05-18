@@ -3,6 +3,7 @@ using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
 using System;
 using Terraria.UI;
+
 namespace DragonLens.Content.GUI.FieldEditors
 {
 	internal abstract class EntityEditor<T> : FieldEditor<T> where T : Entity

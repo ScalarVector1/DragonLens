@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using Terraria.Localization;
+
 namespace DragonLens.Core
 {
 	internal class LocalizationRewriter : ModSystem

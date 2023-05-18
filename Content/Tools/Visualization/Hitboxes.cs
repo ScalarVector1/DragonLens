@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
+
 namespace DragonLens.Content.Tools.Visualization
 {
 	internal class Hitboxes : Tool
