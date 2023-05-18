@@ -50,6 +50,16 @@ namespace DragonLens.Core.Systems.ThemeSystem
 		/// </summary>
 		public ReadOnlyCollection<string> defaultKeys = new(defaultKeysInner);
 
+		/// <summary>
+		/// The name of this icon provider
+		/// </summary>
+		public abstract string Name { get; }
+
+		/// <summary>
+		/// The description for the icon provider
+		/// </summary>
+		public abstract string Description { get; }
+
 		public ThemeIconProvider()
 		{
 			icons = new Dictionary<string, Texture2D>();

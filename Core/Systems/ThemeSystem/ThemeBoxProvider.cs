@@ -6,6 +6,16 @@
 	public abstract class ThemeBoxProvider
 	{
 		/// <summary>
+		/// The name of this box provider
+		/// </summary>
+		public abstract string Name { get; }
+
+		/// <summary>
+		/// The description for the box provider
+		/// </summary>
+		public abstract string Description { get; }
+
+		/// <summary>
 		/// Draws a simple box. Used for most buttons and smaller backgrounds.
 		/// </summary>
 		/// <param name="spriteBatch"></param>

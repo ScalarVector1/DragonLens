@@ -4,6 +4,10 @@ namespace DragonLens.Content.Themes.BoxProviders
 {
 	internal class SimpleBoxes : ThemeBoxProvider
 	{
+		public override string Name => "Simple";
+
+		public override string Description => "The default box style for DragonLens";
+
 		public override void DrawBox(SpriteBatch spriteBatch, Rectangle target, Color color)
 		{
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Themes/BoxProviders/SimpleBoxes/Box").Value;

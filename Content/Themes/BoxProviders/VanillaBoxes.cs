@@ -4,6 +4,10 @@ namespace DragonLens.Content.Themes.BoxProviders
 {
 	internal class VanillaBoxes : ThemeBoxProvider
 	{
+		public override string Name => "Vanilla";
+
+		public override string Description => "A box style resembling that of the vanilla GUI";
+
 		public override void DrawBox(SpriteBatch spriteBatch, Rectangle target, Color color)
 		{
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Themes/BoxProviders/VanillaBoxes/Box").Value;

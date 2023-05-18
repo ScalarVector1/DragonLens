@@ -85,7 +85,8 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			if (boxes.Count <= 0 && icons.Count <= 0 || Main.LocalPlayer.controlHook)
+			// Probably not the best check but is functional for now
+			if (boxes.Count <= 0 && icons.Count <= 0)
 			{
 				RemoveAllChildren();
 				OnInitialize(); // We have to re-initialize so the scrollbars set properly and lists populate correctly
@@ -132,6 +133,9 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
+	/// <summary>
+	/// A button to select a box provider for your theme
+	/// </summary>
 	internal class BoxProviderButton : SmartUIElement
 	{
 		readonly ThemeBoxProvider theme;
@@ -157,8 +161,8 @@ namespace DragonLens.Content.GUI
 
 			if (IsMouseHovering && !Main.mouseLeft)
 			{
-				Tooltip.SetName("Box Theme");
-				Tooltip.SetTooltip("A box theme");
+				Tooltip.SetName(theme.Name);
+				Tooltip.SetTooltip(theme.Description);
 			}
 		}
 
@@ -168,6 +172,9 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
+	/// <summary>
+	/// A button to select an icon provider for your theme
+	/// </summary>
 	internal class IconProviderButton : SmartUIElement
 	{
 		readonly ThemeIconProvider theme;
@@ -193,8 +200,8 @@ namespace DragonLens.Content.GUI
 
 			if (IsMouseHovering && !Main.mouseLeft)
 			{
-				Tooltip.SetName("Icon Theme");
-				Tooltip.SetTooltip("An icon theme");
+				Tooltip.SetName(theme.Name);
+				Tooltip.SetTooltip(theme.Description);
 			}
 		}
 

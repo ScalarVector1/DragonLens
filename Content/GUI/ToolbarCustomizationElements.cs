@@ -350,6 +350,7 @@ namespace DragonLens.Content.GUI
 			ToolbarHandler.ExportToFile(Path.Join(Main.SavePath, "DragonLensLayouts", "Current"));
 
 			UILoader.GetUIState<LayoutPresetBrowser>().visible = false;
+			UILoader.GetUIState<ThemeMenu>().visible = false;
 
 			CustomizeTool.customizing = false;
 
