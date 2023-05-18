@@ -1,6 +1,4 @@
 ﻿using DragonLens.Content.GUI;
-using Terraria.ModLoader;
-
 namespace DragonLens.Core.Systems
 {
 	/// <summary>

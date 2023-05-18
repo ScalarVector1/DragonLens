@@ -1,5 +1,4 @@
 ﻿using System;
-
 namespace DragonLens.Content.GUI.FieldEditors
 {
 	internal class Vector2Editor : FieldEditor<Vector2>

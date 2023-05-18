@@ -1,10 +1,6 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
-using Microsoft.Xna.Framework;
 using System.IO;
-using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
-
 namespace DragonLens.Content.Tools.Gameplay
 {
 	internal class Difficulty : Tool

@@ -3,7 +3,6 @@ using DragonLens.Core.Systems.ToolbarSystem;
 using Microsoft.Xna.Framework.Input;
 using System.Linq;
 using Terraria.GameInput;
-
 namespace DragonLens.Core.Systems
 {
 	internal class ExtraKeybindSystem : ModPlayer

@@ -1,5 +1,4 @@
 ﻿using System;
-
 namespace DragonLens.Content.GUI.FieldEditors
 {
 	internal class FloatEditor : FieldEditor<float>

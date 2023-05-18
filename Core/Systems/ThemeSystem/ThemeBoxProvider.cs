@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-namespace DragonLens.Core.Systems.ThemeSystem
+﻿namespace DragonLens.Core.Systems.ThemeSystem
 {
 	/// <summary>
 	/// A class which provides the methods used to render boxes for the GUI.

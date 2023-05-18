@@ -1,9 +1,8 @@
-﻿using DragonLens.Configs;
-using DragonLens.Core.Loaders.UILoading;
+﻿using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
 using System;
 using Terraria.UI;
-
 namespace DragonLens.Content.GUI.FieldEditors
 {
 	internal abstract class EntityEditor<T> : FieldEditor<T> where T : Entity
@@ -49,7 +48,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 			Vector2 pos = GetDimensions().Position();
 			var preview = new Rectangle((int)pos.X + 12, (int)pos.Y + 32, 60, 60);
 
-			GUIHelper.DrawBox(sprite, preview, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(sprite, preview, ThemeHandler.ButtonColor);
 
 			if (value != null && value.active)
 			{
@@ -84,7 +83,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Picker").Value;
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);

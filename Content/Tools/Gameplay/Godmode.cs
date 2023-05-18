@@ -1,10 +1,8 @@
-﻿using DragonLens.Configs;
-using DragonLens.Core.Systems.ThemeSystem;
+﻿using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
-
 namespace DragonLens.Content.Tools.Gameplay
 {
 	internal class Godmode : Tool
@@ -45,7 +43,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			{
 				base.DrawIcon(spriteBatch, position);
 
-				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ThemeHandler.ButtonColor.InvertColor());
 
 				Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Misc/GlowAlpha").Value;
 				var color = new Color(255, 220, 100)
@@ -67,7 +65,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 				spriteBatch.Draw(icon, position.Center(), null, Color.White, 0, icon.Size() / 2f, scale, 0, 0);
 
-				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ThemeHandler.ButtonColor.InvertColor());
 
 				Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Misc/GlowAlpha").Value;
 				Color color = Color.White;

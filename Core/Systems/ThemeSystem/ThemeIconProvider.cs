@@ -1,8 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Terraria.ModLoader;
-
 namespace DragonLens.Core.Systems.ThemeSystem
 {
 	public abstract class ThemeIconProvider

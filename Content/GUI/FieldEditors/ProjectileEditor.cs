@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Terraria;
-
 namespace DragonLens.Content.GUI.FieldEditors
 {
 	internal class ProjectileEditor : EntityEditor<Projectile>

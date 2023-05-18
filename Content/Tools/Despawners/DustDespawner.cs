@@ -1,6 +1,4 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
-using Terraria;
-
 namespace DragonLens.Content.Tools.Despawners
 {
 	internal class DustDespawner : Tool

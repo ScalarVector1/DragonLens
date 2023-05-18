@@ -1,10 +1,6 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
-using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using Terraria;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-
 namespace DragonLens.Core.Systems.ToolbarSystem
 {
 	/// <summary>

@@ -1,11 +1,8 @@
 ﻿using DragonLens.Content.Themes.BoxProviders;
 using DragonLens.Content.Themes.IconProviders;
 using DragonLens.Core.Systems.ThemeSystem;
-using Microsoft.Xna.Framework;
 using System.ComponentModel;
-using Terraria;
 using Terraria.ModLoader.Config;
-
 namespace DragonLens.Configs
 {
 	public enum BoxStyle

@@ -1,9 +1,5 @@
 ﻿using DragonLens.Core.Systems.ThemeSystem;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
-using Terraria.ModLoader;
-
 namespace DragonLens.Content.Themes.BoxProviders
 {
 	internal class VanillaBoxes : ThemeBoxProvider

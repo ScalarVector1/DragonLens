@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using Terraria.ModLoader.Config;
-
 namespace DragonLens.Configs
 {
 	public class ToolConfig : ModConfig

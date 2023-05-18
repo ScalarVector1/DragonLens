@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.IO;
 using Terraria.ID;
 using Terraria.ModLoader.IO;
-
 namespace DragonLens.Core.Systems.ToolbarSystem
 {
 	/// <summary>

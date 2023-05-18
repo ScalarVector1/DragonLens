@@ -1,17 +1,12 @@
 ﻿using DragonLens.Core.Systems;
 using DragonLens.Core.Systems.ThemeSystem;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
 using System;
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using Terraria;
-using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 using Terraria.UI;
-
 namespace DragonLens.Helpers
 {
 	internal static class GUIHelper

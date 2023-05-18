@@ -1,9 +1,4 @@
 ﻿using DragonLens.Content.GUI;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ModLoader;
-
 namespace DragonLens.Content.Filters
 {
 	internal delegate bool FilterDelegate(BrowserButton button);

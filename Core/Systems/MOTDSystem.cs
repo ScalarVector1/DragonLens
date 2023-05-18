@@ -1,8 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-
-namespace DragonLens.Core.Systems
+﻿namespace DragonLens.Core.Systems
 {
 	/// <summary>
 	/// Displays a welcome message to the user

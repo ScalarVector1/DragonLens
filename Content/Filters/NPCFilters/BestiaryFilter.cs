@@ -1,13 +1,9 @@
 ﻿using DragonLens.Content.GUI;
 using DragonLens.Content.Tools.Spawners;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Reflection;
-using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.Localization;
 using static Terraria.GameContent.Bestiary.Filters;
-
 namespace DragonLens.Content.Filters.NPCFilters
 {
 	internal class BestiaryFilter : Filter

@@ -11,7 +11,6 @@ using Terraria.ID;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 using static Terraria.GameContent.Bestiary.Filters;
-
 namespace DragonLens.Content.Tools.Spawners
 {
 	internal class NPCSpawner : BrowserTool<NPCBrowser>

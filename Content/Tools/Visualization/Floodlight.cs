@@ -1,11 +1,7 @@
-﻿using DragonLens.Configs;
+﻿using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-
 namespace DragonLens.Content.Tools.Visualization
 {
 	internal class Floodlight : Tool
@@ -44,7 +40,7 @@ namespace DragonLens.Content.Tools.Visualization
 
 			if (strength > 0)
 			{
-				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ThemeHandler.ButtonColor.InvertColor());
 
 				Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Misc/GlowAlpha").Value;
 				Color color = new Color(255, 215, 150) * strength;

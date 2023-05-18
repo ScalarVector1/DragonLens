@@ -12,7 +12,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using Terraria.ID;
-
 namespace DragonLens
 {
 	public class DragonLens : Mod

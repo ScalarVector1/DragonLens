@@ -1,8 +1,6 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
 using System.IO;
-using Terraria;
 using Terraria.ID;
-
 namespace DragonLens.Content.Tools.Despawners
 {
 	internal class ItemDespawner : Tool

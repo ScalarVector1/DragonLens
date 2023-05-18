@@ -1,7 +1,6 @@
 ﻿using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Helpers;
 using Terraria.GameContent.UI.Elements;
-
 namespace DragonLens.Content.GUI
 {
 	/// <summary>
@@ -83,6 +82,7 @@ namespace DragonLens.Content.GUI
 		public sealed override void SafeUpdate(GameTime gameTime)
 		{
 			Recalculate();
+
 			if (!Main.mouseLeft && dragging)
 				dragging = false;
 

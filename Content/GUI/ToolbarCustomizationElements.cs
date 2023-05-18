@@ -5,7 +5,6 @@ using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolbarSystem;
 using System.IO;
 using Terraria.UI;
-
 namespace DragonLens.Content.GUI
 {
 	internal class RemoveButton : SmartUIElement
@@ -319,10 +318,10 @@ namespace DragonLens.Content.GUI
 		{
 			var drawTarget = GetDimensions().ToRectangle();
 
-			Helpers.GUIHelper.DrawBox(spriteBatch, drawTarget, ModContent.GetInstance<GUIConfig>().buttonColor);
+			Helpers.GUIHelper.DrawBox(spriteBatch, drawTarget, ThemeHandler.ButtonColor);
 
 			drawTarget.Inflate(-6, -16);
-			Helpers.GUIHelper.DrawBox(spriteBatch, drawTarget, ModContent.GetInstance<GUIConfig>().buttonColor);
+			Helpers.GUIHelper.DrawBox(spriteBatch, drawTarget, ThemeHandler.ButtonColor);
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/NewBar").Value;
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
@@ -367,7 +366,7 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/SaveLayout").Value;
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
@@ -412,7 +411,7 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/LoadLayout").Value;
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
@@ -435,7 +434,7 @@ namespace DragonLens.Content.GUI
 
 		public override void SafeClick(UIMouseEvent evt)
 		{
-			Helpers.GUIHelper.OpenConfig(ModContent.GetInstance<GUIConfig>());
+			UILoader.GetUIState<ThemeMenu>().visible = true;
 		}
 
 		public override void SafeUpdate(GameTime gameTime)
@@ -446,7 +445,7 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/StyleButton").Value;
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
@@ -482,7 +481,7 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
 
 			Texture2D tex = ThemeHandler.GetIcon("Customize");
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);

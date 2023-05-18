@@ -1,18 +1,13 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using Terraria;
-using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
 using static Terraria.ModLoader.Core.TmodFile;
-
 namespace DragonLens.Content.Tools.Developer
 {
 	internal class ShaderCompiler : Tool

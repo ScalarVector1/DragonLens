@@ -5,7 +5,6 @@ using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.UI;
-
 namespace DragonLens.Content.GUI
 {
 	internal class EmergencyCustomizeMenu : SmartUIState

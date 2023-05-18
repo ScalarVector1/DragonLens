@@ -1,12 +1,11 @@
-﻿using DragonLens.Configs;
-using DragonLens.Content.Tools;
+﻿using DragonLens.Content.Tools;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using System;
 using Terraria.UI;
-
 namespace DragonLens.Content.GUI
 {
 	/// <summary>
@@ -322,7 +321,7 @@ namespace DragonLens.Content.GUI
 				var bgTarget = GetDimensions().ToRectangle();
 				bgTarget.Inflate(-15, -15);
 
-				Helpers.GUIHelper.DrawBox(spriteBatch, bgTarget, ModContent.GetInstance<GUIConfig>().backgroundColor);
+				Helpers.GUIHelper.DrawBox(spriteBatch, bgTarget, ThemeHandler.BackgroundColor);
 
 				base.Draw(spriteBatch);
 				Recalculate();
@@ -386,7 +385,7 @@ namespace DragonLens.Content.GUI
 			if (parent.toolbar.collapsed && parent.toolbar.CollapseDirection == CollapseDirection.Floating)
 				return;
 
-			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
 
 			var innerRect = GetDimensions().ToRectangle();
 			innerRect.Inflate(-4, -4);
@@ -439,7 +438,7 @@ namespace DragonLens.Content.GUI
 			else
 				rotation = Toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
 
-			spriteBatch.Draw(tex, GetDimensions().Center(), null, ModContent.GetInstance<GUIConfig>().buttonColor, rotation, new Vector2(45, 75), 1, 0, 0);
+			spriteBatch.Draw(tex, GetDimensions().Center(), null, ThemeHandler.ButtonColor, rotation, new Vector2(45, 75), 1, 0, 0);
 
 			base.Draw(spriteBatch);
 		}

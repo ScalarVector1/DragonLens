@@ -1,10 +1,9 @@
-﻿using DragonLens.Configs;
-using DragonLens.Content.Filters;
+﻿using DragonLens.Content.Filters;
 using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
-
 namespace DragonLens.Content.GUI
 {
 	internal class FilterPanel : SmartUIElement
@@ -51,7 +50,7 @@ namespace DragonLens.Content.GUI
 
 			bar.Height.Set(drawBox.Height - 20, 0);
 
-			GUIHelper.DrawBox(spriteBatch, drawBox, ModContent.GetInstance<GUIConfig>().backgroundColor);
+			GUIHelper.DrawBox(spriteBatch, drawBox, ThemeHandler.BackgroundColor);
 
 			base.Draw(spriteBatch);
 		}
@@ -106,10 +105,10 @@ namespace DragonLens.Content.GUI
 		{
 			var drawBox = GetDimensions().ToRectangle();
 
-			GUIHelper.DrawBox(spriteBatch, drawBox, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, drawBox, ThemeHandler.ButtonColor);
 
 			if (active)
-				GUIHelper.DrawOutline(spriteBatch, drawBox, ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				GUIHelper.DrawOutline(spriteBatch, drawBox, ThemeHandler.ButtonColor.InvertColor());
 
 			drawBox.Inflate(-4, -4);
 			filter.Draw(spriteBatch, drawBox);
