@@ -10,13 +10,7 @@ namespace DragonLens.Content.Tools.Visualization
 
 		public override string IconKey => "Lighting";
 
-		public override string DisplayName => "Mass Illumination";
-
-		public override string Description => "Light up the entire screen!";
-
 		public override bool HasRightClick => true;
-
-		public override string RightClickName => "Decrease Mass Illumination";
 
 		public override void OnActivate()
 		{

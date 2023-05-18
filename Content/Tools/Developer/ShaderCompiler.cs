@@ -1,4 +1,5 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
+using DragonLens.Helpers;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,6 +9,7 @@ using System.Reflection;
 using System.Threading;
 using Terraria.ModLoader.Core;
 using static Terraria.ModLoader.Core.TmodFile;
+
 namespace DragonLens.Content.Tools.Developer
 {
 	internal class ShaderCompiler : Tool
@@ -22,10 +24,6 @@ namespace DragonLens.Content.Tools.Developer
 
 		public override string IconKey => "ShaderCompiler";
 
-		public override string DisplayName => "Shader Reloader";
-
-		public override string Description => "Re-compile and re-load all shaders [WORK IN PROGRESS]";
-
 		public ShaderCompiler() : base()
 		{
 			if (!File.Exists(compilerPath))
@@ -36,11 +34,11 @@ namespace DragonLens.Content.Tools.Developer
 		{
 			if (busy)
 			{
-				Main.NewText("Shader compiler is busy! Please wait...", Color.Orange);
+				Main.NewText(LocalizationHelper.GetToolText("ShaderCompiler.Busy"), Color.Orange);
 				return;
 			}
 
-			Main.NewText("Triggered shader re-compile...");
+			Main.NewText(LocalizationHelper.GetToolText("ShaderCompiler.Triggered"));
 			busy = true;
 
 			Stopwatch watch = new();
@@ -59,7 +57,7 @@ namespace DragonLens.Content.Tools.Developer
 				}
 
 				watch.Stop();
-				Main.NewText($"Shader re-compilation completed in {watch.ElapsedMilliseconds} ms");
+				Main.NewText(LocalizationHelper.GetToolText("ShaderCompiler.Completed", watch.ElapsedMilliseconds));
 				needsReload = true;
 				busy = false;
 			});
@@ -140,7 +138,7 @@ namespace DragonLens.Content.Tools.Developer
 
 			process.WaitForExit();
 
-			Main.NewText($"Shaders for {mod.DisplayName} recompiled!", Color.SkyBlue);
+			Main.NewText(LocalizationHelper.GetToolText("ShaderCompiler.Recompiled", mod.DisplayName), Color.SkyBlue);
 
 			if (!Directory.Exists(Path.Combine(cachePath, mod.Name)))
 				Directory.CreateDirectory(Path.Combine(cachePath, mod.Name));

@@ -11,19 +11,13 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override string IconKey => "FastForward";
 
-		public override string DisplayName => "Fast forward";
-
-		public override string Description => "Click to speed up the game, up to 4x. Right click to move backwards through speeds.";
-
 		public override bool HasRightClick => true;
-
-		public override string RightClickName => "Decrease fast forward rate";
 
 		public override void OnActivate()
 		{
 			if (Main.netMode != NetmodeID.SinglePlayer)
 			{
-				Main.NewText("Fast forward is disabled in multiplayer", Color.Red);
+				Main.NewText(LocalizationHelper.GetToolText("FastForward.MultiplayerDisabled"), Color.Red);
 				speedup = 0;
 				return;
 			}
@@ -38,7 +32,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		{
 			if (Main.netMode != NetmodeID.SinglePlayer)
 			{
-				Main.NewText("Fast forward is disabled in multiplayer", Color.Red);
+				Main.NewText(LocalizationHelper.GetToolText("FastForward.MultiplayerDisabled"), Color.Red);
 				speedup = 0;
 				return;
 			}

@@ -10,13 +10,7 @@ namespace DragonLens.Content.Tools.Despawners
 
 		public override string IconKey => "NPCDespawner";
 
-		public override string DisplayName => "Clear NPCs";
-
-		public override string Description => "Removes all hostile NPCs currently in the world. Right click for a more traditional 'butcher'. NEWBLOCK hold SHIFT to clear/butcher friendly NPCs aswell";
-
 		public override bool HasRightClick => true;
-
-		public override string RightClickName => "Traditional butcher";
 
 		public override void OnActivate()
 		{

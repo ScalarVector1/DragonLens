@@ -1,7 +1,10 @@
 ﻿using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
+using ReLogic.Localization.IME;
+using ReLogic.OS;
 using System.Text.RegularExpressions;
+using Terraria.GameContent;
 using Terraria.GameInput;
 using Terraria.UI;
 namespace DragonLens.Content.GUI.FieldEditors
@@ -21,6 +24,10 @@ namespace DragonLens.Content.GUI.FieldEditors
 		public InputType inputType;
 
 		public string currentValue = "";
+
+		// Composition string is handled at the very beginning of the update
+		// In order to check if there is a composition string before backspace is typed, we need to check the previous state
+		private bool _oldHasCompositionString;
 
 		public TextField(InputType inputType = InputType.text)
 		{
@@ -65,6 +72,10 @@ namespace DragonLens.Content.GUI.FieldEditors
 			Main.instance.HandleIME();
 
 			string newText = Main.GetInputText(currentValue);
+			
+			// GetInputText() handles typing operation, but there is a issue that it doesn't handle backspace correctly when the composition string is not empty. It will delete a character both in the text and the composition string instead of only the one in composition string. We'll fix the issue here to provide a better user experience
+			if (_oldHasCompositionString && Main.inputText.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Back))
+				newText = currentValue; // force text not to be changed
 
 			if (inputType == InputType.integer && Regex.IsMatch(newText, "[0-9]*$"))
 			{
@@ -90,6 +101,8 @@ namespace DragonLens.Content.GUI.FieldEditors
 					updated = true;
 				}
 			}
+
+			_oldHasCompositionString = Platform.Get<IImeService>().CompositionString is {Length: > 0};
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
@@ -100,16 +113,33 @@ namespace DragonLens.Content.GUI.FieldEditors
 			{
 				GUIHelper.DrawOutline(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor.InvertColor());
 				HandleText();
+
+				// draw ime panel, note that if there's no composition string then it won't draw anything
+				Main.instance.DrawWindowsIMEPanel(GetDimensions().Position());
 			}
 
 			Vector2 pos = GetDimensions().Position() + Vector2.One * 4;
 
+			const float scale = 0.75f;
 			string displayed = currentValue;
 
-			if (typing && Main.GameUpdateCount % 20 < 10)
-				displayed += "|";
+			Utils.DrawBorderString(spriteBatch, displayed, pos, Color.White, scale);
 
-			Utils.DrawBorderString(spriteBatch, displayed, pos, Color.White, 0.75f);
+			// composition string + cursor drawing below
+			if (!typing)
+				return;
+
+			pos.X += FontAssets.MouseText.Value.MeasureString(displayed).X * scale;
+			string compositionString = Platform.Get<IImeService>().CompositionString;
+
+			if (compositionString is {Length: > 0})
+			{
+				Utils.DrawBorderString(spriteBatch, compositionString, pos, new Color(255, 240, 20), scale);
+				pos.X += FontAssets.MouseText.Value.MeasureString(compositionString).X * scale;
+			}
+
+			if (Main.GameUpdateCount % 20 < 10)
+				Utils.DrawBorderString(spriteBatch, "|", pos, Color.White, scale);
 		}
 	}
 }

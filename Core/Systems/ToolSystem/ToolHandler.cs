@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DragonLens.Helpers;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -183,7 +184,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 				{
 					if (!PermissionHandler.CanUseTools(Main.LocalPlayer))
 					{
-						Main.NewText("You are not an admin!", Color.Red);
+						Main.NewText(LocalizationHelper.GetText("Permission.NotAdmin"), Color.Red);
 						return;
 					}
 
@@ -194,7 +195,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 				{
 					if (!PermissionHandler.CanUseTools(Main.LocalPlayer))
 					{
-						Main.NewText("You are not an admin!", Color.Red);
+						Main.NewText(LocalizationHelper.GetText("Permission.NotAdmin"), Color.Red);
 						return;
 					}
 

@@ -1,0 +1,47 @@
+BoxStyle: {
+	simple: 简约
+	vanilla: 原版
+}
+
+IconStyle: {
+	basic: 默认
+	HEROs: HEROs
+}
+
+GUIConfig: {
+	Title: GUI配置
+
+	backgroundColor: {
+		Label: 背景颜色
+		Tooltip: UI面板的背景颜色
+	}
+
+	buttonColor: {
+		Label: 按钮颜色
+		Tooltip: 按钮的颜色
+	}
+
+	boxStyle: {
+		Label: UI框风格
+		Tooltip: UI框的风格
+	}
+
+	iconStyle: {
+		Label: 图标风格
+		Tooltip: 工具图标的风格
+	}
+}
+
+ToolConfig: {
+	Title: 工具配置
+
+	preloadSpawners: {
+		Label: 预加载生成器条目
+		Tooltip: 在模组加载时为生成器加载条目，而不是使用时。 可减少游戏中打开生成器时的卡顿，但可能会增加模组加载时间。
+	}
+
+	preloadAssets: {
+		Label: 预加载生成器资源
+		Tooltip: 在模组加载时为生成器加载资源，而不是使用时。 可减少游戏中打开生成器时的卡顿，但可能会增加模组加载时间。
+	}
+}

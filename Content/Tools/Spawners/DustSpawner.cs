@@ -2,6 +2,7 @@
 using DragonLens.Content.Filters.DustFilters;
 using DragonLens.Content.GUI;
 using DragonLens.Content.GUI.FieldEditors;
+using DragonLens.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,10 @@ namespace DragonLens.Content.Tools.Spawners
 	{
 		public override string IconKey => "DustSpawner";
 
-		public override string DisplayName => "Dust spawner";
-
-		public override string Description => "Spawn dust, with options to preview different spawning methods and parameters";
+		public static string GetText(string key, params object[] args)
+		{
+			return LocalizationHelper.GetText($"Tools.DustSpawner.{key}", args);
+		}
 	}
 
 	internal class DustBrowser : Browser
@@ -40,7 +42,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public static Color color = Color.White;
 		public static ColorEditor colorEditor;
 
-		public override string Name => "Dust spawner";
+		public override string Name => DustSpawner.GetText("DisplayName");
 
 		public override string IconTexture => "DustSpawner";
 
@@ -48,19 +50,19 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void PostInitialize()
 		{
-			perfectEditor = new("Use NewDustPerfect", n => perfect = n, false);
+			perfectEditor = new(DustSpawner.GetText("FieldEditors.NewDustPerfect"), n => perfect = n, false);
 			Append(perfectEditor);
 
-			scaleEditor = new("Scale", n => scale = n, 1);
+			scaleEditor = new(DustSpawner.GetText("FieldEditors.Scale"), n => scale = n, 1);
 			Append(scaleEditor);
 
-			alphaEditor = new("Alpha", n => alpha = n, 0);
+			alphaEditor = new(DustSpawner.GetText("FieldEditors.Alpha"), n => alpha = n, 0);
 			Append(alphaEditor);
 
-			velocityEditor = new("Velocity", n => velocity = n, Vector2.Zero);
+			velocityEditor = new(DustSpawner.GetText("FieldEditors.Velocity"), n => velocity = n, Vector2.Zero);
 			Append(velocityEditor);
 
-			colorEditor = new("Color", n => color = n, Color.White);
+			colorEditor = new(DustSpawner.GetText("FieldEditors.Color"), n => color = n, Color.White);
 			Append(colorEditor);
 		}
 
@@ -111,8 +113,8 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SetupFilters(FilterPanel filters)
 		{
-			filters.AddSeperator("Mod filters");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Vanilla", "Dusts from the base game", n => !(n is DustButton && (n as DustButton).dust.type <= DustID.Count)));
+			filters.AddSeperator("Tools.DustSpawner.FilterCategories.Mod");
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.DustSpawner.Filters.Vanilla", n => !(n is DustButton && (n as DustButton).dust.type <= DustID.Count)));
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModDust>().Count() > 0))
 			{
@@ -154,6 +156,14 @@ namespace DragonLens.Content.Tools.Spawners
 			{
 
 			}
+
+			// Set name here to receive game language selection changes in real time
+			// This is a bit of a hack, but it works
+			perfectEditor.name = DustSpawner.GetText("FieldEditors.NewDustPerfect");
+			scaleEditor.name = DustSpawner.GetText("FieldEditors.Scale");
+			alphaEditor.name = DustSpawner.GetText("FieldEditors.Alpha");
+			velocityEditor.name = DustSpawner.GetText("FieldEditors.Velocity");
+			colorEditor.name = DustSpawner.GetText("FieldEditors.Color");
 
 			base.Draw(spriteBatch);
 		}
@@ -229,14 +239,14 @@ namespace DragonLens.Content.Tools.Spawners
 			if (IsMouseHovering)
 			{
 				Tooltip.SetName(Identifier);
-				Tooltip.SetTooltip($"Type: {dust.type}");
+				Tooltip.SetTooltip(DustSpawner.GetText("DustType", dust.type));
 			}
 		}
 
 		public override void SafeClick(UIMouseEvent evt)
 		{
 			DustBrowser.selected = dust;
-			Main.NewText($"{Identifier} selected, click anywhere in the world to spawn. Right click to deselect.");
+			Main.NewText(DustSpawner.GetText("Selected", Identifier));
 		}
 
 		public override int CompareTo(object obj)

@@ -11,10 +11,6 @@ namespace DragonLens.Content.Tools.Visualization
 
 		public override string IconKey => "LockCamera";
 
-		public override string DisplayName => "Lock camera";
-
-		public override string Description => "Lock the camera to it's current position. Mutually exclusive with free camera.";
-
 		public override void OnActivate()
 		{
 			active = !active;

@@ -1,5 +1,6 @@
 ﻿using DragonLens.Content.Tools;
 using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Helpers;
 using System.Collections.Generic;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
@@ -21,7 +22,7 @@ namespace DragonLens.Content.GUI
 
 		public override void OnInitialize()
 		{
-			button = new("Customize toolbars", scale, false);
+			button = new(LocalizationHelper.GetGUIText("EmergencyCustomizeMenu.CustomizeToolbars"), scale, false);
 			button.Left.Set(-410, 1f);
 			button.Top.Set(-37, 1f);
 			button.Width.Set(200, 0);
@@ -53,7 +54,7 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Utils.DrawBorderStringBig(spriteBatch, "Customize tools", button.GetDimensions().Center(), new Color(240, 240, 240), scale, 0.5f, 0.5f);
+			Utils.DrawBorderStringBig(spriteBatch, LocalizationHelper.GetGUIText("EmergencyCustomizeMenu.CustomizeTools"), button.GetDimensions().Center(), new Color(240, 240, 240), scale, 0.5f, 0.5f);
 		}
 	}
 }

@@ -19,10 +19,6 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public override string IconKey => "Paint";
 
-		public override string DisplayName => "Tile painter";
-
-		public override string Description => "Copy/paste regions of the world";
-
 		public override void OnActivate()
 		{
 			PaintWindow state = UILoader.GetUIState<PaintWindow>();
@@ -34,6 +30,11 @@ namespace DragonLens.Content.Tools.Gameplay
 				state.OnInitialize();
 				state.firstSet = true;
 			}
+		}
+
+		public static string GetTextValue(string key, params object[] args)
+		{
+			return LocalizationHelper.GetText($"Tools.Paint.{key}", args);
 		}
 	}
 
@@ -77,7 +78,7 @@ namespace DragonLens.Content.Tools.Gameplay
 				Append(adPanel);
 			}
 
-			sampleButton = new("DragonLens/Assets/GUI/Picker", () => selecting, "Create structure");
+			sampleButton = new("DragonLens/Assets/GUI/Picker", () => selecting, Paint.GetTextValue("CreateStructure"));
 			sampleButton.OnLeftClick += (a, b) => selecting = !selecting;
 			Append(sampleButton);
 
@@ -117,7 +118,7 @@ namespace DragonLens.Content.Tools.Gameplay
 					target = new Rectangle(Player.tileTargetX, Player.tileTargetY, 0, 0);
 					selectingSecondPoint = true;
 
-					Main.NewText("First point set!");
+					Main.NewText(Paint.GetTextValue("FirstPointSet"));
 				}
 				else
 				{
@@ -137,7 +138,7 @@ namespace DragonLens.Content.Tools.Gameplay
 					selecting = false;
 					selectingSecondPoint = false;
 
-					Main.NewText("Structure saved to paint menu!");
+					Main.NewText(Paint.GetTextValue("StructureSaved"));
 				}
 			}
 		}
@@ -206,7 +207,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			Texture2D icon = ThemeHandler.GetIcon("Paint");
 			spriteBatch.Draw(icon, basePos + Vector2.One * 12, Color.White);
 
-			Utils.DrawBorderStringBig(spriteBatch, "Tile painter", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
+			Utils.DrawBorderStringBig(spriteBatch, Paint.GetTextValue("DisplayName"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
 
 			if (structure != null && !selecting)
 			{
@@ -259,7 +260,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			// StructurePreview constructor requires a spritebatch to be active
 			Main.spriteBatch.Begin();
 
-			preview = new("Temporary structure " + strucutre.GetHashCode(), tag);
+			preview = new(Paint.GetTextValue("TempStructure", strucutre.GetHashCode()), tag);
 
 			// End the spritebatch after the preview is created
 			Main.spriteBatch.End();
@@ -344,11 +345,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.BackgroundColor);
 
 			ReLogic.Graphics.DynamicSpriteFont font = Terraria.GameContent.FontAssets.MouseText.Value;
-			string message = GUIHelper.WrapString("For more useful features, check out the full Structure Helper mod! You'll be able to: NEWBLOCK" +
-				" > Export structures to files! NEWBLOCK" +
-				" > Use null tiles to generate non-square structures! NEWBLOCK" +
-				" > Place chests with custom, random loot pools! NEWBLOCK" +
-				" > Generate structures in your own mods from files!", 160, font, 0.8f);
+			string message = GUIHelper.WrapString(Paint.GetTextValue("Advertise.Content"), 160, font, 0.8f);
 
 			Utils.DrawBorderString(spriteBatch, message, dims.TopLeft() + Vector2.One * 8, Color.White, 0.8f);
 
@@ -372,7 +369,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 			method.Invoke(null, new object[] { publishId, null, false });
 
-			Main.NewText("StructureHelper is being downloaded. Return to the main menu and go to the workshop menu to enable it!");
+			Main.NewText(Paint.GetTextValue("Advertise.Downloaded"));
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
@@ -383,7 +380,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/StructureHelper").Value;
 			spriteBatch.Draw(tex, dims.TopLeft() + Vector2.One * 4, Color.White);
 
-			Utils.DrawBorderString(spriteBatch, "Download\n  Now!", dims.TopLeft() + new Vector2(88, 24), Color.White, 0.8f);
+			Utils.DrawBorderString(spriteBatch, Paint.GetTextValue("Advertise.Title"), dims.TopLeft() + new Vector2(88, 24), Color.White, 0.8f);
 
 			base.Draw(spriteBatch);
 		}

@@ -14,10 +14,6 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public override string IconKey => "SpawnTool";
 
-		public override string DisplayName => "Enemy spawn adjuster";
-
-		public override string Description => "Change the rate at which enemies spawn, or disable natural spawns altogether";
-
 		public override void OnActivate()
 		{
 			SpawnWindow state = UILoader.GetUIState<SpawnWindow>();
@@ -105,7 +101,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			Texture2D icon = ThemeHandler.GetIcon("SpawnTool");
 			spriteBatch.Draw(icon, basePos + Vector2.One * 12, Color.White);
 
-			Utils.DrawBorderStringBig(spriteBatch, "Enemy spawn rate", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
+			Utils.DrawBorderStringBig(spriteBatch, LocalizationHelper.GetToolText("SpawnTool.EnemySpawnRate"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
 
 			base.Draw(spriteBatch);
 		}
@@ -171,7 +167,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			var draggerTarget = new Rectangle(dims.X + (int)(progress * dims.Width) - 6, dims.Y - 8, 12, 24);
 			GUIHelper.DrawBox(spriteBatch, draggerTarget, ThemeHandler.ButtonColor);
 
-			Utils.DrawBorderString(spriteBatch, $"Spawn rate: {System.Math.Round(SpawnSystem.spawnRateModifier, 2)}x", dims.TopLeft() + new Vector2(0, -24), Color.White, 0.8f);
+			Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetToolText("SpawnTool.SpawnRate", System.Math.Round(SpawnSystem.spawnRateModifier, 2)), dims.TopLeft() + new Vector2(0, -24), Color.White, 0.8f);
 
 			Utils.DrawBorderString(spriteBatch, "0x", dims.TopLeft() + new Vector2(0, 14), Color.White, 0.8f, 0.5f);
 			Utils.DrawBorderString(spriteBatch, "1x", dims.TopLeft() + new Vector2(30, 14), Color.White, 0.8f, 0.5f);

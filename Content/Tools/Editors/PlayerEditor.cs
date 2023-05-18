@@ -3,6 +3,7 @@ using DragonLens.Content.GUI.FieldEditors;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
+using DragonLens.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,7 @@ namespace DragonLens.Content.Tools.Editors
 	{
 		public override string IconKey => "PlayerEditor";
 
-		public override string DisplayName => "Player Editor";
-
-		public override string Description => "Change the stats (and other fields) of players!";
+		public override string LocalizationKey => "PlayerEditor";
 
 		public override void OnActivate()
 		{
@@ -122,19 +121,24 @@ namespace DragonLens.Content.Tools.Editors
 
 		private void BuildBasicEditor()
 		{
-			basicEditorList.Add(new IntEditor("Max Life", n => player.statLifeMax = n, player.statLifeMax, () => player.statLifeMax, "The players max life via permanent vanilla sources. Changing this below 20 or above 500 might have odd effects."));
-			basicEditorList.Add(new IntEditor("Max Mana", n => player.statManaMax = n, player.statManaMax, () => player.statManaMax, "The players max mana via permanent vanilla sources. Changing this below 20 or above 200 might have odd effects."));
+			static string GetLocalizedText(string text)
+			{
+				return LocalizationHelper.GetText($"Tools.PlayerEditor.Editors.{text}");
+			}
+
+			basicEditorList.Add(new IntEditor(GetLocalizedText("MaxLife.Name"), n => player.statLifeMax = n, player.statLifeMax, () => player.statLifeMax, GetLocalizedText("MaxLife.Description")));
+			basicEditorList.Add(new IntEditor(GetLocalizedText("MaxMana.Name"), n => player.statManaMax = n, player.statManaMax, () => player.statManaMax, GetLocalizedText("MaxMana.Description")));
 
 			PlayerEditorPlayer mp = player.GetModPlayer<PlayerEditorPlayer>();
 
-			basicEditorList.Add(new IntEditor("Extra Life", n => mp.lifeBoost = n, mp.lifeBoost, () => mp.lifeBoost, "Allows you to give yourself an arbitrary amount of extra life."));
-			basicEditorList.Add(new IntEditor("Extra Mana", n => mp.manaBoost = n, mp.manaBoost, () => mp.manaBoost, "Allows you to give yourself an arbitrary amount of extra mana."));
+			basicEditorList.Add(new IntEditor(GetLocalizedText("ExtraLife.Name"), n => mp.lifeBoost = n, mp.lifeBoost, () => mp.lifeBoost, GetLocalizedText("ExtraLife.Description")));
+			basicEditorList.Add(new IntEditor(GetLocalizedText("ExtraMana.Name"), n => mp.manaBoost = n, mp.manaBoost, () => mp.manaBoost, GetLocalizedText("ExtraMana.Description")));
 
-			basicEditorList.Add(new IntEditor("Extra Defense", n => mp.defenseBoost = n, mp.defenseBoost, () => mp.defenseBoost, "Allows you to give yourself an arbitrary amount of extra defense."));
-			basicEditorList.Add(new FloatEditor("Extra Endurance", n => mp.enduranceBoost = n, mp.enduranceBoost, () => mp.enduranceBoost, "Allows you to give yourself an arbitrary amount of extra endurance (damage reduction)."));
+			basicEditorList.Add(new IntEditor(GetLocalizedText("ExtraDefense.Name"), n => mp.defenseBoost = n, mp.defenseBoost, () => mp.defenseBoost, GetLocalizedText("ExtraDefense.Description")));
+			basicEditorList.Add(new FloatEditor(GetLocalizedText("ExtraEndurance.Name"), n => mp.enduranceBoost = n, mp.enduranceBoost, () => mp.enduranceBoost, GetLocalizedText("ExtraEndurance.Description")));
 
-			basicEditorList.Add(new IntEditor("Extra minion slots", n => mp.minionBoost = n, mp.minionBoost, () => mp.minionBoost, "Extra minion slots ontop of what your gear provides you!"));
-			basicEditorList.Add(new FloatEditor("Extra speed", n => mp.speedBoost = n, mp.speedBoost, () => mp.speedBoost, "Speed yourself up!"));
+			basicEditorList.Add(new IntEditor(GetLocalizedText("ExtraMinionSlots.Name"), n => mp.minionBoost = n, mp.minionBoost, () => mp.minionBoost, GetLocalizedText("ExtraMinionSlots.Description")));
+			basicEditorList.Add(new FloatEditor(GetLocalizedText("ExtraSpeed.Name"), n => mp.speedBoost = n, mp.speedBoost, () => mp.speedBoost, GetLocalizedText("ExtraSpeed.Description")));
 		}
 
 		private void BuildModPlayerEditor()
@@ -155,6 +159,11 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
+			static string GetLocalizedText(string text)
+			{
+				return LocalizationHelper.GetText($"Tools.PlayerEditor.{text}");
+			}
+
 			Helpers.GUIHelper.DrawBox(spriteBatch, BoundingBox, ThemeHandler.BackgroundColor);
 
 			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
@@ -164,11 +173,11 @@ namespace DragonLens.Content.Tools.Editors
 			Texture2D icon = ThemeHandler.GetIcon("PlayerEditor");
 			spriteBatch.Draw(icon, basePos + Vector2.One * 16, Color.White);
 
-			Utils.DrawBorderStringBig(spriteBatch, "Player Editor", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.6f);
+			Utils.DrawBorderStringBig(spriteBatch, GetLocalizedText("DisplayName"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.6f);
 
 			Vector2 pos = basePos;
-			Utils.DrawBorderString(spriteBatch, "Vanilla Fields", pos + new Vector2(120, 80), Color.White, 1, 0f, 0.5f);
-			Utils.DrawBorderString(spriteBatch, "Mod Players", pos + new Vector2(320 + 220, 80), Color.White, 1, 0f, 0.5f);
+			Utils.DrawBorderString(spriteBatch, GetLocalizedText("VanillaFields"), pos + new Vector2(120, 80), Color.White, 1, 0f, 0.5f);
+			Utils.DrawBorderString(spriteBatch, GetLocalizedText("ModPlayers"), pos + new Vector2(320 + 220, 80), Color.White, 1, 0f, 0.5f);
 
 			Texture2D background = Terraria.GameContent.TextureAssets.MagicPixel.Value;
 
@@ -263,7 +272,7 @@ namespace DragonLens.Content.Tools.Editors
 		{
 			if (t.FieldType == typeof(T))
 			{
-				string message = "This field editor was auto-generated via reflection. Changing it may have unknowable consequences depending on what the mod this player is from uses it for.";
+				string message = LocalizationHelper.GetToolText("PlayerEditor.AutogenMsg");
 
 				var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(p, n)), (T)t.GetValue(p), () => (T)t.GetValue(p), message });
 				modPlayerEditorList.Add(newEditor);
@@ -286,7 +295,7 @@ namespace DragonLens.Content.Tools.Editors
 		{
 			if (t.PropertyType == typeof(T))
 			{
-				string message = "This property editor was auto-generated via reflection. Changing it may have unknowable consequences depending on what the mod this player is from uses it for.";
+				string message = LocalizationHelper.GetToolText("PlayerEditor.AutogenMsg");
 
 				var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(p, n)), (T)t.GetValue(p), () => (T)t.GetValue(p), message });
 				modPlayerEditorList.Add(newEditor);

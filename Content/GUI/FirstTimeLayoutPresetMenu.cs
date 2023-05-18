@@ -19,22 +19,22 @@ namespace DragonLens.Content.GUI
 
 		public override void OnInitialize()
 		{
-			var newButton = new FirstTimeLayoutButton("Simple", Path.Join(Main.SavePath, "DragonLensLayouts", "Simple"), "DragonLens/Assets/Misc/PreviewSimple", "A simplified layout, perfect for players or mod testers.");
+			var newButton = new FirstTimeLayoutButton("Simple", Path.Join(Main.SavePath, "DragonLensLayouts", "Simple"), "DragonLens/Assets/Misc/PreviewSimple");
 			newButton.Left.Set(-220, 0.5f);
 			newButton.Top.Set(-262, 0.5f);
 			Append(newButton);
 
-			newButton = new FirstTimeLayoutButton("Advanced", Path.Join(Main.SavePath, "DragonLensLayouts", "Advanced"), "DragonLens/Assets/Misc/PreviewAdv", "An advanced layout with every tool available. Perfect for mod developers or power users.");
+			newButton = new FirstTimeLayoutButton("Advanced", Path.Join(Main.SavePath, "DragonLensLayouts", "Advanced"), "DragonLens/Assets/Misc/PreviewAdv");
 			newButton.Left.Set(20, 0.5f);
 			newButton.Top.Set(-262, 0.5f);
 			Append(newButton);
 
-			newButton = new FirstTimeLayoutButton("HEROs Mod imitation", Path.Join(Main.SavePath, "DragonLensLayouts", "HEROs mod imitation"), "DragonLens/Assets/Misc/PreviewHeros", "A layout attempting to mimic HEROs mod as closely as possible.");
+			newButton = new FirstTimeLayoutButton("HEROsMod", Path.Join(Main.SavePath, "DragonLensLayouts", "HEROs mod imitation"), "DragonLens/Assets/Misc/PreviewHeros");
 			newButton.Left.Set(-220, 0.5f);
 			newButton.Top.Set(20, 0.5f);
 			Append(newButton);
 
-			newButton = new FirstTimeLayoutButton("Cheatsheet imitation", Path.Join(Main.SavePath, "DragonLensLayouts", "Cheatsheet imitation"), "DragonLens/Assets/Misc/PreviewCheatsheet", "A layout attempting to mimic Cheatsheet as closely as possible.");
+			newButton = new FirstTimeLayoutButton("Cheatsheet", Path.Join(Main.SavePath, "DragonLensLayouts", "Cheatsheet imitation"), "DragonLens/Assets/Misc/PreviewCheatsheet");
 			newButton.Left.Set(20, 0.5f);
 			newButton.Top.Set(20, 0.5f);
 			Append(newButton);
@@ -47,8 +47,8 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Utils.DrawBorderStringBig(spriteBatch, "Welcome to DragonLens!", GetDimensions().Center() + new Vector2(0, -380), Color.White, 1, 0.5f, 0);
-			Utils.DrawBorderStringBig(spriteBatch, "Please select a layout to get started", GetDimensions().Center() + new Vector2(0, -320), Color.LightGray, 0.6f, 0.5f, 0);
+			Utils.DrawBorderStringBig(spriteBatch, LocalizationHelper.GetGUIText("FirstTimeLayoutPresetMenu.Welcome"), GetDimensions().Center() + new Vector2(0, -380), Color.White, 1, 0.5f, 0);
+			Utils.DrawBorderStringBig(spriteBatch, LocalizationHelper.GetGUIText("FirstTimeLayoutPresetMenu.SelectLayout"), GetDimensions().Center() + new Vector2(0, -320), Color.LightGray, 0.6f, 0.5f, 0);
 
 			base.Draw(spriteBatch);
 		}
@@ -61,7 +61,7 @@ namespace DragonLens.Content.GUI
 		private readonly string presetPath;
 		private readonly string texPath;
 
-		public FirstTimeLayoutButton(string name, string presetPath, string texPath, string tooltip = "A toolbar layout preset")
+		public FirstTimeLayoutButton(string name, string presetPath, string texPath, string tooltip)
 		{
 			this.name = name;
 			this.presetPath = presetPath;
@@ -72,6 +72,10 @@ namespace DragonLens.Content.GUI
 			Height.Set(244, 0);
 		}
 
+		public FirstTimeLayoutButton(string localizationKey, string presetPath, string texPath) : this(LocalizationHelper.GetGUIText($"Layout.{localizationKey}.Name"), presetPath, texPath, LocalizationHelper.GetGUIText($"Layout.{localizationKey}.Tooltip"))
+		{
+		}
+
 		public override void SafeClick(UIMouseEvent evt)
 		{
 			ToolbarHandler.LoadFromFile(presetPath);
@@ -80,7 +84,7 @@ namespace DragonLens.Content.GUI
 
 			UILoader.GetUIState<ToolbarState>().Refresh();
 
-			Main.NewText($"{name} selected! Use the customize tool (wrench icon) to customize your layout or load a different preset.");
+			Main.NewText(LocalizationHelper.GetGUIText("FirstTimeLayoutPresetMenu.Selected", name));
 			FirstTimeSetupSystem.trueFirstTime = false;
 		}
 

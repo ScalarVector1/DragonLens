@@ -16,10 +16,6 @@ namespace DragonLens.Content.Tools
 
 		public override string IconKey => "Customize";
 
-		public override string DisplayName => "Customize tool";
-
-		public override string Description => "Customize your toolbar layout!";
-
 		public override void OnActivate()
 		{
 			if (!customizing)
@@ -55,7 +51,7 @@ namespace DragonLens.Content.Tools
 
 		public static Toolbar TrackedToolbar => trackedElement?.toolbar;
 
-		public override string Name => "Add tool";
+		public override string Name => LocalizationHelper.GetToolText("CustomizeTool.ToolBrowser");
 
 		public override string IconTexture => "Customize";
 

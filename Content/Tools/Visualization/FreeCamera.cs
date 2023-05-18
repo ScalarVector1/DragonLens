@@ -11,10 +11,6 @@ namespace DragonLens.Content.Tools.Visualization
 
 		public override string IconKey => "FreeCamera";
 
-		public override string DisplayName => "Free camera";
-
-		public override string Description => "You can move the camera around freely with your movement keys. Hold SHIFT to speed up and CTRL to slow down while moving. Mutually exclusive with lock camera.";
-
 		public override void OnActivate()
 		{
 			active = !active;

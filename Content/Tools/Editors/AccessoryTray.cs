@@ -16,15 +16,11 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override string IconKey => "AccessoryTray";
 
-		public override string DisplayName => "Accessory tray";
-
-		public override string Description => "A virtually infinite collection of extra accessory slots!";
-
 		public override void OnActivate()
 		{
 			if (Main.netMode != NetmodeID.SinglePlayer)
 			{
-				Main.NewText("Accessory tray is disabled in multiplayer", Color.Red);
+				Main.NewText(LocalizationHelper.GetToolText("AccessoryTray.MpDisabled"), Color.Red);
 				return;
 			}
 
@@ -171,7 +167,7 @@ namespace DragonLens.Content.Tools.Editors
 			bgDims.Inflate(4, 4);
 			spriteBatch.Draw(background, bgDims, Color.Black * 0.25f);
 
-			Utils.DrawBorderStringBig(spriteBatch, "Accessory tray", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
+			Utils.DrawBorderStringBig(spriteBatch, LocalizationHelper.GetToolText("AccessoryTray.DisplayName"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
 
 			base.Draw(spriteBatch);
 		}
@@ -255,7 +251,7 @@ namespace DragonLens.Content.Tools.Editors
 			{
 				Main.LocalPlayer.mouseInterface = true;
 				Main.HoverItem = item;
-				Main.hoverItemName = "Place an accessory here!";
+				Main.hoverItemName = LocalizationHelper.GetToolText("AccessoryTray.PlaceAccHere");
 			}
 		}
 

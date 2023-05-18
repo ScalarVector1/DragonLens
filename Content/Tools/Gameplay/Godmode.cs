@@ -13,13 +13,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override string IconKey => "GodMode";
 
-		public override string DisplayName => "God mode";
-
-		public override string Description => "You cannot be hit, lose mana, or die while active. Right click to allow being hit but disallow dying instead";
-
 		public override bool HasRightClick => true;
-
-		public override string RightClickName => "Dogmode (Godmode + hits allowed)";
 
 		public override void OnActivate()
 		{
@@ -117,7 +111,7 @@ namespace DragonLens.Content.Tools.Gameplay
 				playSound = false;
 				genGore = false;
 
-				Main.NewText("Godmode prevented death with reason: " + damageSource.GetDeathText(Player.name));
+				Main.NewText(LocalizationHelper.GetToolText("Godmode.PreventedDeath", damageSource.GetDeathText(Player.name)));
 				Player.statLife = Player.statLifeMax2;
 				return false;
 			}

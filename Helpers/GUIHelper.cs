@@ -2,11 +2,13 @@
 using DragonLens.Core.Systems.ThemeSystem;
 using ReLogic.Graphics;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Terraria.ModLoader.Config;
 using Terraria.UI;
+
 namespace DragonLens.Helpers
 {
 	internal static class GUIHelper
@@ -86,19 +88,65 @@ namespace DragonLens.Helpers
 		public static string WrapString(string input, int length, DynamicSpriteFont font, float scale)
 		{
 			string output = "";
-			string[] words = input.Split();
+
+			// In case input is empty and causes an error, we put an empty string to the list
+			var words = new List<string> { "" };
+
+			// Word splitting, with CJK characters being treated as a single word
+			string cacheString = "";
+			for (int i = 0; i < input.Length; i++)
+			{
+				// By doing this we split words, and make the first character of words always a space
+				if (cacheString != string.Empty && char.IsWhiteSpace(input[i]))
+				{
+					words.Add(cacheString);
+					cacheString = "";
+				}
+
+				// Single CJK character just get directly added to the list
+				if (LocalizationHelper.IsCjkCharacter(input[i]))
+				{
+					if (cacheString != string.Empty)
+					{
+						words.Add(cacheString);
+						cacheString = "";
+					}
+
+					// If the next character is a CJK punctuation, we add both characters as a single word
+					// Unless the next character is a right close CJK punctuation (e.g. left brackets), in which case we add only the current character
+					if (i + 1 < input.Length && LocalizationHelper.IsCjkPunctuation(input[i + 1]) && !LocalizationHelper.IsRightCloseCjkPunctuation(input[i + 1]))
+					{
+						words.Add(input[i].ToString() + input[i + 1]);
+						i++;
+					}
+					else
+					{
+						words.Add(input[i].ToString());
+					}
+
+					continue;
+				}
+
+				cacheString += input[i];
+			}
+
+			// Add the last word
+			if (!string.IsNullOrEmpty(cacheString))
+			{
+				words.Add(cacheString);
+			}
 
 			string line = "";
 			foreach (string str in words)
 			{
-				if (str == "NEWBLOCK")
+				if (str == " NEWBLOCK")
 				{
 					output += "\n\n";
 					line = "";
 					continue;
 				}
 
-				if (str == "NEWLN")
+				if (str == " NEWLN")
 				{
 					output += "\n";
 					line = "";
@@ -107,17 +155,18 @@ namespace DragonLens.Helpers
 
 				if (font.MeasureString(line).X * scale < length)
 				{
-					output += " " + str;
-					line += " " + str;
+					output += str;
+					line += str;
 				}
 				else
 				{
-					output += "\n" + str;
+					// We don't want the first character of a line to be a space
+					output += "\n" + str.TrimStart();
 					line = str;
 				}
 			}
 
-			return output[1..];
+			return output;
 		}
 
 		/// <summary>
