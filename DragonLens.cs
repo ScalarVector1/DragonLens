@@ -52,7 +52,15 @@ namespace DragonLens
 
 					for (int k = 0; k < ItemID.Count; k++)
 					{
-						Main.instance.LoadItem(k);
+						try
+						{
+							Main.instance.LoadItem(k);
+						}
+						catch
+						{
+							Logger.Warn($"Item asset {k} failed to load");
+							continue;
+						}
 					}
 
 					watch.Stop();
@@ -70,7 +78,15 @@ namespace DragonLens
 
 					for (int k = 0; k < ProjectileID.Count; k++)
 					{
-						Main.instance.LoadProjectile(k);
+						try
+						{
+							Main.instance.LoadProjectile(k);
+						}
+						catch
+						{
+							Logger.Warn($"Projectile asset {k} failed to load");
+							continue;
+						}
 					}
 
 					watch.Stop();
@@ -88,7 +104,15 @@ namespace DragonLens
 
 					for (int k = 0; k < NPCID.Count; k++)
 					{
-						Main.instance.LoadNPC(k);
+						try
+						{
+							Main.instance.LoadNPC(k);
+						}
+						catch
+						{
+							Logger.Warn($"NPC asset {k} failed to load");
+							continue;
+						}
 					}
 
 					watch.Stop();
@@ -106,7 +130,15 @@ namespace DragonLens
 
 					for (int k = 0; k < TileID.Count; k++)
 					{
-						Main.instance.LoadTiles(k);
+						try
+						{
+							Main.instance.LoadTiles(k);
+						}
+						catch
+						{
+							Logger.Warn($"Tile asset {k} failed to load");
+							continue;
+						}
 					}
 
 					watch.Stop();
