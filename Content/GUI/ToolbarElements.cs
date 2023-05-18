@@ -356,7 +356,7 @@ namespace DragonLens.Content.GUI
 				return;
 			}
 
-			if (!parent.toolbar.collapsed)
+			if (!parent.toolbar.collapsed && !CustomizeTool.customizing)
 				tool.OnActivate();
 		}
 
@@ -368,7 +368,7 @@ namespace DragonLens.Content.GUI
 				return;
 			}
 
-			if (!parent.toolbar.collapsed && tool.HasRightClick)
+			if (!parent.toolbar.collapsed && tool.HasRightClick && !CustomizeTool.customizing)
 				tool.OnRightClick();
 		}
 
