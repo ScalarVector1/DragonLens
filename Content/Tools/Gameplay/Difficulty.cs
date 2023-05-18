@@ -75,7 +75,7 @@ namespace DragonLens.Content.Tools.Gameplay
 	}
 
 	/// <summary>
-	/// This prevents the player from mutating the journey state of their save
+	/// This prevents the player from mutating the journey state of the player
 	/// </summary>
 	internal class JourneySafetyPlayer : ModPlayer
 	{
@@ -83,6 +83,8 @@ namespace DragonLens.Content.Tools.Gameplay
 		{
 			if (Player.difficulty == 3)
 				Difficulty.originallyJourney = true;
+			else
+				Difficulty.originallyJourney = false;
 		}
 
 		public override void PreSavePlayer()
@@ -92,6 +94,21 @@ namespace DragonLens.Content.Tools.Gameplay
 
 			if (!Difficulty.originallyJourney && Main.LocalPlayer.difficulty == 3)
 				Main.LocalPlayer.difficulty = (byte)Difficulty.oldPlayerDifficulty;
+		}
+	}
+
+	/// <summary>
+	/// This prevents the player form mutating the journey state of the world
+	/// </summary>
+	internal class JourneySafetySystem : ModSystem
+	{
+		public override void PreSaveAndQuit()
+		{
+			if (Difficulty.originallyJourney && Main.GameMode != GameModeID.Creative)
+				Main.GameMode = GameModeID.Creative;
+
+			if (!Difficulty.originallyJourney && Main.GameMode == GameModeID.Creative)
+				Main.GameMode = GameModeID.Normal;
 		}
 	}
 }
