@@ -1,6 +1,5 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
 using System.Reflection;
-using Terraria;
 using Terraria.Map;
 
 namespace DragonLens.Content.Tools.Map

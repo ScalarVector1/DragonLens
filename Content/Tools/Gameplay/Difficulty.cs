@@ -1,10 +1,7 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
 using System.IO;
-using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace DragonLens.Content.Tools.Gameplay
 {

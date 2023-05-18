@@ -27,7 +27,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// The icon key to retrieve the icon for this tool.
 		/// </summary>
 		public abstract string IconKey { get; }
-		
+
 		/// <summary>
 		/// The localization key to retrieve the localized text for this tool.
 		/// </summary>

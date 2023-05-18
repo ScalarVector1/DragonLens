@@ -1,5 +1,5 @@
-﻿using DragonLens.Configs;
-using DragonLens.Core.Loaders.UILoading;
+﻿using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
 using System;
 using Terraria.UI;
@@ -116,14 +116,14 @@ namespace DragonLens.Content.GUI.FieldEditors
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var dims = GetDimensions().ToRectangle();
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
 			Texture2D tex = ModContent.Request<Texture2D>(texture).Value;
 			dims.Inflate(-4, -4);
 			spriteBatch.Draw(tex, dims, Color.White);
 
 			var draggerTarget = new Rectangle(dims.X + (int)(progress * dims.Width) - 6, dims.Y - 8, 12, 24);
-			GUIHelper.DrawBox(spriteBatch, draggerTarget, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, draggerTarget, ThemeHandler.ButtonColor);
 		}
 	}
 }

@@ -1,16 +1,11 @@
 ﻿using DragonLens.Core.Systems;
 using DragonLens.Core.Systems.ThemeSystem;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
-using Terraria;
-using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 using Terraria.UI;
 
@@ -95,7 +90,7 @@ namespace DragonLens.Helpers
 			string output = "";
 
 			// In case input is empty and causes an error, we put an empty string to the list
-			var words = new List<string> {""};
+			var words = new List<string> { "" };
 
 			// Word splitting, with CJK characters being treated as a single word
 			string cacheString = "";
@@ -107,7 +102,7 @@ namespace DragonLens.Helpers
 					words.Add(cacheString);
 					cacheString = "";
 				}
-				
+
 				// Single CJK character just get directly added to the list
 				if (LocalizationHelper.IsCjkCharacter(input[i]))
 				{
@@ -134,7 +129,7 @@ namespace DragonLens.Helpers
 
 				cacheString += input[i];
 			}
-			
+
 			// Add the last word
 			if (!string.IsNullOrEmpty(cacheString))
 			{

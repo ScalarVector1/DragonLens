@@ -1,13 +1,9 @@
-﻿using DragonLens.Configs;
-using DragonLens.Content.Tools.Gameplay;
+﻿using DragonLens.Content.Tools.Gameplay;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.IO;
-using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace DragonLens.Content.Tools.Map
@@ -29,7 +25,7 @@ namespace DragonLens.Content.Tools.Map
 
 			if (active)
 			{
-				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ThemeHandler.ButtonColor.InvertColor());
 
 				Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Misc/GlowAlpha").Value;
 				var color = new Color(255, 100, 200)

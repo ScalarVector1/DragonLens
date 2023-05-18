@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-
-namespace DragonLens.Core.Systems.ThemeSystem
+﻿namespace DragonLens.Core.Systems.ThemeSystem
 {
 	internal class ThemeColorProvider
 	{

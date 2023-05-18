@@ -1,5 +1,4 @@
-﻿using DragonLens.Configs;
-using DragonLens.Content.GUI;
+﻿using DragonLens.Content.GUI;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
@@ -195,7 +194,7 @@ namespace DragonLens.Content.Tools.Visualization
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, width, height), ModContent.GetInstance<GUIConfig>().backgroundColor);
+			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, width, height), ThemeHandler.BackgroundColor);
 
 			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, width, 40);
@@ -283,7 +282,7 @@ namespace DragonLens.Content.Tools.Visualization
 		{
 			var dims = GetDimensions().ToRectangle();
 
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 			Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetText($"Tools.Hitboxes.Options.{localizationKey}"), new Vector2(dims.Center.X, dims.Y + 8), Color.White, 0.75f, 0.5f);
 
 			base.Draw(spriteBatch);
@@ -336,14 +335,14 @@ namespace DragonLens.Content.Tools.Visualization
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var dims = GetDimensions().ToRectangle();
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/ColorScale").Value;
 			dims.Inflate(-4, -4);
 			spriteBatch.Draw(tex, dims, Color.White);
 
 			var draggerTarget = new Rectangle(dims.X + (int)(progress * dims.Width) - 5, dims.Y - 6, 10, 20);
-			GUIHelper.DrawBox(spriteBatch, draggerTarget, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, draggerTarget, ThemeHandler.ButtonColor);
 		}
 	}
 }

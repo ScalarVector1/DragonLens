@@ -1,5 +1,4 @@
-﻿using DragonLens.Configs;
-using DragonLens.Content.GUI;
+﻿using DragonLens.Content.GUI;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
@@ -155,7 +154,7 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, BoundingBox, ModContent.GetInstance<GUIConfig>().backgroundColor);
+			GUIHelper.DrawBox(spriteBatch, BoundingBox, ThemeHandler.BackgroundColor);
 
 			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 300, 40);
@@ -240,7 +239,7 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
 
 			CalculatedStyle dims = GetDimensions();
 			var iconBox = new Rectangle((int)dims.X, (int)dims.Y, 48, 48);

@@ -140,6 +140,8 @@ ToolbarCustomizationElements: {
 	}
 }
 
+// ThemeMenu.Name: Theme editor
+
 EntityEditor: {
 	LiveReaction: "{0} 实时跟拍"
 	Select: 左键单击以选中实体，右键单击以取消。

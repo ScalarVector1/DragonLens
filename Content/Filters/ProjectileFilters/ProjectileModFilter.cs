@@ -1,10 +1,6 @@
 ﻿using DragonLens.Content.GUI;
 using DragonLens.Content.Tools.Spawners;
 using DragonLens.Core.Systems.ThemeSystem;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ModLoader;
 
 namespace DragonLens.Content.Filters.ProjectileFilters
 {

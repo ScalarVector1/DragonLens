@@ -1,7 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Terraria.ModLoader;
 
 namespace DragonLens.Core.Systems.ThemeSystem
 {
@@ -52,6 +50,15 @@ namespace DragonLens.Core.Systems.ThemeSystem
 		/// A list of the default keys that need to be filled out by an IconProvider, provided for convenience for iteration.
 		/// </summary>
 		public ReadOnlyCollection<string> defaultKeys = new(defaultKeysInner);
+
+		/// <summary>
+		/// The name of this icon provider
+		/// </summary>
+		public abstract string NameKey { get; }
+
+		public string Name => Helpers.LocalizationHelper.GetText($"{NameKey}Icons.Name");
+
+		public string Description => Helpers.LocalizationHelper.GetText($"{NameKey}Icons.Description");
 
 		public ThemeIconProvider()
 		{

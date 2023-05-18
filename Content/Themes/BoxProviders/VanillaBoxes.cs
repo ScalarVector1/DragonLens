@@ -1,13 +1,12 @@
 ﻿using DragonLens.Core.Systems.ThemeSystem;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
-using Terraria.ModLoader;
 
 namespace DragonLens.Content.Themes.BoxProviders
 {
 	internal class VanillaBoxes : ThemeBoxProvider
 	{
+		public override string NameKey => "Vanilla";
+
 		public override void DrawBox(SpriteBatch spriteBatch, Rectangle target, Color color)
 		{
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Themes/BoxProviders/VanillaBoxes/Box").Value;

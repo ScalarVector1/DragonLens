@@ -1,7 +1,4 @@
-﻿using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
+using DragonLens.Helpers;
 
 namespace DragonLens.Core.Systems
 {

@@ -9,8 +9,6 @@ using DragonLens.Content.Tools.Spawners;
 using DragonLens.Content.Tools.Visualization;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolbarSystem;
-using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
 
 namespace DragonLens.Core.Systems
 {

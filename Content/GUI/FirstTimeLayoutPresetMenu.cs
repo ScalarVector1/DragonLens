@@ -1,6 +1,6 @@
-﻿using DragonLens.Configs;
-using DragonLens.Core.Loaders.UILoading;
+﻿using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Helpers;
 using System.Collections.Generic;
@@ -91,7 +91,7 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().backgroundColor);
+			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.BackgroundColor);
 
 			Utils.DrawBorderString(spriteBatch, name, GetDimensions().Position() + Vector2.One * 8, Color.White);
 

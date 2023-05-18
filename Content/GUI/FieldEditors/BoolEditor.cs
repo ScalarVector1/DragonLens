@@ -1,4 +1,4 @@
-﻿using DragonLens.Configs;
+﻿using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
 using System;
 using Terraria.UI;
@@ -23,18 +23,18 @@ namespace DragonLens.Content.GUI.FieldEditors
 			box.Width = 40;
 			box.Height = 15;
 			box.Offset(new Point(95, 40));
-			GUIHelper.DrawBox(sprite, box, ModContent.GetInstance<GUIConfig>().backgroundColor);
+			GUIHelper.DrawBox(sprite, box, ThemeHandler.BackgroundColor);
 
 			if (value)
 			{
 				box.Width = 15;
 				box.Offset(new Point(25, 0));
-				GUIHelper.DrawBox(sprite, box, ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				GUIHelper.DrawBox(sprite, box, ThemeHandler.ButtonColor.InvertColor());
 			}
 			else
 			{
 				box.Width = 15;
-				GUIHelper.DrawBox(sprite, box, ModContent.GetInstance<GUIConfig>().buttonColor);
+				GUIHelper.DrawBox(sprite, box, ThemeHandler.ButtonColor);
 			}
 		}
 	}

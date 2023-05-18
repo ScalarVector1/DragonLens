@@ -1,5 +1,5 @@
-﻿using DragonLens.Configs;
-using DragonLens.Core.Loaders.UILoading;
+﻿using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
 using ReLogic.Localization.IME;
 using ReLogic.OS;
@@ -108,11 +108,11 @@ namespace DragonLens.Content.GUI.FieldEditors
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
 
 			if (typing)
 			{
-				GUIHelper.DrawOutline(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				GUIHelper.DrawOutline(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor.InvertColor());
 				HandleText();
 
 				// draw ime panel, note that if there's no composition string then it won't draw anything

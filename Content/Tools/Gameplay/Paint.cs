@@ -1,5 +1,4 @@
-﻿using DragonLens.Configs;
-using DragonLens.Content.GUI;
+﻿using DragonLens.Content.GUI;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
@@ -197,7 +196,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, width, height), ModContent.GetInstance<GUIConfig>().backgroundColor);
+			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, width, height), ThemeHandler.BackgroundColor);
 
 			Texture2D background = Terraria.GameContent.TextureAssets.MagicPixel.Value;
 			spriteBatch.Draw(background, structureButtons.GetDimensions().ToRectangle(), Color.Black * 0.25f);
@@ -301,7 +300,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var dims = GetDimensions().ToRectangle();
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
 			dims.Inflate(-4, -4);
 
@@ -344,7 +343,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var dims = GetDimensions().ToRectangle();
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().backgroundColor);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.BackgroundColor);
 
 			ReLogic.Graphics.DynamicSpriteFont font = Terraria.GameContent.FontAssets.MouseText.Value;
 			string message = GUIHelper.WrapString(Paint.GetTextValue("Advertise.Content"), 160, font, 0.8f);
@@ -377,7 +376,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var dims = GetDimensions().ToRectangle();
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/StructureHelper").Value;
 			spriteBatch.Draw(tex, dims.TopLeft() + Vector2.One * 4, Color.White);

@@ -3,13 +3,13 @@ using System;
 
 namespace DragonLens.Content.Themes.BoxProviders
 {
-	internal class SimpleBoxes : ThemeBoxProvider
+	internal class MinimalBoxes : ThemeBoxProvider
 	{
-		public override string NameKey => "Simple";
+		public override string NameKey => "Minimal";
 
 		public override void DrawBox(SpriteBatch spriteBatch, Rectangle target, Color color)
 		{
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Themes/BoxProviders/SimpleBoxes/Box").Value;
+			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Themes/BoxProviders/MinimalBoxes/Box").Value;
 
 			if (color == default)
 				color = new Color(49, 84, 141) * 0.9f;
@@ -46,7 +46,7 @@ namespace DragonLens.Content.Themes.BoxProviders
 
 		public override void DrawOutline(SpriteBatch spriteBatch, Rectangle target, Color color)
 		{
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Themes/BoxProviders/SimpleBoxes/Box").Value;
+			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Themes/BoxProviders/MinimalBoxes/Box").Value;
 
 			if (color == default)
 				color = new Color(49, 84, 141) * 0.9f;

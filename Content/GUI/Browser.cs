@@ -1,5 +1,4 @@
-﻿using DragonLens.Configs;
-using DragonLens.Content.Filters;
+﻿using DragonLens.Content.Filters;
 using DragonLens.Content.GUI.FieldEditors;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
@@ -179,7 +178,7 @@ namespace DragonLens.Content.GUI
 		{
 			var target = new Rectangle((int)basePos.X, (int)basePos.Y, 500, 600);
 
-			GUIHelper.DrawBox(spriteBatch, target, ModContent.GetInstance<GUIConfig>().backgroundColor);
+			GUIHelper.DrawBox(spriteBatch, target, ThemeHandler.BackgroundColor);
 
 			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 400, 48);
@@ -289,11 +288,11 @@ namespace DragonLens.Content.GUI
 
 			if (parent.listMode)
 			{
-				GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().backgroundColor);
+				GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.BackgroundColor);
 				Utils.DrawBorderStringBig(spriteBatch, Identifier, GetDimensions().Position() + new Vector2(size + 10, size / 2f + 4), Color.White, size / 36f / 3f, 0, 0.5f);
 			}
 
-			GUIHelper.DrawBox(spriteBatch, drawBox, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, drawBox, ThemeHandler.ButtonColor);
 			SafeDraw(spriteBatch, drawBox);
 
 			base.Draw(spriteBatch);
@@ -315,11 +314,11 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
 
 			if (typing)
 			{
-				GUIHelper.DrawOutline(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				GUIHelper.DrawOutline(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor.InvertColor());
 				HandleText();
 
 				// draw ime panel, note that if there's no composition string then it won't draw anything
@@ -390,14 +389,14 @@ namespace DragonLens.Content.GUI
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var dims = GetDimensions().ToRectangle();
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/AlphaScale").Value;
 			dims.Inflate(-4, -4);
 			spriteBatch.Draw(tex, dims, Color.White);
 
 			var draggerTarget = new Rectangle(dims.X + (int)(progress * dims.Width) - 5, dims.Y - 6, 10, 20);
-			GUIHelper.DrawBox(spriteBatch, draggerTarget, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, draggerTarget, ThemeHandler.ButtonColor);
 
 			if (IsMouseHovering && !Main.mouseLeft)
 			{
