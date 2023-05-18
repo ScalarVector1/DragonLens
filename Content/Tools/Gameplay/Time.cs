@@ -1,5 +1,4 @@
-﻿using DragonLens.Configs;
-using DragonLens.Content.GUI;
+﻿using DragonLens.Content.GUI;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
@@ -16,10 +15,6 @@ namespace DragonLens.Content.Tools.Gameplay
 	internal class Time : Tool
 	{
 		public override string IconKey => "Time";
-
-		public override string DisplayName => "Time tool";
-
-		public override string Description => "Adjust or pause the day/night cycle";
 
 		public override void OnActivate()
 		{
@@ -128,7 +123,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, 400, 200), ModContent.GetInstance<GUIConfig>().backgroundColor);
+			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, 400, 200), ThemeHandler.BackgroundColor);
 
 			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 400, 40);
@@ -137,7 +132,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			Texture2D icon = ThemeHandler.GetIcon("Time");
 			spriteBatch.Draw(icon, basePos + Vector2.One * 12, Color.White);
 
-			Utils.DrawBorderStringBig(spriteBatch, "Set time", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
+			Utils.DrawBorderStringBig(spriteBatch, LocalizationHelper.GetToolText("Time.UITitle"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
 
 			base.Draw(spriteBatch);
 		}
@@ -232,20 +227,21 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var dims = GetDimensions().ToRectangle();
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/TimeScale").Value;
 			dims.Inflate(-4, -4);
 			spriteBatch.Draw(tex, dims, Color.White);
 
 			var draggerTarget = new Rectangle(dims.X + (int)(progress * dims.Width) - 6, dims.Y - 8, 12, 24);
-			GUIHelper.DrawBox(spriteBatch, draggerTarget, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, draggerTarget, ThemeHandler.ButtonColor);
 
-			string dayString = Main.dayTime ? "Day" : "Night";
+			string dayString = LocalizationHelper.GetText($"Tools.Time.{(Main.dayTime ? "Day" : "Night")}");
 			int maxTicks = Main.dayTime ? (int)Main.dayLength : (int)Main.nightLength;
+			string curTimeString = LocalizationHelper.GetToolText("Time.CurrentTime", dayString, (int)Main.time, maxTicks);
 
 			Utils.DrawBorderString(spriteBatch, GetTimeString(), dims.TopLeft() + new Vector2(0, 20), Color.White, 0.8f);
-			Utils.DrawBorderString(spriteBatch, $"({dayString}: {(int)Main.time}/{maxTicks} frames)", dims.TopLeft() + new Vector2(0, 36), Color.White, 0.8f);
+			Utils.DrawBorderString(spriteBatch, curTimeString, dims.TopLeft() + new Vector2(0, 36), Color.White, 0.8f);
 		}
 	}
 
@@ -260,7 +256,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var dims = GetDimensions().ToRectangle();
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
 			Texture2D icon = TimePauseSystem.savedTime == -1 ?
 				ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Pause").Value :
@@ -270,8 +266,9 @@ namespace DragonLens.Content.Tools.Gameplay
 
 			if (IsMouseHovering)
 			{
-				Tooltip.SetName(TimePauseSystem.savedTime == -1 ? "Freeze time" : "Resume time");
-				Tooltip.SetTooltip("Stop the time from changing. This will carry the time between worlds and game reloads!");
+				string name = LocalizationHelper.GetText($"Tools.Time.{(TimePauseSystem.savedTime == -1 ? "Freeze" : "Resume")}");
+				Tooltip.SetName(name);
+				Tooltip.SetTooltip(LocalizationHelper.GetToolText("Time.FreezeTooltip"));
 			}
 		}
 
@@ -306,10 +303,10 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var dims = GetDimensions().ToRectangle();
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
 			if (Main.moonPhase == moonPhase)
-				GUIHelper.DrawOutline(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				GUIHelper.DrawOutline(spriteBatch, dims, ThemeHandler.ButtonColor.InvertColor());
 
 			Texture2D icon = Terraria.GameContent.TextureAssets.Moon[Main.moonType].Value;
 

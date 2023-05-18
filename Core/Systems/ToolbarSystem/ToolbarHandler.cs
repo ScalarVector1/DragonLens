@@ -3,13 +3,11 @@ using DragonLens.Content.Themes.BoxProviders;
 using DragonLens.Content.Themes.IconProviders;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
-using Microsoft.Xna.Framework;
+using DragonLens.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace DragonLens.Core.Systems.ToolbarSystem
@@ -39,7 +37,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 				}
 				catch
 				{
-					Main.NewText("Your saved layout is invalid or corrupted!", Color.Red);
+					Main.NewText(LocalizationHelper.GetGUIText("Layout.Invalid"), Color.Red);
 					LoadFallback();
 				}
 			}

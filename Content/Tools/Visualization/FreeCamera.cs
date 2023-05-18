@@ -1,10 +1,6 @@
-﻿using DragonLens.Configs;
+﻿using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ModLoader;
 
 namespace DragonLens.Content.Tools.Visualization
 {
@@ -15,10 +11,6 @@ namespace DragonLens.Content.Tools.Visualization
 		public static Vector2 freeCameraPos;
 
 		public override string IconKey => "FreeCamera";
-
-		public override string DisplayName => "Free camera";
-
-		public override string Description => "You can move the camera around freely with your movement keys. Hold SHIFT to speed up and CTRL to slow down while moving. Mutually exclusive with lock camera.";
 
 		public override void OnActivate()
 		{
@@ -38,7 +30,7 @@ namespace DragonLens.Content.Tools.Visualization
 
 			if (active)
 			{
-				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ThemeHandler.ButtonColor.InvertColor());
 
 				Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Misc/GlowAlpha").Value;
 				var color = new Color(255, 255, 255)

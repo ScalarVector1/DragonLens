@@ -1,10 +1,6 @@
 ﻿using DragonLens.Core.Loaders.UILoading;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using Terraria;
-using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
 
@@ -22,7 +18,7 @@ namespace DragonLens.Content.GUI
 
 		public void Load(Mod mod)
 		{
-			On.Terraria.Main.Update += Reset;
+			Terraria.On_Main.Update += Reset;
 		}
 
 		public override int InsertionIndex(List<GameInterfaceLayer> layers)
@@ -81,7 +77,7 @@ namespace DragonLens.Content.GUI
 			Utils.DrawBorderString(Main.spriteBatch, tooltip, pos, Color.LightGray, 0.9f);
 		}
 
-		private void Reset(On.Terraria.Main.orig_Update orig, Main self, GameTime gameTime)
+		private void Reset(Terraria.On_Main.orig_Update orig, Main self, GameTime gameTime)
 		{
 			orig(self, gameTime);
 

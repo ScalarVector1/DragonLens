@@ -1,6 +1,6 @@
-﻿using DragonLens.Configs;
-using DragonLens.Content.Filters;
+﻿using DragonLens.Content.Filters;
 using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -51,7 +51,7 @@ namespace DragonLens.Content.GUI
 
 			bar.Height.Set(drawBox.Height - 20, 0);
 
-			GUIHelper.DrawBox(spriteBatch, drawBox, ModContent.GetInstance<GUIConfig>().backgroundColor);
+			GUIHelper.DrawBox(spriteBatch, drawBox, ThemeHandler.BackgroundColor);
 
 			base.Draw(spriteBatch);
 		}
@@ -65,9 +65,9 @@ namespace DragonLens.Content.GUI
 			filters.Add(button);
 		}
 
-		public void AddSeperator(string name)
+		public void AddSeperator(string localizationKey)
 		{
-			var seperator = new FilterSeperator(name)
+			var seperator = new FilterSeperator(localizationKey)
 			{
 				order = lastOrder++
 			};
@@ -106,10 +106,10 @@ namespace DragonLens.Content.GUI
 		{
 			var drawBox = GetDimensions().ToRectangle();
 
-			GUIHelper.DrawBox(spriteBatch, drawBox, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, drawBox, ThemeHandler.ButtonColor);
 
 			if (active)
-				GUIHelper.DrawOutline(spriteBatch, drawBox, ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				GUIHelper.DrawOutline(spriteBatch, drawBox, ThemeHandler.ButtonColor.InvertColor());
 
 			drawBox.Inflate(-4, -4);
 			filter.Draw(spriteBatch, drawBox);
@@ -117,8 +117,8 @@ namespace DragonLens.Content.GUI
 			if (IsMouseHovering)
 			{
 				Main.LocalPlayer.mouseInterface = true;
-				Tooltip.SetName(filter.name);
-				Tooltip.SetTooltip(filter.description);
+				Tooltip.SetName(filter.Name);
+				Tooltip.SetTooltip(filter.Description);
 			}
 		}
 
@@ -135,13 +135,13 @@ namespace DragonLens.Content.GUI
 
 	internal class FilterSeperator : SmartUIElement
 	{
-		public string name;
+		public string localizationKey;
 
 		public int order;
 
-		public FilterSeperator(string name)
+		public FilterSeperator(string localizationKey)
 		{
-			this.name = name;
+			this.localizationKey = localizationKey;
 
 			Width.Set(180, 0);
 			Height.Set(24, 0);
@@ -153,7 +153,7 @@ namespace DragonLens.Content.GUI
 			var backTarget = GetDimensions().ToRectangle();
 			spriteBatch.Draw(back, backTarget, Color.Black * 0.5f);
 
-			Utils.DrawBorderString(spriteBatch, name, GetDimensions().Position() + new Vector2(12, 4), Color.White, 0.8f);
+			Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetText(localizationKey), GetDimensions().Position() + new Vector2(12, 4), Color.White, 0.8f);
 		}
 
 		public override int CompareTo(object obj)

@@ -1,11 +1,9 @@
 ﻿using DragonLens.Core.Systems.ThemeSystem;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using DragonLens.Helpers;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
-using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
+using Terraria.Localization;
 using Terraria.ModLoader.IO;
 
 namespace DragonLens.Core.Systems.ToolSystem
@@ -31,14 +29,21 @@ namespace DragonLens.Core.Systems.ToolSystem
 		public abstract string IconKey { get; }
 
 		/// <summary>
-		/// The display name of the tool to the end user.
+		/// The localization key to retrieve the localized text for this tool.
 		/// </summary>
-		public abstract string DisplayName { get; }
+		public virtual string LocalizationKey => Name;
+
+		/// <summary>
+		/// The display name of the tool to the end user.
+		/// Auto-assigned to a localization key if not overridden.
+		/// </summary>
+		public virtual string DisplayName => LocalizationHelper.GetText($"Tools.{LocalizationKey}.DisplayName");
 
 		/// <summary>
 		/// The description that should show up when queried for more information about this tool.
+		/// Auto-assigned to a localization key if not overridden.
 		/// </summary>
-		public abstract string Description { get; }
+		public virtual string Description => LocalizationHelper.GetText($"Tools.{LocalizationKey}.Description");
 
 		/// <summary>
 		/// What happens when the user activates this tool, either by clicking on it or using it's hotkey.
@@ -52,8 +57,9 @@ namespace DragonLens.Core.Systems.ToolSystem
 
 		/// <summary>
 		/// The name of this tools right click funcitonality. Used for hotkeys.
+		/// Auto-assigned to a localization key if not overridden.
 		/// </summary>
-		public virtual string RightClickName => "";
+		public virtual string RightClickName => LocalizationHelper.GetText($"Tools.{LocalizationKey}.RightClickName");
 
 		/// <summary>
 		/// What happens if this tool is right clicked. Only used if HasRightClick is true.
@@ -112,10 +118,15 @@ namespace DragonLens.Core.Systems.ToolSystem
 			ModTypeLookup<Tool>.Register(this);
 			ToolHandler.AddTool(this);
 
-			keybind = KeybindLoader.RegisterKeybind(Mod, DisplayName, Keys.None);
+			keybind = KeybindLoader.RegisterKeybind(Mod, LocalizationKey, Keys.None);
+			Language.GetOrRegister($"Mods.{Mod.Name}.Tools.{LocalizationKey}.DisplayName", () => Name);
+			Language.GetOrRegister($"Mods.{Mod.Name}.Tools.{LocalizationKey}.Description", () => "The tool has no description! Add one in .hjson files!");
 
 			if (HasRightClick)
-				altKeybind = KeybindLoader.RegisterKeybind(Mod, RightClickName, Keys.None);
+			{
+				altKeybind = KeybindLoader.RegisterKeybind(Mod, $"{LocalizationKey}RightClick", Keys.None);
+				Language.GetOrRegister($"Mods.{Mod.Name}.Tools.{LocalizationKey}.RightClickName", () => $"{Name} Right Click");
+			}
 		}
 
 		/// <summary>

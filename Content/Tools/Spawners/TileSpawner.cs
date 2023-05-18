@@ -17,9 +17,10 @@ namespace DragonLens.Content.Tools.Spawners
 	{
 		public override string IconKey => "TileSpawner";
 
-		public override string DisplayName => "Tile spawner";
-
-		public override string Description => "Place tiles without items!";
+		public static string GetText(string key, params object[] args)
+		{
+			return LocalizationHelper.GetText($"Tools.TileSpawner.{key}", args);
+		}
 	}
 
 	internal class TileBrowser : Browser
@@ -28,7 +29,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public static int variant = 0;
 
-		public override string Name => "Tile spawner";
+		public override string Name => TileSpawner.GetText("DisplayName");
 
 		public override string IconTexture => "TileSpawner";
 
@@ -49,8 +50,8 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SetupFilters(FilterPanel filters)
 		{
-			filters.AddSeperator("Mod filters");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Vanilla", "Tiles from the base game", n => !(n is TileButton && (n as TileButton).tileType <= TileID.Count)));
+			filters.AddSeperator("Tools.TileSpawner.FilterCategories.Mod");
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.TileSpawner.Filters.Vanilla", n => !(n is TileButton && (n as TileButton).tileType <= TileID.Count)));
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModTile>().Count() > 0))
 			{
@@ -62,7 +63,7 @@ namespace DragonLens.Content.Tools.Spawners
 		{
 			base.DraggableUdpate(gameTime);
 
-			if (Main.mouseLeft && selected != -1)
+			if (Main.mouseLeft && selected != -1 && !BoundingBox.Contains(Main.MouseScreen.ToPoint()) && !filters.IsMouseHovering)
 			{
 				PlayerInput.SetZoom_World();
 
@@ -225,7 +226,7 @@ namespace DragonLens.Content.Tools.Spawners
 			if (IsMouseHovering)
 			{
 				Tooltip.SetName(Identifier);
-				Tooltip.SetTooltip($"Type: {tileType}");
+				Tooltip.SetTooltip(TileSpawner.GetText("TileType", tileType));
 			}
 		}
 
@@ -233,7 +234,7 @@ namespace DragonLens.Content.Tools.Spawners
 		{
 			TileBrowser.selected = tileType;
 			TileBrowser.variant = 0;
-			Main.NewText($"{Identifier} selected, click anywhere in the world to place. Right click to deselect.");
+			Main.NewText(TileSpawner.GetText("Selected", Identifier));
 		}
 
 		public override int CompareTo(object obj)

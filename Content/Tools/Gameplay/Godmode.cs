@@ -1,12 +1,7 @@
-﻿using DragonLens.Configs;
-using DragonLens.Core.Systems.ThemeSystem;
+﻿using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
 using Terraria.DataStructures;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace DragonLens.Content.Tools.Gameplay
@@ -19,13 +14,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override string IconKey => "GodMode";
 
-		public override string DisplayName => "God mode";
-
-		public override string Description => "You cannot be hit, lose mana, or die while active. Right click to allow being hit but disallow dying instead";
-
 		public override bool HasRightClick => true;
-
-		public override string RightClickName => "Dogmode (Godmode + hits allowed)";
 
 		public override void OnActivate()
 		{
@@ -49,7 +38,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			{
 				base.DrawIcon(spriteBatch, position);
 
-				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ThemeHandler.ButtonColor.InvertColor());
 
 				Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Misc/GlowAlpha").Value;
 				var color = new Color(255, 220, 100)
@@ -71,7 +60,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 				spriteBatch.Draw(icon, position.Center(), null, Color.White, 0, icon.Size() / 2f, scale, 0, 0);
 
-				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ThemeHandler.ButtonColor.InvertColor());
 
 				Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Misc/GlowAlpha").Value;
 				Color color = Color.White;
@@ -111,12 +100,9 @@ namespace DragonLens.Content.Tools.Gameplay
 			}
 		}
 
-		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
+		public override bool ImmuneTo(PlayerDeathReason damageSource, int cooldownCounter, bool dodgeable)
 		{
-			if (Godmode.godMode)
-				return false;
-
-			return true;
+			return Godmode.godMode;
 		}
 
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
@@ -126,7 +112,7 @@ namespace DragonLens.Content.Tools.Gameplay
 				playSound = false;
 				genGore = false;
 
-				Main.NewText("Godmode prevented death with reason: " + damageSource.GetDeathText(Player.name));
+				Main.NewText(LocalizationHelper.GetToolText("Godmode.PreventedDeath", damageSource.GetDeathText(Player.name)));
 				Player.statLife = Player.statLifeMax2;
 				return false;
 			}

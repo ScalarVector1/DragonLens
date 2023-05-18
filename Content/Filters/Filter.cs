@@ -1,8 +1,5 @@
 ﻿using DragonLens.Content.GUI;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ModLoader;
+using DragonLens.Helpers;
 
 namespace DragonLens.Content.Filters
 {
@@ -19,25 +16,29 @@ namespace DragonLens.Content.Filters
 		public string texture;
 
 		/// <summary>
+		/// The localization key of this filter, used to get localized text for name and description
+		/// </summary>
+		public string localizationKey;
+
+		/// <summary>
 		/// The name of this filter, shown on the tooltip to the user when hovered over.
 		/// </summary>
-		public string name;
+		public virtual string Name => LocalizationHelper.GetText($"{localizationKey}.Name");
 
 		/// <summary>
 		/// The description of this filter, shown on the tooltip to the user when hovered over.
 		/// </summary>
-		public string description;
+		public virtual string Description => LocalizationHelper.GetText($"{localizationKey}.Description");
 
 		/// <summary>
 		/// Defines which elements should be filtered by this filter. Return true to filter out, false to leave in.
 		/// </summary>
 		public FilterDelegate shouldFilter;
 
-		public Filter(string texture, string name, string description, FilterDelegate shouldFilter)
+		public Filter(string texture, string localizationKey, FilterDelegate shouldFilter)
 		{
 			this.texture = texture;
-			this.name = name;
-			this.description = description;
+			this.localizationKey = localizationKey;
 			this.shouldFilter = shouldFilter;
 		}
 

@@ -1,5 +1,4 @@
-﻿using DragonLens.Configs;
-using DragonLens.Content.GUI;
+﻿using DragonLens.Content.GUI;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
@@ -15,10 +14,6 @@ namespace DragonLens.Content.Tools.Gameplay
 	internal class SpawnTool : Tool
 	{
 		public override string IconKey => "SpawnTool";
-
-		public override string DisplayName => "Enemy spawn adjuster";
-
-		public override string Description => "Change the rate at which enemies spawn, or disable natural spawns altogether";
 
 		public override void OnActivate()
 		{
@@ -98,7 +93,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, 360, 120), ModContent.GetInstance<GUIConfig>().backgroundColor);
+			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, 360, 120), ThemeHandler.BackgroundColor);
 
 			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 360, 40);
@@ -107,7 +102,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			Texture2D icon = ThemeHandler.GetIcon("SpawnTool");
 			spriteBatch.Draw(icon, basePos + Vector2.One * 12, Color.White);
 
-			Utils.DrawBorderStringBig(spriteBatch, "Enemy spawn rate", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
+			Utils.DrawBorderStringBig(spriteBatch, LocalizationHelper.GetToolText("SpawnTool.EnemySpawnRate"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
 
 			base.Draw(spriteBatch);
 		}
@@ -152,7 +147,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var dims = GetDimensions().ToRectangle();
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/CloudScale").Value;
 			dims.Inflate(-4, -4);
@@ -171,9 +166,9 @@ namespace DragonLens.Content.Tools.Gameplay
 			GUIHelper.DrawBox(spriteBatch, tickTarget, Color.Red);
 
 			var draggerTarget = new Rectangle(dims.X + (int)(progress * dims.Width) - 6, dims.Y - 8, 12, 24);
-			GUIHelper.DrawBox(spriteBatch, draggerTarget, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, draggerTarget, ThemeHandler.ButtonColor);
 
-			Utils.DrawBorderString(spriteBatch, $"Spawn rate: {System.Math.Round(SpawnSystem.spawnRateModifier, 2)}x", dims.TopLeft() + new Vector2(0, -24), Color.White, 0.8f);
+			Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetToolText("SpawnTool.SpawnRate", System.Math.Round(SpawnSystem.spawnRateModifier, 2)), dims.TopLeft() + new Vector2(0, -24), Color.White, 0.8f);
 
 			Utils.DrawBorderString(spriteBatch, "0x", dims.TopLeft() + new Vector2(0, 14), Color.White, 0.8f, 0.5f);
 			Utils.DrawBorderString(spriteBatch, "1x", dims.TopLeft() + new Vector2(30, 14), Color.White, 0.8f, 0.5f);

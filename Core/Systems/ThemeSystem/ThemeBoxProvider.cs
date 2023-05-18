@@ -1,13 +1,19 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-namespace DragonLens.Core.Systems.ThemeSystem
+﻿namespace DragonLens.Core.Systems.ThemeSystem
 {
 	/// <summary>
 	/// A class which provides the methods used to render boxes for the GUI.
 	/// </summary>
 	public abstract class ThemeBoxProvider
 	{
+		/// <summary>
+		/// The key for the name of this box provider
+		/// </summary>
+		public abstract string NameKey { get; }
+
+		public string Name => Helpers.LocalizationHelper.GetText($"{NameKey}Boxes.Name");
+
+		public string Description => Helpers.LocalizationHelper.GetText($"{NameKey}Boxes.Description");
+
 		/// <summary>
 		/// Draws a simple box. Used for most buttons and smaller backgrounds.
 		/// </summary>

@@ -1,10 +1,6 @@
 ﻿using DragonLens.Content.GUI;
 using DragonLens.Content.Tools.Spawners;
 using DragonLens.Core.Systems.ThemeSystem;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ModLoader;
 
 namespace DragonLens.Content.Filters.ProjectileFilters
 {
@@ -12,10 +8,14 @@ namespace DragonLens.Content.Filters.ProjectileFilters
 	{
 		public Mod mod;
 
-		public ProjectileModFilter(Mod mod) : base("", mod.DisplayName, $"Projectiles added by the mod {mod.DisplayName}", n => FilterByMod(n, mod))
+		public ProjectileModFilter(Mod mod) : base("", "", n => FilterByMod(n, mod))
 		{
 			this.mod = mod;
 		}
+
+		public override string Name => mod.DisplayName;
+
+		public override string Description => ProjectileSpawner.GetText("Filters.Mod.Description", mod.DisplayName);
 
 		public static bool FilterByMod(BrowserButton button, Mod mod)
 		{

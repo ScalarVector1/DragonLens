@@ -1,6 +1,5 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
 using System.IO;
-using Terraria;
 using Terraria.ID;
 
 namespace DragonLens.Content.Tools.Despawners
@@ -8,10 +7,6 @@ namespace DragonLens.Content.Tools.Despawners
 	internal class ProjectileDespawner : Tool
 	{
 		public override string IconKey => "ProjectileDespawner";
-
-		public override string DisplayName => "Clear projectiles";
-
-		public override string Description => "Removes all projectiles currently in the world";
 
 		public override void OnActivate()
 		{

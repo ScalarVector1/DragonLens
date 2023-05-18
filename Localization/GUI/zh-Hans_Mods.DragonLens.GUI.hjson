@@ -1,0 +1,148 @@
+Browser: {
+	ListView: 列表视图
+	Filters: 筛选
+
+	ButtonSizeSlider: {
+		Name: 按钮大小
+		Tooltip: 拖动以调整按钮大小
+	}
+}
+
+DraggableUIState: {
+	Close: 关闭
+
+	UserGuide: {
+		Name: 使用指南
+		Tooltip: 在浏览器中打开此工具的使用指南
+	}
+}
+
+EmergencyCustomizeMenu: {
+	CustomizeToolbars: 自定义工具栏
+	CustomizeTools: 自定义工具
+}
+
+FirstTimeLayoutPresetMenu: {
+	Welcome: 欢迎使用DragonLens！
+	SelectLayout: 请选择一个布局以开始使用
+	Selected: 已选择“{0}”布局！使用自定义工具（扳手图标）来自定义布局或加载不同预设。
+}
+
+LayoutPresetBrowser: {
+	Name: 布局预设
+	LoadedLayout: 已加载布局: {0}
+}
+
+Layout: {
+	Invalid: 您保存的布局无效或已损坏！
+
+	Simple: {
+		Name: 简单
+		Tooltip: 简洁的布局，适合玩家或模组测试员。
+	}
+
+	Advanced: {
+		Name: 高级
+		Tooltip: 包含所有可用工具的高级布局。 非常适合模组开发者或服务器管理员。
+	}
+
+	HEROsMod: {
+		Name: 仿HERO's Mod
+		Tooltip: 与HERO's Mod相似的布局。
+	}
+
+	Cheatsheet: {
+		Name: 仿Cheatsheet
+		Tooltip: 与Cheatsheet相似的布局。
+	}
+
+	Empty: {
+		Name: 空
+		Tooltip: 用于构建你自己的布局。
+	}
+}
+
+ToggleButton: {
+	On: 开启
+	Off: 关闭
+}
+
+ToolbarCustomizationElements: {
+	RemoveButton: {
+		Name: 移除工具
+		Tooltip: 你随时可以从添加工具菜单（绿色标签）重新添加它！
+	}
+
+	AddButton: {
+		Name: 添加工具
+		Tooltip: 为这个工具栏添加工具
+	}
+
+	RemoveToolbarButton: {
+		Name: 移除工具栏
+		Tooltip: 移除整个工具栏！
+	}
+
+	DragButton: {
+		Name: 移动工具栏
+		Tooltip: 点击并拖动以移动此工具栏。 靠近屏幕边缘时，工具栏将自动吸附。 拖动时右键单击以旋转工具栏。
+	}
+
+	HideOptionButton: {
+		Name: "{0}"
+		Tooltip: 允许您为此工具栏设置可见性规则。 NEWBLOCK {0} NEWBLOCK 点此改为：{1}。
+
+		Never: {
+			Name: 始终可见
+			Tip: 在正常游戏过程中始终可见。
+		}
+
+		InventoryOpen: {
+			Name: 仅在物品栏关闭时可见
+			Tip: 仅在物品栏关闭时可见。
+		}
+
+		InventoryClosed: {
+			Name: 仅在物品栏开启时可见
+			Tip: 仅在物品栏开启时可见。
+		}
+
+		NoMapScreen: {
+			Name: 仅在打开地图时可见
+			Tip: 在全屏地图界面中可见。 注意：会打开其他窗口的工具需要关闭地图才能使用！
+		}
+	}
+
+	NewBarButton: {
+		Name: 新工具栏
+		Tooltip: 创建一个全新的空工具栏！
+	}
+
+	SaveLayoutButton: {
+		Name: 保存布局
+		Tooltip: 保存您的自定义布局。
+		LayoutSaved: 布局已保存！
+	}
+
+	LoadLayoutButton: {
+		Name: 加载布局
+		Tooltip: 加载已有的布局
+	}
+
+	VisualConfigButton: {
+		Name: 更改风格
+		Tooltip: 打开配置选项以更改UI的视觉风格
+	}
+
+	FunctionalConfigButton: {
+		Name: 工具选项
+		Tooltip: 打开配置选项以更改工具功能/默认设置
+	}
+}
+
+// ThemeMenu.Name: Theme editor
+
+EntityEditor: {
+	LiveReaction: "{0} 实时跟拍"
+	Select: 左键单击以选中实体，右键单击以取消。
+}

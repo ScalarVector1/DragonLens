@@ -1,6 +1,5 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
 using System.Reflection;
-using Terraria;
 using Terraria.Map;
 
 namespace DragonLens.Content.Tools.Map
@@ -8,10 +7,6 @@ namespace DragonLens.Content.Tools.Map
 	internal class HideMap : Tool
 	{
 		public override string IconKey => "HideMap";
-
-		public override string DisplayName => "Hide map";
-
-		public override string Description => "Resets the world map";
 
 		private FieldInfo tilesArray;
 

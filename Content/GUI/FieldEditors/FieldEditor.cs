@@ -1,5 +1,5 @@
-﻿using DragonLens.Configs;
-using DragonLens.Core.Loaders.UILoading;
+﻿using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
 using System;
 
@@ -13,12 +13,12 @@ namespace DragonLens.Content.GUI.FieldEditors
 		/// <summary>
 		/// The name that gets displated above the panel to the user
 		/// </summary>
-		public readonly string name;
+		public string name;
 
 		/// <summary>
 		/// The info sown when hovering over this panel
 		/// </summary>
-		public readonly string description;
+		public string description;
 
 		/// <summary>
 		/// The current value this editor believes the field its tied to to have. This wont update in real time so be careful
@@ -80,7 +80,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 
 		public sealed override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().backgroundColor);
+			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.BackgroundColor);
 
 			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
 			var backTarget = GetDimensions().ToRectangle();

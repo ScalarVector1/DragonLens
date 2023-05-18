@@ -63,7 +63,7 @@ namespace DragonLens.Content.GUI
 			closeButton = new UIImageButton(ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Remove"));
 			closeButton.Width.Set(16, 0);
 			closeButton.Height.Set(16, 0);
-			closeButton.OnClick += (a, b) => visible = false;
+			closeButton.OnLeftClick += (a, b) => visible = false;
 			Append(closeButton);
 
 			if (HelpLink != "")
@@ -71,7 +71,7 @@ namespace DragonLens.Content.GUI
 				helpButton = new UIImageButton(ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Help"));
 				helpButton.Width.Set(16, 0);
 				helpButton.Height.Set(16, 0);
-				helpButton.OnClick += (a, b) => GUIHelper.OpenUrl(HelpLink);
+				helpButton.OnLeftClick += (a, b) => GUIHelper.OpenUrl(HelpLink);
 				Append(helpButton);
 			}
 
@@ -83,6 +83,7 @@ namespace DragonLens.Content.GUI
 		public sealed override void SafeUpdate(GameTime gameTime)
 		{
 			Recalculate();
+
 			if (!Main.mouseLeft && dragging)
 				dragging = false;
 
@@ -105,7 +106,7 @@ namespace DragonLens.Content.GUI
 
 			if (closeButton.IsMouseHovering)
 			{
-				Tooltip.SetName("Close");
+				Tooltip.SetName(LocalizationHelper.GetGUIText("DraggableUIState.Close"));
 				Tooltip.SetTooltip("");
 			}
 
@@ -114,8 +115,8 @@ namespace DragonLens.Content.GUI
 
 			if (helpButton != null && helpButton.IsMouseHovering)
 			{
-				Tooltip.SetName("User guide");
-				Tooltip.SetTooltip("Open the user guide for this tool in the browser");
+				Tooltip.SetName(LocalizationHelper.GetGUIText("DraggableUIState.UserGuide.Name"));
+				Tooltip.SetTooltip(LocalizationHelper.GetGUIText("DraggableUIState.UserGuide.Tooltip"));
 			}
 
 			AdjustPositions(basePos);

@@ -1,5 +1,4 @@
-﻿using DragonLens.Configs;
-using DragonLens.Content.GUI;
+﻿using DragonLens.Content.GUI;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
@@ -14,10 +13,6 @@ namespace DragonLens.Content.Tools.Visualization
 	internal class Hitboxes : Tool
 	{
 		public override string IconKey => "Hitboxes";
-
-		public override string DisplayName => "Hitbox visualizer";
-
-		public override string Description => "Shows the hitboxes of various entities";
 
 		public override void OnActivate()
 		{
@@ -68,10 +63,10 @@ namespace DragonLens.Content.Tools.Visualization
 	{
 		public override void Load()
 		{
-			On.Terraria.Main.DrawInterface += DrawHitboxes;
+			Terraria.On_Main.DrawInterface += DrawHitboxes;
 		}
 
-		private void DrawHitboxes(On.Terraria.Main.orig_DrawInterface orig, Main self, GameTime gameTime)
+		private void DrawHitboxes(Terraria.On_Main.orig_DrawInterface orig, Main self, GameTime gameTime)
 		{
 			HitboxWindow state = UILoader.GetUIState<HitboxWindow>();
 
@@ -124,7 +119,7 @@ namespace DragonLens.Content.Tools.Visualization
 				}
 
 				return list;
-			}, "NPC Hitboxes", 0);
+			}, "NPC", 0);
 			Append(NPCOption);
 
 			ProjectileOption = new HitboxOption(() =>
@@ -142,7 +137,7 @@ namespace DragonLens.Content.Tools.Visualization
 				}
 
 				return list;
-			}, "Projectile Hitboxes", 0.1f);
+			}, "Projectile", 0.1f);
 			Append(ProjectileOption);
 
 			PlayerOption = new HitboxOption(() =>
@@ -160,7 +155,7 @@ namespace DragonLens.Content.Tools.Visualization
 				}
 
 				return list;
-			}, "Player Hitboxes", 0.5f);
+			}, "Player", 0.5f);
 			Append(PlayerOption);
 
 			ItemOption = new HitboxOption(() =>
@@ -178,7 +173,7 @@ namespace DragonLens.Content.Tools.Visualization
 				}
 
 				return list;
-			}, "Item Hitboxes", 0.6f);
+			}, "Item", 0.6f);
 			Append(ItemOption);
 		}
 
@@ -199,7 +194,7 @@ namespace DragonLens.Content.Tools.Visualization
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, width, height), ModContent.GetInstance<GUIConfig>().backgroundColor);
+			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, width, height), ThemeHandler.BackgroundColor);
 
 			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, width, 40);
@@ -208,7 +203,7 @@ namespace DragonLens.Content.Tools.Visualization
 			Texture2D icon = ThemeHandler.GetIcon("Hitboxes");
 			spriteBatch.Draw(icon, basePos + Vector2.One * 12, Color.White);
 
-			Utils.DrawBorderStringBig(spriteBatch, "Hitboxes", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
+			Utils.DrawBorderStringBig(spriteBatch, LocalizationHelper.GetToolText("Hitboxes.DisplayName"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
 
 			base.Draw(spriteBatch);
 		}
@@ -227,14 +222,14 @@ namespace DragonLens.Content.Tools.Visualization
 
 		public BoxType boxState;
 		public Func<List<Rectangle>> getBoxes;
-		public string text;
+		public string localizationKey;
 
 		public Color BoxColor => slider != null ? slider.Color : Color.Red;
 
-		public HitboxOption(Func<List<Rectangle>> getBoxes, string text, float defaultColor)
+		public HitboxOption(Func<List<Rectangle>> getBoxes, string localizationKey, float defaultColor)
 		{
 			this.getBoxes = getBoxes;
-			this.text = text;
+			this.localizationKey = localizationKey;
 
 			Width.Set(122, 0);
 			Height.Set(90, 0);
@@ -247,19 +242,19 @@ namespace DragonLens.Content.Tools.Visualization
 			var button = new ToggleButton("DragonLens/Assets/GUI/NoBox", () => boxState == BoxType.none);
 			button.Left.Set(10, 0);
 			button.Top.Set(28, 0);
-			button.OnClick += (a, b) => boxState = BoxType.none;
+			button.OnLeftClick += (a, b) => boxState = BoxType.none;
 			Append(button);
 
 			button = new ToggleButton("DragonLens/Assets/GUI/BorderBox", () => boxState == BoxType.outline);
 			button.Left.Set(46, 0);
 			button.Top.Set(28, 0);
-			button.OnClick += (a, b) => boxState = BoxType.outline;
+			button.OnLeftClick += (a, b) => boxState = BoxType.outline;
 			Append(button);
 
 			button = new ToggleButton("DragonLens/Assets/GUI/FillBox", () => boxState == BoxType.filled);
 			button.Left.Set(82, 0);
 			button.Top.Set(28, 0);
-			button.OnClick += (a, b) => boxState = BoxType.filled;
+			button.OnLeftClick += (a, b) => boxState = BoxType.filled;
 			Append(button);
 		}
 
@@ -287,8 +282,8 @@ namespace DragonLens.Content.Tools.Visualization
 		{
 			var dims = GetDimensions().ToRectangle();
 
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
-			Utils.DrawBorderString(spriteBatch, text, new Vector2(dims.Center.X, dims.Y + 8), Color.White, 0.75f, 0.5f);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
+			Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetText($"Tools.Hitboxes.Options.{localizationKey}"), new Vector2(dims.Center.X, dims.Y + 8), Color.White, 0.75f, 0.5f);
 
 			base.Draw(spriteBatch);
 		}
@@ -340,14 +335,14 @@ namespace DragonLens.Content.Tools.Visualization
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var dims = GetDimensions().ToRectangle();
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/ColorScale").Value;
 			dims.Inflate(-4, -4);
 			spriteBatch.Draw(tex, dims, Color.White);
 
 			var draggerTarget = new Rectangle(dims.X + (int)(progress * dims.Width) - 5, dims.Y - 6, 10, 20);
-			GUIHelper.DrawBox(spriteBatch, draggerTarget, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, draggerTarget, ThemeHandler.ButtonColor);
 		}
 	}
 }

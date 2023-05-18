@@ -1,6 +1,5 @@
 ﻿using DragonLens.Content.GUI;
 using DragonLens.Content.Tools.Spawners;
-using Terraria.ModLoader;
 
 namespace DragonLens.Content.Filters.ItemFilters
 {
@@ -8,10 +7,14 @@ namespace DragonLens.Content.Filters.ItemFilters
 	{
 		public DamageClass damageClass;
 
-		public DamageClassFilter(DamageClass damageClass, string texture) : base(texture, damageClass.DisplayName, $"Items with {damageClass.DisplayName}", n => FilterByDamageClass(n, damageClass))
+		public DamageClassFilter(DamageClass damageClass, string texture) : base(texture, "", n => FilterByDamageClass(n, damageClass))
 		{
 			this.damageClass = damageClass;
 		}
+
+		public override string Name => damageClass.DisplayName.Value.Trim();
+
+		public override string Description => ItemSpawner.GetText("Filters.DamageClass.Description", damageClass.DisplayName.Value.Trim());
 
 		public static bool FilterByDamageClass(BrowserButton button, DamageClass damageClass)
 		{

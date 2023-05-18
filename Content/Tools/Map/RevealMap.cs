@@ -1,15 +1,10 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
-using Terraria;
 
 namespace DragonLens.Content.Tools.Map
 {
 	internal class RevealMap : Tool
 	{
 		public override string IconKey => "RevealMap";
-
-		public override string DisplayName => "Reveal map";
-
-		public override string Description => "Reveals the entire world map";
 
 		public override void OnActivate()
 		{

@@ -1,11 +1,7 @@
-﻿using DragonLens.Configs;
+﻿using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace DragonLens.Content.Tools.Gameplay
@@ -16,19 +12,13 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override string IconKey => "FastForward";
 
-		public override string DisplayName => "Fast forward";
-
-		public override string Description => "Click to speed up the game, up to 4x. Right click to move backwards through speeds.";
-
 		public override bool HasRightClick => true;
-
-		public override string RightClickName => "Decrease fast forward rate";
 
 		public override void OnActivate()
 		{
 			if (Main.netMode != NetmodeID.SinglePlayer)
 			{
-				Main.NewText("Fast forward is disabled in multiplayer", Color.Red);
+				Main.NewText(LocalizationHelper.GetToolText("FastForward.MultiplayerDisabled"), Color.Red);
 				speedup = 0;
 				return;
 			}
@@ -43,7 +33,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		{
 			if (Main.netMode != NetmodeID.SinglePlayer)
 			{
-				Main.NewText("Fast forward is disabled in multiplayer", Color.Red);
+				Main.NewText(LocalizationHelper.GetToolText("FastForward.MultiplayerDisabled"), Color.Red);
 				speedup = 0;
 				return;
 			}
@@ -60,7 +50,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 			if (speedup > 0)
 			{
-				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ThemeHandler.ButtonColor.InvertColor());
 
 				Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Misc/GlowAlpha").Value;
 				Color color = new Color(150, 255, 170) * (speedup / 4f);
@@ -92,10 +82,10 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public override void Load()
 		{
-			On.Terraria.Main.DoUpdate += UpdateExtraTimes;
+			Terraria.On_Main.DoUpdate += UpdateExtraTimes;
 		}
 
-		private void UpdateExtraTimes(On.Terraria.Main.orig_DoUpdate orig, Main self, ref GameTime gameTime)
+		private void UpdateExtraTimes(Terraria.On_Main.orig_DoUpdate orig, Main self, ref GameTime gameTime)
 		{
 			orig(self, ref gameTime);
 

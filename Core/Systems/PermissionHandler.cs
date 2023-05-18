@@ -1,4 +1,5 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
+using DragonLens.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -91,10 +92,10 @@ namespace DragonLens.Core.Systems
 				Player player = Main.player.FirstOrDefault(n => n.name == name);
 
 				if (player is null)
-					Main.NewText($"Could not find a player by the name {name}");
+					Main.NewText(LocalizationHelper.GetText("Permission.PlayerNotFound", name));
 
 				if (player == Main.LocalPlayer)
-					Main.NewText("You are now an admin!", Color.LimeGreen);
+					Main.NewText(LocalizationHelper.GetText("Permission.AdminGiven"), Color.LimeGreen);
 
 				admins.Add(player.name);
 
@@ -113,10 +114,10 @@ namespace DragonLens.Core.Systems
 				Player player = Main.player.FirstOrDefault(n => n.name == name);
 
 				if (player is null)
-					Main.NewText($"Could not find a player by the name {name}");
+					Main.NewText(LocalizationHelper.GetText("Permission.PlayerNotFound", name));
 
 				if (player == Main.LocalPlayer)
-					Main.NewText("You are no longer an admin...", Color.Red);
+					Main.NewText(LocalizationHelper.GetText("Permission.AdminTaken"), Color.Red);
 
 				admins.Remove(player.name);
 
@@ -147,7 +148,7 @@ namespace DragonLens.Core.Systems
 	/// </summary>
 	public class PermissionPlayer : ModPlayer
 	{
-		public override void OnEnterWorld(Player player) // Send an admin list sync request on entering the server
+		public override void OnEnterWorld() // Send an admin list sync request on entering the server
 		{
 			if (Main.netMode == NetmodeID.SinglePlayer) //single player dosent care about admins
 				return;
@@ -163,7 +164,7 @@ namespace DragonLens.Core.Systems
 
 			if (Netplay.Connection.Socket.GetRemoteAddress().IsLocalHost()) // The host is automatically an admin!
 			{
-				PermissionHandler.AddAdmin(player);
+				PermissionHandler.AddAdmin(Player);
 
 				foreach (Tool tool in ToolHandler.Tools) // The hosts settings get applied
 				{
@@ -180,17 +181,28 @@ namespace DragonLens.Core.Systems
 	}
 
 	/// <summary>
+	/// A base class to make localization of admin power commands more convenient
+	/// </summary>
+	internal abstract class PermissionCommand : ModCommand
+	{
+		public override string Usage => LocalizationHelper.GetText($"Permission.{GetType().Name}.Usage");
+
+		public override string Description => LocalizationHelper.GetText($"Permission.{GetType().Name}.Description");
+		
+		protected string GetText(string key, params object[] args)
+		{
+			return LocalizationHelper.GetText($"Permission.{GetType().Name}.{key}", args);
+		}
+	}
+
+	/// <summary>
 	/// A command to grant admin status to a player
 	/// </summary>
-	internal class AdminCommand : ModCommand
+	internal class AdminCommand : PermissionCommand
 	{
 		public override string Command => "DLAdmin";
 
 		public override CommandType Type => CommandType.Server | CommandType.Console;
-
-		public override string Usage => "/DLAdmin [player name]";
-
-		public override string Description => "Adds a user to the admin list for DragonLens, allowing them to use the mods cheat tools.";
 
 		public override void Action(CommandCaller caller, string input, string[] args)
 		{
@@ -199,7 +211,7 @@ namespace DragonLens.Core.Systems
 
 			if (args.Length < 1)
 			{
-				Console.WriteLine("You must enter the name of the player to give admin powers to.");
+				Console.WriteLine(GetText("NameNotEntered"));
 				return;
 			}
 
@@ -207,7 +219,7 @@ namespace DragonLens.Core.Systems
 
 			if (PermissionHandler.admins.Contains(name))
 			{
-				Console.WriteLine("That user is already an admin.");
+				Console.WriteLine(GetText("AlreadyAdmin"));
 				return;
 			}
 
@@ -215,11 +227,11 @@ namespace DragonLens.Core.Systems
 
 			if (player is null)
 			{
-				Console.WriteLine($"Could not find a player by the name {name}");
+				Console.WriteLine(LocalizationHelper.GetText("Permission.PlayerNotFound", name));
 			}
 			else
 			{
-				Console.WriteLine($"{name} is now an admin.");
+				Console.WriteLine(GetText("AdminGiven", name));
 				PermissionHandler.AddAdmin(player);
 			}
 		}
@@ -228,7 +240,7 @@ namespace DragonLens.Core.Systems
 	/// <summary>
 	/// A command to revoke admin status from a player
 	/// </summary>
-	internal class DeAdminCommand : ModCommand
+	internal class DeAdminCommand : PermissionCommand
 	{
 		public override string Command => "DLRemoveAdmin";
 
@@ -245,7 +257,7 @@ namespace DragonLens.Core.Systems
 
 			if (args.Length < 1)
 			{
-				Console.WriteLine("You must enter the name of the player to revoke admin powers from.");
+				Console.WriteLine(GetText("NameNotEntered"));
 				return;
 			}
 
@@ -253,7 +265,7 @@ namespace DragonLens.Core.Systems
 
 			if (!PermissionHandler.admins.Contains(name))
 			{
-				Console.WriteLine("That user is not an admin.");
+				Console.WriteLine(GetText("NotAdmin"));
 				return;
 			}
 
@@ -261,11 +273,11 @@ namespace DragonLens.Core.Systems
 
 			if (player is null)
 			{
-				Console.WriteLine($"Could not find a player by the name {name}");
+				Console.WriteLine(LocalizationHelper.GetText("Permission.PlayerNotFound", name));
 			}
 			else
 			{
-				Console.WriteLine($"{name} is no longer an admin.");
+				Console.WriteLine(GetText("AdminTaken", name));
 				PermissionHandler.RemoveAdmin(player);
 			}
 		}
@@ -280,7 +292,7 @@ namespace DragonLens.Core.Systems
 
 		public override CommandType Type => CommandType.Chat | CommandType.Console;
 
-		public override string Description => "List all players that can use DragonLens cheat tools.";
+		public override string Description => LocalizationHelper.GetText("Permission.AdminListCommand.Description");
 
 		public override void Action(CommandCaller caller, string input, string[] args)
 		{

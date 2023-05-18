@@ -1,5 +1,4 @@
-﻿using DragonLens.Configs;
-using DragonLens.Content.GUI;
+﻿using DragonLens.Content.GUI;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
@@ -18,15 +17,11 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override string IconKey => "AccessoryTray";
 
-		public override string DisplayName => "Accessory tray";
-
-		public override string Description => "A virtually infinite collection of extra accessory slots!";
-
 		public override void OnActivate()
 		{
 			if (Main.netMode != NetmodeID.SinglePlayer)
 			{
-				Main.NewText("Accessory tray is disabled in multiplayer", Color.Red);
+				Main.NewText(LocalizationHelper.GetToolText("AccessoryTray.MpDisabled"), Color.Red);
 				return;
 			}
 
@@ -70,7 +65,7 @@ namespace DragonLens.Content.Tools.Editors
 	{
 		public readonly List<Item> accessories = new() { new Item() };
 
-		public override void OnEnterWorld(Player player)
+		public override void OnEnterWorld()
 		{
 			if (Main.netMode != NetmodeID.SinglePlayer)
 				return;
@@ -98,7 +93,7 @@ namespace DragonLens.Content.Tools.Editors
 
 			accessories.ForEach(n =>
 			{
-				Player.VanillaUpdateEquip(n);
+				Player.GrantPrefixBenefits(n)/* tModPorter Note: Removed. Use either GrantPrefixBenefits (if Item.accessory) or GrantArmorBenefits (for armor slots) */;
 				Player.ApplyEquipFunctional(n, false);
 			});
 		}
@@ -159,7 +154,7 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, BoundingBox, ModContent.GetInstance<GUIConfig>().backgroundColor);
+			GUIHelper.DrawBox(spriteBatch, BoundingBox, ThemeHandler.BackgroundColor);
 
 			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 300, 40);
@@ -173,7 +168,7 @@ namespace DragonLens.Content.Tools.Editors
 			bgDims.Inflate(4, 4);
 			spriteBatch.Draw(background, bgDims, Color.Black * 0.25f);
 
-			Utils.DrawBorderStringBig(spriteBatch, "Accessory tray", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
+			Utils.DrawBorderStringBig(spriteBatch, LocalizationHelper.GetToolText("AccessoryTray.DisplayName"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
 
 			base.Draw(spriteBatch);
 		}
@@ -244,7 +239,7 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
 
 			CalculatedStyle dims = GetDimensions();
 			var iconBox = new Rectangle((int)dims.X, (int)dims.Y, 48, 48);
@@ -257,7 +252,7 @@ namespace DragonLens.Content.Tools.Editors
 			{
 				Main.LocalPlayer.mouseInterface = true;
 				Main.HoverItem = item;
-				Main.hoverItemName = "Place an accessory here!";
+				Main.hoverItemName = LocalizationHelper.GetToolText("AccessoryTray.PlaceAccHere");
 			}
 		}
 

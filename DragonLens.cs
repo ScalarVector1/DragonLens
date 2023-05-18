@@ -17,7 +17,7 @@ namespace DragonLens
 {
 	public class DragonLens : Mod
 	{
-		public override void PostAddRecipes()
+		public override void PostAddRecipes()/* tModPorter Note: Removed. Use ModSystem.PostAddRecipes */
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;

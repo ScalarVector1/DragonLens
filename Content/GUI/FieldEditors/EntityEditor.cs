@@ -1,5 +1,5 @@
-﻿using DragonLens.Configs;
-using DragonLens.Core.Loaders.UILoading;
+﻿using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
 using System;
 using Terraria.UI;
@@ -49,7 +49,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 			Vector2 pos = GetDimensions().Position();
 			var preview = new Rectangle((int)pos.X + 12, (int)pos.Y + 32, 60, 60);
 
-			GUIHelper.DrawBox(sprite, preview, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(sprite, preview, ThemeHandler.ButtonColor);
 
 			if (value != null && value.active)
 			{
@@ -59,7 +59,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 				sprite.Draw(Main.screenTarget, preview, source, Color.White);
 			}
 
-			Utils.DrawBorderString(sprite, $"Live {typeof(T).Name} Reaction", pos + new Vector2(8, 94), Color.White, 0.7f);
+			Utils.DrawBorderString(sprite, LocalizationHelper.GetGUIText("EntityEditor.LiveReaction", typeof(T).Name), pos + new Vector2(8, 94), Color.White, 0.7f);
 
 			base.SafeDraw(sprite);
 		}
@@ -79,12 +79,12 @@ namespace DragonLens.Content.GUI.FieldEditors
 		public override void SafeClick(UIMouseEvent evt)
 		{
 			parent.selecting = true;
-			Main.NewText("Click on an entity in the world to select it. Right click to cancel.");
+			Main.NewText(LocalizationHelper.GetGUIText("EntityEditor.Select"));
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Picker").Value;
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);

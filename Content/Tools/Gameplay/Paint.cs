@@ -1,5 +1,4 @@
-﻿using DragonLens.Configs;
-using DragonLens.Content.GUI;
+﻿using DragonLens.Content.GUI;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
@@ -21,10 +20,6 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public override string IconKey => "Paint";
 
-		public override string DisplayName => "Tile painter";
-
-		public override string Description => "Copy/paste regions of the world";
-
 		public override void OnActivate()
 		{
 			PaintWindow state = UILoader.GetUIState<PaintWindow>();
@@ -36,6 +31,11 @@ namespace DragonLens.Content.Tools.Gameplay
 				state.OnInitialize();
 				state.firstSet = true;
 			}
+		}
+
+		public static string GetTextValue(string key, params object[] args)
+		{
+			return LocalizationHelper.GetText($"Tools.Paint.{key}", args);
 		}
 	}
 
@@ -79,8 +79,8 @@ namespace DragonLens.Content.Tools.Gameplay
 				Append(adPanel);
 			}
 
-			sampleButton = new("DragonLens/Assets/GUI/Picker", () => selecting, "Create structure");
-			sampleButton.OnClick += (a, b) => selecting = !selecting;
+			sampleButton = new("DragonLens/Assets/GUI/Picker", () => selecting, Paint.GetTextValue("CreateStructure"));
+			sampleButton.OnLeftClick += (a, b) => selecting = !selecting;
 			Append(sampleButton);
 
 			structureScroll = new(UserInterface);
@@ -119,7 +119,7 @@ namespace DragonLens.Content.Tools.Gameplay
 					target = new Rectangle(Player.tileTargetX, Player.tileTargetY, 0, 0);
 					selectingSecondPoint = true;
 
-					Main.NewText("First point set!");
+					Main.NewText(Paint.GetTextValue("FirstPointSet"));
 				}
 				else
 				{
@@ -139,7 +139,7 @@ namespace DragonLens.Content.Tools.Gameplay
 					selecting = false;
 					selectingSecondPoint = false;
 
-					Main.NewText("Structure saved to paint menu!");
+					Main.NewText(Paint.GetTextValue("StructureSaved"));
 				}
 			}
 		}
@@ -166,7 +166,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			if (selecting || structure != null)
 				Main.LocalPlayer.mouseInterface = true;
 
-			if (Main.mouseLeft && structure != null)
+			if (Main.mouseLeft && structure != null && !BoundingBox.Contains(Main.MouseScreen.ToPoint()))
 			{
 				//Prevents re-placing the same structure in the same place which could cause lag
 				if (PlaceTarget != lastPlaced)
@@ -196,7 +196,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, width, height), ModContent.GetInstance<GUIConfig>().backgroundColor);
+			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, width, height), ThemeHandler.BackgroundColor);
 
 			Texture2D background = Terraria.GameContent.TextureAssets.MagicPixel.Value;
 			spriteBatch.Draw(background, structureButtons.GetDimensions().ToRectangle(), Color.Black * 0.25f);
@@ -208,7 +208,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			Texture2D icon = ThemeHandler.GetIcon("Paint");
 			spriteBatch.Draw(icon, basePos + Vector2.One * 12, Color.White);
 
-			Utils.DrawBorderStringBig(spriteBatch, "Tile painter", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
+			Utils.DrawBorderStringBig(spriteBatch, Paint.GetTextValue("DisplayName"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
 
 			if (structure != null && !selecting)
 			{
@@ -258,7 +258,13 @@ namespace DragonLens.Content.Tools.Gameplay
 			this.parent = parent;
 			strucutre = tag;
 
-			preview = new("Temporary structure " + strucutre.GetHashCode(), tag);
+			// StructurePreview constructor requires a spritebatch to be active
+			Main.spriteBatch.Begin();
+
+			preview = new(Paint.GetTextValue("TempStructure", strucutre.GetHashCode()), tag);
+
+			// End the spritebatch after the preview is created
+			Main.spriteBatch.End();
 
 			Width.Set(140, 0);
 			Height.Set(140, 0);
@@ -269,11 +275,14 @@ namespace DragonLens.Content.Tools.Gameplay
 			closeButton.Left.Set(120, 0);
 			closeButton.Top.Set(4, 0);
 
-			closeButton.OnClick += (a, b) =>
+			closeButton.OnLeftClick += (a, b) =>
 			{
 				preview.Dispose();
 				preview = null;
 				parent.structureButtons.Remove(this);
+
+				if (parent.structure == this)
+					parent.structure = null;
 			};
 
 			Append(closeButton);
@@ -291,7 +300,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var dims = GetDimensions().ToRectangle();
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
 			dims.Inflate(-4, -4);
 
@@ -327,21 +336,17 @@ namespace DragonLens.Content.Tools.Gameplay
 			closeButton.Height.Set(16, 0);
 			closeButton.Left.Set(186, 0);
 			closeButton.Top.Set(8, 0);
-			closeButton.OnClick += (a, b) => Remove();
+			closeButton.OnLeftClick += (a, b) => Remove();
 			Append(closeButton);
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var dims = GetDimensions().ToRectangle();
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().backgroundColor);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.BackgroundColor);
 
 			ReLogic.Graphics.DynamicSpriteFont font = Terraria.GameContent.FontAssets.MouseText.Value;
-			string message = GUIHelper.WrapString("For more useful features, check out the full Structure Helper mod! You'll be able to: NEWBLOCK" +
-				" > Export structures to files! NEWBLOCK" +
-				" > Use null tiles to generate non-square structures! NEWBLOCK" +
-				" > Place chests with custom, random loot pools! NEWBLOCK" +
-				" > Generate structures in your own mods from files!", 160, font, 0.8f);
+			string message = GUIHelper.WrapString(Paint.GetTextValue("Advertise.Content"), 160, font, 0.8f);
 
 			Utils.DrawBorderString(spriteBatch, message, dims.TopLeft() + Vector2.One * 8, Color.White, 0.8f);
 
@@ -365,18 +370,18 @@ namespace DragonLens.Content.Tools.Gameplay
 
 			method.Invoke(null, new object[] { publishId, null, false });
 
-			Main.NewText("StructureHelper is being downloaded. Return to the main menu and go to the workshop menu to enable it!");
+			Main.NewText(Paint.GetTextValue("Advertise.Downloaded"));
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var dims = GetDimensions().ToRectangle();
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/StructureHelper").Value;
 			spriteBatch.Draw(tex, dims.TopLeft() + Vector2.One * 4, Color.White);
 
-			Utils.DrawBorderString(spriteBatch, "Download\n  Now!", dims.TopLeft() + new Vector2(88, 24), Color.White, 0.8f);
+			Utils.DrawBorderString(spriteBatch, Paint.GetTextValue("Advertise.Title"), dims.TopLeft() + new Vector2(88, 24), Color.White, 0.8f);
 
 			base.Draw(spriteBatch);
 		}

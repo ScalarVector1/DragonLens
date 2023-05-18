@@ -1,6 +1,5 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
 using System.IO;
-using Terraria;
 using Terraria.ID;
 
 namespace DragonLens.Content.Tools.Despawners
@@ -12,13 +11,7 @@ namespace DragonLens.Content.Tools.Despawners
 
 		public override string IconKey => "NPCDespawner";
 
-		public override string DisplayName => "Clear NPCs";
-
-		public override string Description => "Removes all hostile NPCs currently in the world. Right click for a more traditional 'butcher'. NEWBLOCK hold SHIFT to clear/butcher friendly NPCs aswell";
-
 		public override bool HasRightClick => true;
-
-		public override string RightClickName => "Traditional butcher";
 
 		public override void OnActivate()
 		{
@@ -38,7 +31,7 @@ namespace DragonLens.Content.Tools.Despawners
 			foreach (NPC npc in Main.npc)
 			{
 				if (!npc.friendly || Main.keyState.PressingShift())
-					npc.StrikeNPC(int.MaxValue, 0, 0);
+					npc.StrikeNPC(new NPC.HitInfo() { Damage = int.MaxValue });
 			}
 
 			lastUsedClear = 1;
@@ -70,7 +63,7 @@ namespace DragonLens.Content.Tools.Despawners
 				foreach (NPC npc in Main.npc)
 				{
 					if (!npc.friendly || clearFriendly)
-						npc.StrikeNPC(int.MaxValue, 0, 0);
+						npc.StrikeNPC(new NPC.HitInfo() { Damage = int.MaxValue });
 				}
 			}
 

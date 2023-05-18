@@ -1,24 +1,21 @@
 ﻿using DragonLens.Content.Themes.BoxProviders;
 using DragonLens.Content.Themes.IconProviders;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace DragonLens.Core.Systems.ThemeSystem
 {
 	internal class ThemeHandler : ModSystem
 	{
-		private readonly static Dictionary<string, ThemeBoxProvider> allBoxProviders = new();
-		private readonly static Dictionary<string, ThemeIconProvider> allIconProviders = new();
+		public readonly static Dictionary<string, ThemeBoxProvider> allBoxProviders = new();
+		public readonly static Dictionary<string, ThemeIconProvider> allIconProviders = new();
 
 		private readonly static Dictionary<Type, ThemeBoxProvider> allBoxProvidersByType = new();
 		private readonly static Dictionary<Type, ThemeIconProvider> allIconProvidersByType = new();
 
 		public static ThemeBoxProvider currentBoxProvider;
-		public static ThemeColorProvider currentColorProvider;
+		public static ThemeColorProvider currentColorProvider = new();
 		public static ThemeIconProvider currentIconProvider;
 
 		/// <summary>
@@ -50,6 +47,15 @@ namespace DragonLens.Core.Systems.ThemeSystem
 		}
 
 		/// <summary>
+		/// Sets the current box provider to a given box provider instance.
+		/// </summary>
+		/// <param name="provider">The provider to use</param>
+		public static void SetBoxProvider(ThemeBoxProvider provider)
+		{
+			currentBoxProvider = provider;
+		}
+
+		/// <summary>
 		/// Sets the current icon provider based on a string key. The key should be the name of the ThemeIconProvider's type.
 		/// </summary>
 		/// <param name="key">The type name of the ThemeIconProvider to set</param>
@@ -65,6 +71,15 @@ namespace DragonLens.Core.Systems.ThemeSystem
 		public static void SetIconProvider<T>() where T : ThemeIconProvider
 		{
 			currentIconProvider = allIconProvidersByType[typeof(T)];
+		}
+
+		/// <summary>
+		/// Sets the current icon provider to a given icon provider instance.
+		/// </summary>
+		/// <param name="provider">the provider to use</param>
+		public static void SetIconProvider(ThemeIconProvider provider)
+		{
+			currentIconProvider = provider;
 		}
 
 		public static ThemeBoxProvider GetBoxProvider<T>() where T : ThemeBoxProvider

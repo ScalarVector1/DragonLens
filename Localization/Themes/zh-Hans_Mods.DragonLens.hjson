@@ -1,0 +1,24 @@
+SimpleBoxes: {
+	// Name: Simple
+	// Description: The default box style for DragonLens
+}
+
+VanillaBoxes: {
+	// Name: Vanilla
+	// Description: A box style similar to the vanilla GUI
+}
+
+MinimalBoxes: {
+	// Name: Minimal
+	// Description: As simple a box style as you can get
+}
+
+DragonLensIcons: {
+	// Name: Default
+	// Description: The default icons for DragonLens
+}
+
+HEROsIcons: {
+	// Name: HEROs Mod
+	// Description: Icons from and mimicing the style of HEROs mod
+}

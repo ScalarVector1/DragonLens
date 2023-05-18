@@ -1,10 +1,12 @@
-﻿using DragonLens.Configs;
-using DragonLens.Content.Filters;
+﻿using DragonLens.Content.Filters;
 using DragonLens.Content.GUI.FieldEditors;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
+using ReLogic.Localization.IME;
+using ReLogic.OS;
 using System.Collections.Generic;
+using Terraria.GameContent;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 using FixedUIScrollbar = Terraria.GameContent.UI.Elements.FixedUIScrollbar;
@@ -113,12 +115,12 @@ namespace DragonLens.Content.GUI
 			sizeSlider = new(this);
 			Append(sizeSlider);
 
-			listButton = new("DragonLens/Assets/GUI/Play", () => listMode, "List view");
-			listButton.OnClick += (n, k) => listMode = !listMode;
+			listButton = new("DragonLens/Assets/GUI/Play", () => listMode, LocalizationHelper.GetGUIText("Browser.ListView"));
+			listButton.OnLeftClick += (n, k) => listMode = !listMode;
 			Append(listButton);
 
-			filterButton = new("DragonLens/Assets/GUI/Filter", () => filtersVisible, "Filters");
-			filterButton.OnClick += (n, k) =>
+			filterButton = new("DragonLens/Assets/GUI/Filter", () => filtersVisible, LocalizationHelper.GetGUIText("Browser.Filters"));
+			filterButton.OnLeftClick += (n, k) =>
 			{
 				filtersVisible = !filtersVisible;
 				if (filtersVisible)
@@ -176,7 +178,7 @@ namespace DragonLens.Content.GUI
 		{
 			var target = new Rectangle((int)basePos.X, (int)basePos.Y, 500, 600);
 
-			GUIHelper.DrawBox(spriteBatch, target, ModContent.GetInstance<GUIConfig>().backgroundColor);
+			GUIHelper.DrawBox(spriteBatch, target, ThemeHandler.BackgroundColor);
 
 			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 400, 48);
@@ -286,11 +288,11 @@ namespace DragonLens.Content.GUI
 
 			if (parent.listMode)
 			{
-				GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().backgroundColor);
+				GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.BackgroundColor);
 				Utils.DrawBorderStringBig(spriteBatch, Identifier, GetDimensions().Position() + new Vector2(size + 10, size / 2f + 4), Color.White, size / 36f / 3f, 0, 0.5f);
 			}
 
-			GUIHelper.DrawBox(spriteBatch, drawBox, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, drawBox, ThemeHandler.ButtonColor);
 			SafeDraw(spriteBatch, drawBox);
 
 			base.Draw(spriteBatch);
@@ -312,21 +314,39 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
 
 			if (typing)
 			{
-				GUIHelper.DrawOutline(spriteBatch, GetDimensions().ToRectangle(), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				GUIHelper.DrawOutline(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor.InvertColor());
+				HandleText();
+
+				// draw ime panel, note that if there's no composition string then it won't draw anything
+				Main.instance.DrawWindowsIMEPanel(GetDimensions().Position());
 			}
 
 			Vector2 pos = GetDimensions().Position() + Vector2.One * 4;
 
+			const float scale = 1;
 			string displayed = currentValue;
 
-			if (typing && Main.GameUpdateCount % 20 < 10)
-				displayed += "|";
+			Utils.DrawBorderString(spriteBatch, displayed, pos, Color.White, scale);
 
-			Utils.DrawBorderString(spriteBatch, displayed, pos, Color.White);
+			// composition string + cursor drawing below
+			if (!typing)
+				return;
+
+			pos.X += FontAssets.MouseText.Value.MeasureString(displayed).X * scale;
+			string compositionString = Platform.Get<IImeService>().CompositionString;
+
+			if (compositionString is {Length: > 0})
+			{
+				Utils.DrawBorderString(spriteBatch, compositionString, pos, new Color(255, 240, 20), scale);
+				pos.X += FontAssets.MouseText.Value.MeasureString(compositionString).X * scale;
+			}
+
+			if (Main.GameUpdateCount % 20 < 10)
+				Utils.DrawBorderString(spriteBatch, "|", pos, Color.White, scale);
 		}
 	}
 
@@ -369,19 +389,19 @@ namespace DragonLens.Content.GUI
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var dims = GetDimensions().ToRectangle();
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/AlphaScale").Value;
 			dims.Inflate(-4, -4);
 			spriteBatch.Draw(tex, dims, Color.White);
 
 			var draggerTarget = new Rectangle(dims.X + (int)(progress * dims.Width) - 5, dims.Y - 6, 10, 20);
-			GUIHelper.DrawBox(spriteBatch, draggerTarget, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, draggerTarget, ThemeHandler.ButtonColor);
 
 			if (IsMouseHovering && !Main.mouseLeft)
 			{
-				Tooltip.SetName("Button scale");
-				Tooltip.SetTooltip("Drag to adjust the size of buttons in the browser");
+				Tooltip.SetName(LocalizationHelper.GetGUIText("Browser.ButtonSizeSlider.Name"));
+				Tooltip.SetTooltip(LocalizationHelper.GetGUIText("Browser.ButtonSizeSlider.Tooltip"));
 			}
 		}
 	}

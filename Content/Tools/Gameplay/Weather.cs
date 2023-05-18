@@ -1,5 +1,4 @@
-﻿using DragonLens.Configs;
-using DragonLens.Content.GUI;
+﻿using DragonLens.Content.GUI;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
@@ -16,10 +15,6 @@ namespace DragonLens.Content.Tools.Gameplay
 	internal class Weather : Tool
 	{
 		public override string IconKey => "Weather";
-
-		public override string DisplayName => "Weather tool";
-
-		public override string Description => "Adjust the weather";
 
 		public override void OnActivate()
 		{
@@ -82,6 +77,11 @@ namespace DragonLens.Content.Tools.Gameplay
 
 			if (Main.netMode == NetmodeID.Server)
 				NetSend(-1, sender);
+		}
+
+		public static string GetText(string key, params object[] args)
+		{
+			return LocalizationHelper.GetText($"Tools.Weather.{key}", args);
 		}
 	}
 
@@ -166,7 +166,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, 400, 260), ModContent.GetInstance<GUIConfig>().backgroundColor);
+			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, 400, 260), ThemeHandler.BackgroundColor);
 
 			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 400, 40);
@@ -175,9 +175,9 @@ namespace DragonLens.Content.Tools.Gameplay
 			Texture2D icon = ThemeHandler.GetIcon("Weather");
 			spriteBatch.Draw(icon, basePos + Vector2.One * 12, Color.White);
 
-			Utils.DrawBorderStringBig(spriteBatch, "Set weather", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
+			Utils.DrawBorderStringBig(spriteBatch, Weather.GetText("UITitle"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.45f);
 
-			string tips = "Useful combinations:\nHigh Rain + Wind > 20 mph = Thunderstorm\nNatural Rain + Snow biome = Blizzard";
+			string tips = Weather.GetText("Combinations");
 			Utils.DrawBorderString(spriteBatch, tips, basePos + new Vector2(12, 176), Color.White, 0.8f);
 
 			base.Draw(spriteBatch);
@@ -225,7 +225,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var dims = GetDimensions().ToRectangle();
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/CloudScale").Value;
 			dims.Inflate(-4, -4);
@@ -238,13 +238,13 @@ namespace DragonLens.Content.Tools.Gameplay
 			GUIHelper.DrawBox(spriteBatch, tickTarget, Color.Orange);
 
 			var draggerTarget = new Rectangle(dims.X + (int)(progress * dims.Width) - 6, dims.Y - 8, 12, 24);
-			GUIHelper.DrawBox(spriteBatch, draggerTarget, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, draggerTarget, ThemeHandler.ButtonColor);
 
-			Utils.DrawBorderString(spriteBatch, "Rain intensity", dims.TopLeft() + new Vector2(0, -22), Color.White, 0.8f);
+			Utils.DrawBorderString(spriteBatch, Weather.GetText("RainIntensity"), dims.TopLeft() + new Vector2(0, -22), Color.White, 0.8f);
 
-			Utils.DrawBorderString(spriteBatch, "low", dims.TopLeft() + new Vector2(30, 14), Color.White, 0.7f, 0.5f);
-			Utils.DrawBorderString(spriteBatch, "med", dims.TopLeft() + new Vector2(120, 14), Color.White, 0.7f, 0.5f);
-			Utils.DrawBorderString(spriteBatch, "high", dims.TopLeft() + new Vector2(240, 14), Color.White, 0.7f, 0.5f);
+			Utils.DrawBorderString(spriteBatch, Weather.GetText("RainLow"), dims.TopLeft() + new Vector2(30, 14), Color.White, 0.7f, 0.5f);
+			Utils.DrawBorderString(spriteBatch, Weather.GetText("RainMedium"), dims.TopLeft() + new Vector2(120, 14), Color.White, 0.7f, 0.5f);
+			Utils.DrawBorderString(spriteBatch, Weather.GetText("RainHigh"), dims.TopLeft() + new Vector2(240, 14), Color.White, 0.7f, 0.5f);
 		}
 	}
 
@@ -289,7 +289,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var dims = GetDimensions().ToRectangle();
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/WindScale").Value;
 			dims.Inflate(-4, -4);
@@ -302,14 +302,14 @@ namespace DragonLens.Content.Tools.Gameplay
 			GUIHelper.DrawBox(spriteBatch, tickTarget, Color.Red);
 
 			var draggerTarget = new Rectangle(dims.X + (int)(progress * dims.Width) - 6, dims.Y - 8, 12, 24);
-			GUIHelper.DrawBox(spriteBatch, draggerTarget, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, draggerTarget, ThemeHandler.ButtonColor);
 
-			Utils.DrawBorderString(spriteBatch, "Wind strength", dims.TopLeft() + new Vector2(0, -22), Color.White, 0.8f);
+			Utils.DrawBorderString(spriteBatch, Weather.GetText("WindStrength"), dims.TopLeft() + new Vector2(0, -22), Color.White, 0.8f);
 
-			Utils.DrawBorderString(spriteBatch, "60w", dims.TopLeft() + new Vector2(10, 14), Color.White, 0.7f, 0.5f);
-			Utils.DrawBorderString(spriteBatch, "60e", dims.TopLeft() + new Vector2(290, 14), Color.White, 0.7f, 0.5f);
-			Utils.DrawBorderString(spriteBatch, "20w", dims.TopLeft() + new Vector2(100, 14), Color.White, 0.7f, 0.5f);
-			Utils.DrawBorderString(spriteBatch, "20e", dims.TopLeft() + new Vector2(200, 14), Color.White, 0.7f, 0.5f);
+			Utils.DrawBorderString(spriteBatch, Weather.GetText("WindSixtyWest"), dims.TopLeft() + new Vector2(10, 14), Color.White, 0.7f, 0.5f);
+			Utils.DrawBorderString(spriteBatch, Weather.GetText("WindSixtyEast"), dims.TopLeft() + new Vector2(290, 14), Color.White, 0.7f, 0.5f);
+			Utils.DrawBorderString(spriteBatch, Weather.GetText("WindTwentyWest"), dims.TopLeft() + new Vector2(100, 14), Color.White, 0.7f, 0.5f);
+			Utils.DrawBorderString(spriteBatch, Weather.GetText("WindTwentyEast"), dims.TopLeft() + new Vector2(200, 14), Color.White, 0.7f, 0.5f);
 		}
 	}
 
@@ -324,17 +324,17 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var dims = GetDimensions().ToRectangle();
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
 			Texture2D icon = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Rain").Value;
 
 			if (Main.raining)
-				GUIHelper.DrawOutline(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				GUIHelper.DrawOutline(spriteBatch, dims, ThemeHandler.ButtonColor.InvertColor());
 
 			if (IsMouseHovering)
 			{
-				Tooltip.SetName("Rain");
-				Tooltip.SetTooltip("Enables or disables natural rain. Note that you may still see residual rain during the 'fade-out' of a natural rain event.");
+				Tooltip.SetName(Weather.GetText("RainButton.Name"));
+				Tooltip.SetTooltip(Weather.GetText("RainButton.Tooltip"));
 			}
 
 			spriteBatch.Draw(icon, dims.Center.ToVector2(), null, Color.White, 0, icon.Size() / 2, 1, 0, 0);
@@ -364,17 +364,17 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var dims = GetDimensions().ToRectangle();
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
 			Texture2D icon = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Sandstorm").Value;
 
 			if (Sandstorm.Happening)
-				GUIHelper.DrawOutline(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				GUIHelper.DrawOutline(spriteBatch, dims, ThemeHandler.ButtonColor.InvertColor());
 
 			if (IsMouseHovering)
 			{
-				Tooltip.SetName("Sandstorm");
-				Tooltip.SetTooltip("Start or stop a sandstorm. Only visible in the desert.");
+				Tooltip.SetName(Weather.GetText("SandstormButton.Name"));
+				Tooltip.SetTooltip(Weather.GetText("SandstormButton.Tooltip"));
 			}
 
 			spriteBatch.Draw(icon, dims.Center.ToVector2(), null, Color.White, 0, icon.Size() / 2, 1, 0, 0);
@@ -404,7 +404,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			var dims = GetDimensions().ToRectangle();
-			GUIHelper.DrawBox(spriteBatch, dims, ModContent.GetInstance<GUIConfig>().buttonColor);
+			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
 			Texture2D icon = WeatherSystem.weatherFrozen ?
 				ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Play").Value :
@@ -412,8 +412,9 @@ namespace DragonLens.Content.Tools.Gameplay
 
 			if (IsMouseHovering)
 			{
-				Tooltip.SetName(WeatherSystem.weatherFrozen ? "Resume weather" : "Freeze weather");
-				Tooltip.SetTooltip("Stop the weather from changing. This will carry your weather settings between worlds and game reloads!");
+				string name = Weather.GetText($"FreezeWeatherButton.{(WeatherSystem.weatherFrozen ? "Resume" : "Freeze")}");
+				Tooltip.SetName(name);
+				Tooltip.SetTooltip(Weather.GetText("FreezeWeatherButton.Tooltip"));
 			}
 
 			spriteBatch.Draw(icon, dims.Center.ToVector2(), null, Color.White, 0, icon.Size() / 2, 1, 0, 0);

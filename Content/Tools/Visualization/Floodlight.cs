@@ -1,9 +1,6 @@
-﻿using DragonLens.Configs;
+﻿using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace DragonLens.Content.Tools.Visualization
@@ -14,13 +11,7 @@ namespace DragonLens.Content.Tools.Visualization
 
 		public override string IconKey => "Lighting";
 
-		public override string DisplayName => "Mass Illumination";
-
-		public override string Description => "Light up the entire screen!";
-
 		public override bool HasRightClick => true;
-
-		public override string RightClickName => "Decrease Mass Illumination";
 
 		public override void OnActivate()
 		{
@@ -44,7 +35,7 @@ namespace DragonLens.Content.Tools.Visualization
 
 			if (strength > 0)
 			{
-				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ModContent.GetInstance<GUIConfig>().buttonColor.InvertColor());
+				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ThemeHandler.ButtonColor.InvertColor());
 
 				Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Misc/GlowAlpha").Value;
 				Color color = new Color(255, 215, 150) * strength;
@@ -71,10 +62,10 @@ namespace DragonLens.Content.Tools.Visualization
 
 		public override void Load()
 		{
-			On.Terraria.Graphics.Light.TileLightScanner.GetTileLight += HackLight;
+			Terraria.Graphics.Light.On_TileLightScanner.GetTileLight += HackLight;
 		}
 
-		private void HackLight(On.Terraria.Graphics.Light.TileLightScanner.orig_GetTileLight orig, Terraria.Graphics.Light.TileLightScanner self, int x, int y, out Vector3 outputColor)
+		private void HackLight(Terraria.Graphics.Light.On_TileLightScanner.orig_GetTileLight orig, Terraria.Graphics.Light.TileLightScanner self, int x, int y, out Vector3 outputColor)
 		{
 			orig(self, x, y, out outputColor);
 
