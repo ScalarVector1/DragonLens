@@ -4,9 +4,7 @@ namespace DragonLens.Content.Themes.BoxProviders
 {
 	internal class VanillaBoxes : ThemeBoxProvider
 	{
-		public override string Name => "Vanilla";
-
-		public override string Description => "A box style resembling that of the vanilla GUI";
+		public override string NameKey => "Vanilla";
 
 		public override void DrawBox(SpriteBatch spriteBatch, Rectangle target, Color color)
 		{

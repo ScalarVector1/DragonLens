@@ -114,7 +114,7 @@ namespace DragonLens.Content.GUI
 			Texture2D icon = ThemeHandler.GetIcon("Customize");
 			spriteBatch.Draw(icon, basePos + Vector2.One * 16, Color.White);
 
-			Utils.DrawBorderStringBig(spriteBatch, "Theme editor", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.6f);
+			Utils.DrawBorderStringBig(spriteBatch, LocalizationHelper.GetGUIText("ThemeMenu.Name"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.6f);
 
 			base.Draw(spriteBatch);
 		}

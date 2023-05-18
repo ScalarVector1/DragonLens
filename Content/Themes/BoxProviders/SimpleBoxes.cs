@@ -4,9 +4,7 @@ namespace DragonLens.Content.Themes.BoxProviders
 {
 	internal class SimpleBoxes : ThemeBoxProvider
 	{
-		public override string Name => "Simple";
-
-		public override string Description => "The default box style for DragonLens";
+		public override string NameKey => "Simple";
 
 		public override void DrawBox(SpriteBatch spriteBatch, Rectangle target, Color color)
 		{

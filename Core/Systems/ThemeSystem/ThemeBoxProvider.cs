@@ -6,14 +6,13 @@
 	public abstract class ThemeBoxProvider
 	{
 		/// <summary>
-		/// The name of this box provider
+		/// The key for the name of this box provider
 		/// </summary>
-		public abstract string Name { get; }
+		public abstract string NameKey { get; }
 
-		/// <summary>
-		/// The description for the box provider
-		/// </summary>
-		public abstract string Description { get; }
+		public string Name => Helpers.LocalizationHelper.GetText($"{NameKey}Boxes.Name");
+
+		public string Description => Helpers.LocalizationHelper.GetText($"{NameKey}Boxes.Description");
 
 		/// <summary>
 		/// Draws a simple box. Used for most buttons and smaller backgrounds.

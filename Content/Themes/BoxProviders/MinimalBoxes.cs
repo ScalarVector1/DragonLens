@@ -4,9 +4,7 @@ namespace DragonLens.Content.Themes.BoxProviders
 {
 	internal class MinimalBoxes : ThemeBoxProvider
 	{
-		public override string Name => "Minimal";
-
-		public override string Description => "As plain as plain can get";
+		public override string NameKey => "Minimal";
 
 		public override void DrawBox(SpriteBatch spriteBatch, Rectangle target, Color color)
 		{

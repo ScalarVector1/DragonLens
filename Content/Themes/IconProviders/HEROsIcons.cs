@@ -5,9 +5,7 @@ namespace DragonLens.Content.Themes.IconProviders
 {
 	internal class HEROsIcons : ThemeIconProvider
 	{
-		public override string Name => "HEROs mod";
-
-		public override string Description => "Icons from or imitating the style of HEROs mod";
+		public override string NameKey => "HEROs";
 
 		public override void PopulateIcons(Dictionary<string, Texture2D> icons)
 		{

@@ -140,6 +140,8 @@ ToolbarCustomizationElements: {
 	}
 }
 
+ThemeMenu.Name: Theme editor
+
 EntityEditor: {
 	LiveReaction: Live {0} Reaction
 	Select: Click on an entity in the world to select it. Right click to cancel.

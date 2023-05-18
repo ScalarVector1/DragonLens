@@ -53,12 +53,11 @@ namespace DragonLens.Core.Systems.ThemeSystem
 		/// <summary>
 		/// The name of this icon provider
 		/// </summary>
-		public abstract string Name { get; }
+		public abstract string NameKey { get; }
 
-		/// <summary>
-		/// The description for the icon provider
-		/// </summary>
-		public abstract string Description { get; }
+		public string Name => Helpers.LocalizationHelper.GetText($"{NameKey}Icons.Name");
+
+		public string Description => Helpers.LocalizationHelper.GetText($"{NameKey}Icons.Description");
 
 		public ThemeIconProvider()
 		{
