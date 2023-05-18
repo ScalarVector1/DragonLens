@@ -127,8 +127,11 @@ namespace DragonLens.Content.Tools.Editors
 
 		private void BuildBasicEditor()
 		{
-			string GetLocalizedText(string text) => LocalizationHelper.GetText($"Tools.PlayerEditor.Editors.{text}");
-			
+			static string GetLocalizedText(string text)
+			{
+				return LocalizationHelper.GetText($"Tools.PlayerEditor.Editors.{text}");
+			}
+
 			basicEditorList.Add(new IntEditor(GetLocalizedText("MaxLife.Name"), n => player.statLifeMax = n, player.statLifeMax, () => player.statLifeMax, GetLocalizedText("MaxLife.Description")));
 			basicEditorList.Add(new IntEditor(GetLocalizedText("MaxMana.Name"), n => player.statManaMax = n, player.statManaMax, () => player.statManaMax, GetLocalizedText("MaxMana.Description")));
 
@@ -162,7 +165,10 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			string GetLocalizedText(string text) => LocalizationHelper.GetText($"Tools.PlayerEditor.{text}");
+			static string GetLocalizedText(string text)
+			{
+				return LocalizationHelper.GetText($"Tools.PlayerEditor.{text}");
+			}
 
 			Helpers.GUIHelper.DrawBox(spriteBatch, BoundingBox, ModContent.GetInstance<GUIConfig>().backgroundColor);
 

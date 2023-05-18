@@ -133,8 +133,11 @@ namespace DragonLens.Content.Tools.Editors
 
 		private void BuildBasicEditor()
 		{
-			string GetLocalizedText(string text) => LocalizationHelper.GetText($"Tools.ItemEditor.Editors.{text}");
-			
+			static string GetLocalizedText(string text)
+			{
+				return LocalizationHelper.GetText($"Tools.ItemEditor.Editors.{text}");
+			}
+
 			basicEditorList.Add(new IntEditor(GetLocalizedText("Damage.Name"), n => item.damage = n, item.damage, () => item.damage, GetLocalizedText("Damage.Description")));
 			basicEditorList.Add(new IntEditor(GetLocalizedText("CritChance.Name"), n => item.crit = n, item.crit, () => item.crit, GetLocalizedText("CritChance.Description")));
 			basicEditorList.Add(new FloatEditor(GetLocalizedText("Knockback.Name"), n => item.knockBack = n, item.knockBack, () => item.knockBack, GetLocalizedText("Knockback.Description")));
@@ -241,7 +244,10 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			string GetLocalizedText(string text) => LocalizationHelper.GetText($"Tools.ItemEditor.{text}");
+			static string GetLocalizedText(string text)
+			{
+				return LocalizationHelper.GetText($"Tools.ItemEditor.{text}");
+			}
 
 			Helpers.GUIHelper.DrawBox(spriteBatch, BoundingBox, ModContent.GetInstance<GUIConfig>().backgroundColor);
 

@@ -128,6 +128,7 @@ namespace DragonLens.Helpers
 					{
 						words.Add(input[i].ToString());
 					}
+
 					continue;
 				}
 
