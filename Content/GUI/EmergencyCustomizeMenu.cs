@@ -24,7 +24,7 @@ namespace DragonLens.Content.GUI
 		public override void OnInitialize()
 		{
 			button = new(LocalizationHelper.GetGUIText("EmergencyCustomizeMenu.CustomizeToolbars"), scale, false);
-			button.Left.Set(-410, 1f);
+			button.Left.Set(-460, 1f);
 			button.Top.Set(-37, 1f);
 			button.Width.Set(200, 0);
 			button.Height.Set(32, 0);
