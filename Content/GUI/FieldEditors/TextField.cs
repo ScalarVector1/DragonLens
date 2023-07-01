@@ -37,14 +37,26 @@ namespace DragonLens.Content.GUI.FieldEditors
 			Height.Set(24, 0);
 		}
 
-		public override void SafeClick(UIMouseEvent evt)
+		public void SetTyping()
 		{
 			typing = true;
+			Main.blockInput = true;
+		}
+		
+		public void SetNotTyping()
+		{
+			typing = false;
+			Main.blockInput = false;
+		}
+
+		public override void SafeClick(UIMouseEvent evt)
+		{
+			SetTyping();
 		}
 
 		public override void SafeRightClick(UIMouseEvent evt)
 		{
-			typing = true;
+			SetTyping();
 			currentValue = "";
 			updated = true;
 		}
@@ -61,13 +73,13 @@ namespace DragonLens.Content.GUI.FieldEditors
 				reset = true;
 
 			if (Main.mouseLeft && !IsMouseHovering)
-				typing = false;
+				SetNotTyping();
 		}
 
 		public void HandleText()
 		{
 			if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape))
-				typing = false;
+				SetNotTyping();
 
 			PlayerInput.WritingText = true;
 			Main.instance.HandleIME();
