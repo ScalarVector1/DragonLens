@@ -78,6 +78,22 @@ namespace DragonLens.Content.Tools.Spawners
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Defense", "Tools.ItemSpawner.Filters.Armor", n => !(n is ItemButton && (n as ItemButton).item.defense > 0)));
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Placeable", "Tools.ItemSpawner.Filters.Placeable", n => !(n is ItemButton && (n as ItemButton).item.createTile >= TileID.Dirt || (n as ItemButton).item.createWall >= 0)));
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Unknown", "Tools.ItemSpawner.Filters.Deprecated", n => n is ItemButton ib && !ItemID.Sets.Deprecated[ib.item.type]));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Consumables", "Tools.ItemSpawner.Filters.Consumables", n => n is ItemButton ib && (!ib.item.consumable || ib.item.createTile >= TileID.Dirt || ib.item.createWall >= 0)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Pickaxe", "Tools.ItemSpawner.Filters.Pickaxe", n => n is ItemButton ib && ib.item.pick == 0));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Axe", "Tools.ItemSpawner.Filters.Axe", n => n is ItemButton ib && ib.item.axe == 0));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Hammer", "Tools.ItemSpawner.Filters.Hammer", n => n is ItemButton ib && ib.item.hammer == 0));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Ammo", "Tools.ItemSpawner.Filters.Ammo", n => n is ItemButton ib && ib.item.ammo == AmmoID.None));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Expert", "Tools.ItemSpawner.Filters.Expert", n => n is ItemButton ib && !ib.item.expert));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Master", "Tools.ItemSpawner.Filters.Master", n => n is ItemButton ib && !ib.item.master));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanity", "Tools.ItemSpawner.Filters.Vanity", n => n is ItemButton ib && !ib.item.vanity));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Fishing", "Tools.ItemSpawner.Filters.Fishing", n => n is ItemButton ib && ib.item.fishingPole == 0 && ib.item.bait == 0 && !ib.item.questItem));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/MakeNPC", "Tools.ItemSpawner.Filters.MakeNPC", n => n is ItemButton ib && ib.item.makeNPC == 0));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Mounts", "Tools.ItemSpawner.Filters.Mounts", n => n is ItemButton ib && ib.item.mountType == -1));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Pets", "Tools.ItemSpawner.Filters.Pets", n => n is ItemButton ib && (!Main.vanityPet[ib.item.buffType] || Main.lightPet[ib.item.buffType])));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Wings", "Tools.ItemSpawner.Filters.Wings", n => n is ItemButton ib && ib.item.wingSlot == -1));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Hooks", "Tools.ItemSpawner.Filters.Hooks", n => n is ItemButton ib && !Main.projHook[ib.item.shoot]));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Material", "Tools.ItemSpawner.Filters.Material", n => n is ItemButton ib && !ItemID.Sets.IsAMaterial[ib.item.type])); // Alternatively: ib.item.material
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Journey", "Tools.ItemSpawner.Filters.Unresearched", n => n is ItemButton ib && (!Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId.ContainsKey(ib.item.type) || Main.LocalPlayer.creativeTracker.ItemSacrifices.TryGetSacrificeNumbers(ib.item.type, out int amountWeHave, out int amountNeededTotal) && amountWeHave >= amountNeededTotal))); // Don't display if the item can't be research or already has been researched.
 		}
 	}
 

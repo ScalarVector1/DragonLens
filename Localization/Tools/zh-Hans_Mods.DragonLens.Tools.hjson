@@ -434,6 +434,86 @@ ItemSpawner: {
 			Name: 弃用
 			Description: 被弃用的物品 (ItemID.Sets.Deprecated)
 		}
+
+		Consumables: {
+			// Name: Consumables
+			// Description: Any item that is consumable and doesn't place a tile
+		}
+
+		Pickaxe: {
+			// Name: Pickaxe
+			// Description: Any item that has pickaxe power
+		}
+
+		Axe: {
+			// Name: Axe
+			// Description: Any item that has axe power
+		}
+
+		Hammer: {
+			// Name: Hammer
+			// Description: Any item that has hammer power
+		}
+
+		Ammo: {
+			// Name: Ammo
+			// Description: Any item that can be used as ammo
+		}
+
+		Expert: {
+			// Name: Expert
+			// Description: Any item that is Expert Mode exclusive
+		}
+
+		Master: {
+			// Name: Master
+			// Description: Any item that is Master Mode exclusive
+		}
+
+		Vanity: {
+			// Name: Vanity
+			// Description: Any item that is a vanity item
+		}
+
+		Fishing: {
+			// Name: Fishing
+			// Description: Any item that is a fishing rod, bait, or quest fish
+		}
+
+		MakeNPC: {
+			// Name: Create NPC
+			// Description: Any item that creates an NPC
+		}
+
+		Mounts: {
+			// Name: Mounts
+			// Description: Any item that is a mount
+		}
+
+		Pets: {
+			// Name: Pets
+			// Description: Any item that is a pet or light pet
+		}
+
+		Wings: {
+			// Name: Wings
+			// Description: Any item that are wings
+		}
+
+		Hooks: {
+			// Name: Hooks
+			// Description: Any item that is a grappling hook
+		}
+
+		Material: {
+			// Name: Material
+			// Description: Any item that is a material
+		}
+
+		Unresearched: {
+			// Name: Unresearched
+			// Description: Any item that has not been researched in Journey Mode
+		}
 	}
 }
 
