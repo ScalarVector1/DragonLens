@@ -377,7 +377,7 @@ namespace DragonLens.Content.GUI
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/LoadLayout").Value;
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
-			
+
 			base.Draw(spriteBatch);
 		}
 	}

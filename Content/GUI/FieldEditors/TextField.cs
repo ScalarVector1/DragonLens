@@ -42,7 +42,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 			typing = true;
 			Main.blockInput = true;
 		}
-		
+
 		public void SetNotTyping()
 		{
 			typing = false;
@@ -85,7 +85,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 			Main.instance.HandleIME();
 
 			string newText = Main.GetInputText(currentValue);
-			
+
 			// GetInputText() handles typing operation, but there is a issue that it doesn't handle backspace correctly when the composition string is not empty. It will delete a character both in the text and the composition string instead of only the one in composition string. We'll fix the issue here to provide a better user experience
 			if (_oldHasCompositionString && Main.inputText.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Back))
 				newText = currentValue; // force text not to be changed
@@ -115,7 +115,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 				}
 			}
 
-			_oldHasCompositionString = Platform.Get<IImeService>().CompositionString is {Length: > 0};
+			_oldHasCompositionString = Platform.Get<IImeService>().CompositionString is { Length: > 0 };
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
@@ -145,7 +145,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 			pos.X += FontAssets.MouseText.Value.MeasureString(displayed).X * scale;
 			string compositionString = Platform.Get<IImeService>().CompositionString;
 
-			if (compositionString is {Length: > 0})
+			if (compositionString is { Length: > 0 })
 			{
 				Utils.DrawBorderString(spriteBatch, compositionString, pos, new Color(255, 240, 20), scale);
 				pos.X += FontAssets.MouseText.Value.MeasureString(compositionString).X * scale;
