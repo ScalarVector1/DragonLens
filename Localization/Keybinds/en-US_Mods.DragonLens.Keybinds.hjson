@@ -39,3 +39,4 @@ ItemSpawner.DisplayName: "{$Mods.DragonLens.Tools.ItemSpawner.DisplayName}"
 NPCSpawner.DisplayName: "{$Mods.DragonLens.Tools.NPCSpawner.DisplayName}"
 ProjectileSpawner.DisplayName: "{$Mods.DragonLens.Tools.ProjectileSpawner.DisplayName}"
 TileSpawner.DisplayName: "{$Mods.DragonLens.Tools.TileSpawner.DisplayName}"
+SoundSpawner.DisplayName: Sound Spawner

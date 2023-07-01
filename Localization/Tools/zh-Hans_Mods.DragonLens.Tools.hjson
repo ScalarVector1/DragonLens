@@ -568,3 +568,8 @@ CustomizeTool: {
 	Description: 自定义你的工具栏布局！
 	ToolBrowser: 添加工具
 }
+
+SoundSpawner: {
+	// DisplayName: SoundSpawner
+	// Description: The tool has no description! Add one in .hjson files!
+}
