@@ -8,9 +8,11 @@ using DragonLens.Content.Tools.Spawners;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems;
 using DragonLens.Core.Systems.ToolSystem;
+using ReLogic.Content;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using Terraria.GameContent;
 using Terraria.ID;
 
 namespace DragonLens
@@ -54,7 +56,7 @@ namespace DragonLens
 					{
 						try
 						{
-							Main.instance.LoadItem(k);
+							Main.Assets.Request<Texture2D>(TextureAssets.Item[k].Name, AssetRequestMode.AsyncLoad).Wait();
 						}
 						catch
 						{
@@ -80,7 +82,7 @@ namespace DragonLens
 					{
 						try
 						{
-							Main.instance.LoadProjectile(k);
+							Main.Assets.Request<Texture2D>(TextureAssets.Projectile[k].Name, AssetRequestMode.AsyncLoad).Wait();
 						}
 						catch
 						{
@@ -106,7 +108,7 @@ namespace DragonLens
 					{
 						try
 						{
-							Main.instance.LoadNPC(k);
+							Main.Assets.Request<Texture2D>(TextureAssets.Npc[k].Name, AssetRequestMode.AsyncLoad).Wait();
 						}
 						catch
 						{
@@ -132,7 +134,7 @@ namespace DragonLens
 					{
 						try
 						{
-							Main.instance.LoadTiles(k);
+							Main.Assets.Request<Texture2D>(TextureAssets.Tile[k].Name, AssetRequestMode.AsyncLoad).Wait();
 						}
 						catch
 						{

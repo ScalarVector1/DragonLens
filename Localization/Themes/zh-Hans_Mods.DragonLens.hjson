@@ -22,3 +22,55 @@ HEROsIcons: {
 	// Name: HEROs Mod
 	// Description: Icons from and mimicing the style of HEROs mod
 }
+
+Configs: {
+	GUIConfig: {
+		// DisplayName: "{$Mods.DragonLens.GUIConfig.Title}"
+
+		backgroundColor: {
+			// Label: "{$Mods.DragonLens.GUIConfig.backgroundColor.Label}"
+			// Tooltip: "{$Mods.DragonLens.GUIConfig.backgroundColor.Tooltip}"
+		}
+
+		buttonColor: {
+			// Label: "{$Mods.DragonLens.GUIConfig.buttonColor.Label}"
+			// Tooltip: "{$Mods.DragonLens.GUIConfig.buttonColor.Tooltip}"
+		}
+
+		boxStyle: {
+			// Label: "{$Mods.DragonLens.GUIConfig.boxStyle.Label}"
+			// Tooltip: "{$Mods.DragonLens.GUIConfig.boxStyle.Tooltip}"
+		}
+
+		iconStyle: {
+			// Label: "{$Mods.DragonLens.GUIConfig.iconStyle.Label}"
+			// Tooltip: "{$Mods.DragonLens.GUIConfig.iconStyle.Tooltip}"
+		}
+	}
+
+	BoxStyle: {
+		// Tooltip: ""
+		// simple.Label: "{$Mods.DragonLens.BoxStyle.simple}"
+		// vanilla.Label: "{$Mods.DragonLens.BoxStyle.vanilla}"
+	}
+
+	IconStyle: {
+		// Tooltip: ""
+		// basic.Label: "{$Mods.DragonLens.IconStyle.basic}"
+		// HEROs.Label: "{$Mods.DragonLens.IconStyle.HEROs}"
+	}
+
+	ToolConfig: {
+		// DisplayName: "{$Mods.DragonLens.ToolConfig.Title}"
+
+		preloadSpawners: {
+			// Label: "{$Mods.DragonLens.ToolConfig.preloadSpawners.Label}"
+			// Tooltip: "{$Mods.DragonLens.ToolConfig.preloadSpawners.Tooltip}"
+		}
+
+		preloadAssets: {
+			// Label: "{$Mods.DragonLens.ToolConfig.preloadAssets.Label}"
+			// Tooltip: "{$Mods.DragonLens.ToolConfig.preloadAssets.Tooltip}"
+		}
+	}
+}
