@@ -89,7 +89,7 @@ namespace DragonLens.Content.Tools.Spawners
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Fishing", "Tools.ItemSpawner.Filters.Fishing", n => n is ItemButton ib && ib.item.fishingPole == 0 && ib.item.bait == 0 && !ib.item.questItem));
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/MakeNPC", "Tools.ItemSpawner.Filters.MakeNPC", n => n is ItemButton ib && ib.item.makeNPC == 0));
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Mounts", "Tools.ItemSpawner.Filters.Mounts", n => n is ItemButton ib && ib.item.mountType == -1));
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Pets", "Tools.ItemSpawner.Filters.Pets", n => n is ItemButton ib && (!Main.vanityPet[ib.item.buffType] || Main.lightPet[ib.item.buffType])));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Pets", "Tools.ItemSpawner.Filters.Pets", n => n is ItemButton ib && !(Main.vanityPet[ib.item.buffType] || Main.lightPet[ib.item.buffType])));
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Wings", "Tools.ItemSpawner.Filters.Wings", n => n is ItemButton ib && ib.item.wingSlot == -1));
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Hooks", "Tools.ItemSpawner.Filters.Hooks", n => n is ItemButton ib && !Main.projHook[ib.item.shoot]));
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Material", "Tools.ItemSpawner.Filters.Material", n => n is ItemButton ib && !ItemID.Sets.IsAMaterial[ib.item.type])); // Alternatively: ib.item.material
