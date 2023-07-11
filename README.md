@@ -7,5 +7,4 @@ For a long time, both players looking for 'creative' like utilities or cheats, a
 https://github.com/ScalarVector1/DragonLens
 
 # Terraria Forums:
-
 https://forums.terraria.org/index.php?threads/dragonlens-modern-customizable-cheatsheet-heros-mod-replacement.117891/
