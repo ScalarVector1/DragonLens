@@ -189,6 +189,11 @@ PlayerEditor: {
 			Name: 额外速度
 			Description: 冲冲冲！
 		}
+
+		InfWingTime: {
+			// Name: Infinite Wing Time
+			// Description: Allows permanent flight!
+		}
 	}
 }
 
@@ -570,6 +575,6 @@ CustomizeTool: {
 }
 
 SoundSpawner: {
-	// DisplayName: SoundSpawner
-	// Description: The tool has no description! Add one in .hjson files!
+	// DisplayName: Sound Player
+	// Description: Browse and play sounds from the game
 }
