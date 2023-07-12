@@ -23,6 +23,16 @@ HEROsIcons: {
 	Description: Icons from and mimicing the style of HEROs mod
 }
 
+BackgroundColor: {
+	Name: Background
+	Description: The color of backgrounds in the DragonLens GUI
+}
+
+ButtonColor: {
+	Name: Buttons
+	Description: The color of buttons in the DragonLens GUI
+}
+
 Configs: {
 	GUIConfig: {
 		DisplayName: "{$Mods.DragonLens.GUIConfig.Title}"

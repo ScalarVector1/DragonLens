@@ -320,7 +320,7 @@ namespace DragonLens.Content.Tools.Editors
 				if (IsMouseHovering)
 				{
 					Main.LocalPlayer.mouseInterface = true;
-					Main.HoverItem = parent.item;
+					Main.HoverItem = parent.item.Clone(); // Fix knockback issue. Issue #73
 					Main.hoverItemName = "a";
 				}
 			}

@@ -53,14 +53,14 @@ namespace DragonLens.Content.GUI
 			icons.SetScrollbar(iconScrollBar);
 			Append(icons);
 
-			backgroundColorEditor = new("Background",
+			backgroundColorEditor = new(LocalizationHelper.GetText("BackgroundColor.Name"),
 				(a) => ThemeHandler.currentColorProvider.backgroundColor = a,
-				ThemeHandler.BackgroundColor, null, "The color of backgrounds in the DragonLens GUI");
+				ThemeHandler.BackgroundColor, null, LocalizationHelper.GetText("BackgroundColor.Description"));
 			Append(backgroundColorEditor);
 
-			foregroundColorEditor = new("Buttons",
+			foregroundColorEditor = new(LocalizationHelper.GetText("ButtonColor.Name"),
 				(a) => ThemeHandler.currentColorProvider.buttonColor = a,
-				ThemeHandler.ButtonColor, null, "The color of buttons in the DragonLens GUI");
+				ThemeHandler.ButtonColor, null, LocalizationHelper.GetText("ButtonColor.Description"));
 			Append(foregroundColorEditor);
 		}
 
