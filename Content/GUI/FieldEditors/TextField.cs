@@ -134,7 +134,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 			Vector2 pos = GetDimensions().Position() + Vector2.One * 4;
 
 			const float scale = 0.75f;
-			string displayed = currentValue;
+			string displayed = currentValue ?? "";
 
 			Utils.DrawBorderString(spriteBatch, displayed, pos, Color.White, scale);
 

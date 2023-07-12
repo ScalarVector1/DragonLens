@@ -3,6 +3,7 @@ using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
 using System.Collections.Generic;
+using Terraria.GameInput;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
@@ -93,6 +94,9 @@ namespace DragonLens.Content.GUI
 				OnInitialize(); // We have to re-initialize so the scrollbars set properly and lists populate correctly
 				PopulateLists();
 			}
+
+			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
+				PlayerInput.LockVanillaMouseScroll("DragonLens: Theme Menu");
 
 			var target = new Rectangle((int)basePos.X, (int)basePos.Y, 574, 400);
 

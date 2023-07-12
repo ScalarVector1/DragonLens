@@ -2,6 +2,9 @@
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
+using System.Collections.Generic;
+using System.Linq;
+using Terraria.GameInput;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
@@ -11,6 +14,7 @@ namespace DragonLens.Content.GUI
 	{
 		public Browser parent;
 
+		public List<FilterButton> filterButtonInstances;
 		public UIGrid filters;
 		public FixedUIScrollbar bar;
 
@@ -30,6 +34,7 @@ namespace DragonLens.Content.GUI
 			bar.Top.Set(10, 0);
 			Append(bar);
 
+			filterButtonInstances = new List<FilterButton>();
 			filters = new();
 			filters.Width.Set(180, 0);
 			filters.Height.Set(400, 0);
@@ -49,6 +54,9 @@ namespace DragonLens.Content.GUI
 
 			drawBox.Height = (int)MathHelper.Min(420, filters.GetTotalHeight() + 20);
 
+			if (drawBox.Contains(Main.MouseScreen.ToPoint()))
+				PlayerInput.LockVanillaMouseScroll("DragonLens: Filter Panel");
+
 			bar.Height.Set(drawBox.Height - 20, 0);
 
 			GUIHelper.DrawBox(spriteBatch, drawBox, ThemeHandler.BackgroundColor);
@@ -58,11 +66,12 @@ namespace DragonLens.Content.GUI
 
 		public void AddFilter(Filter filter)
 		{
-			var button = new FilterButton(parent, filter);
+			var button = new FilterButton(parent, filter, this);
 			button.Width.Set(32, 0);
 			button.Height.Set(32, 0);
 			button.order = lastOrder++;
 			filters.Add(button);
+			filterButtonInstances.Add(button);
 		}
 
 		public void AddSeperator(string localizationKey)
@@ -73,10 +82,20 @@ namespace DragonLens.Content.GUI
 			};
 			filters.Add(seperator);
 		}
+
+		public void DisableOtherModFilters(FilterButton requester)
+		{
+			foreach (var filterButton in filterButtonInstances.Where(btn => btn.filter.isModFilter && btn != requester)) {
+				if (!filterButton.active) continue;
+				filterButton.active = false;
+				parent.FilterEvent -= filterButton.filter.shouldFilter;
+			}
+		}
 	}
 
 	internal class FilterButton : SmartUIElement
 	{
+		public FilterPanel panel;
 		public Browser parent;
 		public Filter filter;
 
@@ -84,15 +103,19 @@ namespace DragonLens.Content.GUI
 
 		public int order;
 
-		public FilterButton(Browser parent, Filter filter)
+		public FilterButton(Browser parent, Filter filter, FilterPanel panel)
 		{
 			this.parent = parent;
 			this.filter = filter;
+			this.panel = panel;
 		}
 
 		public override void SafeClick(UIMouseEvent evt)
 		{
 			active = !active;
+
+			if (active && filter.isModFilter)
+				panel.DisableOtherModFilters(this);
 
 			if (active)
 				parent.FilterEvent += filter.shouldFilter;

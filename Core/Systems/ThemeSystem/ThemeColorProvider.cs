@@ -2,7 +2,7 @@
 {
 	internal class ThemeColorProvider
 	{
-		public Color buttonColor = new(200, 150, 255);
-		public Color backgroundColor = new(180, 130, 235);
+		public Color backgroundColor = new(48, 84, 132);
+		public Color buttonColor = new(47, 81, 136);
 	}
 }
