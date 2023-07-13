@@ -51,7 +51,7 @@ namespace DragonLens.Content.Tools.Editors
 			Player.statDefense += defenseBoost;
 			Player.endurance += enduranceBoost;
 			Player.moveSpeed += speedBoost;
-			Player.empressBrooch = wingBoost;
+			if (wingBoost) { Player.wingTime = Player.wingTimeMax; }
 		}
 	}
 
