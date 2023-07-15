@@ -570,6 +570,6 @@ CustomizeTool: {
 }
 
 SoundSpawner: {
-	// DisplayName: SoundSpawner
-	// Description: The tool has no description! Add one in .hjson files!
+	// DisplayName: Sound Player
+	// Description: Browse and play sounds from the game
 }
