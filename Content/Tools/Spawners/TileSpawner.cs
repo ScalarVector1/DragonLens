@@ -90,7 +90,7 @@ namespace DragonLens.Content.Tools.Spawners
 			if (selected != -1)
 				Main.LocalPlayer.mouseInterface = true;
 
-			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
+			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()) || selected != -1)
 				PlayerInput.LockVanillaMouseScroll($"DragonLens: {Name}");
 		}
 
