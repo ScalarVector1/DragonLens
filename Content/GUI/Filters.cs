@@ -85,9 +85,11 @@ namespace DragonLens.Content.GUI
 
 		public void DisableOtherModFilters(FilterButton requester)
 		{
-			foreach (FilterButton filterButton in filterButtonInstances.Where(btn => btn.filter.isModFilter && btn != requester)) {
-				if (!filterButton.active)
+			foreach (FilterButton filterButton in filterButtonInstances.Where(btn => btn.filter.isModFilter && btn != requester))
+			{
+				if (!filterButton.active) 
 					continue;
+
 				filterButton.active = false;
 				parent.FilterEvent -= filterButton.filter.shouldFilter;
 			}
