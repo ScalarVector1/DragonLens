@@ -156,7 +156,7 @@ namespace DragonLens.Content.Tools.Editors
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
-				PlayerInput.LockVanillaMouseScroll("DragonLens: Item Editor");
+				PlayerInput.LockVanillaMouseScroll("DragonLens: Accessory Tray");
 
 			GUIHelper.DrawBox(spriteBatch, BoundingBox, ThemeHandler.BackgroundColor);
 

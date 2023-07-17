@@ -167,7 +167,7 @@ namespace DragonLens.Content.Tools.Editors
 			}
 
 			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
-				PlayerInput.LockVanillaMouseScroll("DragonLens: Item Editor");
+				PlayerInput.LockVanillaMouseScroll("DragonLens: Player Editor");
 
 			Helpers.GUIHelper.DrawBox(spriteBatch, BoundingBox, ThemeHandler.BackgroundColor);
 
