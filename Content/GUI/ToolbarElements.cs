@@ -439,7 +439,7 @@ namespace DragonLens.Content.GUI
 				rotation = Toolbar.relativePosition.Y > 0.5f ? 0 : 3.14f;
 			else
 				rotation = Toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
-
+				
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, ThemeHandler.ButtonColor, rotation, new Vector2(45, 75), 1, 0, 0);
 
 			base.Draw(spriteBatch);

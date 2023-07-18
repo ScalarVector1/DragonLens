@@ -570,6 +570,6 @@ CustomizeTool: {
 }
 
 SoundSpawner: {
-	// DisplayName: Sound Player
-	// Description: Browse and play sounds from the game
+	DisplayName: 音效播放器
+	Description: 浏览并播放游戏中的音效
 }

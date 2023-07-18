@@ -4,6 +4,7 @@ using DragonLens.Content.GUI;
 using DragonLens.Helpers;
 using System.Collections.Generic;
 using System.Linq;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -57,7 +58,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void SetupFilters(FilterPanel filters)
 		{
 			filters.AddSeperator("Tools.ItemSpawner.FilterCategories.Mod");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.ItemSpawner.Filters.Vanilla", n => !(n is ItemButton && (n as ItemButton).item.ModItem is null)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.ItemSpawner.Filters.Vanilla", n => !(n is ItemButton && (n as ItemButton).item.ModItem is null)) { isModFilter = true});
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModItem>().Count() > 0))
 			{
@@ -78,6 +79,14 @@ namespace DragonLens.Content.Tools.Spawners
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Defense", "Tools.ItemSpawner.Filters.Armor", n => !(n is ItemButton && (n as ItemButton).item.defense > 0)));
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Placeable", "Tools.ItemSpawner.Filters.Placeable", n => !(n is ItemButton && (n as ItemButton).item.createTile >= TileID.Dirt || (n as ItemButton).item.createWall >= 0)));
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Unknown", "Tools.ItemSpawner.Filters.Deprecated", n => n is ItemButton ib && !ItemID.Sets.Deprecated[ib.item.type]));
+		}
+
+		public override void DraggableUdpate(GameTime gameTime)
+		{
+			base.DraggableUdpate(gameTime);
+			
+			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
+				PlayerInput.LockVanillaMouseScroll($"DragonLens: {Name}");
 		}
 	}
 

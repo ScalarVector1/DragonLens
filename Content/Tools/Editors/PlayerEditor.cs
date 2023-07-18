@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Terraria.GameInput;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
@@ -164,6 +165,9 @@ namespace DragonLens.Content.Tools.Editors
 			{
 				return LocalizationHelper.GetText($"Tools.PlayerEditor.{text}");
 			}
+
+			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
+				PlayerInput.LockVanillaMouseScroll("DragonLens: Player Editor");
 
 			Helpers.GUIHelper.DrawBox(spriteBatch, BoundingBox, ThemeHandler.BackgroundColor);
 

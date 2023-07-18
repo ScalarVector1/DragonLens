@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Terraria.GameContent.UI;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -248,6 +249,9 @@ namespace DragonLens.Content.Tools.Editors
 				return LocalizationHelper.GetText($"Tools.ItemEditor.{text}");
 			}
 
+			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
+				PlayerInput.LockVanillaMouseScroll("DragonLens: Item Editor");
+
 			Helpers.GUIHelper.DrawBox(spriteBatch, BoundingBox, ThemeHandler.BackgroundColor);
 
 			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
@@ -316,7 +320,7 @@ namespace DragonLens.Content.Tools.Editors
 				if (IsMouseHovering)
 				{
 					Main.LocalPlayer.mouseInterface = true;
-					Main.HoverItem = parent.item;
+					Main.HoverItem = parent.item.Clone(); // Fix knockback issue. Issue #73
 					Main.hoverItemName = "a";
 				}
 			}

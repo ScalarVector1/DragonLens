@@ -80,6 +80,8 @@ namespace DragonLens.Core.Loaders.UILoading
 		/// <param name="gameTime"></param>
 		public override void UpdateUI(GameTime gameTime)
 		{
+			if (Main.ingameOptionsWindow || Main.InGameUI.IsVisible)
+				return;
 			foreach (UserInterface eachState in UserInterfaces)
 			{
 				if (eachState?.CurrentState != null && ((SmartUIState)eachState.CurrentState).Visible)
