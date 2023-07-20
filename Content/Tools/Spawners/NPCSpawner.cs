@@ -78,7 +78,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void SetupFilters(FilterPanel filters)
 		{
 			filters.AddSeperator("Tools.NPCSpawner.FilterCategories.Mod");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.NPCSpawner.Filters.Vanilla", n => !(n is NPCButton && (n as NPCButton).npc.ModNPC is null)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.NPCSpawner.Filters.Vanilla", n => !(n is NPCButton && (n as NPCButton).npc.ModNPC is null)) { isModFilter = true});
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModNPC>().Count() > 0))
 			{
@@ -107,6 +107,9 @@ namespace DragonLens.Content.Tools.Spawners
 
 			if (selected != null)
 				Main.LocalPlayer.mouseInterface = true;
+
+			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
+				PlayerInput.LockVanillaMouseScroll($"DragonLens: {Name}");
 		}
 
 		public override void SafeClick(UIMouseEvent evt)

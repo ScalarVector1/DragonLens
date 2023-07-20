@@ -11,6 +11,7 @@ namespace DragonLens.Content.Filters.TileFilters
 		public TileModFilter(Mod mod) : base("", "", n => FilterByMod(n, mod))
 		{
 			this.mod = mod;
+			isModFilter = true;
 		}
 
 		public override string Name => mod.DisplayName;

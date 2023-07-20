@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Terraria.DataStructures;
+using Terraria.GameInput;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.Social.Steam;
@@ -124,13 +125,10 @@ namespace DragonLens.Content.Tools.Gameplay
 				else
 				{
 					var secondPoint = new Point16(Player.tileTargetX, Player.tileTargetY);
-
-					if (secondPoint.X < target.X || secondPoint.Y < target.Y)
-					{
-						Point16 temp = secondPoint;
-						secondPoint = target.TopLeft().ToPoint16();
-						target = new Rectangle(temp.X, temp.Y, 0, 0);
-					}
+					var firstPoint = target.TopLeft().ToPoint16();
+					
+					target = new Rectangle(Math.Min(secondPoint.X, target.X), Math.Min(secondPoint.Y, target.Y), 0, 0);
+					secondPoint = new Point16(Math.Max(secondPoint.X, firstPoint.X), Math.Max(secondPoint.Y, firstPoint.Y));
 
 					target.Width = secondPoint.X - target.X;
 					target.Height = secondPoint.Y - target.Y;
@@ -165,6 +163,9 @@ namespace DragonLens.Content.Tools.Gameplay
 		{
 			if (selecting || structure != null)
 				Main.LocalPlayer.mouseInterface = true;
+
+			if (structure != null || BoundingBox.Contains(Main.MouseScreen.ToPoint()))
+				PlayerInput.LockVanillaMouseScroll("DragonLens: Paint Tool");
 
 			if (Main.mouseLeft && structure != null && !BoundingBox.Contains(Main.MouseScreen.ToPoint()))
 			{
