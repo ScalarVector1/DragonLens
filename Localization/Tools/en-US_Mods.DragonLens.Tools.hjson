@@ -189,6 +189,11 @@ PlayerEditor: {
 			Name: Extra speed
 			Description: Speed yourself up!
 		}
+
+		InfWingTime: {
+			Name: Infinite Wing Time
+			Description: Allows permanent flight!
+		}
 	}
 }
 

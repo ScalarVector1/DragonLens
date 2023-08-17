@@ -189,6 +189,11 @@ PlayerEditor: {
 			Name: 额外速度
 			Description: 冲冲冲！
 		}
+
+		InfWingTime: {
+			// Name: Infinite Wing Time
+			// Description: Allows permanent flight!
+		}
 	}
 }
 
