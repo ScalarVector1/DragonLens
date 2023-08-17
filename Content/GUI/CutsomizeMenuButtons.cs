@@ -25,7 +25,7 @@ namespace DragonLens.Content.GUI
 			GUIHelper.DrawBox(spriteBatch, drawTarget, ThemeHandler.BackgroundColor);
 			GUIHelper.DrawBox(spriteBatch, buttonTarget, ThemeHandler.ButtonColor);
 
-			Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetGUIText($"ToolbarCustomizationElements.{GetType().Name}.Name"), new Vector2(drawTarget.X + 52, drawTarget.Y + 28), Color.White, 1, 0, 0.5f);
+			Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetGUIText($"ToolbarCustomizationElements.{GetType().Name}.Name"), new Vector2(drawTarget.X + 54, drawTarget.Y + 28), Color.White, 1, 0, 0.5f);
 
 			if (IsMouseHovering)
 			{
@@ -54,6 +54,8 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
+			base.Draw(spriteBatch);
+
 			var drawTarget = GetDimensions().ToRectangle();
 			drawTarget = new Rectangle(drawTarget.X, drawTarget.Y, 48, 48);
 
@@ -62,8 +64,6 @@ namespace DragonLens.Content.GUI
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/NewBar").Value;
 			spriteBatch.Draw(tex, GetDimensions().Position() + Vector2.One * 24, null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
-
-			base.Draw(spriteBatch);
 		}
 	}
 

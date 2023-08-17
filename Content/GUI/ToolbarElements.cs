@@ -287,8 +287,7 @@ namespace DragonLens.Content.GUI
 		public void Customize()
 		{
 			AddTabButton(new AddButton(this), 0.2f);
-			AddTabButton(new RemoveToolbarButton(this), 0.4f);
-			AddTabButton(new DragButton(this), 0.6f);
+			AddTabButton(new RemoveToolbarButton(this), 0.5f);
 			AddTabButton(new HideOptionButton(this), 0.8f);
 
 			foreach (UIElement child in Children)

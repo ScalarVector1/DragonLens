@@ -129,6 +129,12 @@ namespace DragonLens.Content.GUI
 		public DragButton(ToolbarElement parent)
 		{
 			this.parent = parent;
+
+			Width.Set(parent.Width.Pixels, 0);
+			Height.Set(parent.Height.Pixels, 0);
+			Left.Set(parent.Left.Pixels, 0);
+			Top.Set(parent.Top.Pixels, 0);
+
 		}
 
 		public override void SafeMouseDown(UIMouseEvent evt)
@@ -196,22 +202,12 @@ namespace DragonLens.Content.GUI
 				DraggedToolbar.collapsed = false;
 				draggedElement.Refresh();
 			}
-		}
 
-		public override void Draw(SpriteBatch spriteBatch)
-		{
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Tab").Value;
-
-			float rotation;
-
-			if (Toolbar.orientation == Orientation.Horizontal)
-				rotation = Toolbar.relativePosition.Y > 0.5f ? 0 : 3.14f;
-			else
-				rotation = Toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
-
-			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Blue, rotation, tex.Size() / 2f, 1, 0, 0);
-
-			base.Draw(spriteBatch);
+			Width.Set(parent.Width.Pixels, 0);
+			Height.Set(parent.Height.Pixels, 0);
+			Left.Set(parent.Left.Pixels, 0);
+			Top.Set(parent.Top.Pixels, 0);
+			Recalculate();
 		}
 	}
 
