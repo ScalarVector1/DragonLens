@@ -87,25 +87,25 @@ namespace DragonLens.Content.GUI
 			addButton.Top.Set(-100, 0.5f);
 			Append(addButton);
 
-			var saveButton = new SaveLayoutButton();
-			saveButton.Left.Set(-100, 0.5f);
-			saveButton.Top.Set(-50, 0.5f);
-			Append(saveButton);
-
-			var loadButton = new LoadLayoutButton();
-			loadButton.Left.Set(-100, 0.5f);
-			loadButton.Top.Set(0, 0.5f);
-			Append(loadButton);
-
 			var styleButton = new VisualConfigButton();
 			styleButton.Left.Set(-100, 0.5f);
-			styleButton.Top.Set(50, 0.5f);
+			styleButton.Top.Set(-50, 0.5f);
 			Append(styleButton);
 
 			var functionButton = new FunctionalConfigButton();
 			functionButton.Left.Set(-100, 0.5f);
-			functionButton.Top.Set(100, 0.5f);
+			functionButton.Top.Set(0, 0.5f);
 			Append(functionButton);
+
+			var loadButton = new LoadLayoutButton();
+			loadButton.Left.Set(-100, 0.5f);
+			loadButton.Top.Set(50, 0.5f);
+			Append(loadButton);
+
+			var saveButton = new SaveLayoutButton();
+			saveButton.Left.Set(-100, 0.5f);
+			saveButton.Top.Set(100, 0.5f);
+			Append(saveButton);
 		}
 
 		/// <summary>
@@ -139,7 +139,7 @@ namespace DragonLens.Content.GUI
 			if (CustomizeTool.customizing)
 			{
 				Texture2D tex = Terraria.GameContent.TextureAssets.MagicPixel.Value;
-				spriteBatch.Draw(tex, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), null, Color.Black * 0.25f);
+				spriteBatch.Draw(tex, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), null, Color.Black * 0.75f);
 			}
 
 			base.Draw(spriteBatch);

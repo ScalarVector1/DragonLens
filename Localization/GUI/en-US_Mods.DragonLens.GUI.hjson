@@ -114,12 +114,12 @@ ToolbarCustomizationElements: {
 	}
 
 	NewBarButton: {
-		Name: New toolbar
+		Name: Add toolbar
 		Tooltip: Create a brand new empty toolbar!
 	}
 
 	SaveLayoutButton: {
-		Name: Save layout
+		Name: Save & Continue
 		Tooltip: Finish customizing and save your layout
 		LayoutSaved: Layout saved!
 	}
@@ -130,8 +130,8 @@ ToolbarCustomizationElements: {
 	}
 
 	VisualConfigButton: {
-		Name: Change style
-		Tooltip: Open the configuration to change the visual style of the GUI
+		Name: Customize theme
+		Tooltip: Open the theme customizer
 	}
 
 	FunctionalConfigButton: {

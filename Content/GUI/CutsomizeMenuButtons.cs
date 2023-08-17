@@ -9,11 +9,39 @@ using Terraria.UI;
 
 namespace DragonLens.Content.GUI
 {
-	internal class NewBarButton : ToolbarCustomizationElement
+	internal abstract class CustomizeMenuLine : LocalizedCustomizationElement
+	{
+		public CustomizeMenuLine()
+		{
+			Width.Set(200, 0);
+			Height.Set(48, 0);
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			var drawTarget = GetDimensions().ToRectangle();
+			var buttonTarget = new Rectangle(drawTarget.X, drawTarget.Y, 48, 48);
+
+			GUIHelper.DrawBox(spriteBatch, drawTarget, ThemeHandler.BackgroundColor);
+			GUIHelper.DrawBox(spriteBatch, buttonTarget, ThemeHandler.ButtonColor);
+
+			Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetGUIText($"ToolbarCustomizationElements.{GetType().Name}.Name"), new Vector2(drawTarget.X + 52, drawTarget.Y + 28), Color.White, 1, 0, 0.5f);
+
+			if (IsMouseHovering)
+			{
+				Tooltip.SetName(LocalizationHelper.GetGUIText($"ToolbarCustomizationElements.{GetType().Name}.Name"));
+				Tooltip.SetTooltip(LocalizationHelper.GetGUIText($"ToolbarCustomizationElements.{GetType().Name}.Tooltip"));
+			}
+
+			base.Draw(spriteBatch);
+		}
+	}
+
+	internal class NewBarButton : CustomizeMenuLine
 	{
 		public override void SafeClick(UIMouseEvent evt)
 		{
-			ToolbarHandler.activeToolbars.Add(new Toolbar(new Vector2(0.5f, 0.6f), Orientation.Horizontal, Main.mapFullscreen ? AutomaticHideOption.NoMapScreen : AutomaticHideOption.Never));
+			ToolbarHandler.activeToolbars.Add(new Toolbar(new Vector2(0.5f, 0.2f), Orientation.Horizontal, Main.mapFullscreen ? AutomaticHideOption.NoMapScreen : AutomaticHideOption.Never));
 
 			UILoader.GetUIState<ToolbarState>().Refresh();
 		}
@@ -33,13 +61,13 @@ namespace DragonLens.Content.GUI
 			GUIHelper.DrawBox(spriteBatch, drawTarget, ThemeHandler.ButtonColor);
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/NewBar").Value;
-			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
+			spriteBatch.Draw(tex, GetDimensions().Position() + Vector2.One * 24, null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
 
 			base.Draw(spriteBatch);
 		}
 	}
 
-	internal class SaveLayoutButton : ToolbarCustomizationElement
+	internal class SaveLayoutButton : CustomizeMenuLine
 	{
 		public override void SafeClick(UIMouseEvent evt)
 		{
@@ -64,16 +92,14 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
+			base.Draw(spriteBatch);
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/SaveLayout").Value;
-			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
-
-			base.Draw(spriteBatch);
+			spriteBatch.Draw(tex, GetDimensions().Position() + Vector2.One * 24, null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
 		}
 	}
 
-	internal class LoadLayoutButton : ToolbarCustomizationElement
+	internal class LoadLayoutButton : CustomizeMenuLine
 	{
 		public override void SafeClick(UIMouseEvent evt)
 		{
@@ -97,16 +123,14 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
+			base.Draw(spriteBatch);
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/LoadLayout").Value;
-			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
-
-			base.Draw(spriteBatch);
+			spriteBatch.Draw(tex, GetDimensions().Position() + Vector2.One * 24, null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
 		}
 	}
 
-	internal class VisualConfigButton : ToolbarCustomizationElement
+	internal class VisualConfigButton : CustomizeMenuLine
 	{
 		public override void SafeClick(UIMouseEvent evt)
 		{
@@ -121,20 +145,18 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
+			base.Draw(spriteBatch);
 
 			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/StyleButton").Value;
-			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
-
-			base.Draw(spriteBatch);
+			spriteBatch.Draw(tex, GetDimensions().Position() + Vector2.One * 24, null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
 		}
 	}
 
-	internal class FunctionalConfigButton : ToolbarCustomizationElement
+	internal class FunctionalConfigButton : CustomizeMenuLine
 	{
 		public override void SafeClick(UIMouseEvent evt)
 		{
-			Helpers.GUIHelper.OpenConfig(ModContent.GetInstance<ToolConfig>());
+			GUIHelper.OpenConfig(ModContent.GetInstance<ToolConfig>());
 		}
 
 		public override void SafeUpdate(GameTime gameTime)
@@ -145,12 +167,10 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
+			base.Draw(spriteBatch);
 
 			Texture2D tex = ThemeHandler.GetIcon("Customize");
-			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
-
-			base.Draw(spriteBatch);
+			spriteBatch.Draw(tex, GetDimensions().Position() + Vector2.One * 24, null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
 		}
 	}
 }

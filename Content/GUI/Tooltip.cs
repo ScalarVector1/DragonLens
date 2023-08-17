@@ -23,7 +23,7 @@ namespace DragonLens.Content.GUI
 
 		public override int InsertionIndex(List<GameInterfaceLayer> layers)
 		{
-			return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text")) + 1;
+			return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text")) + 2;
 		}
 
 		/// <summary>

@@ -21,9 +21,11 @@ namespace DragonLens.Content.GUI
 
 		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 574, 64);
 
+		public override Vector2 DefaultPosition => new Vector2(0.3f, 0.5f);
+
 		public override int InsertionIndex(List<GameInterfaceLayer> layers)
 		{
-			return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
+			return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text")) + 1;
 		}
 
 		public override void SafeOnInitialize()
