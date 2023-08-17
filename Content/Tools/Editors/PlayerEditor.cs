@@ -42,6 +42,7 @@ namespace DragonLens.Content.Tools.Editors
 		public int defenseBoost = 0;
 		public float enduranceBoost = 0;
 		public float speedBoost = 0;
+		public bool wingBoost = false;
 
 		public override void PostUpdateEquips()
 		{
@@ -51,6 +52,8 @@ namespace DragonLens.Content.Tools.Editors
 			Player.statDefense += defenseBoost;
 			Player.endurance += enduranceBoost;
 			Player.moveSpeed += speedBoost;
+			if (wingBoost)
+				Player.wingTime = Player.wingTimeMax;
 		}
 	}
 
@@ -141,6 +144,9 @@ namespace DragonLens.Content.Tools.Editors
 
 			basicEditorList.Add(new IntEditor(GetLocalizedText("ExtraMinionSlots.Name"), n => mp.minionBoost = n, mp.minionBoost, () => mp.minionBoost, GetLocalizedText("ExtraMinionSlots.Description")));
 			basicEditorList.Add(new FloatEditor(GetLocalizedText("ExtraSpeed.Name"), n => mp.speedBoost = n, mp.speedBoost, () => mp.speedBoost, GetLocalizedText("ExtraSpeed.Description")));
+
+			basicEditorList.Add(new BoolEditor(GetLocalizedText("InfWingTime.Name"), n => mp.wingBoost = n, mp.wingBoost, () => mp.wingBoost, GetLocalizedText("InfWingTime.Description")));
+
 		}
 
 		private void BuildModPlayerEditor()
