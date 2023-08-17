@@ -36,12 +36,12 @@ namespace DragonLens.Helpers
 		{
 			return Regex.IsMatch(a.ToString(), @"\p{IsCJKUnifiedIdeographs}");
 		}
-		
+
 		public static bool IsRightCloseCjkPunctuation(char a)
 		{
 			return a is '（' or '【' or '《' or '｛' or '｢' or '［' or '｟' or '“';
 		}
-		
+
 		public static bool IsCjkCharacter(char a)
 		{
 			return IsCjkUnifiedIdeographs(a) || IsCjkPunctuation(a);

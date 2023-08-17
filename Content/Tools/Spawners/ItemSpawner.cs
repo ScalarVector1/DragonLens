@@ -4,6 +4,7 @@ using DragonLens.Content.GUI;
 using DragonLens.Helpers;
 using System.Collections.Generic;
 using System.Linq;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -57,7 +58,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void SetupFilters(FilterPanel filters)
 		{
 			filters.AddSeperator("Tools.ItemSpawner.FilterCategories.Mod");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.ItemSpawner.Filters.Vanilla", n => !(n is ItemButton && (n as ItemButton).item.ModItem is null)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.ItemSpawner.Filters.Vanilla", n => !(n is ItemButton && (n as ItemButton).item.ModItem is null)) { isModFilter = true });
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModItem>().Count() > 0))
 			{
@@ -94,6 +95,14 @@ namespace DragonLens.Content.Tools.Spawners
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Hooks", "Tools.ItemSpawner.Filters.Hooks", n => n is ItemButton ib && !Main.projHook[ib.item.shoot]));
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Material", "Tools.ItemSpawner.Filters.Material", n => n is ItemButton ib && !ItemID.Sets.IsAMaterial[ib.item.type])); // Alternatively: ib.item.material
 			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Journey", "Tools.ItemSpawner.Filters.Unresearched", n => n is ItemButton ib && (!Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId.ContainsKey(ib.item.type) || Main.LocalPlayer.creativeTracker.ItemSacrifices.TryGetSacrificeNumbers(ib.item.type, out int amountWeHave, out int amountNeededTotal) && amountWeHave >= amountNeededTotal))); // Don't display if the item can't be research or already has been researched.
+		}
+
+		public override void DraggableUdpate(GameTime gameTime)
+		{
+			base.DraggableUdpate(gameTime);
+
+			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
+				PlayerInput.LockVanillaMouseScroll($"DragonLens: {Name}");
 		}
 	}
 

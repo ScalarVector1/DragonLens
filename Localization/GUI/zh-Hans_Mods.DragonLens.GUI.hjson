@@ -140,7 +140,7 @@ ToolbarCustomizationElements: {
 	}
 }
 
-// ThemeMenu.Name: Theme editor
+ThemeMenu.Name: 编辑主题
 
 EntityEditor: {
 	LiveReaction: "{0} 实时跟拍"

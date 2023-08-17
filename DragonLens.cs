@@ -8,9 +8,11 @@ using DragonLens.Content.Tools.Spawners;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems;
 using DragonLens.Core.Systems.ToolSystem;
+using ReLogic.Content;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using Terraria.GameContent;
 using Terraria.ID;
 
 namespace DragonLens
@@ -52,7 +54,15 @@ namespace DragonLens
 
 					for (int k = 0; k < ItemID.Count; k++)
 					{
-						Main.instance.LoadItem(k);
+						try
+						{
+							Main.Assets.Request<Texture2D>(TextureAssets.Item[k].Name, AssetRequestMode.AsyncLoad).Wait();
+						}
+						catch
+						{
+							Logger.Warn($"Item asset {k} failed to load");
+							continue;
+						}
 					}
 
 					watch.Stop();
@@ -70,7 +80,15 @@ namespace DragonLens
 
 					for (int k = 0; k < ProjectileID.Count; k++)
 					{
-						Main.instance.LoadProjectile(k);
+						try
+						{
+							Main.Assets.Request<Texture2D>(TextureAssets.Projectile[k].Name, AssetRequestMode.AsyncLoad).Wait();
+						}
+						catch
+						{
+							Logger.Warn($"Projectile asset {k} failed to load");
+							continue;
+						}
 					}
 
 					watch.Stop();
@@ -88,7 +106,15 @@ namespace DragonLens
 
 					for (int k = 0; k < NPCID.Count; k++)
 					{
-						Main.instance.LoadNPC(k);
+						try
+						{
+							Main.Assets.Request<Texture2D>(TextureAssets.Npc[k].Name, AssetRequestMode.AsyncLoad).Wait();
+						}
+						catch
+						{
+							Logger.Warn($"NPC asset {k} failed to load");
+							continue;
+						}
 					}
 
 					watch.Stop();
@@ -106,7 +132,15 @@ namespace DragonLens
 
 					for (int k = 0; k < TileID.Count; k++)
 					{
-						Main.instance.LoadTiles(k);
+						try
+						{
+							Main.Assets.Request<Texture2D>(TextureAssets.Tile[k].Name, AssetRequestMode.AsyncLoad).Wait();
+						}
+						catch
+						{
+							Logger.Warn($"Tile asset {k} failed to load");
+							continue;
+						}
 					}
 
 					watch.Stop();

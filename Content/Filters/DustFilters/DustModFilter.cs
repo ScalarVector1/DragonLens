@@ -12,6 +12,7 @@ namespace DragonLens.Content.Filters.DustFilters
 		public DustModFilter(Mod mod) : base("", "", n => FilterByMod(n, mod))
 		{
 			this.mod = mod;
+			isModFilter = true;
 		}
 
 		public override string Name => mod.DisplayName;

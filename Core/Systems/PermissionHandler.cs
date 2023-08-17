@@ -188,7 +188,7 @@ namespace DragonLens.Core.Systems
 		public override string Usage => LocalizationHelper.GetText($"Permission.{GetType().Name}.Usage");
 
 		public override string Description => LocalizationHelper.GetText($"Permission.{GetType().Name}.Description");
-		
+
 		protected string GetText(string key, params object[] args)
 		{
 			return LocalizationHelper.GetText($"Permission.{GetType().Name}.{key}", args);

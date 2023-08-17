@@ -77,6 +77,7 @@ namespace DragonLens.Core.Systems
 					.AddTool<BuffSpawner>()
 					.AddTool<DustSpawner>()
 					.AddTool<TileSpawner>()
+					.AddTool<SoundSpawner>()
 					.AddTool<AccessoryTray>()
 					);
 

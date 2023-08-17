@@ -50,6 +50,13 @@ namespace DragonLens.Content.Tools.Gameplay
 		{
 			if (InfiniteReach.active)
 			{
+				if (Main.SmartCursorWanted)
+				{
+					Main.SmartCursorWanted_Mouse = false;
+					Main.SmartCursorWanted_GamePad = false;
+					Main.NewText("Smart cursor is disabled with omnipotent building");
+				}
+
 				Player.tileRangeX = int.MaxValue / 32 - 20;
 				Player.tileRangeY = int.MaxValue / 32 - 20;
 			}

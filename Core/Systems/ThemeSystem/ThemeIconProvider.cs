@@ -39,6 +39,7 @@ namespace DragonLens.Core.Systems.ThemeSystem
 			"ProjectileDespawner",
 			"ProjectileSpawner",
 			"RevealMap",
+			"SoundSpawner",
 			"SpawnTool",
 			"TileSpawner",
 			"Time",

@@ -339,7 +339,7 @@ namespace DragonLens.Content.GUI
 			pos.X += FontAssets.MouseText.Value.MeasureString(displayed).X * scale;
 			string compositionString = Platform.Get<IImeService>().CompositionString;
 
-			if (compositionString is {Length: > 0})
+			if (compositionString is { Length: > 0 })
 			{
 				Utils.DrawBorderString(spriteBatch, compositionString, pos, new Color(255, 240, 20), scale);
 				pos.X += FontAssets.MouseText.Value.MeasureString(compositionString).X * scale;

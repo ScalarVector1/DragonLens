@@ -648,3 +648,8 @@ CustomizeTool: {
 	Description: Customize your toolbar layout!
 	ToolBrowser: Add tool
 }
+
+SoundSpawner: {
+	DisplayName: Sound Player
+	Description: Browse and play sounds from the game
+}

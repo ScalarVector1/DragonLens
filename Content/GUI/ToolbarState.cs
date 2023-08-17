@@ -63,11 +63,17 @@ namespace DragonLens.Content.GUI
 			Recalculate();
 		}
 
+		/// <summary>
+		/// Handles updating the logic for the collapse animation of toolbars
+		/// </summary>
 		public void UpdateCollapse()
 		{
 			toolbarElements.ForEach(n => n.UpdateTargetOffset());
 		}
 
+		/// <summary>
+		/// Triggers the toolbar state to enter customize mode
+		/// </summary>
 		public void Customize()
 		{
 			foreach (UIElement child in Children)
@@ -77,31 +83,34 @@ namespace DragonLens.Content.GUI
 			}
 
 			var addButton = new NewBarButton();
-			addButton.Left.Set(-24, 0.5f);
-			addButton.Top.Set(-24, 0.5f);
+			addButton.Left.Set(-100, 0.5f);
+			addButton.Top.Set(-100, 0.5f);
 			Append(addButton);
 
 			var saveButton = new SaveLayoutButton();
-			saveButton.Left.Set(34, 0.5f);
-			saveButton.Top.Set(-24, 0.5f);
+			saveButton.Left.Set(-100, 0.5f);
+			saveButton.Top.Set(-50, 0.5f);
 			Append(saveButton);
 
 			var loadButton = new LoadLayoutButton();
-			loadButton.Left.Set(-84, 0.5f);
-			loadButton.Top.Set(-24, 0.5f);
+			loadButton.Left.Set(-100, 0.5f);
+			loadButton.Top.Set(0, 0.5f);
 			Append(loadButton);
 
 			var styleButton = new VisualConfigButton();
-			styleButton.Left.Set(34, 0.5f);
-			styleButton.Top.Set(30, 0.5f);
+			styleButton.Left.Set(-100, 0.5f);
+			styleButton.Top.Set(50, 0.5f);
 			Append(styleButton);
 
 			var functionButton = new FunctionalConfigButton();
-			functionButton.Left.Set(-84, 0.5f);
-			functionButton.Top.Set(30, 0.5f);
+			functionButton.Left.Set(-100, 0.5f);
+			functionButton.Top.Set(100, 0.5f);
 			Append(functionButton);
 		}
 
+		/// <summary>
+		/// Ends customization and removes all customization elements
+		/// </summary>
 		public void FinishCustomize()
 		{
 			List<UIElement> toRemove = new();
@@ -119,6 +128,21 @@ namespace DragonLens.Content.GUI
 			{
 				RemoveChild(child);
 			}
+		}
+
+		/// <summary>
+		/// Draws the black background while customizing to emphasize the customization process
+		/// </summary>
+		/// <param name="spriteBatch"></param>
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			if (CustomizeTool.customizing)
+			{
+				Texture2D tex = Terraria.GameContent.TextureAssets.MagicPixel.Value;
+				spriteBatch.Draw(tex, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), null, Color.Black * 0.25f);
+			}
+
+			base.Draw(spriteBatch);
 		}
 	}
 

@@ -37,14 +37,26 @@ namespace DragonLens.Content.GUI.FieldEditors
 			Height.Set(24, 0);
 		}
 
-		public override void SafeClick(UIMouseEvent evt)
+		public void SetTyping()
 		{
 			typing = true;
+			Main.blockInput = true;
+		}
+
+		public void SetNotTyping()
+		{
+			typing = false;
+			Main.blockInput = false;
+		}
+
+		public override void SafeClick(UIMouseEvent evt)
+		{
+			SetTyping();
 		}
 
 		public override void SafeRightClick(UIMouseEvent evt)
 		{
-			typing = true;
+			SetTyping();
 			currentValue = "";
 			updated = true;
 		}
@@ -61,19 +73,19 @@ namespace DragonLens.Content.GUI.FieldEditors
 				reset = true;
 
 			if (Main.mouseLeft && !IsMouseHovering)
-				typing = false;
+				SetNotTyping();
 		}
 
 		public void HandleText()
 		{
 			if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Escape))
-				typing = false;
+				SetNotTyping();
 
 			PlayerInput.WritingText = true;
 			Main.instance.HandleIME();
 
 			string newText = Main.GetInputText(currentValue);
-			
+
 			// GetInputText() handles typing operation, but there is a issue that it doesn't handle backspace correctly when the composition string is not empty. It will delete a character both in the text and the composition string instead of only the one in composition string. We'll fix the issue here to provide a better user experience
 			if (_oldHasCompositionString && Main.inputText.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Back))
 				newText = currentValue; // force text not to be changed
@@ -103,7 +115,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 				}
 			}
 
-			_oldHasCompositionString = Platform.Get<IImeService>().CompositionString is {Length: > 0};
+			_oldHasCompositionString = Platform.Get<IImeService>().CompositionString is { Length: > 0 };
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
@@ -122,7 +134,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 			Vector2 pos = GetDimensions().Position() + Vector2.One * 4;
 
 			const float scale = 0.75f;
-			string displayed = currentValue;
+			string displayed = currentValue ?? "";
 
 			Utils.DrawBorderString(spriteBatch, displayed, pos, Color.White, scale);
 
@@ -133,7 +145,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 			pos.X += FontAssets.MouseText.Value.MeasureString(displayed).X * scale;
 			string compositionString = Platform.Get<IImeService>().CompositionString;
 
-			if (compositionString is {Length: > 0})
+			if (compositionString is { Length: > 0 })
 			{
 				Utils.DrawBorderString(spriteBatch, compositionString, pos, new Color(255, 240, 20), scale);
 				pos.X += FontAssets.MouseText.Value.MeasureString(compositionString).X * scale;

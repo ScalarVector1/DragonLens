@@ -125,7 +125,10 @@ namespace DragonLens.Core.Systems.ThemeSystem
 			var themeTag = new TagCompound
 			{
 				["BoxTheme"] = currentBoxProvider.GetType().FullName,
-				["IconTheme"] = currentIconProvider.GetType().FullName
+				["IconTheme"] = currentIconProvider.GetType().FullName,
+
+				["backColor"] = currentColorProvider.backgroundColor,
+				["buttonColor"] = currentColorProvider.buttonColor
 			};
 
 			tag["Theme"] = themeTag;
@@ -137,6 +140,9 @@ namespace DragonLens.Core.Systems.ThemeSystem
 			{
 				SetBoxProvider(themeTag.GetString("BoxTheme"));
 				SetIconProvider(themeTag.GetString("IconTheme"));
+
+				currentColorProvider.backgroundColor = themeTag.Get<Color>("backColor");
+				currentColorProvider.buttonColor = themeTag.Get<Color>("buttonColor");
 			}
 			else //defaults
 			{

@@ -648,3 +648,8 @@ CustomizeTool: {
 	Description: 自定义你的工具栏布局！
 	ToolBrowser: 添加工具
 }
+
+SoundSpawner: {
+	DisplayName: 音效播放器
+	Description: 浏览并播放游戏中的音效
+}
