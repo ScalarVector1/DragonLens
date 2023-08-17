@@ -37,7 +37,7 @@ namespace DragonLens.Content.Filters.TileFilters
 			string path = $"{mod.Name}/icon_small";
 
 			if (mod.Name == "ModLoader")
-				tex = ThemeHandler.GetIcon("Customize");
+				tex = ModContent.Request<Texture2D>("DragonLens/Assets/Filters/tModLoader").Value;
 			else if (ModContent.HasAsset(path))
 				tex = ModContent.Request<Texture2D>(path).Value;
 
