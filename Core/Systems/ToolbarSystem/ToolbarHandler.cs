@@ -27,6 +27,25 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 			if (Main.netMode == NetmodeID.Server)
 				return;
 
+			// Check version file. If version do not match, re-generate presets!
+			string versionPath = Path.Join(Main.SavePath, "DragonLensLayouts", "Version");
+
+			if (File.Exists(versionPath))
+			{
+				string comp = File.ReadAllText(versionPath);
+				if(comp != $"{Mod.Version}")
+				{
+					FirstTimeSetupSystem.SetupPresets();
+					File.WriteAllText(versionPath, $"{Mod.Version}");
+				}
+			}
+			else
+			{
+				FirstTimeSetupSystem.SetupPresets();
+				File.WriteAllText(versionPath, $"{Mod.Version}");
+			}
+
+			// Attempt to load the current layout
 			string currentPath = Path.Join(Main.SavePath, "DragonLensLayouts", "Current");
 
 			if (File.Exists(currentPath))
@@ -136,6 +155,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 			build(activeToolbars);
 			ThemeHandler.currentBoxProvider = boxes;
 			ThemeHandler.currentIconProvider = icons;
+			ThemeHandler.currentColorProvider = new ThemeColorProvider();
 			ExportToFile(Path.Join(Main.SavePath, "DragonLensLayouts", name));
 		}
 

@@ -83,9 +83,14 @@ ToolbarCustomizationElements: {
 		Tooltip: 移除整个工具栏！
 	}
 
-	DragButton: {
-		Name: 移动工具栏
-		Tooltip: 点击并拖动以移动此工具栏。 靠近屏幕边缘时，工具栏将自动吸附。 拖动时右键单击以旋转工具栏。
+	ToolbarDragger: {
+		// Name: Move toolbar
+		// Tooltip: Click and drag to re-position this toolbar. The toolbar will automatically snap to the edges of the screen if close enough. NEWBLOCK Right click while dragging to rotate the toolbar.
+	}
+
+	ToolButtonDragger: {
+		// Name: Move tool
+		// Tooltip: Click and drag to re-position this tool on the toolbar.
 	}
 
 	HideOptionButton: {
