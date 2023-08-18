@@ -56,7 +56,7 @@ namespace DragonLens.Content.Tools
 
 		public override string IconTexture => "Customize";
 
-		public override Vector2 DefaultPosition => new Vector2(0.6f, 0.3f);
+		public override Vector2 DefaultPosition => new(0.6f, 0.3f);
 
 		public override int InsertionIndex(List<GameInterfaceLayer> layers)
 		{

@@ -18,12 +18,12 @@ namespace DragonLens.Content.GUI
 
 		public void Load(Mod mod)
 		{
-			Terraria.On_Main.Update += Reset;
+			Terraria.On_Main.DrawInterface += Reset;
 		}
 
 		public override int InsertionIndex(List<GameInterfaceLayer> layers)
 		{
-			return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text")) + 2;
+			return layers.Count - 1;
 		}
 
 		/// <summary>
@@ -77,7 +77,7 @@ namespace DragonLens.Content.GUI
 			Utils.DrawBorderString(Main.spriteBatch, tooltip, pos, Color.LightGray, 0.9f);
 		}
 
-		private void Reset(Terraria.On_Main.orig_Update orig, Main self, GameTime gameTime)
+		private void Reset(On_Main.orig_DrawInterface orig, Main self, GameTime gameTime)
 		{
 			orig(self, gameTime);
 
