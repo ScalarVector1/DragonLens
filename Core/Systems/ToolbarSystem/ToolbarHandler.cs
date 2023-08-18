@@ -27,6 +27,12 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 			if (Main.netMode == NetmodeID.Server)
 				return;
 
+			// Set up our directory
+			string dir = Path.Join(Main.SavePath, "DragonLensLayouts");
+
+			if (!Directory.Exists(dir))
+				Directory.CreateDirectory(dir);
+
 			// Check version file. If version do not match, re-generate presets!
 			string versionPath = Path.Join(Main.SavePath, "DragonLensLayouts", "Version");
 
@@ -62,9 +68,6 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 			}
 			else
 			{
-				string dir = Path.Join(Main.SavePath, "DragonLensLayouts");
-				Directory.CreateDirectory(dir);
-
 				LoadFallback();
 			}
 		}

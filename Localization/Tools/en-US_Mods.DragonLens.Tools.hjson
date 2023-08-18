@@ -403,6 +403,8 @@ ItemSpawner: {
 	FilterCategories: {
 		Mod: Mod filters
 		Damage: Damage filters
+		Equipment: Equipment filters
+		Utility: Utility filters
 		Misc: Misc filters
 	}
 
@@ -480,11 +482,6 @@ ItemSpawner: {
 			Description: Any item that is a vanity item
 		}
 
-		Fishing: {
-			Name: Fishing
-			Description: Any item that is a fishing rod, bait, or quest fish
-		}
-
 		MakeNPC: {
 			Name: Create NPC
 			Description: Any item that creates an NPC
@@ -513,11 +510,6 @@ ItemSpawner: {
 		Material: {
 			Name: Material
 			Description: Any item that is a material
-		}
-
-		Unresearched: {
-			Name: Unresearched
-			Description: Any item that has not been researched in Journey Mode
 		}
 	}
 }
