@@ -56,6 +56,13 @@ namespace DragonLens.Content.Tools
 
 		public override string IconTexture => "Customize";
 
+		public override Vector2 DefaultPosition => new Vector2(0.6f, 0.3f);
+
+		public override int InsertionIndex(List<GameInterfaceLayer> layers)
+		{
+			return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text")) + 1;
+		}
+
 		public override void PopulateGrid(UIGrid grid)
 		{
 			var buttons = new List<ToolBrowserButton>();
