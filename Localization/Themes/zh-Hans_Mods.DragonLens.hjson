@@ -1,26 +1,36 @@
 SimpleBoxes: {
-	// Name: Simple
-	// Description: The default box style for DragonLens
+	Name: 简单
+	Description: DragonLens的默认UI框样式
 }
 
 VanillaBoxes: {
-	// Name: Vanilla
-	// Description: A box style similar to the vanilla GUI
+	Name: 原版
+	Description: 和原版类似的UI框样式
 }
 
 MinimalBoxes: {
-	// Name: Minimal
-	// Description: As simple a box style as you can get
+	Name: 极简
+	Description: 极简的UI框样式
 }
 
 DragonLensIcons: {
-	// Name: Default
-	// Description: The default icons for DragonLens
+	Name: 默认
+	Description: DragonLens的默认工具图标
 }
 
 HEROsIcons: {
 	// Name: HEROs Mod
-	// Description: Icons from and mimicing the style of HEROs mod
+	Description: 与HERO's Mod相似的图标，一些图标直接来自HERO's Mod。
+}
+
+BackgroundColor: {
+	Name: 背景颜色
+	Description: DragonLens界面背景的颜色
+}
+
+ButtonColor: {
+	Name: 按钮颜色
+	Description: DragonLens界面按钮的颜色
 }
 
 Configs: {

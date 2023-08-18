@@ -189,6 +189,11 @@ PlayerEditor: {
 			Name: Extra speed
 			Description: Speed yourself up!
 		}
+
+		InfWingTime: {
+			Name: Infinite Wing Time
+			Description: Allows permanent flight!
+		}
 	}
 }
 
@@ -398,6 +403,8 @@ ItemSpawner: {
 	FilterCategories: {
 		Mod: Mod filters
 		Damage: Damage filters
+		Equipment: Equipment filters
+		Utility: Utility filters
 		Misc: Misc filters
 	}
 
@@ -427,12 +434,82 @@ ItemSpawner: {
 
 		Placeable: {
 			Name: Placeable
-			Description: Any item that palces a tile
+			Description: Any item that places a tile
 		}
 
 		Deprecated: {
 			Name: Deprecated
 			Description: Any item that is deprecated (ItemID.Sets.Deprecated)
+		}
+
+		Consumables: {
+			Name: Consumables
+			Description: Any item that is consumable and doesn't place a tile
+		}
+
+		Pickaxe: {
+			Name: Pickaxe
+			Description: Any item that has pickaxe power
+		}
+
+		Axe: {
+			Name: Axe
+			Description: Any item that has axe power
+		}
+
+		Hammer: {
+			Name: Hammer
+			Description: Any item that has hammer power
+		}
+
+		Ammo: {
+			Name: Ammo
+			Description: Any item that can be used as ammo
+		}
+
+		Expert: {
+			Name: Expert
+			Description: Any item that is Expert Mode exclusive
+		}
+
+		Master: {
+			Name: Master
+			Description: Any item that is Master Mode exclusive
+		}
+
+		Vanity: {
+			Name: Vanity
+			Description: Any item that is a vanity item
+		}
+
+		MakeNPC: {
+			Name: Create NPC
+			Description: Any item that creates an NPC
+		}
+
+		Mounts: {
+			Name: Mounts
+			Description: Any item that is a mount
+		}
+
+		Pets: {
+			Name: Pets
+			Description: Any item that is a pet or light pet
+		}
+
+		Wings: {
+			Name: Wings
+			Description: Any item that are wings
+		}
+
+		Hooks: {
+			Name: Hooks
+			Description: Any item that is a grappling hook
+		}
+
+		Material: {
+			Name: Material
+			Description: Any item that is a material
 		}
 	}
 }

@@ -189,6 +189,11 @@ PlayerEditor: {
 			Name: 额外速度
 			Description: 冲冲冲！
 		}
+
+		InfWingTime: {
+			// Name: Infinite Wing Time
+			// Description: Allows permanent flight!
+		}
 	}
 }
 
@@ -398,6 +403,8 @@ ItemSpawner: {
 	FilterCategories: {
 		Mod: 按模组筛选
 		Damage: 按伤害类型筛选
+		// Equipment: Equipment filters
+		// Utility: Utility filters
 		Misc: 其他筛选项
 	}
 
@@ -433,6 +440,76 @@ ItemSpawner: {
 		Deprecated: {
 			Name: 弃用
 			Description: 被弃用的物品 (ItemID.Sets.Deprecated)
+		}
+
+		Consumables: {
+			// Name: Consumables
+			// Description: Any item that is consumable and doesn't place a tile
+		}
+
+		Pickaxe: {
+			// Name: Pickaxe
+			// Description: Any item that has pickaxe power
+		}
+
+		Axe: {
+			// Name: Axe
+			// Description: Any item that has axe power
+		}
+
+		Hammer: {
+			// Name: Hammer
+			// Description: Any item that has hammer power
+		}
+
+		Ammo: {
+			// Name: Ammo
+			// Description: Any item that can be used as ammo
+		}
+
+		Expert: {
+			// Name: Expert
+			// Description: Any item that is Expert Mode exclusive
+		}
+
+		Master: {
+			// Name: Master
+			// Description: Any item that is Master Mode exclusive
+		}
+
+		Vanity: {
+			// Name: Vanity
+			// Description: Any item that is a vanity item
+		}
+
+		MakeNPC: {
+			// Name: Create NPC
+			// Description: Any item that creates an NPC
+		}
+
+		Mounts: {
+			// Name: Mounts
+			// Description: Any item that is a mount
+		}
+
+		Pets: {
+			// Name: Pets
+			// Description: Any item that is a pet or light pet
+		}
+
+		Wings: {
+			// Name: Wings
+			// Description: Any item that are wings
+		}
+
+		Hooks: {
+			// Name: Hooks
+			// Description: Any item that is a grappling hook
+		}
+
+		Material: {
+			// Name: Material
+			// Description: Any item that is a material
 		}
 	}
 }
@@ -570,6 +647,6 @@ CustomizeTool: {
 }
 
 SoundSpawner: {
-	// DisplayName: Sound Player
-	// Description: Browse and play sounds from the game
+	DisplayName: 音效播放器
+	Description: 浏览并播放游戏中的音效
 }

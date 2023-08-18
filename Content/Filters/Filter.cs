@@ -11,6 +11,11 @@ namespace DragonLens.Content.Filters
 	internal class Filter
 	{
 		/// <summary>
+		/// Whether this filter is a mod filter. You can only activate one mod filter an once.
+		/// </summary>
+		public bool isModFilter;
+
+		/// <summary>
 		/// The texture used to draw this filters icon if no custom drawing is defined.
 		/// </summary>
 		public string texture;

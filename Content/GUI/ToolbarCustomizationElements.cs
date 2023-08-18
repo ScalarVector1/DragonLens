@@ -1,16 +1,14 @@
-﻿using DragonLens.Configs;
-using DragonLens.Content.Tools;
+﻿using DragonLens.Content.Tools;
 using DragonLens.Core.Loaders.UILoading;
-using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Helpers;
-using System.IO;
+using System.Linq;
 using Terraria.UI;
 
 namespace DragonLens.Content.GUI
 {
 	// used for easier localization code
-	internal abstract class ToolbarCustomizationElement : SmartUIElement
+	internal abstract class LocalizedCustomizationElement : SmartUIElement
 	{
 		public override void Draw(SpriteBatch spriteBatch)
 		{
@@ -24,7 +22,10 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
-	internal class RemoveButton : ToolbarCustomizationElement
+	/// <summary>
+	/// Individual tool button remove button
+	/// </summary>
+	internal class RemoveButton : LocalizedCustomizationElement
 	{
 		private readonly ToolButton parent;
 
@@ -51,86 +52,119 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
-	internal class AddButton : ToolbarCustomizationElement
+	/// <summary>
+	/// Individual tool button dragger
+	/// </summary>
+	internal class ToolButtonDragger : LocalizedCustomizationElement
 	{
-		public ToolbarElement parent;
+		private readonly ToolButton parent;
 
-		public Toolbar Toolbar => parent.toolbar;
+		public bool dragging;
+		public static Vector2 dragOffset;
 
-		public AddButton(ToolbarElement parent)
+		ToolbarElement ParentToolbar => parent.parent;
+
+		public ToolButtonDragger(ToolButton parent)
 		{
 			this.parent = parent;
+
+			Width.Set(parent.Width.Pixels, 0);
+			Height.Set(parent.Height.Pixels, 0);
+			Left.Set(0, 0);
+			Top.Set(0, 0);
 		}
 
-		public override void SafeClick(UIMouseEvent evt)
+		public override void SafeMouseDown(UIMouseEvent evt)
 		{
-			ToolBrowser.OpenForToolbar(parent);
+			dragging = true;
+			dragOffset = parent.GetDimensions().Center() - Main.MouseScreen;
 		}
 
-		public override void Draw(SpriteBatch spriteBatch)
+		public override void SafeMouseUp(UIMouseEvent evt)
 		{
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Tab").Value;
+			dragging = false;
+			dragOffset = Vector2.Zero;
+		}
 
-			float rotation;
+		public override void SafeUpdate(GameTime gameTime)
+		{
+			if (dragging)
+			{
+				int index = ParentToolbar.toolbar.toolList.IndexOf(parent.tool);
 
-			if (Toolbar.orientation == Orientation.Horizontal)
-				rotation = Toolbar.relativePosition.Y > 0.5f ? 0 : 3.14f;
+				if (ParentToolbar.toolbar.orientation == Orientation.Horizontal)
+				{
+					if (Main.MouseScreen.X > parent.GetDimensions().X + parent.GetDimensions().Width + 8 && index < parent.parent.toolbar.toolList.Count - 1)
+						SwapTools(index + 1);
+					else if (Main.MouseScreen.X < parent.GetDimensions().X - 8 && index > 0)
+						SwapTools(index - 1);
+				}
+				else
+				{
+					if (Main.MouseScreen.Y > parent.GetDimensions().Y + parent.GetDimensions().Height + 8 && index < parent.parent.toolbar.toolList.Count - 1)
+						SwapTools(index + 1);
+					else if (Main.MouseScreen.Y < parent.GetDimensions().Y - 8 && index > 0)
+						SwapTools(index - 1);
+				}
+			}
 			else
-				rotation = Toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
+			{
+				Width.Set(parent.Width.Pixels, 0);
+				Height.Set(parent.Height.Pixels, 0);
+				Left.Set(0, 0);
+				Top.Set(0, 0);
+				Recalculate();
+			}
+		}
 
-			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.LimeGreen, rotation, tex.Size() / 2f, 1, 0, 0);
+		private void SwapTools(int index2)
+		{
+			int index = ParentToolbar.toolbar.toolList.IndexOf(parent.tool);
 
-			base.Draw(spriteBatch);
+			Core.Systems.ToolSystem.Tool otherTool = ParentToolbar.toolbar.toolList[index2];
+			UIElement other = ParentToolbar.Children.FirstOrDefault(n => n is ToolButton && (n as ToolButton).tool == otherTool);
+
+			(ParentToolbar.toolbar.toolList[index2], ParentToolbar.toolbar.toolList[index]) = (ParentToolbar.toolbar.toolList[index], ParentToolbar.toolbar.toolList[index2]);
+
+			StyleDimension temp = parent.Left;
+			StyleDimension temp2 = parent.Top;
+
+			parent.Left.Set(other.Left.Pixels, other.Left.Percent);
+			parent.Top.Set(other.Top.Pixels, other.Top.Percent);
+
+			other.Left.Set(temp.Pixels, temp.Percent);
+			other.Top.Set(temp2.Pixels, temp2.Percent);
+
+			parent.Recalculate();
+			other.Recalculate();
 		}
 	}
 
-	internal class RemoveToolbarButton : ToolbarCustomizationElement
+	/// <summary>
+	/// Full toolbar dragger element
+	/// </summary>
+	internal class ToolbarDragger : LocalizedCustomizationElement
 	{
 		public ToolbarElement parent;
 
-		public Toolbar Toolbar => parent.toolbar;
-
-		public RemoveToolbarButton(ToolbarElement parent)
-		{
-			this.parent = parent;
-		}
-
-		public override void SafeClick(UIMouseEvent evt)
-		{
-			ToolbarHandler.activeToolbars.Remove(Toolbar);
-			UILoader.GetUIState<ToolbarState>().Refresh();
-		}
-
-		public override void Draw(SpriteBatch spriteBatch)
-		{
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Tab").Value;
-
-			float rotation;
-
-			if (Toolbar.orientation == Orientation.Horizontal)
-				rotation = Toolbar.relativePosition.Y > 0.5f ? 0 : 3.14f;
-			else
-				rotation = Toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
-
-			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Red, rotation, tex.Size() / 2f, 1, 0, 0);
-
-			base.Draw(spriteBatch);
-		}
-	}
-
-	internal class DragButton : ToolbarCustomizationElement
-	{
-		public ToolbarElement parent;
+		public static bool debounce;
 
 		public static bool dragging;
+		public static Vector2 dragOffset;
 		public static ToolbarElement draggedElement;
 
 		public Toolbar Toolbar => parent.toolbar;
 		public Toolbar DraggedToolbar => draggedElement.toolbar;
 
-		public DragButton(ToolbarElement parent)
+		public ToolbarDragger(ToolbarElement parent)
 		{
 			this.parent = parent;
+
+			Width.Set(parent.Width.Pixels, 0);
+			Height.Set(parent.Height.Pixels, 0);
+			Left.Set(0, 0);
+			Top.Set(0, 0);
+
 		}
 
 		public override void SafeMouseDown(UIMouseEvent evt)
@@ -138,41 +172,56 @@ namespace DragonLens.Content.GUI
 			dragging = true;
 			draggedElement = parent;
 			parent.beingDragged = true;
+			dragOffset = parent.GetDimensions().Center() - Main.MouseScreen;
 		}
 
 		public override void SafeMouseUp(UIMouseEvent evt)
 		{
 			dragging = false;
-			parent.Refresh();
-			parent.Customize();
 			parent.beingDragged = false;
 
+			parent.Refresh();
+			parent.Customize();
+
+			dragOffset = Vector2.Zero;
 			draggedElement = null;
 		}
 
 		public override void SafeUpdate(GameTime gameTime)
 		{
+			if (debounce && !Main.mouseRight && Main.mouseRightRelease)
+				debounce = false;
+
+			// This logic exists because this dragger is always present, not just when customizing. Has to be done due to
+			// append order effecting click priority :/
+			if (!CustomizeTool.customizing)
+			{
+				Width.Set(0, 0);
+				Height.Set(0, 0);
+				return;
+			}
+
 			if (dragging && draggedElement != null)
 			{
-				if (Main.mouseRight && Main.mouseRightRelease)
+				if (Main.mouseRight && !debounce)
 				{
 					if (DraggedToolbar.orientation == Orientation.Horizontal)
 					{
 						DraggedToolbar.orientation = Orientation.Vertical;
-						Main.mouseRightRelease = false; //failsafe for slow updates
+						debounce = true;
 					}
 					else
 					{
 						DraggedToolbar.orientation = Orientation.Horizontal;
-						Main.mouseRightRelease = false;
+						debounce = true;
 					}
 				}
 
 				float relW = draggedElement.Width.Pixels / Main.screenWidth;
 				float relH = draggedElement.Height.Pixels / Main.screenHeight;
 
-				DraggedToolbar.relativePosition.X = MathHelper.Clamp(Main.MouseScreen.X / Main.screenWidth, 0 + relW / 2, 1 - relW / 2);
-				DraggedToolbar.relativePosition.Y = MathHelper.Clamp(Main.MouseScreen.Y / Main.screenHeight, 0 + relH / 2, 1 - relH / 2);
+				DraggedToolbar.relativePosition.X = MathHelper.Clamp((Main.MouseScreen.X + dragOffset.X) / Main.screenWidth, 0 + relW / 2, 1 - relW / 2);
+				DraggedToolbar.relativePosition.Y = MathHelper.Clamp((Main.MouseScreen.Y + dragOffset.Y) / Main.screenHeight, 0 + relH / 2, 1 - relH / 2);
 
 				if (Main.MouseScreen.X / Main.screenWidth < 0.025f && draggedElement.Width.Pixels < Main.screenHeight)
 				{
@@ -195,14 +244,43 @@ namespace DragonLens.Content.GUI
 					DraggedToolbar.orientation = Orientation.Horizontal;
 				}
 
-				DraggedToolbar.collapsed = false;
+				draggedElement.Recalculate();
 				draggedElement.Refresh();
 			}
+			else
+			{
+				Width.Set(parent.Width.Pixels, 0);
+				Height.Set(parent.Height.Pixels, 0);
+				Left.Set(0, 0);
+				Top.Set(0, 0);
+				Recalculate();
+			}
+		}
+	}
+
+	/// <summary>
+	/// Tab the user can press to add a tool to a toolbar
+	/// </summary>
+	internal class AddButton : LocalizedCustomizationElement
+	{
+		public ToolbarElement parent;
+
+		public Toolbar Toolbar => parent.toolbar;
+
+		public AddButton(ToolbarElement parent)
+		{
+			this.parent = parent;
+		}
+
+		public override void SafeClick(UIMouseEvent evt)
+		{
+			ToolBrowser.OpenForToolbar(parent);
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Tab").Value;
+			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/SpecialTabs").Value;
+			var source = new Rectangle(0, 0, 60, 24);
 
 			float rotation;
 
@@ -211,12 +289,53 @@ namespace DragonLens.Content.GUI
 			else
 				rotation = Toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
 
-			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Blue, rotation, tex.Size() / 2f, 1, 0, 0);
+			spriteBatch.Draw(tex, GetDimensions().Center(), source, new Color(100, 200, 100), rotation, new Vector2(30, 0), 1, 0, 0);
 
 			base.Draw(spriteBatch);
 		}
 	}
 
+	/// <summary>
+	/// Tab the user can press to remove a toolbar
+	/// </summary>
+	internal class RemoveToolbarButton : LocalizedCustomizationElement
+	{
+		public ToolbarElement parent;
+
+		public Toolbar Toolbar => parent.toolbar;
+
+		public RemoveToolbarButton(ToolbarElement parent)
+		{
+			this.parent = parent;
+		}
+
+		public override void SafeClick(UIMouseEvent evt)
+		{
+			ToolbarHandler.activeToolbars.Remove(Toolbar);
+			UILoader.GetUIState<ToolbarState>().Refresh();
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/SpecialTabs").Value;
+			var source = new Rectangle(60, 0, 60, 24);
+
+			float rotation;
+
+			if (Toolbar.orientation == Orientation.Horizontal)
+				rotation = Toolbar.relativePosition.Y > 0.5f ? 0 : 3.14f;
+			else
+				rotation = Toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
+
+			spriteBatch.Draw(tex, GetDimensions().Center(), source, new Color(200, 100, 100), rotation, new Vector2(30, 0), 1, 0, 0);
+
+			base.Draw(spriteBatch);
+		}
+	}
+
+	/// <summary>
+	/// Tab the user can press to toggle the hide state
+	/// </summary>
 	internal class HideOptionButton : SmartUIElement
 	{
 		public ToolbarElement parent;
@@ -238,7 +357,8 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Tab").Value;
+			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/SpecialTabs").Value;
+			var source = new Rectangle(120, 0, 60, 24);
 
 			float rotation;
 
@@ -247,196 +367,20 @@ namespace DragonLens.Content.GUI
 			else
 				rotation = Toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
 
-			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Yellow, rotation, tex.Size() / 2f, 1, 0, 0);
+			spriteBatch.Draw(tex, GetDimensions().Center(), source, new Color(200, 200, 100), rotation, new Vector2(30, 0), 1, 0, 0);
 
 			if (IsMouseHovering)
 			{
-				string hideOption = LocalizationHelper.GetGUIText($"ToolbarCustomizationElements.HideOptionButton.{Toolbar.automaticHideOption.ToString()}.Name");
+				string hideOption = LocalizationHelper.GetGUIText($"ToolbarCustomizationElements.HideOptionButton.{Toolbar.automaticHideOption}.Name");
 
-				string hideTip = LocalizationHelper.GetGUIText($"ToolbarCustomizationElements.HideOptionButton.{Toolbar.automaticHideOption.ToString()}.Tip");
+				string hideTip = LocalizationHelper.GetGUIText($"ToolbarCustomizationElements.HideOptionButton.{Toolbar.automaticHideOption}.Tip");
 
 				var nextOptionEnum = (AutomaticHideOption)(((int)Toolbar.automaticHideOption + 1) % 4);
-				string nextOption = LocalizationHelper.GetGUIText($"ToolbarCustomizationElements.HideOptionButton.{nextOptionEnum.ToString()}.Name");
+				string nextOption = LocalizationHelper.GetGUIText($"ToolbarCustomizationElements.HideOptionButton.{nextOptionEnum}.Name");
 
 				Tooltip.SetName(LocalizationHelper.GetGUIText("ToolbarCustomizationElements.HideOptionButton.Name", hideOption));
 				Tooltip.SetTooltip(LocalizationHelper.GetGUIText("ToolbarCustomizationElements.HideOptionButton.Tooltip", hideTip, nextOption));
 			}
-
-			base.Draw(spriteBatch);
-		}
-	}
-
-	internal class NewBarButton : ToolbarCustomizationElement
-	{
-		public NewBarButton()
-		{
-			Width.Set(48, 0);
-			Height.Set(48, 0);
-		}
-
-		public override void SafeClick(UIMouseEvent evt)
-		{
-			ToolbarHandler.activeToolbars.Add(new Toolbar(new Vector2(0.5f, 0.6f), Orientation.Horizontal, Main.mapFullscreen ? AutomaticHideOption.NoMapScreen : AutomaticHideOption.Never));
-
-			UILoader.GetUIState<ToolbarState>().Refresh();
-		}
-
-		public override void SafeUpdate(GameTime gameTime)
-		{
-			if (IsMouseHovering)
-				Main.LocalPlayer.mouseInterface = true;
-		}
-
-		public override void Draw(SpriteBatch spriteBatch)
-		{
-			var drawTarget = GetDimensions().ToRectangle();
-
-			Helpers.GUIHelper.DrawBox(spriteBatch, drawTarget, ThemeHandler.ButtonColor);
-
-			drawTarget.Inflate(-6, -16);
-			Helpers.GUIHelper.DrawBox(spriteBatch, drawTarget, ThemeHandler.ButtonColor);
-
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/NewBar").Value;
-			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
-
-			base.Draw(spriteBatch);
-		}
-	}
-
-	internal class SaveLayoutButton : ToolbarCustomizationElement
-	{
-		public SaveLayoutButton()
-		{
-			Width.Set(48, 0);
-			Height.Set(48, 0);
-		}
-
-		public override void SafeClick(UIMouseEvent evt)
-		{
-			UILoader.GetUIState<ToolbarState>().FinishCustomize();
-			ToolbarHandler.ExportToFile(Path.Join(Main.SavePath, "DragonLensLayouts", "Current"));
-
-			UILoader.GetUIState<LayoutPresetBrowser>().visible = false;
-			UILoader.GetUIState<ThemeMenu>().visible = false;
-
-			CustomizeTool.customizing = false;
-
-			UILoader.GetUIState<ToolbarState>().Refresh();
-
-			Main.NewText(LocalizationHelper.GetGUIText("ToolbarCustomizationElements.SaveLayoutButton.LayoutSaved"));
-		}
-
-		public override void SafeUpdate(GameTime gameTime)
-		{
-			if (IsMouseHovering)
-				Main.LocalPlayer.mouseInterface = true;
-		}
-
-		public override void Draw(SpriteBatch spriteBatch)
-		{
-			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
-
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/SaveLayout").Value;
-			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
-
-			base.Draw(spriteBatch);
-		}
-	}
-
-	internal class LoadLayoutButton : ToolbarCustomizationElement
-	{
-		public LoadLayoutButton()
-		{
-			Width.Set(48, 0);
-			Height.Set(48, 0);
-		}
-
-		public override void SafeClick(UIMouseEvent evt)
-		{
-			LayoutPresetBrowser state = UILoader.GetUIState<LayoutPresetBrowser>();
-			state.visible = !state.visible;
-
-			BrowserButton.drawDelayTimer = 2;
-
-			if (!state.initialized)
-			{
-				UILoader.GetUIState<LayoutPresetBrowser>().Refresh();
-				state.initialized = true;
-			}
-		}
-
-		public override void SafeUpdate(GameTime gameTime)
-		{
-			if (IsMouseHovering)
-				Main.LocalPlayer.mouseInterface = true;
-		}
-
-		public override void Draw(SpriteBatch spriteBatch)
-		{
-			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
-
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/LoadLayout").Value;
-			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
-
-			base.Draw(spriteBatch);
-		}
-	}
-
-	internal class VisualConfigButton : ToolbarCustomizationElement
-	{
-		public VisualConfigButton()
-		{
-			Width.Set(48, 0);
-			Height.Set(48, 0);
-		}
-
-		public override void SafeClick(UIMouseEvent evt)
-		{
-			UILoader.GetUIState<ThemeMenu>().visible = true;
-		}
-
-		public override void SafeUpdate(GameTime gameTime)
-		{
-			if (IsMouseHovering)
-				Main.LocalPlayer.mouseInterface = true;
-		}
-
-		public override void Draw(SpriteBatch spriteBatch)
-		{
-			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
-
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/StyleButton").Value;
-			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
-
-			base.Draw(spriteBatch);
-		}
-	}
-
-	internal class FunctionalConfigButton : ToolbarCustomizationElement
-	{
-		public FunctionalConfigButton()
-		{
-			Width.Set(48, 0);
-			Height.Set(48, 0);
-		}
-
-		public override void SafeClick(UIMouseEvent evt)
-		{
-			Helpers.GUIHelper.OpenConfig(ModContent.GetInstance<ToolConfig>());
-		}
-
-		public override void SafeUpdate(GameTime gameTime)
-		{
-			if (IsMouseHovering)
-				Main.LocalPlayer.mouseInterface = true;
-		}
-
-		public override void Draw(SpriteBatch spriteBatch)
-		{
-			Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
-
-			Texture2D tex = ThemeHandler.GetIcon("Customize");
-			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
 
 			base.Draw(spriteBatch);
 		}

@@ -13,7 +13,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 			entry = new(InputType.text);
 			entry.Left.Set(10, 0);
 			entry.Top.Set(32, 0);
-			entry.currentValue = initialValue.ToString();
+			entry.currentValue = initialValue ?? "";
 			Append(entry);
 		}
 

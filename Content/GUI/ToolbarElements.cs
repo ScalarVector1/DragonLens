@@ -49,12 +49,19 @@ namespace DragonLens.Content.GUI
 
 			RemoveAllChildren();
 
+			// Cant add this while being dragged because that makes it go poo poo mode
+			if (!beingDragged)
+			{
+				Append(new ToolbarDragger(this)); // Important this goes under everything so its last precedence.
+												  // Sucks this has to be here but oh well. Terraria hates letting you re-order UI elements :/
+			}
+
 			Vector2 position = Vector2.Zero;
 
 			if (toolbar.orientation == Orientation.Horizontal)
-				position += new Vector2(32, 92 / 2 - 46 / 2);
+				position += new Vector2(36, 100 / 2 - 46 / 2);
 			else
-				position += new Vector2(92 / 2 - 46 / 2, 32);
+				position += new Vector2(100 / 2 - 46 / 2, 36);
 
 			foreach (Tool tool in toolbar.toolList)
 			{
@@ -69,26 +76,40 @@ namespace DragonLens.Content.GUI
 
 			if (toolbar.orientation == Orientation.Horizontal)
 			{
-				Width.Set(Math.Max(position.X + 26, 200), 0);
-				Height.Set(92, 0);
+				Width.Set(Math.Max(position.X + 34, 200), 0);
+				Height.Set(100, 0);
 			}
 			else
 			{
-				Height.Set(Math.Max(position.Y + 26, 200), 0);
-				Width.Set(92, 0);
+				Height.Set(Math.Max(position.Y + 34, 200), 0);
+				Width.Set(100, 0);
 			}
+
+			UpdatePosition();
+			AddCollapseTab();
+		}
+
+		/// <summary>
+		/// Calls position constraints together for convenience and while dragging
+		/// </summary>
+		public void UpdatePosition()
+		{
+			Left.Set(0, toolbar.relativePosition.X);
+			Top.Set(0, toolbar.relativePosition.Y);
 
 			Recalculate();
 			UpdateTargetOffset();
 			offset = offsetTarget;
 			AdjustDimensions();
-			AddCollapseTab();
 
 			Recalculate();
 
 			basePos = GetDimensions().Position();
 		}
 
+		/// <summary>
+		/// Calculates offsets for when a toolbar is collapsed
+		/// </summary>
 		public void UpdateTargetOffset()
 		{
 			switch (toolbar.CollapseDirection)
@@ -128,19 +149,19 @@ namespace DragonLens.Content.GUI
 			switch (toolbar.CollapseDirection)
 			{
 				case CollapseDirection.Left:
-					Left.Set(-15, 0);
+					Left.Set(-19, 0);
 					break;
 
 				case CollapseDirection.Right:
-					Left.Set(-92 + 15, 1);
+					Left.Set(-92 + 11, 1);
 					break;
 
 				case CollapseDirection.Up:
-					Top.Set(-15, 0);
+					Top.Set(-19, 0);
 					break;
 
 				case CollapseDirection.Down:
-					Top.Set(-92 + 15, 1);
+					Top.Set(-92 + 11, 1);
 					break;
 
 				case CollapseDirection.Floating:
@@ -222,28 +243,33 @@ namespace DragonLens.Content.GUI
 			}
 		}
 
+		/// <summary>
+		/// Adds a tab button for when customizing
+		/// </summary>
+		/// <param name="element">The tab to add</param>
+		/// <param name="offset">How far along the bar it should be as a percentage</param>
 		private void AddTabButton(UIElement element, float offset)
 		{
-			element.Width.Set(30, 0);
-			element.Height.Set(30, 0);
+			element.Width.Set(60, 0);
+			element.Height.Set(60, 0);
 
 			if (toolbar.orientation == Orientation.Horizontal)
 			{
-				element.Left.Set(-15, offset);
+				element.Left.Set(-30, offset);
 
 				if (toolbar.relativePosition.Y > 0.5f)
-					element.Top.Set(-15, 0f);
+					element.Top.Set(-35, 0f);
 				else
-					element.Top.Set(-15, 1f);
+					element.Top.Set(-25, 1f);
 			}
 			else
 			{
 				if (toolbar.relativePosition.X < 0.5f)
-					element.Left.Set(-15, 1f);
+					element.Left.Set(-25, 1f);
 				else
-					element.Left.Set(-15, 0f);
+					element.Left.Set(-35, 0f);
 
-				element.Top.Set(-15, offset);
+				element.Top.Set(-30, offset);
 			}
 
 			Append(element);
@@ -284,11 +310,13 @@ namespace DragonLens.Content.GUI
 			}
 		}
 
+		/// <summary>
+		/// Trigger customization mode for this element
+		/// </summary>
 		public void Customize()
 		{
 			AddTabButton(new AddButton(this), 0.2f);
-			AddTabButton(new RemoveToolbarButton(this), 0.4f);
-			AddTabButton(new DragButton(this), 0.6f);
+			AddTabButton(new RemoveToolbarButton(this), 0.5f);
 			AddTabButton(new HideOptionButton(this), 0.8f);
 
 			foreach (UIElement child in Children)
@@ -298,6 +326,9 @@ namespace DragonLens.Content.GUI
 			}
 		}
 
+		/// <summary>
+		/// Leave customization mode for this element
+		/// </summary>
 		public void FinishCustomize()
 		{
 			foreach (UIElement child in Children)
@@ -313,7 +344,6 @@ namespace DragonLens.Content.GUI
 		{
 			if (toolbar is null)
 			{
-				//base.Draw(spriteBatch);
 				FirstTimeSetupSystem.PanicToSetup();
 				return;
 			}
@@ -321,7 +351,7 @@ namespace DragonLens.Content.GUI
 			if (!toolbar.Invisible)
 			{
 				var bgTarget = GetDimensions().ToRectangle();
-				bgTarget.Inflate(-15, -15);
+				bgTarget.Inflate(-19, -19);
 
 				Helpers.GUIHelper.DrawBox(spriteBatch, bgTarget, ThemeHandler.BackgroundColor);
 
@@ -331,6 +361,9 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
+	/// <summary>
+	/// A button which can be used to activate a tool when clicked on
+	/// </summary>
 	internal class ToolButton : SmartUIElement
 	{
 		public Tool tool;
@@ -374,7 +407,12 @@ namespace DragonLens.Content.GUI
 
 		public void Customize()
 		{
-			Append(new RemoveButton(this));
+			Append(new ToolButtonDragger(this));
+
+			var rb = new RemoveButton(this);
+			rb.Left.Set(4, 0);
+			rb.Top.Set(4, 0);
+			Append(rb);
 		}
 
 		public void FinishCustomize()
@@ -404,6 +442,9 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
+	/// <summary>
+	/// The tab the user can click on to hide a hotbar
+	/// </summary>
 	internal class HideTab : SmartUIElement
 	{
 		public ToolbarElement parent;
@@ -440,7 +481,7 @@ namespace DragonLens.Content.GUI
 			else
 				rotation = Toolbar.relativePosition.X > 0.5f ? 1.57f * 3 : 1.57f;
 
-			spriteBatch.Draw(tex, GetDimensions().Center(), null, ThemeHandler.ButtonColor, rotation, new Vector2(45, 75), 1, 0, 0);
+			spriteBatch.Draw(tex, GetDimensions().Center(), null, ThemeHandler.ButtonColor, rotation, new Vector2(45, 0), 1, 0, 0);
 
 			base.Draw(spriteBatch);
 		}

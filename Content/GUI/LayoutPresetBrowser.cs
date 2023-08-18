@@ -1,6 +1,7 @@
 ﻿using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Helpers;
+using System.Collections.Generic;
 using System.IO;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -10,6 +11,13 @@ namespace DragonLens.Content.GUI
 	internal class LayoutPresetBrowser : Browser
 	{
 		public override string Name => LocalizationHelper.GetGUIText("LayoutPresetBrowser.Name");
+
+		public override Vector2 DefaultPosition => new(0.6f, 0.5f);
+
+		public override int InsertionIndex(List<GameInterfaceLayer> layers)
+		{
+			return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text")) + 1;
+		}
 
 		public override void PopulateGrid(UIGrid grid)
 		{

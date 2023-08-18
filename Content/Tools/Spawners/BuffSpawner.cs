@@ -104,7 +104,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void SetupFilters(FilterPanel filters)
 		{
 			filters.AddSeperator("Tools.BuffSpawner.FilterCategories.Mod");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.BuffSpawner.Filters.Vanilla", n => !(n is BuffButton && (n as BuffButton).type <= BuffID.Count)));
+			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.BuffSpawner.Filters.Vanilla", n => !(n is BuffButton && (n as BuffButton).type <= BuffID.Count)) { isModFilter = true });
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModBuff>().Count() > 0))
 			{
@@ -122,6 +122,9 @@ namespace DragonLens.Content.Tools.Spawners
 
 			if (selected != -1)
 				Main.LocalPlayer.mouseInterface = true;
+
+			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
+				PlayerInput.LockVanillaMouseScroll($"DragonLens: {Name}");
 		}
 
 		public override void SafeClick(UIMouseEvent evt)

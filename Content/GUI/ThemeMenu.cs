@@ -3,6 +3,7 @@ using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
 using System.Collections.Generic;
+using Terraria.GameInput;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
@@ -20,9 +21,11 @@ namespace DragonLens.Content.GUI
 
 		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 574, 64);
 
+		public override Vector2 DefaultPosition => new(0.3f, 0.5f);
+
 		public override int InsertionIndex(List<GameInterfaceLayer> layers)
 		{
-			return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
+			return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text")) + 1;
 		}
 
 		public override void SafeOnInitialize()
@@ -52,14 +55,14 @@ namespace DragonLens.Content.GUI
 			icons.SetScrollbar(iconScrollBar);
 			Append(icons);
 
-			backgroundColorEditor = new("Background",
+			backgroundColorEditor = new(LocalizationHelper.GetText("BackgroundColor.Name"),
 				(a) => ThemeHandler.currentColorProvider.backgroundColor = a,
-				ThemeHandler.BackgroundColor, null, "The color of backgrounds in the DragonLens GUI");
+				ThemeHandler.BackgroundColor, null, LocalizationHelper.GetText("BackgroundColor.Description"));
 			Append(backgroundColorEditor);
 
-			foregroundColorEditor = new("Buttons",
+			foregroundColorEditor = new(LocalizationHelper.GetText("ButtonColor.Name"),
 				(a) => ThemeHandler.currentColorProvider.buttonColor = a,
-				ThemeHandler.ButtonColor, null, "The color of buttons in the DragonLens GUI");
+				ThemeHandler.ButtonColor, null, LocalizationHelper.GetText("ButtonColor.Description"));
 			Append(foregroundColorEditor);
 		}
 
@@ -93,6 +96,9 @@ namespace DragonLens.Content.GUI
 				OnInitialize(); // We have to re-initialize so the scrollbars set properly and lists populate correctly
 				PopulateLists();
 			}
+
+			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
+				PlayerInput.LockVanillaMouseScroll("DragonLens: Theme Menu");
 
 			var target = new Rectangle((int)basePos.X, (int)basePos.Y, 574, 400);
 

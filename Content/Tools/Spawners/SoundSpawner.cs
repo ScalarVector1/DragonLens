@@ -2,6 +2,7 @@
 using DragonLens.Helpers;
 using System.Collections.Generic;
 using Terraria.Audio;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -49,6 +50,14 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 
 			grid.AddRange(buttons);
+		}
+
+		public override void DraggableUdpate(GameTime gameTime)
+		{
+			base.DraggableUdpate(gameTime);
+
+			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
+				PlayerInput.LockVanillaMouseScroll($"DragonLens: {Name}");
 		}
 	}
 
