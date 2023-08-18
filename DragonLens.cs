@@ -19,6 +19,12 @@ namespace DragonLens
 {
 	public class DragonLens : Mod
 	{
+		static void LoadAsset<T>(Asset<T> asset) where T : class
+		{
+			if (asset.State == AssetState.NotLoaded)
+				Main.Assets.Request<Texture2D>(asset.Name, AssetRequestMode.AsyncLoad).Wait();
+		}
+
 		public override void PostAddRecipes()/* tModPorter Note: Removed. Use ModSystem.PostAddRecipes */
 		{
 			if (Main.netMode == NetmodeID.Server)
@@ -47,12 +53,6 @@ namespace DragonLens
 
 			if (ModContent.GetInstance<ToolConfig>().preloadAssets)
 			{
-				static void LoadAsset<T>(Asset<T> asset) where T : class
-				{
-					if (asset.State == AssetState.NotLoaded)
-						Main.Assets.Request<Texture2D>(asset.Name, AssetRequestMode.AsyncLoad).Wait();
-				}
-
 				var itemThread = new Thread(() =>
 				{
 					Stopwatch watch = new();
