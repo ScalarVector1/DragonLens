@@ -39,7 +39,7 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 			if (File.Exists(versionPath))
 			{
 				string comp = File.ReadAllText(versionPath);
-				if(comp != $"{Mod.Version}")
+				if (comp != $"{Mod.Version}")
 				{
 					FirstTimeSetupSystem.SetupPresets();
 					File.WriteAllText(versionPath, $"{Mod.Version}");

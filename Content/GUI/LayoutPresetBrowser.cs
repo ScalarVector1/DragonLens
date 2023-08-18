@@ -12,7 +12,7 @@ namespace DragonLens.Content.GUI
 	{
 		public override string Name => LocalizationHelper.GetGUIText("LayoutPresetBrowser.Name");
 
-		public override Vector2 DefaultPosition => new Vector2(0.6f, 0.5f);
+		public override Vector2 DefaultPosition => new(0.6f, 0.5f);
 
 		public override int InsertionIndex(List<GameInterfaceLayer> layers)
 		{
