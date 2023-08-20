@@ -403,8 +403,8 @@ ItemSpawner: {
 	FilterCategories: {
 		Mod: 按模组筛选
 		Damage: 按伤害类型筛选
-		// Equipment: Equipment filters
-		// Utility: Utility filters
+		Equipment: 按装备类型筛选
+		Utility: 按功能筛选
 		Misc: 其他筛选项
 	}
 
@@ -443,73 +443,73 @@ ItemSpawner: {
 		}
 
 		Consumables: {
-			// Name: Consumables
-			// Description: Any item that is consumable and doesn't place a tile
+			Name: 消耗品
+			Description: 不放置物块的算作消耗品的物品
 		}
 
 		Pickaxe: {
-			// Name: Pickaxe
-			// Description: Any item that has pickaxe power
+			Name: 镐
+			Description: 有镐力的物品
 		}
 
 		Axe: {
-			// Name: Axe
-			// Description: Any item that has axe power
+			Name: 斧
+			Description: 有斧力的物品
 		}
 
 		Hammer: {
-			// Name: Hammer
-			// Description: Any item that has hammer power
+			Name: 锤
+			Description: 有镐锤的物品
 		}
 
 		Ammo: {
-			// Name: Ammo
-			// Description: Any item that can be used as ammo
+			Name: 弹药
+			Description: 可作为弹药使用的物品
 		}
 
 		Expert: {
-			// Name: Expert
-			// Description: Any item that is Expert Mode exclusive
+			Name: 专家
+			Description: 专家模式独有的物品
 		}
 
 		Master: {
-			// Name: Master
-			// Description: Any item that is Master Mode exclusive
+			Name: 大师
+			Description: 大师模式独有的物品
 		}
 
 		Vanity: {
-			// Name: Vanity
-			// Description: Any item that is a vanity item
+			Name: 时装
+			Description: 属于时装的物品
 		}
 
 		MakeNPC: {
-			// Name: Create NPC
-			// Description: Any item that creates an NPC
+			Name: 释放NPC
+			Description: 使用时会释放NPC的物品
 		}
 
 		Mounts: {
-			// Name: Mounts
-			// Description: Any item that is a mount
+			Name: 坐骑
+			Description: 算作坐骑的物品
 		}
 
 		Pets: {
-			// Name: Pets
-			// Description: Any item that is a pet or light pet
+			Name: 宠物
+			Description: 算作宠物或照明宠物的物品
 		}
 
 		Wings: {
-			// Name: Wings
-			// Description: Any item that are wings
+			Name: 翅膀
+			Description: 算作翅膀的物品
 		}
 
 		Hooks: {
-			// Name: Hooks
-			// Description: Any item that is a grappling hook
+			Name: 钩爪
+			Description: 算作钩爪的物品
 		}
 
 		Material: {
-			// Name: Material
-			// Description: Any item that is a material
+			Name: 材料
+			Description: 算作材料的物品
 		}
 	}
 }
