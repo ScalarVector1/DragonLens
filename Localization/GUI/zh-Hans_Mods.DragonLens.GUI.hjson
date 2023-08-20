@@ -85,7 +85,7 @@ ToolbarCustomizationElements: {
 
 	ToolbarDragger: {
 		Name: 移动工具栏
-		Tooltip: 拖动以重新定位此工具栏。 工具栏会自动吸附到屏幕边缘。NEWBLOCK 拖动时右键单击以旋转工具栏。
+		Tooltip: 拖动以重新定位此工具栏。 工具栏会自动吸附到屏幕边缘。 NEWBLOCK 拖动时右键单击以旋转工具栏。
 	}
 
 	ToolButtonDragger: {
