@@ -191,8 +191,8 @@ PlayerEditor: {
 		}
 
 		InfWingTime: {
-			// Name: Infinite Wing Time
-			// Description: Allows permanent flight!
+			Name: 无限飞行时间
+			Description: 允许永久飞行，一口气飞到月球！
 		}
 	}
 }
