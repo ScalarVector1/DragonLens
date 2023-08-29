@@ -19,6 +19,12 @@ namespace DragonLens
 {
 	public class DragonLens : Mod
 	{
+		static void LoadAsset<T>(Asset<T> asset) where T : class
+		{
+			if (asset.State == AssetState.NotLoaded)
+				Main.Assets.Request<Texture2D>(asset.Name, AssetRequestMode.AsyncLoad).Wait();
+		}
+
 		public override void PostAddRecipes()/* tModPorter Note: Removed. Use ModSystem.PostAddRecipes */
 		{
 			if (Main.netMode == NetmodeID.Server)
@@ -56,7 +62,7 @@ namespace DragonLens
 					{
 						try
 						{
-							Main.Assets.Request<Texture2D>(TextureAssets.Item[k].Name, AssetRequestMode.AsyncLoad).Wait();
+							LoadAsset(TextureAssets.Item[k]);
 						}
 						catch
 						{
@@ -82,7 +88,7 @@ namespace DragonLens
 					{
 						try
 						{
-							Main.Assets.Request<Texture2D>(TextureAssets.Projectile[k].Name, AssetRequestMode.AsyncLoad).Wait();
+							LoadAsset(TextureAssets.Projectile[k]);
 						}
 						catch
 						{
@@ -108,7 +114,7 @@ namespace DragonLens
 					{
 						try
 						{
-							Main.Assets.Request<Texture2D>(TextureAssets.Npc[k].Name, AssetRequestMode.AsyncLoad).Wait();
+							LoadAsset(TextureAssets.Npc[k]);
 						}
 						catch
 						{
@@ -134,7 +140,7 @@ namespace DragonLens
 					{
 						try
 						{
-							Main.Assets.Request<Texture2D>(TextureAssets.Tile[k].Name, AssetRequestMode.AsyncLoad).Wait();
+							LoadAsset(TextureAssets.Tile[k]);
 						}
 						catch
 						{
