@@ -1,4 +1,5 @@
-﻿using DragonLens.Core.Systems.ThemeSystem;
+﻿using DragonLens.Core.Systems;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 
@@ -42,17 +43,19 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public override void PostUpdate()
 		{
-			if (NoClip.active)
+			if (NoClip.active && PermissionHandler.CanUseTools(Player))
+			{
 				Player.Center = NoClip.desiredPos;
 
-			if (Player.controlLeft)
-				NoClip.desiredPos.X -= 15;
-			if (Player.controlRight)
-				NoClip.desiredPos.X += 15;
-			if (Player.controlUp)
-				NoClip.desiredPos.Y -= 15;
-			if (Player.controlDown)
-				NoClip.desiredPos.Y += 15;
+				if (Player.controlLeft)
+					NoClip.desiredPos.X -= 15;
+				if (Player.controlRight)
+					NoClip.desiredPos.X += 15;
+				if (Player.controlUp)
+					NoClip.desiredPos.Y -= 15;
+				if (Player.controlDown)
+					NoClip.desiredPos.Y += 15;
+			}
 		}
 	}
 }

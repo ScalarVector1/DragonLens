@@ -51,7 +51,7 @@ namespace DragonLens.Core.Systems
 
 			if (ModContent.GetInstance<ToolConfig>().preloadAssets)
 			{
-				var itemThread = 
+				var itemThread =
 				new Thread(() =>
 				{
 					Stopwatch watch = new();
@@ -78,7 +78,7 @@ namespace DragonLens.Core.Systems
 				};
 				itemThread.Start();
 
-				var projThread = 
+				var projThread =
 				new Thread(() =>
 				{
 					Stopwatch watch = new();
@@ -105,7 +105,7 @@ namespace DragonLens.Core.Systems
 				};
 				projThread.Start();
 
-				var npcThread = 
+				var npcThread =
 				new Thread(() =>
 				{
 					Stopwatch watch = new();
@@ -132,7 +132,7 @@ namespace DragonLens.Core.Systems
 				};
 				npcThread.Start();
 
-				var tileThread = 
+				var tileThread =
 				new Thread(() =>
 				{
 					Stopwatch watch = new();

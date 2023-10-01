@@ -1,4 +1,5 @@
 ﻿using DragonLens.Content.Tools.Gameplay;
+using DragonLens.Core.Systems;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
@@ -88,7 +89,7 @@ namespace DragonLens.Content.Tools.Map
 
 		private void TeleportFromMap(Vector2 arg1, float arg2)
 		{
-			if (MapTeleport.active && Main.mouseRight)
+			if (MapTeleport.active && PermissionHandler.CanUseTools(Main.LocalPlayer) && Main.mouseRight)
 			{
 				Vector2 screenSize = new Vector2(Main.screenWidth, Main.screenHeight) * Main.UIScale;
 				Vector2 target = ((Main.MouseScreen - screenSize / 2) / 16 * (16 / Main.mapFullscreenScale) + Main.mapFullscreenPos) * 16;

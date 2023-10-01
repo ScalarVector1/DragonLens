@@ -1,4 +1,5 @@
-﻿using DragonLens.Core.Systems.ThemeSystem;
+﻿using DragonLens.Core.Systems;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using System.IO;
@@ -96,14 +97,14 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public override void PostUpdate()
 		{
-			if (Magnet.active)
+			if (Magnet.active && PermissionHandler.CanUseTools(Player))
 			{
 				foreach (Item item in Main.item)
 				{
 					item.Center = Player.Center;
 				}
 			}
-			else if (Magnet.voidActive)
+			else if (Magnet.voidActive && PermissionHandler.CanUseTools(Player))
 			{
 				foreach (Item item in Main.item)
 				{

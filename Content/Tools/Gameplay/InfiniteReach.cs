@@ -1,4 +1,5 @@
-﻿using DragonLens.Core.Systems.ThemeSystem;
+﻿using DragonLens.Core.Systems;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using Terraria.ModLoader.IO;
@@ -48,7 +49,7 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public override void UpdateEquips()
 		{
-			if (InfiniteReach.active)
+			if (InfiniteReach.active && PermissionHandler.CanUseTools(Player))
 			{
 				if (Main.SmartCursorWanted)
 				{
@@ -62,14 +63,9 @@ namespace DragonLens.Content.Tools.Gameplay
 			}
 		}
 
-		public override bool CanUseItem(Item item)
-		{
-			return base.CanUseItem(item);
-		}
-
 		public override float UseTimeMultiplier(Item item)
 		{
-			if (InfiniteReach.active && (item.createTile != -1 || item.createWall != -1 || item.pick > 0 || item.axe > 0 || item.hammer > 0))
+			if (InfiniteReach.active && PermissionHandler.CanUseTools(Player) && (item.createTile != -1 || item.createWall != -1 || item.pick > 0 || item.axe > 0 || item.hammer > 0))
 				return 0.1f;
 
 			return 1;
@@ -77,7 +73,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override float UseAnimationMultiplier(Item item)
 		{
-			if (InfiniteReach.active && (item.createTile != -1 || item.createWall != -1 || item.pick > 0 || item.axe > 0 || item.hammer > 0))
+			if (InfiniteReach.active && PermissionHandler.CanUseTools(Player) && (item.createTile != -1 || item.createWall != -1 || item.pick > 0 || item.axe > 0 || item.hammer > 0))
 				return 0.1f;
 
 			return 1;

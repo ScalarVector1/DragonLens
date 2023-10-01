@@ -1,4 +1,5 @@
-﻿using DragonLens.Core.Systems.ThemeSystem;
+﻿using DragonLens.Core.Systems;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using Terraria.DataStructures;
@@ -93,7 +94,7 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public override void PostUpdate()
 		{
-			if (Godmode.godMode)
+			if (Godmode.godMode && PermissionHandler.CanUseTools(Player))
 			{
 				Player.statLife = Player.statLifeMax2;
 				Player.statMana = Player.statManaMax2;
@@ -102,12 +103,12 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override bool ImmuneTo(PlayerDeathReason damageSource, int cooldownCounter, bool dodgeable)
 		{
-			return Godmode.godMode;
+			return Godmode.godMode && PermissionHandler.CanUseTools(Player);
 		}
 
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
 		{
-			if (Godmode.godMode || Godmode.dogMode)
+			if ((Godmode.godMode || Godmode.dogMode) && PermissionHandler.CanUseTools(Player))
 			{
 				playSound = false;
 				genGore = false;

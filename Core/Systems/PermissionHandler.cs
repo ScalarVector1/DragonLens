@@ -202,7 +202,7 @@ namespace DragonLens.Core.Systems
 	{
 		public override string Command => "DLAdmin";
 
-		public override CommandType Type => CommandType.Server | CommandType.Console;
+		public override CommandType Type => CommandType.Chat | CommandType.Server | CommandType.Console;
 
 		public override void Action(CommandCaller caller, string input, string[] args)
 		{
@@ -212,14 +212,23 @@ namespace DragonLens.Core.Systems
 			if (args.Length < 1)
 			{
 				Console.WriteLine(GetText("NameNotEntered"));
+				Main.NewText(GetText("NameNotEntered"), Color.Red);
 				return;
 			}
 
-			string name = args[0];
+			string name = "";
+			for(int k = 0; k < args.Length; k++)
+			{
+				if (k > 0)
+					name += " ";
+
+				name += args[k];
+			}
 
 			if (PermissionHandler.admins.Contains(name))
 			{
 				Console.WriteLine(GetText("AlreadyAdmin"));
+				Main.NewText(GetText("AlreadyAdmin"), Color.Red);
 				return;
 			}
 
@@ -228,10 +237,12 @@ namespace DragonLens.Core.Systems
 			if (player is null)
 			{
 				Console.WriteLine(LocalizationHelper.GetText("Permission.PlayerNotFound", name));
+				Main.NewText(LocalizationHelper.GetText("Permission.PlayerNotFound", name), Color.Red);
 			}
 			else
 			{
 				Console.WriteLine(GetText("AdminGiven", name));
+				Main.NewText(GetText("AdminGiven", name), Color.Lime);
 				PermissionHandler.AddAdmin(player);
 			}
 		}
@@ -244,7 +255,7 @@ namespace DragonLens.Core.Systems
 	{
 		public override string Command => "DLRemoveAdmin";
 
-		public override CommandType Type => CommandType.Server | CommandType.Console;
+		public override CommandType Type => CommandType.Chat | CommandType.Server | CommandType.Console;
 
 		public override string Usage => "/DLRemoveAdmin [player name]";
 
@@ -258,14 +269,23 @@ namespace DragonLens.Core.Systems
 			if (args.Length < 1)
 			{
 				Console.WriteLine(GetText("NameNotEntered"));
+				Main.NewText(GetText("NameNotEntered"), Color.Red);
 				return;
 			}
 
-			string name = args[0];
+			string name = "";
+			for (int k = 0; k < args.Length; k++)
+			{
+				if (k > 0)
+					name += " ";
+
+				name += args[k];
+			}
 
 			if (!PermissionHandler.admins.Contains(name))
 			{
 				Console.WriteLine(GetText("NotAdmin"));
+				Main.NewText(GetText("NotAdmin"), Color.Red);
 				return;
 			}
 
@@ -274,10 +294,12 @@ namespace DragonLens.Core.Systems
 			if (player is null)
 			{
 				Console.WriteLine(LocalizationHelper.GetText("Permission.PlayerNotFound", name));
+				Main.NewText(LocalizationHelper.GetText("Permission.PlayerNotFound", name), Color.Red);
 			}
 			else
 			{
 				Console.WriteLine(GetText("AdminTaken", name));
+				Main.NewText(GetText("AdminTaken", name), Color.Lime);
 				PermissionHandler.RemoveAdmin(player);
 			}
 		}
