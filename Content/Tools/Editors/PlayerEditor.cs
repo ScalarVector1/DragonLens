@@ -283,15 +283,22 @@ namespace DragonLens.Content.Tools.Editors
 		{
 			if (t.FieldType == typeof(T))
 			{
-				string message = LocalizationHelper.GetToolText("PlayerEditor.AutogenMsg");
+				try
+				{
+					string message = LocalizationHelper.GetToolText("PlayerEditor.AutogenMsg");
 
-				var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(p, n)), (T)t.GetValue(p), () => (T)t.GetValue(p), message });
-				modPlayerEditorList.Add(newEditor);
+					var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(p, n)), (T)t.GetValue(p), () => (T)t.GetValue(p), message });
+					modPlayerEditorList.Add(newEditor);
 
-				if (newEditor.Height.Pixels > nextHeight)
-					nextHeight = newEditor.Height.Pixels;
+					if (newEditor.Height.Pixels > nextHeight)
+						nextHeight = newEditor.Height.Pixels;
 
-				count++;
+					count++;
+				}
+				catch
+				{
+					Console.WriteLine($"Error while attempting to add editor for field {t?.Name ?? "Unknown"}");
+				}
 
 				if (count >= 3)
 				{
@@ -306,15 +313,22 @@ namespace DragonLens.Content.Tools.Editors
 		{
 			if (t.PropertyType == typeof(T))
 			{
-				string message = LocalizationHelper.GetToolText("PlayerEditor.AutogenMsg");
+				try
+				{
+					string message = LocalizationHelper.GetToolText("PlayerEditor.AutogenMsg");
 
-				var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(p, n)), (T)t.GetValue(p), () => (T)t.GetValue(p), message });
-				modPlayerEditorList.Add(newEditor);
+					var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(p, n)), (T)t.GetValue(p), () => (T)t.GetValue(p), message });
+					modPlayerEditorList.Add(newEditor);
 
-				if (newEditor.Height.Pixels > nextHeight)
-					nextHeight = newEditor.Height.Pixels;
+					if (newEditor.Height.Pixels > nextHeight)
+						nextHeight = newEditor.Height.Pixels;
 
-				count++;
+					count++;
+				}
+				catch
+				{
+					Console.WriteLine($"Error while attempting to add editor for field {t?.Name ?? "Unknown"}");
+				}
 
 				if (count >= 3)
 				{

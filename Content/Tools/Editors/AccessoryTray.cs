@@ -94,7 +94,7 @@ namespace DragonLens.Content.Tools.Editors
 
 			accessories.ForEach(n =>
 			{
-				Player.GrantPrefixBenefits(n)/* tModPorter Note: Removed. Use either GrantPrefixBenefits (if Item.accessory) or GrantArmorBenefits (for armor slots) */;
+				Player.GrantPrefixBenefits(n);
 				Player.ApplyEquipFunctional(n, false);
 			});
 		}

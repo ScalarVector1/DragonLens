@@ -203,10 +203,17 @@ namespace DragonLens.Content.Tools.Editors
 		{
 			if (t.FieldType == typeof(T))
 			{
-				string message = LocalizationHelper.GetToolText("ItemEditor.AutogenMsg");
+				try
+				{
+					string message = LocalizationHelper.GetToolText("ItemEditor.AutogenMsg");
 
-				var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(item.ModItem, n)), (T)t.GetValue(item.ModItem), () => (T)t.GetValue(item.ModItem), message });
-				modItemEditorList.Add(newEditor);
+					var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(item.ModItem, n)), (T)t.GetValue(item.ModItem), () => (T)t.GetValue(item.ModItem), message });
+					modItemEditorList.Add(newEditor);
+				}
+				catch
+				{
+					Console.WriteLine($"Error while attempting to add editor for field {t?.Name ?? "Unknown"}");
+				}
 			}
 		}
 
@@ -214,10 +221,17 @@ namespace DragonLens.Content.Tools.Editors
 		{
 			if (t.PropertyType == typeof(T))
 			{
-				string message = LocalizationHelper.GetToolText("ItemEditor.AutogenMsg");
+				try
+				{
+					string message = LocalizationHelper.GetToolText("ItemEditor.AutogenMsg");
 
-				var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(item.ModItem, n)), (T)t.GetValue(item.ModItem), () => (T)t.GetValue(item.ModItem), message });
-				modItemEditorList.Add(newEditor);
+					var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(item.ModItem, n)), (T)t.GetValue(item.ModItem), () => (T)t.GetValue(item.ModItem), message });
+					modItemEditorList.Add(newEditor);
+				}
+				catch
+				{
+					Console.WriteLine($"Error while attempting to add editor for field {t?.Name ?? "Unknown"}");
+				}
 			}
 		}
 
