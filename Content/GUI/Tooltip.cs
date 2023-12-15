@@ -18,7 +18,17 @@ namespace DragonLens.Content.GUI
 
 		public void Load(Mod mod)
 		{
-			Terraria.On_Main.DrawInterface += Reset;
+			On_Main.DrawInterface += static (On_Main.orig_DrawInterface orig, Main self, GameTime gameTime) =>
+			{
+				orig(self, gameTime);
+				Reset();
+			};
+
+			On_Main.DrawMap += static (On_Main.orig_DrawMap orig, Main self, GameTime gameTime) =>
+			{
+				orig(self, gameTime);
+				Reset();
+			};
 		}
 
 		public override int InsertionIndex(List<GameInterfaceLayer> layers)
@@ -77,10 +87,8 @@ namespace DragonLens.Content.GUI
 			Utils.DrawBorderString(Main.spriteBatch, tooltip, pos, Color.LightGray, 0.9f);
 		}
 
-		private void Reset(On_Main.orig_DrawInterface orig, Main self, GameTime gameTime)
+		private static void Reset()
 		{
-			orig(self, gameTime);
-
 			//reset
 			text = string.Empty;
 			tooltip = string.Empty;
