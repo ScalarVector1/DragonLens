@@ -178,8 +178,9 @@ namespace DragonLens.Content.GUI
 
 			PlayerInput.SetZoom_UI();
 
-			UILoader.GetUIState<ToolbarState>().UserInterface.Update(Main._drawInterfaceGameTime);
-			UILoader.GetUIState<ToolBrowser>().UserInterface.Update(Main._drawInterfaceGameTime); //We update/draw the tool browser here too to ease customization
+			// Have to check if _drawInterfaceGameTime is null otherwise there is a crash with world gen preview mod
+			UILoader.GetUIState<ToolbarState>().UserInterface.Update(Main._drawInterfaceGameTime ?? new GameTime());
+			UILoader.GetUIState<ToolBrowser>().UserInterface.Update(Main._drawInterfaceGameTime ?? new GameTime()); //We update/draw the tool browser here too to ease customization
 
 			Main.spriteBatch.Begin(default, default, default, default, default, default, Main.UIScaleMatrix);
 			UILoader.GetUIState<ToolbarState>().Draw(Main.spriteBatch);
