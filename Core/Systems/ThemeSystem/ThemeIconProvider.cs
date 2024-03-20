@@ -17,6 +17,7 @@ namespace DragonLens.Core.Systems.ThemeSystem
 			"DogMode",
 			"DustDespawner",
 			"DustSpawner",
+			"EntityEditor",
 			"FastForward",
 			"FreeCamera",
 			"GodMode",

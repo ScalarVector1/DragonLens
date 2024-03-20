@@ -26,6 +26,7 @@ namespace DragonLens.Content.Tools.Editors
 			state.visible = !state.visible;
 
 			//We re-initialize because the UserInterface isnt set when loaded so the scroll bars poop out
+			state.entity = null;
 			state.RemoveAllChildren();
 			state.OnInitialize();
 		}
@@ -40,6 +41,8 @@ namespace DragonLens.Content.Tools.Editors
 
 		public FixedUIScrollbar basicEditorScroll;
 		public FixedUIScrollbar modEditorScroll;
+
+		public EntityEditorButton button;
 
 		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 844, 32);
 
@@ -77,6 +80,9 @@ namespace DragonLens.Content.Tools.Editors
 			modEditorList.SetScrollbar(modEditorScroll);
 			modEditorList.ListPadding = 16;
 			Append(modEditorList);
+
+			button = new(this);
+			Append(button);
 		}
 
 		public override void AdjustPositions(Vector2 newPos)
@@ -90,6 +96,38 @@ namespace DragonLens.Content.Tools.Editors
 			modEditorList.Top.Set(newPos.Y + 50 + 48, 0);
 			modEditorScroll.Left.Set(newPos.X + 480 + 338, 0);
 			modEditorScroll.Top.Set(newPos.Y + 50 + 48, 0);
+
+			button.Left.Set(newPos.X - 220, 0);
+			button.Top.Set(newPos.Y + 220, 0);
+		}
+
+		public override void DraggableUdpate(GameTime gameTime)
+		{
+			if (entity is null || !entity.active)
+			{
+				basicEditorList.Clear();
+				modEditorList.Clear();
+
+				basicEditorScroll.Remove();
+				modEditorScroll.Remove();
+
+				width = 600;
+				height = 130;
+
+				entity = null;
+				PlayerInput.WritingText = false;
+				Main.blockInput = false;
+
+				Main.LocalPlayer.mouseInterface = true;
+			}
+			else
+			{
+				Append(basicEditorScroll);
+				Append(modEditorScroll);
+
+				width = 844;
+				height = 648;
+			}
 		}
 
 		public void SetupNew()
@@ -110,7 +148,8 @@ namespace DragonLens.Content.Tools.Editors
 
 		private void BuildModEditor()
 		{
-
+			if (entity is NPC)
+				BuildModNPC();
 		}
 
 		// TODO: Soemthing here to allow mods to register custom entity types?
@@ -145,7 +184,21 @@ namespace DragonLens.Content.Tools.Editors
 
 		private void BuildModNPC()
 		{
+			NPC npc = entity as NPC;
 
+			if (npc.ModNPC != null)
+				modEditorList.Add(new ModTypeContainer(npc.ModNPC, "~ModNPC Fields"));
+
+			foreach (GlobalNPC gnpc in npc.Globals)
+			{
+				if (gnpc.Mod == ModLoader.GetMod("DragonLens"))
+					continue;
+
+				var newContainer = new ModTypeContainer(gnpc);
+
+				if (newContainer.modPlayerEditorList.Count > 1)
+					modEditorList.Add(newContainer);
+			}
 		}
 		#endregion
 
@@ -155,7 +208,10 @@ namespace DragonLens.Content.Tools.Editors
 			{
 				for(int k = 0; k < Main.maxNPCs; k++)
 				{
-					if (Main.npc[k].active && Main.npc[k].Hitbox.Contains(Main.MouseWorld.ToPoint()))
+					var box = Main.npc[k].Hitbox;
+					box.Inflate(16, 16);
+
+					if (Main.npc[k].active && box.Contains(Main.MouseWorld.ToPoint()))
 					{
 						entity = Main.npc[k];
 						Main.NewText(Main.npc[k].GivenOrTypeName + " selected for editing.");
@@ -175,6 +231,8 @@ namespace DragonLens.Content.Tools.Editors
 				return LocalizationHelper.GetText($"Tools.EntityEditor.{text}");
 			}
 
+			Vector2 pos = basePos;
+
 			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
 				PlayerInput.LockVanillaMouseScroll("DragonLens: Entity Editor");
 
@@ -189,11 +247,24 @@ namespace DragonLens.Content.Tools.Editors
 
 			Utils.DrawBorderStringBig(spriteBatch, GetLocalizedText("DisplayName"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.6f);
 
+			// Preview portrait
+			var preview = new Rectangle((int)pos.X - 220, (int)pos.Y, 200, 200);
+
+			GUIHelper.DrawBox(spriteBatch, preview, ThemeHandler.ButtonColor);
+
+			if (entity != null && entity.active)
+			{
+				preview.Inflate(-4, -4);
+				var source = new Rectangle((int)entity.Center.X - 100, (int)entity.Center.Y - 100, 200, 200);
+				source.Offset((-Main.screenPosition).ToPoint());
+				spriteBatch.Draw(Main.screenTarget, preview, source, Color.White);
+			}
+
+			// Labels
 			if (entity != null)
 			{
-				Vector2 pos = basePos;
 				Utils.DrawBorderString(spriteBatch, GetLocalizedText("VanillaFields"), pos + new Vector2(120, 80), Color.White, 1, 0f, 0.5f);
-				Utils.DrawBorderString(spriteBatch, GetLocalizedText("ModPlayers"), pos + new Vector2(320 + 220, 80), Color.White, 1, 0f, 0.5f);
+				Utils.DrawBorderString(spriteBatch, GetLocalizedText("ModFields"), pos + new Vector2(320 + 220, 80), Color.White, 1, 0f, 0.5f);
 
 				Texture2D background = Terraria.GameContent.TextureAssets.MagicPixel.Value;
 
@@ -202,11 +273,44 @@ namespace DragonLens.Content.Tools.Editors
 			}
 			else
 			{
-				Utils.DrawBorderStringBig(spriteBatch, "Click an entity to start", BoundingBox.Center.ToVector2(), Color.White, 1f, 0.5f, 0.5f);
+				Utils.DrawBorderStringBig(spriteBatch, GetLocalizedText("Tutorial"), BoundingBox.Center.ToVector2() + Vector2.UnitY * 38, Color.White, 0.8f, 0.5f, 0.5f);
 			}
 
 			base.Draw(spriteBatch);
 
+		}
+	}
+
+	internal class EntityEditorButton : SmartUIElement
+	{
+		public EntityEditorState parent;
+
+		public EntityEditorButton(EntityEditorState parent)
+		{
+			this.parent = parent;
+			Width.Set(200, 0);
+			Height.Set(42, 0);
+		}
+
+		public override void SafeClick(UIMouseEvent evt)
+		{
+			parent.basicEditorList.Clear();
+			parent.modEditorList.Clear();
+
+			parent.entity = null;
+			PlayerInput.WritingText = false;
+			Main.blockInput = false;
+
+			
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			if (GetDimensions().ToRectangle().Contains(Main.MouseScreen.ToPoint()))
+				Main.LocalPlayer.mouseInterface = true;
+
+			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
+			Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetToolText("EntityEditor.Deselect"), GetDimensions().Center(), Color.LightGray, 1, 0.5f, 0.5f);
 		}
 	}
 }

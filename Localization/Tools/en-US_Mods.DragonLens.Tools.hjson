@@ -652,6 +652,10 @@ SoundSpawner: {
 }
 
 EntityEditor: {
-	DisplayName: EntityEditorTool
-	Description: The tool has no description! Add one in .hjson files!
+	DisplayName: Entity Editor
+	Description: View and edit the values of any entity
+	VanillaFields: Vanilla Fields
+	ModFields: Modded Fields
+	Tutorial: Click an entity to start
+	Deselect: Deselect
 }
