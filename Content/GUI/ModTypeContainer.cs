@@ -93,7 +93,6 @@ namespace DragonLens.Content.GUI
 			{
 				if (k > 0 && k % 3 == 0)
 				{
-					Main.NewText(tallest);
 					height += tallest + modPlayerEditorList.ListPadding;
 					tallest = 0;
 				}
@@ -103,10 +102,7 @@ namespace DragonLens.Content.GUI
 					tallest = item.Height.Pixels;
 			}
 
-			Main.NewText(tallest);
 			height += tallest + modPlayerEditorList.ListPadding;
-
-			Main.NewText("Total: " + height);
 
 			Width.Set(480, 0);
 			Height.Set(height, 0);
@@ -114,8 +110,6 @@ namespace DragonLens.Content.GUI
 
 			modPlayerEditorList.Height.Set(height, 0);
 			modPlayerEditorList.MaxHeight.Set(height, 0);
-
-			Main.NewText(modPlayerEditorList.MaxHeight.Pixels);
 
 			Append(modPlayerEditorList);
 		}
