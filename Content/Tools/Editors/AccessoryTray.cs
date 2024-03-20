@@ -104,7 +104,7 @@ namespace DragonLens.Content.Tools.Editors
 	{
 		public UIGrid slots;
 
-		public FixedUIScrollbar slotsScroll;
+		public StyledScrollbar slotsScroll;
 
 		public bool initialized = false;
 

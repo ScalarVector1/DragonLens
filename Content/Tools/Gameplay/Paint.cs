@@ -45,7 +45,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		public bool firstSet;
 
 		public UIGrid structureButtons;
-		public FixedUIScrollbar structureScroll;
+		public StyledScrollbar structureScroll;
 		public ToggleButton sampleButton;
 		public AdPanel adPanel;
 

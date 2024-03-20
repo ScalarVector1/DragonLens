@@ -12,9 +12,9 @@ namespace DragonLens.Content.GUI
 	internal class ThemeMenu : DraggableUIState
 	{
 		private UIGrid boxes;
-		private FixedUIScrollbar boxScrollBar;
+		private StyledScrollbar boxScrollBar;
 		private UIGrid icons;
-		private FixedUIScrollbar iconScrollBar;
+		private StyledScrollbar iconScrollBar;
 
 		private ColorEditor backgroundColorEditor;
 		private ColorEditor foregroundColorEditor;

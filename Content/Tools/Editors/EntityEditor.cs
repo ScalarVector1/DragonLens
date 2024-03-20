@@ -39,8 +39,8 @@ namespace DragonLens.Content.Tools.Editors
 		public UIGrid basicEditorList;
 		public UIGrid modEditorList;
 
-		public FixedUIScrollbar basicEditorScroll;
-		public FixedUIScrollbar modEditorScroll;
+		public StyledScrollbar basicEditorScroll;
+		public StyledScrollbar modEditorScroll;
 
 		public EntityEditorButton button;
 

@@ -64,8 +64,8 @@ namespace DragonLens.Content.Tools.Editors
 		public UIGrid basicEditorList;
 		public UIGrid modPlayerEditorList;
 
-		public FixedUIScrollbar basicEditorScroll;
-		public FixedUIScrollbar modPlayerEditorScroll;
+		public StyledScrollbar basicEditorScroll;
+		public StyledScrollbar modPlayerEditorScroll;
 
 		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 844, 32);
 

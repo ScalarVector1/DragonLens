@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using Terraria.GameContent;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
-using FixedUIScrollbar = Terraria.GameContent.UI.Elements.FixedUIScrollbar;
 
 namespace DragonLens.Content.GUI
 {
@@ -19,7 +18,7 @@ namespace DragonLens.Content.GUI
 	internal abstract class Browser : DraggableUIState
 	{
 		private UIGrid options;
-		private FixedUIScrollbar scrollBar;
+		private StyledScrollbar scrollBar;
 		private ToggleButton listButton;
 		private ToggleButton filterButton;
 		public FilterPanel filters;

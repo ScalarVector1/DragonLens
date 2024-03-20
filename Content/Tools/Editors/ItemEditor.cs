@@ -42,9 +42,9 @@ namespace DragonLens.Content.Tools.Editors
 		public Terraria.GameContent.UI.Elements.UIList modItemEditorList;
 		public Terraria.GameContent.UI.Elements.UIList prefixList;
 
-		public FixedUIScrollbar basicEditorScroll;
-		public FixedUIScrollbar modItemEditorScroll;
-		public FixedUIScrollbar prefixScroll;
+		public StyledScrollbar basicEditorScroll;
+		public StyledScrollbar modItemEditorScroll;
+		public StyledScrollbar prefixScroll;
 
 		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 600, 32);
 

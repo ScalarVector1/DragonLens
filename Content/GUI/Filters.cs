@@ -16,7 +16,7 @@ namespace DragonLens.Content.GUI
 
 		public List<FilterButton> filterButtonInstances;
 		public UIGrid filters;
-		public FixedUIScrollbar bar;
+		public StyledScrollbar bar;
 
 		/// <summary>
 		/// We track an order so the order in which filters are added in code is the order in which they appear
