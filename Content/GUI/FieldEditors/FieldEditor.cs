@@ -5,10 +5,7 @@ using System;
 
 namespace DragonLens.Content.GUI.FieldEditors
 {
-	/// <summary>
-	/// A UI element for changing the value of 'something'. 
-	/// </summary>
-	internal abstract class FieldEditor<T> : SmartUIElement
+	internal abstract class FieldEditor : SmartUIElement
 	{
 		/// <summary>
 		/// The name that gets displated above the panel to the user
@@ -20,6 +17,25 @@ namespace DragonLens.Content.GUI.FieldEditors
 		/// </summary>
 		public string description;
 
+		/// <summary>
+		/// If this editor is currently being used to change a value, and thus shouldn't listen for update
+		/// </summary>
+		public virtual bool Editing => false;
+
+		public override int CompareTo(object obj)
+		{
+			if (obj is FieldEditor editor)
+				return name.CompareTo(editor.name);
+
+			return base.CompareTo(obj);
+		}
+	}
+
+	/// <summary>
+	/// A UI element for changing the value of 'something'. 
+	/// </summary>
+	internal abstract class FieldEditor<T> : FieldEditor
+	{
 		/// <summary>
 		/// The current value this editor believes the field its tied to to have. This wont update in real time so be careful
 		/// </summary>
@@ -34,11 +50,6 @@ namespace DragonLens.Content.GUI.FieldEditors
 		/// This function, called every frame while the editor is not being used, is used to update the editor's value to the current value of the tracked value.
 		/// </summary>
 		protected readonly Func<T> listenForUpdate;
-
-		/// <summary>
-		/// If this editor is currently being used to change a value, and thus shouldn't listen for update
-		/// </summary>
-		public virtual bool Editing => false;
 
 		/// <summary>
 		/// 

@@ -279,7 +279,7 @@ namespace DragonLens.Content.Tools.Editors
 			Append(modPlayerEditorList);
 		}
 
-		private void TryAddEditor<T, E>(FieldInfo t, ModPlayer p) where E : FieldEditor<T>
+		private void TryAddEditor<T, E>(FieldInfo t, object p) where E : FieldEditor<T>
 		{
 			if (t.FieldType == typeof(T))
 			{
@@ -309,7 +309,7 @@ namespace DragonLens.Content.Tools.Editors
 			}
 		}
 
-		private void TryAddEditor<T, E>(PropertyInfo t, ModPlayer p) where E : FieldEditor<T>
+		private void TryAddEditor<T, E>(PropertyInfo t, object p) where E : FieldEditor<T>
 		{
 			if (t.PropertyType == typeof(T))
 			{

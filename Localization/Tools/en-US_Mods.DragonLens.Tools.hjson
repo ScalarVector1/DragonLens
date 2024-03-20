@@ -650,3 +650,8 @@ SoundSpawner: {
 	DisplayName: Sound Player
 	Description: Browse and play sounds from the game
 }
+
+EntityEditor: {
+	DisplayName: EntityEditorTool
+	Description: The tool has no description! Add one in .hjson files!
+}

@@ -40,3 +40,4 @@ NPCSpawner.DisplayName: "{$Mods.DragonLens.Tools.NPCSpawner.DisplayName}"
 ProjectileSpawner.DisplayName: "{$Mods.DragonLens.Tools.ProjectileSpawner.DisplayName}"
 TileSpawner.DisplayName: "{$Mods.DragonLens.Tools.TileSpawner.DisplayName}"
 SoundSpawner.DisplayName: "{$Mods.DragonLens.Tools.SoundSpawner.DisplayName}"
+EntityEditor.DisplayName: Entity Editor
