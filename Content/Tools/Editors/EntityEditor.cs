@@ -44,6 +44,8 @@ namespace DragonLens.Content.Tools.Editors
 
 		public EntityEditorButton button;
 
+		public TextField searchBar;
+
 		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 844, 32);
 
 		public override Vector2 DefaultPosition => new(0.4f, 0.4f);
@@ -77,12 +79,18 @@ namespace DragonLens.Content.Tools.Editors
 			modEditorList = new();
 			modEditorList.Width.Set(480, 0);
 			modEditorList.Height.Set(540, 0);
+			modEditorList.ListPadding = 0;
 			modEditorList.SetScrollbar(modEditorScroll);
 			modEditorList.ListPadding = 16;
 			Append(modEditorList);
 
 			button = new(this);
 			Append(button);
+
+			searchBar = new();
+			searchBar.Width.Set(180, 0);
+			searchBar.Height.Set(32, 0);
+			Append(searchBar);
 		}
 
 		public override void AdjustPositions(Vector2 newPos)
@@ -99,6 +107,9 @@ namespace DragonLens.Content.Tools.Editors
 
 			button.Left.Set(newPos.X - 220, 0);
 			button.Top.Set(newPos.Y + 220, 0);
+
+			searchBar.Left.Set(newPos.X + 650, 0);
+			searchBar.Top.Set(newPos.Y + 60, 0);
 		}
 
 		public override void DraggableUdpate(GameTime gameTime)
@@ -127,6 +138,15 @@ namespace DragonLens.Content.Tools.Editors
 
 				width = 844;
 				height = 648;
+
+				if (searchBar.updated)
+				{
+					foreach(UIElement element in modEditorList._items)
+					{
+						if (element is ModTypeContainer container)
+							container.Filter(searchBar.currentValue);
+					}
+				}
 			}
 		}
 
@@ -264,7 +284,7 @@ namespace DragonLens.Content.Tools.Editors
 			if (entity != null)
 			{
 				Utils.DrawBorderString(spriteBatch, GetLocalizedText("VanillaFields"), pos + new Vector2(120, 80), Color.White, 1, 0f, 0.5f);
-				Utils.DrawBorderString(spriteBatch, GetLocalizedText("ModFields"), pos + new Vector2(320 + 220, 80), Color.White, 1, 0f, 0.5f);
+				Utils.DrawBorderString(spriteBatch, GetLocalizedText("ModFields"), pos + new Vector2(320 + 120, 80), Color.White, 1, 0f, 0.5f);
 
 				Texture2D background = Terraria.GameContent.TextureAssets.MagicPixel.Value;
 

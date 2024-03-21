@@ -18,6 +18,11 @@ namespace DragonLens.Content.GUI.FieldEditors
 		public string description;
 
 		/// <summary>
+		/// Base height for this editor, used when heights are changed to filter
+		/// </summary>
+		public int height;
+
+		/// <summary>
 		/// If this editor is currently being used to change a value, and thus shouldn't listen for update
 		/// </summary>
 		public virtual bool Editing => false;
@@ -25,7 +30,13 @@ namespace DragonLens.Content.GUI.FieldEditors
 		public override int CompareTo(object obj)
 		{
 			if (obj is FieldEditor editor)
+			{
+				if ((Height.Pixels > 0) != (editor.Height.Pixels > 0))
+					return Height.Pixels.CompareTo(editor.Height.Pixels) * -1;
+
 				return name.CompareTo(editor.name);
+			}
+				
 
 			return base.CompareTo(obj);
 		}
@@ -62,6 +73,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 		{
 			Width.Set(150, 0);
 			Height.Set(height, 0);
+			this.height = height;
 			this.name = name;
 			this.onValueChanged = onValueChanged;
 			this.listenForUpdate = listenForUpdate;
@@ -91,6 +103,9 @@ namespace DragonLens.Content.GUI.FieldEditors
 
 		public sealed override void Draw(SpriteBatch spriteBatch)
 		{
+			if (Height.Pixels <= 0 && Height.Percent <= 0)
+				return;
+
 			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.BackgroundColor);
 
 			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;

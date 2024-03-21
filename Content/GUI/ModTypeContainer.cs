@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria.ModLoader.UI.Elements;
+using Terraria.UI;
 
 namespace DragonLens.Content.GUI
 {
@@ -24,6 +25,9 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
+			if (Parent.Parent.Parent.Height.Pixels <= 0)
+				return;
+
 			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
 			var backTarget = GetDimensions().ToRectangle();
 			spriteBatch.Draw(back, backTarget, Color.Black * 0.5f);
@@ -52,8 +56,6 @@ namespace DragonLens.Content.GUI
 			modPlayerEditorList.Add(new ModTypeSeperator(Label));
 
 			modPlayerEditorList.Width.Set(480, 0);
-
-			Main.NewText(Label);
 
 			if (modType != null)
 			{
@@ -88,8 +90,17 @@ namespace DragonLens.Content.GUI
 				}
 			}
 
+			CalcHeight();
+
+			Append(modPlayerEditorList);
+		}
+
+		private void CalcHeight()
+		{
+			height = 36;
+
 			float tallest = 0;
-			for(int k = 0; k < modPlayerEditorList.Count - 1; k++)
+			for (int k = 0; k < modPlayerEditorList.Count - 1; k++)
 			{
 				if (k > 0 && k % 3 == 0)
 				{
@@ -98,7 +109,7 @@ namespace DragonLens.Content.GUI
 				}
 
 				var item = modPlayerEditorList._items[k + 1];
-				if(item.Height.Pixels > tallest)
+				if (item.Height.Pixels > tallest)
 					tallest = item.Height.Pixels;
 			}
 
@@ -110,8 +121,6 @@ namespace DragonLens.Content.GUI
 
 			modPlayerEditorList.Height.Set(height, 0);
 			modPlayerEditorList.MaxHeight.Set(height, 0);
-
-			Append(modPlayerEditorList);
 		}
 
 		private void TryAddEditor<T, E>(FieldInfo t, object mt) where E : FieldEditor<T>
@@ -147,6 +156,42 @@ namespace DragonLens.Content.GUI
 				{
 					Console.WriteLine($"Error while attempting to add editor for field {t?.Name ?? "Unknown"}");
 				}
+			}
+		}
+
+		/// <summary>
+		/// Filters out editors whos name does not match a search term
+		/// </summary>
+		/// <param name="filter">The search term</param>
+		public void Filter(string filter)
+		{
+			bool anyShown = false;
+
+			foreach(UIElement element in modPlayerEditorList._items)
+			{
+				if (element is FieldEditor editor)
+				{
+					if (editor.name.ToLower().Contains(filter.ToLower()))
+					{
+						editor.Height.Set(editor.height, 0);
+						anyShown = true;
+					}
+					else
+					{
+						element.Height.Set(0, 0);
+					}
+				}
+			}
+
+			if (anyShown)
+			{
+				modPlayerEditorList.UpdateOrder();
+				CalcHeight();
+			}
+			else
+			{
+				Height.Set(0, 0);
+				modPlayerEditorList.Height.Set(0, 0);
 			}
 		}
 
