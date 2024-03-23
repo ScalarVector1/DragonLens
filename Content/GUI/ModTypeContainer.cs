@@ -39,15 +39,16 @@ namespace DragonLens.Content.GUI
 	internal class ModTypeContainer : SmartUIElement
 	{
 		public UIGrid modPlayerEditorList;
-		public ModType modType;
+		public object modType;
 
 		private float height = 32;
 
 		private string nameOverride;
 
-		public string Label => nameOverride == string.Empty ? modType.Mod.DisplayName + ": " + modType.Name : nameOverride;
+		public string smartLabel => modType is ModType mt ? mt.Mod.Name + ": " + mt.Name : modType.GetType().Name;
+		public string Label => nameOverride == string.Empty ? smartLabel : nameOverride;
 
-		public ModTypeContainer(ModType modType, string nameOverride = "")
+		public ModTypeContainer(object modType, string nameOverride = "")
 		{
 			this.modType = modType;
 			this.nameOverride = nameOverride;
@@ -104,7 +105,9 @@ namespace DragonLens.Content.GUI
 			{
 				if (k > 0 && k % 3 == 0)
 				{
-					height += tallest + modPlayerEditorList.ListPadding;
+					if (tallest != 0)
+						height += tallest + modPlayerEditorList.ListPadding;
+					
 					tallest = 0;
 				}
 
@@ -113,7 +116,8 @@ namespace DragonLens.Content.GUI
 					tallest = item.Height.Pixels;
 			}
 
-			height += tallest + modPlayerEditorList.ListPadding;
+			if (tallest != 0)
+				height += tallest + modPlayerEditorList.ListPadding;
 
 			Width.Set(480, 0);
 			Height.Set(height, 0);

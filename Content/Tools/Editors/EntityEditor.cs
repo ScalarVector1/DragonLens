@@ -37,14 +37,11 @@ namespace DragonLens.Content.Tools.Editors
 		public Entity entity;
 
 		public UIGrid basicEditorList;
-		public UIGrid modEditorList;
-
 		public StyledScrollbar basicEditorScroll;
-		public StyledScrollbar modEditorScroll;
+
+		public FieldEditorMenu moddedEditor;
 
 		public EntityEditorButton button;
-
-		public TextField searchBar;
 
 		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 844, 32);
 
@@ -71,26 +68,12 @@ namespace DragonLens.Content.Tools.Editors
 			basicEditorList.SetScrollbar(basicEditorScroll);
 			Append(basicEditorList);
 
-			modEditorScroll = new(UserInterface);
-			modEditorScroll.Height.Set(540, 0);
-			modEditorScroll.Width.Set(16, 0);
-			Append(modEditorScroll);
-
-			modEditorList = new();
-			modEditorList.Width.Set(480, 0);
-			modEditorList.Height.Set(540, 0);
-			modEditorList.ListPadding = 0;
-			modEditorList.SetScrollbar(modEditorScroll);
-			modEditorList.ListPadding = 16;
-			Append(modEditorList);
+			moddedEditor = new(UserInterface);
+			moddedEditor.OnInitialize();
+			Append(moddedEditor);
 
 			button = new(this);
 			Append(button);
-
-			searchBar = new();
-			searchBar.Width.Set(180, 0);
-			searchBar.Height.Set(32, 0);
-			Append(searchBar);
 		}
 
 		public override void AdjustPositions(Vector2 newPos)
@@ -100,16 +83,11 @@ namespace DragonLens.Content.Tools.Editors
 			basicEditorScroll.Left.Set(newPos.X + 320, 0);
 			basicEditorScroll.Top.Set(newPos.Y + 50 + 48, 0);
 
-			modEditorList.Left.Set(newPos.X + 342, 0);
-			modEditorList.Top.Set(newPos.Y + 50 + 48, 0);
-			modEditorScroll.Left.Set(newPos.X + 480 + 338, 0);
-			modEditorScroll.Top.Set(newPos.Y + 50 + 48, 0);
+			moddedEditor.Left.Set(newPos.X + 342, 0);
+			moddedEditor.Top.Set(newPos.Y, 0);
 
 			button.Left.Set(newPos.X - 220, 0);
 			button.Top.Set(newPos.Y + 220, 0);
-
-			searchBar.Left.Set(newPos.X + 650, 0);
-			searchBar.Top.Set(newPos.Y + 60, 0);
 		}
 
 		public override void DraggableUdpate(GameTime gameTime)
@@ -117,10 +95,9 @@ namespace DragonLens.Content.Tools.Editors
 			if (entity is null || !entity.active)
 			{
 				basicEditorList.Clear();
-				modEditorList.Clear();
+				moddedEditor.Clear();
 
 				basicEditorScroll.Remove();
-				modEditorScroll.Remove();
 
 				width = 600;
 				height = 130;
@@ -134,19 +111,9 @@ namespace DragonLens.Content.Tools.Editors
 			else
 			{
 				Append(basicEditorScroll);
-				Append(modEditorScroll);
 
 				width = 844;
 				height = 648;
-
-				if (searchBar.updated)
-				{
-					foreach(UIElement element in modEditorList._items)
-					{
-						if (element is ModTypeContainer container)
-							container.Filter(searchBar.currentValue);
-					}
-				}
 			}
 		}
 
@@ -205,20 +172,20 @@ namespace DragonLens.Content.Tools.Editors
 		private void BuildModNPC()
 		{
 			NPC npc = entity as NPC;
+			List<object> modEditorList = new();
 
 			if (npc.ModNPC != null)
-				modEditorList.Add(new ModTypeContainer(npc.ModNPC, "~ModNPC Fields"));
+				modEditorList.Add(npc.ModNPC);
 
 			foreach (GlobalNPC gnpc in npc.Globals)
 			{
 				if (gnpc.Mod == ModLoader.GetMod("DragonLens"))
 					continue;
 
-				var newContainer = new ModTypeContainer(gnpc);
-
-				if (newContainer.modPlayerEditorList.Count > 1)
-					modEditorList.Add(newContainer);
+				modEditorList.Add(gnpc);
 			}
+
+			moddedEditor.SetEditing(modEditorList.ToArray());
 		}
 		#endregion
 
@@ -284,12 +251,10 @@ namespace DragonLens.Content.Tools.Editors
 			if (entity != null)
 			{
 				Utils.DrawBorderString(spriteBatch, GetLocalizedText("VanillaFields"), pos + new Vector2(120, 80), Color.White, 1, 0f, 0.5f);
-				Utils.DrawBorderString(spriteBatch, GetLocalizedText("ModFields"), pos + new Vector2(320 + 120, 80), Color.White, 1, 0f, 0.5f);
 
 				Texture2D background = Terraria.GameContent.TextureAssets.MagicPixel.Value;
 
 				spriteBatch.Draw(background, basicEditorList.GetDimensions().ToRectangle(), Color.Black * 0.25f);
-				spriteBatch.Draw(background, modEditorList.GetDimensions().ToRectangle(), Color.Black * 0.25f);
 			}
 			else
 			{
@@ -315,13 +280,11 @@ namespace DragonLens.Content.Tools.Editors
 		public override void SafeClick(UIMouseEvent evt)
 		{
 			parent.basicEditorList.Clear();
-			parent.modEditorList.Clear();
+			parent.moddedEditor.Clear();
 
 			parent.entity = null;
 			PlayerInput.WritingText = false;
-			Main.blockInput = false;
-
-			
+			Main.blockInput = false;	
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
