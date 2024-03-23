@@ -62,10 +62,10 @@ namespace DragonLens.Content.Tools.Editors
 		public Player player = Main.LocalPlayer;
 
 		public UIGrid basicEditorList;
-		public UIGrid modPlayerEditorList;
+		public FieldEditorMenu modPlayerEditor;
 
 		public StyledScrollbar basicEditorScroll;
-		public StyledScrollbar modPlayerEditorScroll;
+
 
 		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 844, 32);
 
@@ -92,17 +92,9 @@ namespace DragonLens.Content.Tools.Editors
 			basicEditorList.SetScrollbar(basicEditorScroll);
 			Append(basicEditorList);
 
-			modPlayerEditorScroll = new(UserInterface);
-			modPlayerEditorScroll.Height.Set(540, 0);
-			modPlayerEditorScroll.Width.Set(16, 0);
-			Append(modPlayerEditorScroll);
-
-			modPlayerEditorList = new();
-			modPlayerEditorList.Width.Set(480, 0);
-			modPlayerEditorList.Height.Set(540, 0);
-			modPlayerEditorList.SetScrollbar(modPlayerEditorScroll);
-			modPlayerEditorList.ListPadding = 16;
-			Append(modPlayerEditorList);
+			modPlayerEditor = new(UserInterface);
+			modPlayerEditor.OnInitialize();
+			Append(modPlayerEditor);
 		}
 
 		public override void AdjustPositions(Vector2 newPos)
@@ -112,10 +104,8 @@ namespace DragonLens.Content.Tools.Editors
 			basicEditorScroll.Left.Set(newPos.X + 320, 0);
 			basicEditorScroll.Top.Set(newPos.Y + 50 + 48, 0);
 
-			modPlayerEditorList.Left.Set(newPos.X + 342, 0);
-			modPlayerEditorList.Top.Set(newPos.Y + 50 + 48, 0);
-			modPlayerEditorScroll.Left.Set(newPos.X + 480 + 338, 0);
-			modPlayerEditorScroll.Top.Set(newPos.Y + 50 + 48, 0);
+			modPlayerEditor.Left.Set(newPos.X + 342, 0);
+			modPlayerEditor.Top.Set(newPos.Y + 50, 0);
 		}
 
 		public void SetupNewPlayer()
@@ -151,16 +141,17 @@ namespace DragonLens.Content.Tools.Editors
 
 		private void BuildModPlayerEditor()
 		{
+			List<object> modEditorList = new();
+
 			foreach (ModPlayer mp in player.ModPlayers)
 			{
 				if (mp is PlayerEditorPlayer) //this is our own special thing we want in the other box!
 					continue;
 
-				var newContainer = new ModTypeContainer(mp);
-
-				if (newContainer.modPlayerEditorList.Count > 1)
-					modPlayerEditorList.Add(newContainer);
+				modEditorList.Add(mp);
 			}
+
+			modPlayerEditor.SetEditing(modEditorList.ToArray());
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
@@ -186,12 +177,10 @@ namespace DragonLens.Content.Tools.Editors
 
 			Vector2 pos = basePos;
 			Utils.DrawBorderString(spriteBatch, GetLocalizedText("VanillaFields"), pos + new Vector2(120, 80), Color.White, 1, 0f, 0.5f);
-			Utils.DrawBorderString(spriteBatch, GetLocalizedText("ModPlayers"), pos + new Vector2(320 + 220, 80), Color.White, 1, 0f, 0.5f);
 
 			Texture2D background = Terraria.GameContent.TextureAssets.MagicPixel.Value;
 
 			spriteBatch.Draw(background, basicEditorList.GetDimensions().ToRectangle(), Color.Black * 0.25f);
-			spriteBatch.Draw(background, modPlayerEditorList.GetDimensions().ToRectangle(), Color.Black * 0.25f);
 
 			base.Draw(spriteBatch);
 		}

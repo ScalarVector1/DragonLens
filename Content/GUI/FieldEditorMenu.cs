@@ -27,14 +27,14 @@ namespace DragonLens.Content.GUI
 		{
 			this.userInterface = userInterface;
 			Width.Set(496, 0);
-			Height.Set(600, 0);
+			Height.Set(550, 0);
 		}
 
 		public override void OnInitialize()
 		{
 			modEditorScroll = new(userInterface);
 			modEditorScroll.Left.Set(480, 0);
-			modEditorScroll.Top.Set(98, 0);
+			modEditorScroll.Top.Set(48, 0);
 			modEditorScroll.Height.Set(540, 0);
 			modEditorScroll.Width.Set(16, 0);
 			Append(modEditorScroll);
@@ -42,14 +42,14 @@ namespace DragonLens.Content.GUI
 			modEditorList = new();
 			modEditorList.Width.Set(480, 0);
 			modEditorList.Height.Set(540, 0);
-			modEditorList.Top.Set(98, 0);
+			modEditorList.Top.Set(48, 0);
 			modEditorList.ListPadding = 0;
 			modEditorList.SetScrollbar(modEditorScroll);
 			Append(modEditorList);
 
 			searchBar = new();
 			searchBar.Left.Set(312, 0);
-			searchBar.Top.Set(60, 0);
+			searchBar.Top.Set(10, 0);
 			searchBar.Width.Set(180, 0);
 			searchBar.Height.Set(32, 0);
 			Append(searchBar);
@@ -61,7 +61,7 @@ namespace DragonLens.Content.GUI
 			{
 				foreach (UIElement element in modEditorList._items)
 				{
-					if (element is ModTypeContainer container)
+					if (element is ObjectEditor container)
 						container.Filter(searchBar.currentValue);
 				}
 			}
@@ -75,7 +75,7 @@ namespace DragonLens.Content.GUI
 		{
 			foreach(object obj in editing)
 			{
-				ModTypeContainer container = new ModTypeContainer(obj);
+				ObjectEditor container = new ObjectEditor(obj);
 				if (container.modPlayerEditorList.Count > 1)
 					modEditorList.Add(container);
 			}
@@ -92,7 +92,7 @@ namespace DragonLens.Content.GUI
 				return;
 
 			Vector2 pos = GetDimensions().Position();
-			Utils.DrawBorderString(spriteBatch, "Modded fields", pos + new Vector2(120, 80), Color.White, 1, 0f, 0.5f);
+			Utils.DrawBorderString(spriteBatch, "Modded fields", pos + new Vector2(120, 30), Color.White, 1, 0f, 0.5f);
 
 			Texture2D background = Terraria.GameContent.TextureAssets.MagicPixel.Value;
 

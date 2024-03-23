@@ -39,11 +39,10 @@ namespace DragonLens.Content.Tools.Editors
 		public SetDefaultsButton defaultButton;
 
 		public UIGrid basicEditorList;
-		public Terraria.GameContent.UI.Elements.UIList modItemEditorList;
+		public FieldEditorMenu moddedEditor;
 		public Terraria.GameContent.UI.Elements.UIList prefixList;
 
 		public StyledScrollbar basicEditorScroll;
-		public StyledScrollbar modItemEditorScroll;
 		public StyledScrollbar prefixScroll;
 
 		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 600, 32);
@@ -57,7 +56,7 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void SafeOnInitialize()
 		{
-			width = 800;
+			width = 844;
 			height = 648;
 
 			slot = new(this);
@@ -77,50 +76,41 @@ namespace DragonLens.Content.Tools.Editors
 			basicEditorList.SetScrollbar(basicEditorScroll);
 			Append(basicEditorList);
 
-			modItemEditorScroll = new(UserInterface);
-			modItemEditorScroll.Height.Set(540, 0);
-			modItemEditorScroll.Width.Set(16, 0);
-			Append(modItemEditorScroll);
-
-			modItemEditorList = new();
-			modItemEditorList.Width.Set(160, 0);
-			modItemEditorList.Height.Set(540, 0);
-			modItemEditorList.SetScrollbar(modItemEditorScroll);
-			Append(modItemEditorList);
+			moddedEditor = new(UserInterface);
+			moddedEditor.OnInitialize();
+			Append(moddedEditor);
 
 			prefixScroll = new(UserInterface);
-			prefixScroll.Height.Set(300, 0);
+			prefixScroll.Height.Set(326, 0);
 			prefixScroll.Width.Set(16, 0);
 			Append(prefixScroll);
 
 			prefixList = new();
 			prefixList.Width.Set(180, 0);
-			prefixList.Height.Set(300, 0);
+			prefixList.Height.Set(326, 0);
 			prefixList.SetScrollbar(prefixScroll);
 			Append(prefixList);
 		}
 
 		public override void AdjustPositions(Vector2 newPos)
 		{
-			slot.Left.Set(newPos.X + 594, 0);
+			slot.Left.Set(newPos.X - 182, 0);
 			slot.Top.Set(newPos.Y + 50 + 48, 0);
 
-			defaultButton.Left.Set(newPos.X + 564, 0);
-			defaultButton.Top.Set(newPos.Y + 190 + 48, 0);
+			defaultButton.Left.Set(newPos.X -212, 0);
+			defaultButton.Top.Set(newPos.Y + 190 + 52, 0);
 
 			basicEditorList.Left.Set(newPos.X + 10, 0);
 			basicEditorList.Top.Set(newPos.Y + 50 + 48, 0);
 			basicEditorScroll.Left.Set(newPos.X + 320, 0);
 			basicEditorScroll.Top.Set(newPos.Y + 50 + 48, 0);
 
-			modItemEditorList.Left.Set(newPos.X + 342, 0);
-			modItemEditorList.Top.Set(newPos.Y + 50 + 48, 0);
-			modItemEditorScroll.Left.Set(newPos.X + 160 + 338, 0);
-			modItemEditorScroll.Top.Set(newPos.Y + 50 + 48, 0);
+			moddedEditor.Left.Set(newPos.X + 342, 0);
+			moddedEditor.Top.Set(newPos.Y + 50, 0);
 
-			prefixList.Left.Set(newPos.X + 564, 0);
+			prefixList.Left.Set(newPos.X -220, 0);
 			prefixList.Top.Set(newPos.Y + 260 + 48, 0);
-			prefixScroll.Left.Set(newPos.X + 564 + 180, 0);
+			prefixScroll.Left.Set(newPos.X -220 + 180, 0);
 			prefixScroll.Top.Set(newPos.Y + 260 + 48, 0);
 		}
 
@@ -163,76 +153,19 @@ namespace DragonLens.Content.Tools.Editors
 			//TODO: Prefix dropdown
 		}
 
-		private void BuildModItemEditor()
+		public void BuildModItemEditor()
 		{
+			List<object> modEditorList = new();
+
 			if (item.ModItem != null)
+				modEditorList.Add(item.ModItem);
+
+			foreach (GlobalItem gi in item.Globals)
 			{
-				//TODO: some sort of GetEditor generic or something so we dont have to do... this
-				foreach (FieldInfo t in item.ModItem.GetType().GetFields())
-				{
-					TryAddEditor<bool, BoolEditor>(t);
-					TryAddEditor<int, IntEditor>(t);
-					TryAddEditor<float, FloatEditor>(t);
-					TryAddEditor<Vector2, Vector2Editor>(t);
-					TryAddEditor<Color, ColorEditor>(t);
-					TryAddEditor<string, StringEditor>(t);
-					TryAddEditor<NPC, NPCEditor>(t);
-					TryAddEditor<Projectile, ProjectileEditor>(t);
-					TryAddEditor<Player, PlayerEditor>(t);
-				}
-
-				foreach (PropertyInfo t in item.ModItem.GetType().GetProperties().Where(n => n.SetMethod != null))
-				{
-					if (t.Name == "SacrificeTotal")
-						continue;
-
-					TryAddEditor<bool, BoolEditor>(t);
-					TryAddEditor<int, IntEditor>(t);
-					TryAddEditor<float, FloatEditor>(t);
-					TryAddEditor<Vector2, Vector2Editor>(t);
-					TryAddEditor<Color, ColorEditor>(t);
-					TryAddEditor<string, StringEditor>(t);
-					TryAddEditor<NPC, NPCEditor>(t);
-					TryAddEditor<Projectile, ProjectileEditor>(t);
-					TryAddEditor<Player, PlayerEditor>(t);
-				}
+				modEditorList.Add(gi);
 			}
-		}
 
-		private void TryAddEditor<T, E>(FieldInfo t) where E : FieldEditor<T>
-		{
-			if (t.FieldType == typeof(T))
-			{
-				try
-				{
-					string message = LocalizationHelper.GetToolText("ItemEditor.AutogenMsg");
-
-					var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(item.ModItem, n)), (T)t.GetValue(item.ModItem), () => (T)t.GetValue(item.ModItem), message });
-					modItemEditorList.Add(newEditor);
-				}
-				catch
-				{
-					Console.WriteLine($"Error while attempting to add editor for field {t?.Name ?? "Unknown"}");
-				}
-			}
-		}
-
-		private void TryAddEditor<T, E>(PropertyInfo t) where E : FieldEditor<T>
-		{
-			if (t.PropertyType == typeof(T))
-			{
-				try
-				{
-					string message = LocalizationHelper.GetToolText("ItemEditor.AutogenMsg");
-
-					var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(item.ModItem, n)), (T)t.GetValue(item.ModItem), () => (T)t.GetValue(item.ModItem), message });
-					modItemEditorList.Add(newEditor);
-				}
-				catch
-				{
-					Console.WriteLine($"Error while attempting to add editor for field {t?.Name ?? "Unknown"}");
-				}
-			}
+			moddedEditor.SetEditing(modEditorList.ToArray());
 		}
 
 		private void BuildPrefixEditor()
@@ -241,7 +174,7 @@ namespace DragonLens.Content.Tools.Editors
 
 			for (int k = 1; k < PrefixLoader.PrefixCount; k++)
 			{
-				for (int i = 0; i < 100; i++)
+				for (int i = 0; i < 200; i++)
 				{
 					Item clone = item.Clone();
 					clone.SetDefaults(item.type);
@@ -256,6 +189,14 @@ namespace DragonLens.Content.Tools.Editors
 			}
 		}
 
+		public override void DraggableUdpate(GameTime gameTime)
+		{
+			Rectangle side = new Rectangle(BoundingBox.X - 230, BoundingBox.Y + 50, 218, 598);
+
+			if (side.Contains(Main.MouseScreen.ToPoint()))
+				Main.LocalPlayer.mouseInterface = true;
+		}
+
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 			static string GetLocalizedText(string text)
@@ -263,7 +204,10 @@ namespace DragonLens.Content.Tools.Editors
 				return LocalizationHelper.GetText($"Tools.ItemEditor.{text}");
 			}
 
-			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
+			Rectangle side = new Rectangle(BoundingBox.X - 230, BoundingBox.Y + 50, 218, 598);
+			Helpers.GUIHelper.DrawBox(spriteBatch, side, ThemeHandler.BackgroundColor);
+
+			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()) || side.Contains(Main.MouseScreen.ToPoint()))
 				PlayerInput.LockVanillaMouseScroll("DragonLens: Item Editor");
 
 			Helpers.GUIHelper.DrawBox(spriteBatch, BoundingBox, ThemeHandler.BackgroundColor);
@@ -279,13 +223,10 @@ namespace DragonLens.Content.Tools.Editors
 
 			Vector2 pos = basePos;
 			Utils.DrawBorderString(spriteBatch, GetLocalizedText("VanillaFields"), pos + new Vector2(120, 80), Color.White, 1, 0f, 0.5f);
-			Utils.DrawBorderString(spriteBatch, GetLocalizedText("Modded"), pos + new Vector2(320 + 70, 80), Color.White, 1, 0f, 0.5f);
-			Utils.DrawBorderString(spriteBatch, GetLocalizedText("Prefixes"), pos + new Vector2(320 + 130 + 170, 80), Color.White, 1, 0f, 0.5f);
 
 			Texture2D background = Terraria.GameContent.TextureAssets.MagicPixel.Value;
 
 			spriteBatch.Draw(background, basicEditorList.GetDimensions().ToRectangle(), Color.Black * 0.25f);
-			spriteBatch.Draw(background, modItemEditorList.GetDimensions().ToRectangle(), Color.Black * 0.25f);
 			spriteBatch.Draw(background, prefixList.GetDimensions().ToRectangle(), Color.Black * 0.25f);
 
 			base.Draw(spriteBatch);
@@ -317,7 +258,7 @@ namespace DragonLens.Content.Tools.Editors
 			{
 				Main.mouseItem = parent.item.Clone();
 				parent.basicEditorList.Clear();
-				parent.modItemEditorList.Clear();
+				parent.moddedEditor.Clear();
 				parent.item.TurnToAir();
 			}
 		}
@@ -359,7 +300,12 @@ namespace DragonLens.Content.Tools.Editors
 		public override void SafeClick(UIMouseEvent evt)
 		{
 			if (!parent.item.IsAir)
+			{
 				parent.item.SetDefaults(parent.item.type);
+
+				parent.moddedEditor.Clear();
+				parent.BuildModItemEditor();
+			}
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
@@ -407,9 +353,9 @@ namespace DragonLens.Content.Tools.Editors
 			{
 				Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
 
-				string name = PrefixID.Search.ContainsId(prefixID) ? PrefixID.Search.GetName(prefixID) : PrefixLoader.GetPrefix(prefixID).DisplayName.Value;
+				string name = PrefixLoader.GetPrefix(prefixID) is null ? PrefixID.Search.GetName(prefixID) : PrefixLoader.GetPrefix(prefixID).DisplayName.Value;
 
-				Utils.DrawBorderString(spriteBatch, name, GetDimensions().Center(), ItemRarity.GetColor(dummy.rare), 1, 0.5f, 0.5f);
+				Utils.DrawBorderString(spriteBatch, name, GetDimensions().Center() + Vector2.UnitY * 2, ItemRarity.GetColor(dummy.rare), 1, 0.5f, 0.5f);
 
 				ModPrefix prefix = PrefixLoader.GetPrefix(prefixID);
 
@@ -420,15 +366,29 @@ namespace DragonLens.Content.Tools.Editors
 
 					spriteBatch.Draw(tex, GetDimensions().ToRectangle().TopLeft() + new Vector2(16, 16), null, Color.White, 0, tex.Size() / 2f, 0.5f, 0, 0);
 				}
+
+				if (IsMouseHovering)
+				{
+					Tooltip.SetName(name);
+					Tooltip.SetTooltip("From mod: " + (prefix != null ? prefix.Mod.DisplayName : "Vanilla"));
+				}
 			}
 		}
 
 		public override int CompareTo(object obj)
-		{
+		{ 
 			if (obj is PrefixButton button)
-				return dummy.rare - button.dummy.rare;
+			{
+				if (button.dummy.rare != dummy.rare)
+					return dummy.rare.CompareTo(button.dummy.rare);
 
-			return 0;
+				string name = PrefixLoader.GetPrefix(prefixID) is null ? PrefixID.Search.GetName(prefixID) : PrefixLoader.GetPrefix(prefixID).DisplayName.Value;
+				string otherName = PrefixLoader.GetPrefix(button.prefixID) is null ? PrefixID.Search.GetName(button.prefixID) : PrefixLoader.GetPrefix(button.prefixID).DisplayName.Value;
+
+				return name.CompareTo(otherName);
+			}
+
+			return base.CompareTo(obj);
 		}
 	}
 }

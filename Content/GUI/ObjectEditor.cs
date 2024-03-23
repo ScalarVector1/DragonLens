@@ -12,11 +12,11 @@ using Terraria.UI;
 
 namespace DragonLens.Content.GUI
 {
-	internal class ModTypeSeperator : SmartUIElement
+	internal class ObjectEditorLabel : SmartUIElement
 	{
 		readonly string message;
 
-		public ModTypeSeperator(string message)
+		public ObjectEditorLabel(string message)
 		{
 			this.message = message;
 			Width.Set(480, 0);
@@ -36,7 +36,7 @@ namespace DragonLens.Content.GUI
 		}
 	}
 
-	internal class ModTypeContainer : SmartUIElement
+	internal class ObjectEditor : SmartUIElement
 	{
 		public UIGrid modPlayerEditorList;
 		public object modType;
@@ -48,13 +48,13 @@ namespace DragonLens.Content.GUI
 		public string smartLabel => modType is ModType mt ? mt.Mod.Name + ": " + mt.Name : modType.GetType().Name;
 		public string Label => nameOverride == string.Empty ? smartLabel : nameOverride;
 
-		public ModTypeContainer(object modType, string nameOverride = "")
+		public ObjectEditor(object modType, string nameOverride = "")
 		{
 			this.modType = modType;
 			this.nameOverride = nameOverride;
 
 			modPlayerEditorList = new();
-			modPlayerEditorList.Add(new ModTypeSeperator(Label));
+			modPlayerEditorList.Add(new ObjectEditorLabel(Label));
 
 			modPlayerEditorList.Width.Set(480, 0);
 
@@ -201,7 +201,7 @@ namespace DragonLens.Content.GUI
 
 		public override int CompareTo(object obj)
 		{
-			if (obj is ModTypeContainer container)
+			if (obj is ObjectEditor container)
 				return Label.CompareTo(container.Label);
 
 			return base.CompareTo(obj);

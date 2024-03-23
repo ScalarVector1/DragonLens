@@ -84,7 +84,7 @@ namespace DragonLens.Content.Tools.Editors
 			basicEditorScroll.Top.Set(newPos.Y + 50 + 48, 0);
 
 			moddedEditor.Left.Set(newPos.X + 342, 0);
-			moddedEditor.Top.Set(newPos.Y, 0);
+			moddedEditor.Top.Set(newPos.Y + 50, 0);
 
 			button.Left.Set(newPos.X - 220, 0);
 			button.Top.Set(newPos.Y + 220, 0);
