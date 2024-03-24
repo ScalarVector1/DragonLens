@@ -39,18 +39,18 @@ namespace DragonLens.Content.GUI
 	internal class ObjectEditor : SmartUIElement
 	{
 		public UIGrid modPlayerEditorList;
-		public object modType;
+		public object obj;
 
 		private float height = 32;
 
 		private string nameOverride;
 
-		public string smartLabel => modType is ModType mt ? mt.Mod.Name + ": " + mt.Name : modType.GetType().Name;
+		public string smartLabel => obj is ModType mt ? mt.Mod.Name + ": " + mt.Name : obj.GetType().Name;
 		public string Label => nameOverride == string.Empty ? smartLabel : nameOverride;
 
-		public ObjectEditor(object modType, string nameOverride = "")
+		public ObjectEditor(object obj, string nameOverride = "")
 		{
-			this.modType = modType;
+			this.obj = obj;
 			this.nameOverride = nameOverride;
 
 			modPlayerEditorList = new();
@@ -58,36 +58,38 @@ namespace DragonLens.Content.GUI
 
 			modPlayerEditorList.Width.Set(480, 0);
 
-			if (modType != null)
+			if (obj != null)
 			{
 				//TODO: some sort of GetEditor generic or something so we dont have to do... this
-				foreach (FieldInfo t in modType.GetType().GetFields())
+				foreach (FieldInfo fieldInfo in obj.GetType().GetFields())
 				{
-					TryAddEditor<bool, BoolEditor>(t, modType);
-					TryAddEditor<int, IntEditor>(t, modType);
-					TryAddEditor<float, FloatEditor>(t, modType);
-					TryAddEditor<Vector2, Vector2Editor>(t, modType);
-					TryAddEditor<Color, ColorEditor>(t, modType);
-					TryAddEditor<string, StringEditor>(t, modType);
-					TryAddEditor<NPC, NPCEditor>(t, modType);
-					TryAddEditor<Projectile, ProjectileEditor>(t, modType);
-					TryAddEditor<Player, PlayerEditor>(t, modType);
+					TryAddEditor<bool, BoolEditor>(fieldInfo, obj);
+					TryAddEditor<int, IntEditor>(fieldInfo, obj);
+					TryAddEditor<float, FloatEditor>(fieldInfo, obj);
+					TryAddEditor<Vector2, Vector2Editor>(fieldInfo, obj);
+					TryAddEditor<Color, ColorEditor>(fieldInfo, obj);
+					TryAddEditor<string, StringEditor>(fieldInfo, obj);
+					TryAddEditor<NPC, NPCEditor>(fieldInfo, obj);
+					TryAddEditor<Projectile, ProjectileEditor>(fieldInfo, obj);
+					TryAddEditor<Player, PlayerEditor>(fieldInfo, obj);
+					TryAddEditor<Item, ItemEditor>(fieldInfo, obj);
 				}
 
-				foreach (PropertyInfo t in modType.GetType().GetProperties().Where(n => n.SetMethod != null))
+				foreach (PropertyInfo propInfo in obj.GetType().GetProperties().Where(n => n.SetMethod != null))
 				{
-					if (t.Name == "Entity")
+					if (propInfo.Name == "Entity")
 						continue;
 
-					TryAddEditor<bool, BoolEditor>(t, modType);
-					TryAddEditor<int, IntEditor>(t, modType);
-					TryAddEditor<float, FloatEditor>(t, modType);
-					TryAddEditor<Vector2, Vector2Editor>(t, modType);
-					TryAddEditor<Color, ColorEditor>(t, modType);
-					TryAddEditor<string, StringEditor>(t, modType);
-					TryAddEditor<NPC, NPCEditor>(t, modType);
-					TryAddEditor<Projectile, ProjectileEditor>(t, modType);
-					TryAddEditor<Player, PlayerEditor>(t, modType);
+					TryAddEditor<bool, BoolEditor>(propInfo, obj);
+					TryAddEditor<int, IntEditor>(propInfo, obj);
+					TryAddEditor<float, FloatEditor>(propInfo, obj);
+					TryAddEditor<Vector2, Vector2Editor>(propInfo, obj);
+					TryAddEditor<Color, ColorEditor>(propInfo, obj);
+					TryAddEditor<string, StringEditor>(propInfo, obj);
+					TryAddEditor<NPC, NPCEditor>(propInfo, obj);
+					TryAddEditor<Projectile, ProjectileEditor>(propInfo, obj);
+					TryAddEditor<Player, PlayerEditor>(propInfo, obj);
+					TryAddEditor<Item, ItemEditor>(propInfo, obj);
 				}
 			}
 

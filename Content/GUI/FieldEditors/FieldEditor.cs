@@ -23,6 +23,11 @@ namespace DragonLens.Content.GUI.FieldEditors
 		public int height;
 
 		/// <summary>
+		/// Allows subclasses that want custom tooltips to hide this elements tooltip
+		/// </summary>
+		public bool hideTooltip;
+
+		/// <summary>
 		/// If this editor is currently being used to change a value, and thus shouldn't listen for update
 		/// </summary>
 		public virtual bool Editing => false;
@@ -55,12 +60,12 @@ namespace DragonLens.Content.GUI.FieldEditors
 		/// <summary>
 		/// The callback that should happen when this editor thinks the value its tracking has changed. You'll likely need to cast the object parameter to the correct type.
 		/// </summary>
-		protected readonly Action<T> onValueChanged;
+		public readonly Action<T> onValueChanged;
 
 		/// <summary>
 		/// This function, called every frame while the editor is not being used, is used to update the editor's value to the current value of the tracked value.
 		/// </summary>
-		protected readonly Func<T> listenForUpdate;
+		public readonly Func<T> listenForUpdate;
 
 		/// <summary>
 		/// 
@@ -121,10 +126,11 @@ namespace DragonLens.Content.GUI.FieldEditors
 
 			SafeDraw(spriteBatch);
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && !hideTooltip)
 			{
 				Tooltip.SetName(name);
 				Tooltip.SetTooltip(description);
+				hideTooltip = false;
 			}
 		}
 

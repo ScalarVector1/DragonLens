@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -35,6 +36,7 @@ namespace DragonLens.Content.Tools.Editors
 	internal class EntityEditorState : DraggableUIState
 	{
 		public Entity entity;
+		public TileEntity tileEntity; // Tile entities are not entities. How inconvenient.
 
 		public UIGrid basicEditorList;
 		public StyledScrollbar basicEditorScroll;
@@ -92,7 +94,7 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void DraggableUdpate(GameTime gameTime)
 		{
-			if (entity is null || !entity.active)
+			if ((entity is null || !entity.active) && tileEntity is null)
 			{
 				basicEditorList.Clear();
 				moddedEditor.Clear();
@@ -103,6 +105,7 @@ namespace DragonLens.Content.Tools.Editors
 				height = 130;
 
 				entity = null;
+				tileEntity = null;
 				PlayerInput.WritingText = false;
 				Main.blockInput = false;
 
@@ -125,18 +128,32 @@ namespace DragonLens.Content.Tools.Editors
 
 		private void BuildBasicEditor()
 		{
-			basicEditorList.Add(new Vector2Editor("Position", n => entity.position = n, entity.position, () => entity.position, "Where the entity top-left is located in world coordinates"));
-			basicEditorList.Add(new Vector2Editor("Velocity", n => entity.velocity = n, entity.velocity, () => entity.velocity, "How much the entity's position changes each tick"));
-			basicEditorList.Add(new Vector2Editor("Size", n => entity.Size = n, entity.Size, () => entity.Size, "The width/height of the entities hitbox"));
+			if (entity != null)
+			{
+				basicEditorList.Add(new Vector2Editor("Position", n => entity.position = n, entity.position, () => entity.position, "Where the entity top-left is located in world coordinates"));
+				basicEditorList.Add(new Vector2Editor("Velocity", n => entity.velocity = n, entity.velocity, () => entity.velocity, "How much the entity's position changes each tick"));
+				basicEditorList.Add(new Vector2Editor("Size", n => entity.Size = n, entity.Size, () => entity.Size, "The width/height of the entities hitbox"));
 
-			if (entity is NPC)
-				BuildBasicNPC();
+				if (entity is NPC)
+					BuildBasicNPC();
+			}
+			else if (tileEntity != null)
+			{
+				BuildBasicTE();
+			}
 		}
 
 		private void BuildModEditor()
 		{
-			if (entity is NPC)
-				BuildModNPC();
+			if (entity != null)
+			{
+				if (entity is NPC)
+					BuildModNPC();
+			}
+			else if (tileEntity != null)
+			{
+				BuildModTE();
+			}
 		}
 
 		// TODO: Soemthing here to allow mods to register custom entity types?
@@ -189,10 +206,23 @@ namespace DragonLens.Content.Tools.Editors
 		}
 		#endregion
 
+		#region TE
+		public void BuildBasicTE()
+		{
+			basicEditorList.Add(new IntEditor("type", n => tileEntity.type = (byte)n, tileEntity.type, () => tileEntity.type, "ID of the tile entity. Changing this is probably pretty dangerous."));
+		}
+
+		public void BuildModTE()
+		{
+			moddedEditor.SetEditing(new object[] {tileEntity});
+		}
+		#endregion
+
 		public override void SafeClick(UIMouseEvent evt)
 		{
 			if (!BoundingBox.Contains(Main.MouseScreen.ToPoint()) && entity is null)
 			{
+				// NPCs
 				for(int k = 0; k < Main.maxNPCs; k++)
 				{
 					var box = Main.npc[k].Hitbox;
@@ -201,12 +231,50 @@ namespace DragonLens.Content.Tools.Editors
 					if (Main.npc[k].active && box.Contains(Main.MouseWorld.ToPoint()))
 					{
 						entity = Main.npc[k];
+						tileEntity = null;
+
 						Main.NewText(Main.npc[k].GivenOrTypeName + " selected for editing.");
+				
+						SetupNew();
+
+						return;
+					}
+				}
+
+				// Projectiles
+				for (int k = 0; k < Main.maxProjectiles; k++)
+				{
+					var box = Main.projectile[k].Hitbox;
+					box.Inflate(16, 16);
+
+					if (Main.projectile[k].active && box.Contains(Main.MouseWorld.ToPoint()))
+					{
+						entity = Main.projectile[k];
+						tileEntity = null;
+
+						Main.NewText(Main.projectile[k].Name + " selected for editing.");
 
 						SetupNew();
 
-						break;
+						return;
 					}
+				}
+
+				// Tile entity
+
+				Point16 pos = (Main.MouseWorld / 16).ToPoint16();
+				if (TileEntity.ByPosition.ContainsKey(pos))
+				{
+					var te = TileEntity.ByPosition[pos];
+
+					tileEntity = te;
+					entity = null;
+
+					Main.NewText(te.Position + " (Tile Entity) selected for editing.");
+
+					SetupNew();
+
+					return;
 				}
 			}
 		}
@@ -247,18 +315,26 @@ namespace DragonLens.Content.Tools.Editors
 				spriteBatch.Draw(Main.screenTarget, preview, source, Color.White);
 			}
 
+			if (tileEntity != null)
+			{
+				preview.Inflate(-4, -4);
+				var source = new Rectangle(tileEntity.Position.X * 16 - 100, tileEntity.Position.Y * 16 - 100, 200, 200);
+				source.Offset((-Main.screenPosition).ToPoint());
+				spriteBatch.Draw(Main.screenTarget, preview, source, Color.White);
+			}
+
 			// Labels
-			if (entity != null)
+			if ((entity is null || !entity.active) && tileEntity is null)
+			{
+				Utils.DrawBorderStringBig(spriteBatch, GetLocalizedText("Tutorial"), BoundingBox.Center.ToVector2() + Vector2.UnitY * 38, Color.White, 0.8f, 0.5f, 0.5f);
+			}
+			else
 			{
 				Utils.DrawBorderString(spriteBatch, GetLocalizedText("VanillaFields"), pos + new Vector2(120, 80), Color.White, 1, 0f, 0.5f);
 
 				Texture2D background = Terraria.GameContent.TextureAssets.MagicPixel.Value;
 
 				spriteBatch.Draw(background, basicEditorList.GetDimensions().ToRectangle(), Color.Black * 0.25f);
-			}
-			else
-			{
-				Utils.DrawBorderStringBig(spriteBatch, GetLocalizedText("Tutorial"), BoundingBox.Center.ToVector2() + Vector2.UnitY * 38, Color.White, 0.8f, 0.5f, 0.5f);
 			}
 
 			base.Draw(spriteBatch);
@@ -283,6 +359,7 @@ namespace DragonLens.Content.Tools.Editors
 			parent.moddedEditor.Clear();
 
 			parent.entity = null;
+			parent.tileEntity = null;
 			PlayerInput.WritingText = false;
 			Main.blockInput = false;	
 		}
