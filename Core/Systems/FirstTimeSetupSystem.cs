@@ -79,6 +79,8 @@ namespace DragonLens.Core.Systems
 					.AddTool<TileSpawner>()
 					.AddTool<SoundSpawner>()
 					.AddTool<AccessoryTray>()
+					.AddTool<EntityEditorTool>()
+					.AddTool<SystemEditorTool>()
 					);
 
 				n.Add(
