@@ -659,3 +659,9 @@ EntityEditor: {
 	// Tutorial: Click an entity to start
 	// Deselect: Deselect
 }
+
+SystemEditor: {
+	// DisplayName: System Editor
+	// Description: Change global properties about the world and modded systems. This is an advanced tool.
+	// VanillaFields: Vanilla Fields
+}

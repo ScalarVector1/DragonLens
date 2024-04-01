@@ -138,6 +138,13 @@ namespace DragonLens.Content.GUI
 					string message = LocalizationHelper.GetToolText("PlayerEditor.AutogenMsg");
 
 					var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(mt, n)), (T)t.GetValue(mt), () => (T)t.GetValue(mt), message });
+
+					if (t.IsStatic)
+						newEditor.isStatic = true;
+
+					if (t.IsLiteral || t.IsInitOnly)
+						newEditor.isLocked = true;
+					
 					modPlayerEditorList.Add(newEditor);
 				}
 				catch
@@ -149,13 +156,20 @@ namespace DragonLens.Content.GUI
 
 		private void TryAddEditor<T, E>(PropertyInfo t, object mt) where E : FieldEditor<T>
 		{
-			if (t.PropertyType == typeof(T))
+			if (t.PropertyType == typeof(T) && t.CanRead)
 			{
 				try
 				{
 					string message = LocalizationHelper.GetToolText("PlayerEditor.AutogenMsg");
 
 					var newEditor = (E)Activator.CreateInstance(typeof(E), new object[] { t.Name, (Action<T>)(n => t.SetValue(mt, n)), (T)t.GetValue(mt), () => (T)t.GetValue(mt), message });
+
+					if (t.GetGetMethod().IsStatic)
+						newEditor.isStatic = true;
+
+					if (!t.CanWrite)
+						newEditor.isLocked = true;
+
 					modPlayerEditorList.Add(newEditor);
 				}
 				catch

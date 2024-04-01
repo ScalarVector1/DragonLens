@@ -2,6 +2,7 @@
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
 using System;
+using Terraria.UI;
 
 namespace DragonLens.Content.GUI.FieldEditors
 {
@@ -11,6 +12,11 @@ namespace DragonLens.Content.GUI.FieldEditors
 		/// The name that gets displated above the panel to the user
 		/// </summary>
 		public string name;
+
+		/// <summary>
+		/// Shortened name for the UI if applicable
+		/// </summary>
+		public string shortName;
 
 		/// <summary>
 		/// The info sown when hovering over this panel
@@ -26,6 +32,9 @@ namespace DragonLens.Content.GUI.FieldEditors
 		/// Allows subclasses that want custom tooltips to hide this elements tooltip
 		/// </summary>
 		public bool hideTooltip;
+
+		public bool isStatic;
+		public bool isLocked;
 
 		/// <summary>
 		/// If this editor is currently being used to change a value, and thus shouldn't listen for update
@@ -67,6 +76,8 @@ namespace DragonLens.Content.GUI.FieldEditors
 		/// </summary>
 		public readonly Func<T> listenForUpdate;
 
+		public UIElement blocker;
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -84,6 +95,16 @@ namespace DragonLens.Content.GUI.FieldEditors
 			this.listenForUpdate = listenForUpdate;
 			value = initialValue;
 			this.description = description;
+
+			ReLogic.Graphics.DynamicSpriteFont font = Terraria.GameContent.FontAssets.MouseText.Value;
+			shortName = name;
+			while (font.MeasureString(shortName).X * 0.7f > 120)
+			{
+				shortName = shortName[..^1];
+			}
+
+			if (shortName != name)
+				shortName += "...";
 		}
 
 		/// <summary>
@@ -99,6 +120,15 @@ namespace DragonLens.Content.GUI.FieldEditors
 				T newValue = listenForUpdate();
 				OnRecieveNewValue(newValue);
 				value = newValue;
+			}
+
+			if (isLocked && blocker is null)
+			{
+				blocker = new();
+				blocker.Width.Set(Width.Pixels, 0);
+				blocker.Height.Set(Height.Pixels, 0);
+				blocker.OnLeftClick += (a, b) => Main.NewText("This field is uneditable!");
+				Append(blocker);
 			}
 
 			EditorUpdate(gameTime);
@@ -119,12 +149,21 @@ namespace DragonLens.Content.GUI.FieldEditors
 			backTarget.Offset(new Point(4, 4));
 			spriteBatch.Draw(back, backTarget, Color.Black * 0.5f);
 
-			Utils.DrawBorderString(spriteBatch, name, GetDimensions().Position() + new Vector2(8, 4), Color.White, 0.7f);
-			Utils.DrawBorderString(spriteBatch, typeof(T).Name, GetDimensions().Position() + new Vector2(8, 18), Color.Gray, 0.65f);
-
 			base.Draw(spriteBatch);
 
 			SafeDraw(spriteBatch);
+
+			if (isLocked)
+				GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), Color.Black * 0.5f);
+
+			Utils.DrawBorderString(spriteBatch, shortName, GetDimensions().Position() + new Vector2(8, 4), Color.White, 0.7f);
+			Utils.DrawBorderString(spriteBatch, typeof(T).Name, GetDimensions().Position() + new Vector2(8, 18), Color.Gray, 0.65f);
+
+			if (isStatic)
+				Utils.DrawBorderString(spriteBatch, "Static", GetDimensions().Position() + new Vector2(146, -8), Color.Gold, 0.65f, 1f);
+
+			if (isLocked)
+				Utils.DrawBorderString(spriteBatch, "Uneditable", GetDimensions().Position() + new Vector2(4, -8), Color.SkyBlue, 0.65f);
 
 			if (IsMouseHovering && !hideTooltip)
 			{

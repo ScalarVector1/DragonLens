@@ -42,6 +42,7 @@ namespace DragonLens.Core.Systems.ThemeSystem
 			"RevealMap",
 			"SoundSpawner",
 			"SpawnTool",
+			"SystemEditor",
 			"TileSpawner",
 			"Time",
 			"VoidMagnet",
