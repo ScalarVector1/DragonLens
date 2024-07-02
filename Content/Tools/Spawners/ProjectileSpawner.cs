@@ -150,7 +150,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void SetupFilters(FilterPanel filters)
 		{
 			filters.AddSeperator("Tools.ProjectileSpawner.FilterCategories.Mod");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.ProjectileSpawner.Filters.Vanilla", n => !(n is ProjectileButton && (n as ProjectileButton).proj.ModProjectile is null)) { isModFilter = true });
+			filters.AddFilter(new Filter(Assets.Filters.Vanilla, "Tools.ProjectileSpawner.Filters.Vanilla", n => !(n is ProjectileButton && (n as ProjectileButton).proj.ModProjectile is null)) { isModFilter = true });
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModProjectile>().Count() > 0))
 			{
@@ -158,8 +158,8 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 
 			filters.AddSeperator("Tools.ProjectileSpawner.FilterCategories.Hostility");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Friendly", "Tools.ProjectileSpawner.Filters.Friendly", n => !(n is ProjectileButton && (n as ProjectileButton).proj.friendly)));
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Hostile", "Tools.ProjectileSpawner.Filters.Hostile", n => !(n is ProjectileButton && (n as ProjectileButton).proj.hostile)));
+			filters.AddFilter(new Filter(Assets.Filters.Friendly, "Tools.ProjectileSpawner.Filters.Friendly", n => !(n is ProjectileButton && (n as ProjectileButton).proj.friendly)));
+			filters.AddFilter(new Filter(Assets.Filters.Hostile, "Tools.ProjectileSpawner.Filters.Hostile", n => !(n is ProjectileButton && (n as ProjectileButton).proj.hostile)));
 		}
 
 		public override void DraggableUdpate(GameTime gameTime)

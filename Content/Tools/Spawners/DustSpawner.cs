@@ -115,7 +115,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void SetupFilters(FilterPanel filters)
 		{
 			filters.AddSeperator("Tools.DustSpawner.FilterCategories.Mod");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.DustSpawner.Filters.Vanilla", n => !(n is DustButton && (n as DustButton).dust.type <= DustID.Count)) { isModFilter = true });
+			filters.AddFilter(new Filter(Assets.Filters.Vanilla, "Tools.DustSpawner.Filters.Vanilla", n => !(n is DustButton && (n as DustButton).dust.type <= DustID.Count)) { isModFilter = true });
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModDust>().Count() > 0))
 			{

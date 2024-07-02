@@ -1,5 +1,6 @@
 ﻿using DragonLens.Content.GUI;
 using DragonLens.Content.Tools.Spawners;
+using ReLogic.Content;
 
 namespace DragonLens.Content.Filters.ItemFilters
 {
@@ -7,7 +8,7 @@ namespace DragonLens.Content.Filters.ItemFilters
 	{
 		public DamageClass damageClass;
 
-		public DamageClassFilter(DamageClass damageClass, string texture) : base(texture, "", n => FilterByDamageClass(n, damageClass))
+		public DamageClassFilter(DamageClass damageClass, Asset<Texture2D> texture) : base(texture, "", n => FilterByDamageClass(n, damageClass))
 		{
 			this.damageClass = damageClass;
 		}

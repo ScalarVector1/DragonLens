@@ -51,7 +51,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void SetupFilters(FilterPanel filters)
 		{
 			filters.AddSeperator("Tools.TileSpawner.FilterCategories.Mod");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.TileSpawner.Filters.Vanilla", n => !(n is TileButton && (n as TileButton).tileType <= TileID.Count)) { isModFilter = true });
+			filters.AddFilter(new Filter(Assets.Filters.Vanilla, "Tools.TileSpawner.Filters.Vanilla", n => !(n is TileButton && (n as TileButton).tileType <= TileID.Count)) { isModFilter = true });
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModTile>().Count() > 0))
 			{

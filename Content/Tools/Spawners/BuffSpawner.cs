@@ -104,7 +104,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void SetupFilters(FilterPanel filters)
 		{
 			filters.AddSeperator("Tools.BuffSpawner.FilterCategories.Mod");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Vanilla", "Tools.BuffSpawner.Filters.Vanilla", n => !(n is BuffButton && (n as BuffButton).type <= BuffID.Count)) { isModFilter = true });
+			filters.AddFilter(new Filter(Assets.Filters.Vanilla, "Tools.BuffSpawner.Filters.Vanilla", n => !(n is BuffButton && (n as BuffButton).type <= BuffID.Count)) { isModFilter = true });
 
 			foreach (Mod mod in ModLoader.Mods.Where(n => n.GetContent<ModBuff>().Count() > 0))
 			{
@@ -112,8 +112,8 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 
 			filters.AddSeperator("Tools.BuffSpawner.FilterCategories.Buff");
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Friendly", "Tools.BuffSpawner.Filters.Buff", n => !(n is BuffButton && !Main.debuff[(n as BuffButton).type])));
-			filters.AddFilter(new Filter("DragonLens/Assets/Filters/Hostile", "Tools.BuffSpawner.Filters.Debuff", n => !(n is BuffButton && Main.debuff[(n as BuffButton).type])));
+			filters.AddFilter(new Filter(Assets.Filters.Friendly, "Tools.BuffSpawner.Filters.Buff", n => !(n is BuffButton && !Main.debuff[(n as BuffButton).type])));
+			filters.AddFilter(new Filter(Assets.Filters.Hostile, "Tools.BuffSpawner.Filters.Debuff", n => !(n is BuffButton && Main.debuff[(n as BuffButton).type])));
 		}
 
 		public override void DraggableUdpate(GameTime gameTime)
