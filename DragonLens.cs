@@ -2,6 +2,7 @@ global using Microsoft.Xna.Framework;
 global using Microsoft.Xna.Framework.Graphics;
 global using Terraria;
 global using Terraria.ModLoader;
+global using ReLogic.Content;
 using DragonLens.Configs;
 using DragonLens.Content.Tools;
 using DragonLens.Content.Tools.Spawners;

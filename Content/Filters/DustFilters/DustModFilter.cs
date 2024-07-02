@@ -9,7 +9,7 @@ namespace DragonLens.Content.Filters.DustFilters
 	{
 		public Mod mod;
 
-		public DustModFilter(Mod mod) : base("", "", n => FilterByMod(n, mod))
+		public DustModFilter(Mod mod) : base(null, "", n => FilterByMod(n, mod))
 		{
 			this.mod = mod;
 			isModFilter = true;

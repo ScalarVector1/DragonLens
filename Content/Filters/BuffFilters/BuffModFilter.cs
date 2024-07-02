@@ -8,7 +8,7 @@ namespace DragonLens.Content.Filters.BuffFilters
 	{
 		public Mod mod;
 
-		public BuffModFilter(Mod mod) : base("", "", n => FilterByMod(n, mod))
+		public BuffModFilter(Mod mod) : base(null, "", n => FilterByMod(n, mod))
 		{
 			this.mod = mod;
 			isModFilter = true;

@@ -8,7 +8,7 @@ namespace DragonLens.Content.Filters.ProjectileFilters
 	{
 		public Mod mod;
 
-		public ProjectileModFilter(Mod mod) : base("", "", n => FilterByMod(n, mod))
+		public ProjectileModFilter(Mod mod) : base(null, "", n => FilterByMod(n, mod))
 		{
 			this.mod = mod;
 			isModFilter = true;

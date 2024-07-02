@@ -14,7 +14,7 @@ namespace DragonLens.Content.Filters.NPCFilters
 
 		public IBestiaryEntryFilter bestiaryFilter;
 
-		public BestiaryFilter(IBestiaryEntryFilter bestiaryFilter) : base("", "", n => FilterByBestiary(n, bestiaryFilter))
+		public BestiaryFilter(IBestiaryEntryFilter bestiaryFilter) : base(null, "", n => FilterByBestiary(n, bestiaryFilter))
 		{
 			this.bestiaryFilter = bestiaryFilter;
 		}

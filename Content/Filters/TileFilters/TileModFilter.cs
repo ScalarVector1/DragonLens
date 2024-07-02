@@ -8,7 +8,7 @@ namespace DragonLens.Content.Filters.TileFilters
 	{
 		public Mod mod;
 
-		public TileModFilter(Mod mod) : base("", "", n => FilterByMod(n, mod))
+		public TileModFilter(Mod mod) : base(null, "", n => FilterByMod(n, mod))
 		{
 			this.mod = mod;
 			isModFilter = true;

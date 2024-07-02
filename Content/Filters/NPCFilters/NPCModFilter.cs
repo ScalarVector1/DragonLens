@@ -8,7 +8,7 @@ namespace DragonLens.Content.Filters.NPCFilters
 	{
 		public Mod mod;
 
-		public NPCModFilter(Mod mod) : base("", "", n => FilterByMod(n, mod))
+		public NPCModFilter(Mod mod) : base(null, "", n => FilterByMod(n, mod))
 		{
 			this.mod = mod;
 			isModFilter = true;
