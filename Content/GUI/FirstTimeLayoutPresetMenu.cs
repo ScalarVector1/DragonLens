@@ -3,6 +3,7 @@ using DragonLens.Core.Systems;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Helpers;
+using ReLogic.Content;
 using System.Collections.Generic;
 using System.IO;
 using Terraria.UI;
@@ -20,22 +21,22 @@ namespace DragonLens.Content.GUI
 
 		public override void OnInitialize()
 		{
-			var newButton = new FirstTimeLayoutButton("Simple", Path.Join(Main.SavePath, "DragonLensLayouts", "Simple"), "DragonLens/Assets/Misc/PreviewSimple");
+			var newButton = new FirstTimeLayoutButton("Simple", Path.Join(Main.SavePath, "DragonLensLayouts", "Simple"), Assets.Misc.PreviewSimple);
 			newButton.Left.Set(-220, 0.5f);
 			newButton.Top.Set(-262, 0.5f);
 			Append(newButton);
 
-			newButton = new FirstTimeLayoutButton("Advanced", Path.Join(Main.SavePath, "DragonLensLayouts", "Advanced"), "DragonLens/Assets/Misc/PreviewAdv");
+			newButton = new FirstTimeLayoutButton("Advanced", Path.Join(Main.SavePath, "DragonLensLayouts", "Advanced"), Assets.Misc.PreviewAdv);
 			newButton.Left.Set(20, 0.5f);
 			newButton.Top.Set(-262, 0.5f);
 			Append(newButton);
 
-			newButton = new FirstTimeLayoutButton("HEROsMod", Path.Join(Main.SavePath, "DragonLensLayouts", "HEROs mod imitation"), "DragonLens/Assets/Misc/PreviewHeros");
+			newButton = new FirstTimeLayoutButton("HEROsMod", Path.Join(Main.SavePath, "DragonLensLayouts", "HEROs mod imitation"), Assets.Misc.PreviewHeros);
 			newButton.Left.Set(-220, 0.5f);
 			newButton.Top.Set(20, 0.5f);
 			Append(newButton);
 
-			newButton = new FirstTimeLayoutButton("Cheatsheet", Path.Join(Main.SavePath, "DragonLensLayouts", "Cheatsheet imitation"), "DragonLens/Assets/Misc/PreviewCheatsheet");
+			newButton = new FirstTimeLayoutButton("Cheatsheet", Path.Join(Main.SavePath, "DragonLensLayouts", "Cheatsheet imitation"), Assets.Misc.PreviewCheatsheet);
 			newButton.Left.Set(20, 0.5f);
 			newButton.Top.Set(20, 0.5f);
 			Append(newButton);
@@ -60,20 +61,20 @@ namespace DragonLens.Content.GUI
 		private readonly string name;
 		private readonly string tooltip;
 		private readonly string presetPath;
-		private readonly string texPath;
+		private readonly Asset<Texture2D> texture;
 
-		public FirstTimeLayoutButton(string name, string presetPath, string texPath, string tooltip)
+		public FirstTimeLayoutButton(string name, string presetPath, Asset<Texture2D> texture, string tooltip)
 		{
 			this.name = name;
 			this.presetPath = presetPath;
 			this.tooltip = tooltip;
-			this.texPath = texPath;
+			this.texture = texture;
 
 			Width.Set(218, 0);
 			Height.Set(244, 0);
 		}
 
-		public FirstTimeLayoutButton(string localizationKey, string presetPath, string texPath) : this(LocalizationHelper.GetGUIText($"Layout.{localizationKey}.Name"), presetPath, texPath, LocalizationHelper.GetGUIText($"Layout.{localizationKey}.Tooltip"))
+		public FirstTimeLayoutButton(string localizationKey, string presetPath, Asset<Texture2D> texture) : this(LocalizationHelper.GetGUIText($"Layout.{localizationKey}.Name"), presetPath, texture, LocalizationHelper.GetGUIText($"Layout.{localizationKey}.Tooltip"))
 		{
 		}
 
@@ -95,7 +96,7 @@ namespace DragonLens.Content.GUI
 
 			Utils.DrawBorderString(spriteBatch, name, GetDimensions().Position() + Vector2.One * 8, Color.White);
 
-			Texture2D tex = ModContent.Request<Texture2D>(texPath).Value;
+			Texture2D tex = texture.Value;
 			spriteBatch.Draw(tex, GetDimensions().Position() + new Vector2(8, 36), null, Color.White, 0, Vector2.Zero, 0.5f, 0, 0);
 
 			if (IsMouseHovering)
