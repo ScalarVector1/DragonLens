@@ -62,7 +62,7 @@ namespace DragonLens.Content.GUI
 			drawTarget.Inflate(-6, -16);
 			GUIHelper.DrawBox(spriteBatch, drawTarget, ThemeHandler.ButtonColor);
 
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/NewBar").Value;
+			Texture2D tex = Assets.GUI.NewBar.Value;
 			spriteBatch.Draw(tex, GetDimensions().Position() + Vector2.One * 24, null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
 		}
 	}
@@ -94,7 +94,7 @@ namespace DragonLens.Content.GUI
 		{
 			base.Draw(spriteBatch);
 
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/SaveLayout").Value;
+			Texture2D tex = Assets.GUI.SaveLayout.Value;
 			spriteBatch.Draw(tex, GetDimensions().Position() + Vector2.One * 24, null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
 		}
 	}
@@ -125,7 +125,7 @@ namespace DragonLens.Content.GUI
 		{
 			base.Draw(spriteBatch);
 
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/LoadLayout").Value;
+			Texture2D tex = Assets.GUI.LoadLayout.Value;
 			spriteBatch.Draw(tex, GetDimensions().Position() + Vector2.One * 24, null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
 		}
 	}
@@ -147,7 +147,7 @@ namespace DragonLens.Content.GUI
 		{
 			base.Draw(spriteBatch);
 
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/StyleButton").Value;
+			Texture2D tex = Assets.GUI.StyleButton.Value;
 			spriteBatch.Draw(tex, GetDimensions().Position() + Vector2.One * 24, null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
 		}
 	}

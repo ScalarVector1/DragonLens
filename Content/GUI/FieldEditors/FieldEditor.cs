@@ -143,7 +143,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 
 			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.BackgroundColor);
 
-			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
+			Texture2D back = Assets.GUI.Gradient.Value;
 			var backTarget = GetDimensions().ToRectangle();
 			backTarget.Height = 24;
 			backTarget.Offset(new Point(4, 4));

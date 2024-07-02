@@ -77,7 +77,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SafeDraw(SpriteBatch spriteBatch, Rectangle iconBox)
 		{
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Misc/Sound").Value;
+			Texture2D tex = Assets.Misc.Sound.Value;
 
 			spriteBatch.Draw(tex, iconBox.Center(), null, Color.White, 0, tex.Size() / 2f, 1, 0, 0);
 			Utils.DrawBorderString(spriteBatch, name[..2], iconBox.TopLeft() + Vector2.One * 6, Color.Gray);

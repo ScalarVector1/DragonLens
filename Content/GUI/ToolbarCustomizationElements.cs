@@ -45,7 +45,7 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Remove").Value;
+			Texture2D tex = Assets.GUI.Remove.Value;
 			spriteBatch.Draw(tex, GetDimensions().Position(), Color.White);
 
 			base.Draw(spriteBatch);
@@ -279,7 +279,7 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/SpecialTabs").Value;
+			Texture2D tex = Assets.GUI.SpecialTabs.Value;
 			var source = new Rectangle(0, 0, 60, 24);
 
 			float rotation;
@@ -317,7 +317,7 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/SpecialTabs").Value;
+			Texture2D tex = Assets.GUI.SpecialTabs.Value;
 			var source = new Rectangle(60, 0, 60, 24);
 
 			float rotation;
@@ -357,7 +357,7 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/SpecialTabs").Value;
+			Texture2D tex = Assets.GUI.SpecialTabs.Value;
 			var source = new Rectangle(120, 0, 60, 24);
 
 			float rotation;

@@ -202,7 +202,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			Texture2D background = Terraria.GameContent.TextureAssets.MagicPixel.Value;
 			spriteBatch.Draw(background, structureButtons.GetDimensions().ToRectangle(), Color.Black * 0.25f);
 
-			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
+			Texture2D back = Assets.GUI.Gradient.Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 400, 40);
 			spriteBatch.Draw(back, backTarget, Color.Black * 0.5f);
 
@@ -270,7 +270,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			Width.Set(140, 0);
 			Height.Set(140, 0);
 
-			closeButton = new Terraria.GameContent.UI.Elements.UIImageButton(ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Remove"));
+			closeButton = new Terraria.GameContent.UI.Elements.UIImageButton(Assets.GUI.Remove);
 			closeButton.Width.Set(16, 0);
 			closeButton.Height.Set(16, 0);
 			closeButton.Left.Set(120, 0);
@@ -332,7 +332,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			button.Top.Set(390, 0);
 			Append(button);
 
-			var closeButton = new Terraria.GameContent.UI.Elements.UIImageButton(ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Remove"));
+			var closeButton = new Terraria.GameContent.UI.Elements.UIImageButton(Assets.GUI.Remove);
 			closeButton.Width.Set(16, 0);
 			closeButton.Height.Set(16, 0);
 			closeButton.Left.Set(186, 0);
@@ -379,7 +379,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			var dims = GetDimensions().ToRectangle();
 			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/StructureHelper").Value;
+			Texture2D tex = Assets.GUI.StructureHelper.Value;
 			spriteBatch.Draw(tex, dims.TopLeft() + Vector2.One * 4, Color.White);
 
 			Utils.DrawBorderString(spriteBatch, Paint.GetTextValue("Advertise.Title"), dims.TopLeft() + new Vector2(88, 24), Color.White, 0.8f);

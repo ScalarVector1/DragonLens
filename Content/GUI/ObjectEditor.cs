@@ -28,7 +28,7 @@ namespace DragonLens.Content.GUI
 			if (Parent.Parent.Parent.Height.Pixels <= 0)
 				return;
 
-			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
+			Texture2D back = Assets.GUI.Gradient.Value;
 			var backTarget = GetDimensions().ToRectangle();
 			spriteBatch.Draw(back, backTarget, Color.Black * 0.5f);
 

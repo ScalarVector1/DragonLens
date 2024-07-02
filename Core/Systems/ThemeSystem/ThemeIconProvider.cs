@@ -76,7 +76,7 @@ namespace DragonLens.Core.Systems.ThemeSystem
 			if (icons.ContainsKey(key))
 				return icons[key];
 			else
-				return ModContent.Request<Texture2D>("DragonLens/Assets/GUI/NoBox").Value;
+				return Assets.GUI.NoBox.Value;
 		}
 	}
 }

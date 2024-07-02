@@ -472,7 +472,7 @@ namespace DragonLens.Content.GUI
 			if (CustomizeTool.customizing)
 				return;
 
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/TabWide").Value;
+			Texture2D tex = Assets.GUI.TabWide.Value;
 
 			float rotation;
 

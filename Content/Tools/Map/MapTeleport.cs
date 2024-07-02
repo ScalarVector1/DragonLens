@@ -28,7 +28,7 @@ namespace DragonLens.Content.Tools.Map
 			{
 				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ThemeHandler.ButtonColor.InvertColor());
 
-				Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/Misc/GlowAlpha").Value;
+				Texture2D tex = Assets.Misc.GlowAlpha.Value;
 				var color = new Color(255, 100, 200)
 				{
 					A = 0

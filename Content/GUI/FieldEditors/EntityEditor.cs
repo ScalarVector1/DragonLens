@@ -86,7 +86,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 		{
 			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
 
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Picker").Value;
+			Texture2D tex = Assets.GUI.Picker.Value;
 			spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.White, 0, tex.Size() / 2, 1, 0, 0);
 		}
 	}

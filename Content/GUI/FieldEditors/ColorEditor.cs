@@ -1,6 +1,7 @@
 ﻿using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
+using ReLogic.Content;
 using System;
 using Terraria.UI;
 
@@ -17,7 +18,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 
 		public ColorEditor(string name, Action<Color> onValueChanged, Color initialValue, Func<Color> listenForUpdate = null, string description = "") : base(130, name, onValueChanged, listenForUpdate, initialValue, description)
 		{
-			rSlider = new Slider("DragonLens/Assets/GUI/RedScale", n =>
+			rSlider = new Slider(Assets.GUI.RedScale, n =>
 			{
 				onValueChanged(new Color(n, gSlider.progress, bSlider.progress, aSlider.progress));
 				value = new Color(n, gSlider.progress, bSlider.progress, aSlider.progress);
@@ -27,7 +28,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 			rSlider.progress = initialValue.R / 255f;
 			Append(rSlider);
 
-			gSlider = new Slider("DragonLens/Assets/GUI/GreenScale", n =>
+			gSlider = new Slider(Assets.GUI.GreenScale, n =>
 			{
 				onValueChanged(new Color(rSlider.progress, n, bSlider.progress, aSlider.progress));
 				value = new Color(rSlider.progress, n, bSlider.progress, aSlider.progress);
@@ -37,7 +38,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 			gSlider.progress = initialValue.G / 255f;
 			Append(gSlider);
 
-			bSlider = new Slider("DragonLens/Assets/GUI/BlueScale", n =>
+			bSlider = new Slider(Assets.GUI.BlueScale, n =>
 			{
 				onValueChanged(new Color(rSlider.progress, gSlider.progress, n, aSlider.progress));
 				value = new Color(rSlider.progress, gSlider.progress, n, aSlider.progress);
@@ -47,7 +48,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 			bSlider.progress = initialValue.B / 255f;
 			Append(bSlider);
 
-			aSlider = new Slider("DragonLens/Assets/GUI/AlphaScale", n =>
+			aSlider = new Slider(Assets.GUI.AlphaScale, n =>
 			{
 				onValueChanged(new Color(rSlider.progress, gSlider.progress, bSlider.progress, n));
 				value = new Color(rSlider.progress, gSlider.progress, bSlider.progress, n);
@@ -84,10 +85,10 @@ namespace DragonLens.Content.GUI.FieldEditors
 		public bool dragging;
 		public float progress;
 
-		public string texture;
+		public Asset<Texture2D> texture;
 		public Action<float> onChanged;
 
-		public Slider(string texture, Action<float> onChanged)
+		public Slider(Asset<Texture2D> texture, Action<float> onChanged)
 		{
 			Width.Set(130, 0);
 			Height.Set(16, 0);
@@ -118,7 +119,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 			var dims = GetDimensions().ToRectangle();
 			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
-			Texture2D tex = ModContent.Request<Texture2D>(texture).Value;
+			Texture2D tex = texture.Value;
 			dims.Inflate(-4, -4);
 			spriteBatch.Draw(tex, dims, Color.White);
 

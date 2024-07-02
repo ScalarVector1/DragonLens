@@ -60,7 +60,7 @@ namespace DragonLens.Content.GUI
 		{
 			basePos = new Vector2(DefaultPosition.X * Main.screenWidth, DefaultPosition.Y * Main.screenHeight);
 
-			closeButton = new UIImageButton(ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Remove"));
+			closeButton = new UIImageButton(Assets.GUI.Remove);
 			closeButton.Width.Set(16, 0);
 			closeButton.Height.Set(16, 0);
 			closeButton.OnLeftClick += (a, b) => visible = false;
@@ -68,7 +68,7 @@ namespace DragonLens.Content.GUI
 
 			if (HelpLink != "")
 			{
-				helpButton = new UIImageButton(ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Help"));
+				helpButton = new UIImageButton(Assets.GUI.Help);
 				helpButton.Width.Set(16, 0);
 				helpButton.Height.Set(16, 0);
 				helpButton.OnLeftClick += (a, b) => GUIHelper.OpenUrl(HelpLink);

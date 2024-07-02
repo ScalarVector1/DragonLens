@@ -196,7 +196,7 @@ namespace DragonLens.Content.Tools.Visualization
 		{
 			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, width, height), ThemeHandler.BackgroundColor);
 
-			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
+			Texture2D back = Assets.GUI.Gradient.Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, width, 40);
 			spriteBatch.Draw(back, backTarget, Color.Black * 0.5f);
 
@@ -337,7 +337,7 @@ namespace DragonLens.Content.Tools.Visualization
 			var dims = GetDimensions().ToRectangle();
 			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/ColorScale").Value;
+			Texture2D tex = Assets.GUI.ColorScale.Value;
 			dims.Inflate(-4, -4);
 			spriteBatch.Draw(tex, dims, Color.White);
 

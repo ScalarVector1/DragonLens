@@ -1,5 +1,6 @@
 ﻿using DragonLens.Content.GUI;
 using DragonLens.Helpers;
+using ReLogic.Content;
 
 namespace DragonLens.Content.Filters
 {
@@ -18,7 +19,7 @@ namespace DragonLens.Content.Filters
 		/// <summary>
 		/// The texture used to draw this filters icon if no custom drawing is defined.
 		/// </summary>
-		public string texture;
+		public Asset<Texture2D> texture;
 
 		/// <summary>
 		/// The localization key of this filter, used to get localized text for name and description
@@ -40,7 +41,7 @@ namespace DragonLens.Content.Filters
 		/// </summary>
 		public FilterDelegate shouldFilter;
 
-		public Filter(string texture, string localizationKey, FilterDelegate shouldFilter)
+		public Filter(Asset<Texture2D> texture, string localizationKey, FilterDelegate shouldFilter)
 		{
 			this.texture = texture;
 			this.localizationKey = localizationKey;
@@ -54,7 +55,7 @@ namespace DragonLens.Content.Filters
 		/// <param name="target">The bounding box of the filter button</param>
 		public virtual void Draw(SpriteBatch spriteBatch, Rectangle target)
 		{
-			Texture2D tex = ModContent.Request<Texture2D>(texture).Value;
+			Texture2D tex = texture.Value;
 			int widest = tex.Width > tex.Height ? tex.Width : tex.Height;
 
 			spriteBatch.Draw(tex, target.Center.ToVector2(), null, Color.White, 0, tex.Size() / 2f, target.Width / (float)widest, 0, 0);

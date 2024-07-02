@@ -179,7 +179,7 @@ namespace DragonLens.Content.GUI
 
 			GUIHelper.DrawBox(spriteBatch, target, ThemeHandler.BackgroundColor);
 
-			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
+			Texture2D back = Assets.GUI.Gradient.Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 400, 48);
 			spriteBatch.Draw(back, backTarget, Color.Black * 0.5f);
 
@@ -390,7 +390,7 @@ namespace DragonLens.Content.GUI
 			var dims = GetDimensions().ToRectangle();
 			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/AlphaScale").Value;
+			Texture2D tex = Assets.GUI.AlphaScale.Value;
 			dims.Inflate(-4, -4);
 			spriteBatch.Draw(tex, dims, Color.White);
 

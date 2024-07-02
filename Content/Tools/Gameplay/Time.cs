@@ -125,7 +125,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		{
 			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, 400, 200), ThemeHandler.BackgroundColor);
 
-			Texture2D back = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Gradient").Value;
+			Texture2D back = Assets.GUI.Gradient.Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 400, 40);
 			spriteBatch.Draw(back, backTarget, Color.Black * 0.5f);
 
@@ -229,7 +229,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			var dims = GetDimensions().ToRectangle();
 			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
-			Texture2D tex = ModContent.Request<Texture2D>("DragonLens/Assets/GUI/TimeScale").Value;
+			Texture2D tex = Assets.GUI.TimeScale.Value;
 			dims.Inflate(-4, -4);
 			spriteBatch.Draw(tex, dims, Color.White);
 
@@ -259,8 +259,8 @@ namespace DragonLens.Content.Tools.Gameplay
 			GUIHelper.DrawBox(spriteBatch, dims, ThemeHandler.ButtonColor);
 
 			Texture2D icon = TimePauseSystem.savedTime == -1 ?
-				ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Pause").Value :
-				ModContent.Request<Texture2D>("DragonLens/Assets/GUI/Play").Value;
+				Assets.GUI.Pause.Value :
+				Assets.GUI.Play.Value;
 
 			spriteBatch.Draw(icon, dims.TopLeft() + Vector2.One * 5, Color.White);
 
