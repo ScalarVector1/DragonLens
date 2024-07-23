@@ -665,3 +665,8 @@ SystemEditor: {
 	// Description: Change global properties about the world and modded systems. This is an advanced tool.
 	// VanillaFields: Vanilla Fields
 }
+
+PlayerManager: {
+	// DisplayName: PlayerManager
+	// Description: The tool has no description! Add one in .hjson files!
+}
