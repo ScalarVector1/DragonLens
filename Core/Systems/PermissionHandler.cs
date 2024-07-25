@@ -1,16 +1,30 @@
 ﻿using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
+using Microsoft.Build.Evaluation;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader.IO;
 
 namespace DragonLens.Core.Systems
 {
 	internal class PermissionHandler : ModSystem
 	{
-		public static readonly List<string> admins = new();
+		public static string worldID = Guid.NewGuid().ToString();
+
+		/// <summary>
+		/// Admin list. On the server contains all admins, on a local client will contain your ID if you are adming
+		/// and will not if you are not.
+		/// </summary>
+		public static List<string> admins = new();
+
+		/// <summary>
+		/// List of player indicies who are admins, used to sync this data visually without sending actual IDs
+		/// </summary>
+		public static List<int> visualAdmins = new();
 
 		/// <summary>
 		/// Determines if a player can use tools or not, based on their netmode and admin status.
@@ -22,7 +36,21 @@ namespace DragonLens.Core.Systems
 			if (Main.netMode == NetmodeID.SinglePlayer)
 				return true;
 			else
-				return admins.Contains(player.name);
+				return admins.Contains(player.GetModPlayer<PermissionPlayer>().currentServerID);
+		}
+
+		/// <summary>
+		/// If a player is an admin or not. Use this to tell if they are an admin from a foreign client.
+		/// Should only be used for display purposes.
+		/// </summary>
+		/// <param name="player">The player to check</param>
+		/// <returns>If they are an admin or not</returns>
+		public static bool LooksLikeAdmin(Player player)
+		{
+			if (Main.netMode == NetmodeID.SinglePlayer)
+				return true;
+			else
+				return visualAdmins.Contains(player.whoAmI);
 		}
 
 		/// <summary>
@@ -31,12 +59,10 @@ namespace DragonLens.Core.Systems
 		/// <param name="player">The player to add. They must not already be an admin.</param>
 		public static void AddAdmin(Player player)
 		{
-			admins.Add(player.name);
-
 			ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
 			packet.Write("AdminUpdate");
 			packet.Write(0);
-			packet.Write(player.name);
+			packet.Write(player.whoAmI);
 			packet.Send();
 		}
 
@@ -46,15 +72,10 @@ namespace DragonLens.Core.Systems
 		/// <param name="player">The player to remove. They must be an admin.</param>
 		public static void RemoveAdmin(Player player)
 		{
-			if (!admins.Contains(player.name))
-				return;
-
-			admins.Remove(player.name);
-
 			ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
 			packet.Write("AdminUpdate");
 			packet.Write(1);
-			packet.Write(player.name);
+			packet.Write(player.whoAmI);
 			packet.Send();
 		}
 
@@ -77,69 +98,138 @@ namespace DragonLens.Core.Systems
 			}
 		}
 
+		private static void SendVisualAdmins()
+		{
+			ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
+			packet.Write("AdminUpdate");
+			packet.Write(2);
+			packet.Write(visualAdmins.Count);
+
+			foreach (var admin in visualAdmins)
+			{
+				packet.Write(admin);
+			}
+
+			packet.Send();
+		}
+
 		/// <summary>
 		/// Handles an admin status update packet from the net
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="sender"></param>
-		public static void HandlePacket(BinaryReader reader)
-		{
+		public static void HandlePacket(BinaryReader reader, int whoAmI)
+		{		
 			int operation = reader.ReadInt32(); //First read the operation type
+			ModLoader.GetMod("DragonLens").Logger.Info("Recieved permission packet: " + operation);
 
 			if (operation == 0) //Set admin
 			{
-				string name = reader.ReadString();
-				Player player = Main.player.FirstOrDefault(n => n.name == name);
-
-				if (player is null)
-					Main.NewText(LocalizationHelper.GetText("Permission.PlayerNotFound", name));
-
-				if (player == Main.LocalPlayer)
-					Main.NewText(LocalizationHelper.GetText("Permission.AdminGiven"), Color.LimeGreen);
-
-				admins.Add(player.name);
-
 				if (Main.netMode == NetmodeID.Server)
 				{
+					Player player = Main.player[reader.ReadInt32()];
+					admins.Add(player.GetModPlayer<PermissionPlayer>().currentServerID);
+					visualAdmins.Add(player.whoAmI);
+
 					ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
 					packet.Write("AdminUpdate");
-					packet.Write(operation);
-					packet.Write(player.name);
-					packet.Send();
+					packet.Write(0);
+					packet.Send(player.whoAmI);
+
+					SendVisualAdmins();
+				}
+				else
+				{
+					admins.Add(Main.LocalPlayer.GetModPlayer<PermissionPlayer>().currentServerID);
 				}
 			}
 			else if (operation == 1) //Remove admin
 			{
-				string name = reader.ReadString();
-				Player player = Main.player.FirstOrDefault(n => n.name == name);
-
-				if (player is null)
-					Main.NewText(LocalizationHelper.GetText("Permission.PlayerNotFound", name));
-
-				if (player == Main.LocalPlayer)
-					Main.NewText(LocalizationHelper.GetText("Permission.AdminTaken"), Color.Red);
-
-				admins.Remove(player.name);
-
 				if (Main.netMode == NetmodeID.Server)
 				{
+					Player player = Main.player[reader.ReadInt32()];
+					admins.Remove(player.GetModPlayer<PermissionPlayer>().currentServerID);
+					visualAdmins.Remove(player.whoAmI);
+
 					ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
 					packet.Write("AdminUpdate");
-					packet.Write(operation);
-					packet.Write(player.name);
-					packet.Send();
+					packet.Write(1);
+					packet.Send(player.whoAmI);
+
+					SendVisualAdmins();
+				}
+				else
+				{
+					admins.Remove(Main.LocalPlayer.GetModPlayer<PermissionPlayer>().currentServerID);
 				}
 			}
-			else if (operation == 2) //Sync only
+			else if (operation == 2) //Sync visual only
 			{
 				if (Main.netMode == NetmodeID.Server)
 				{
+					SendVisualAdmins();
+				}
+				else
+				{
+					visualAdmins.Clear();
+					int count = reader.ReadInt32();
+
+					for(int k = 0; k < count; k++)
+					{
+						visualAdmins.Add(reader.ReadInt32());
+					}
+				}
+			}
+			else if (operation == 3) //Send server ID
+			{
+				if (Main.netMode == NetmodeID.Server) // When the server gets this packet, send the world ID back to the client
+				{
 					ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
 					packet.Write("AdminUpdate");
-					packet.Write(operation);
+					packet.Write(3);
+					packet.Write(worldID);
+					packet.Send(whoAmI);
+				}
+				else // When the client gets this packet, send their ID for that world back to the server
+				{
+					worldID = reader.ReadString();
+
+					var mp = Main.LocalPlayer.GetModPlayer<PermissionPlayer>();
+
+					if (!mp.IDs.ContainsKey(worldID))
+						mp.GenerateID();
+
+					ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
+					packet.Write("AdminUpdate");
+					packet.Write(4);
+					packet.Write(mp.IDs[worldID]);
 					packet.Send();
 				}
 			}
+			else if (operation == 4) //Validate ID
+			{
+				if (Main.netMode == NetmodeID.Server)
+				{
+					string ID = reader.ReadString();
+					Main.player[whoAmI].GetModPlayer<PermissionPlayer>().currentServerID = ID;
+				}
+			}
+		}
+
+		public override void SaveWorldData(TagCompound tag)
+		{
+			tag["worldID"] = worldID;
+			tag["admins"] = admins.ToList();
+		}
+
+		public override void LoadWorldData(TagCompound tag)
+		{
+			worldID = tag.GetString("worldID");
+
+			if (string.IsNullOrEmpty(worldID))
+				worldID = Guid.NewGuid().ToString();
+
+			admins = (List<string>)tag.GetList<string>("admins");
 		}
 	}
 
@@ -148,15 +238,73 @@ namespace DragonLens.Core.Systems
 	/// </summary>
 	public class PermissionPlayer : ModPlayer
 	{
+		/// <summary>
+		/// Dictionary of all IDs, stored in memory only on the local client. ONLY THE RELEVANT
+		/// ID SHOULD EVER BE SENT TO A SERVER!!!
+		/// </summary>
+		public Dictionary<string, string> IDs = new();
+
+		public string currentServerID;
+
+		public void LoadIDs()
+		{
+			IDs.Clear();
+			string dir = Path.Join(Main.SavePath, "DragonLensID");
+
+			// Create ID file if it does not exist
+			if (!File.Exists(dir))
+			{
+				File.WriteAllText(dir,
+					"#========================= [ WARNING ] =========================\n" +
+					"#This file contains your DragonLens IDs, which are what\n" +
+					"#identify you across various servers you visit. These are\n" +
+					"#essentially your passwords for these servers! YOU SHOULD\n" +
+					"#NOT SHARE THESE WITH ANYONE, EVER, FOR ANY REASON! If you\n" +
+					"#are being asked for these, someone is trying to impersonate\n" +
+					"#you to gain admin permissions on a server!\n" +
+					"#===============================================================\n");
+			}
+
+			// Read all IDs on local client
+			var lines = File.ReadAllLines(dir);
+
+			foreach(string line in lines.Where(n => !n.StartsWith("#")))
+			{
+				if (line.Contains(":"))
+				{
+					var parts = line.Split(":");
+					IDs.Add(parts[0], parts[1]);
+				}
+			}
+		}
+
+		public void GenerateID()
+		{
+			string dir = Path.Join(Main.SavePath, "DragonLensID");
+
+			var newID = Guid.NewGuid().ToString();
+			IDs.Add(PermissionHandler.worldID, newID);
+			File.AppendAllText(dir, $"{PermissionHandler.worldID}:{newID}\n");
+		}
+
 		public override void OnEnterWorld() // Send an admin list sync request on entering the server
 		{
 			if (Main.netMode == NetmodeID.SinglePlayer) //single player dosent care about admins
 				return;
 
-			if (Main.netMode == NetmodeID.MultiplayerClient) // Sync the admin info!
+			if (Main.netMode == NetmodeID.MultiplayerClient) 
 			{
+				if (IDs.Count <= 0)
+					LoadIDs();
 
+				// Send request for world ID and to send my ID back
 				ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
+				packet.Write("AdminUpdate");
+				packet.Write(3);
+				packet.Send();
+
+				// Send request for visual admin info
+				packet = ModLoader.GetMod("DragonLens").GetPacket();
 				packet.Write("AdminUpdate");
 				packet.Write(2);
 				packet.Send();
@@ -176,154 +324,6 @@ namespace DragonLens.Core.Systems
 				ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
 				packet.Write("ToolDataRequest");
 				packet.Send();
-			}
-		}
-	}
-
-	/// <summary>
-	/// A base class to make localization of admin power commands more convenient
-	/// </summary>
-	internal abstract class PermissionCommand : ModCommand
-	{
-		public override string Usage => LocalizationHelper.GetText($"Permission.{GetType().Name}.Usage");
-
-		public override string Description => LocalizationHelper.GetText($"Permission.{GetType().Name}.Description");
-
-		protected string GetText(string key, params object[] args)
-		{
-			return LocalizationHelper.GetText($"Permission.{GetType().Name}.{key}", args);
-		}
-	}
-
-	/// <summary>
-	/// A command to grant admin status to a player
-	/// </summary>
-	internal class AdminCommand : PermissionCommand
-	{
-		public override string Command => "DLAdmin";
-
-		public override CommandType Type => CommandType.Chat | CommandType.Server | CommandType.Console;
-
-		public override void Action(CommandCaller caller, string input, string[] args)
-		{
-			if (caller.CommandType != CommandType.Console && !PermissionHandler.CanUseTools(caller.Player)) //Only admins or console can make more admins
-				return;
-
-			if (args.Length < 1)
-			{
-				Console.WriteLine(GetText("NameNotEntered"));
-				Main.NewText(GetText("NameNotEntered"), Color.Red);
-				return;
-			}
-
-			string name = "";
-			for(int k = 0; k < args.Length; k++)
-			{
-				if (k > 0)
-					name += " ";
-
-				name += args[k];
-			}
-
-			if (PermissionHandler.admins.Contains(name))
-			{
-				Console.WriteLine(GetText("AlreadyAdmin"));
-				Main.NewText(GetText("AlreadyAdmin"), Color.Red);
-				return;
-			}
-
-			Player player = Main.player.FirstOrDefault(n => n.name == name);
-
-			if (player is null)
-			{
-				Console.WriteLine(LocalizationHelper.GetText("Permission.PlayerNotFound", name));
-				Main.NewText(LocalizationHelper.GetText("Permission.PlayerNotFound", name), Color.Red);
-			}
-			else
-			{
-				Console.WriteLine(GetText("AdminGiven", name));
-				Main.NewText(GetText("AdminGiven", name), Color.Lime);
-				PermissionHandler.AddAdmin(player);
-			}
-		}
-	}
-
-	/// <summary>
-	/// A command to revoke admin status from a player
-	/// </summary>
-	internal class DeAdminCommand : PermissionCommand
-	{
-		public override string Command => "DLRemoveAdmin";
-
-		public override CommandType Type => CommandType.Chat | CommandType.Server | CommandType.Console;
-
-		public override string Usage => "/DLRemoveAdmin [player name]";
-
-		public override string Description => "Removes a user from the admin list for DragonLens, disallowing them from using the mods cheat tools.";
-
-		public override void Action(CommandCaller caller, string input, string[] args)
-		{
-			if (caller.CommandType != CommandType.Console && !PermissionHandler.CanUseTools(caller.Player)) //Only admins or console can remove admins
-				return;
-
-			if (args.Length < 1)
-			{
-				Console.WriteLine(GetText("NameNotEntered"));
-				Main.NewText(GetText("NameNotEntered"), Color.Red);
-				return;
-			}
-
-			string name = "";
-			for (int k = 0; k < args.Length; k++)
-			{
-				if (k > 0)
-					name += " ";
-
-				name += args[k];
-			}
-
-			if (!PermissionHandler.admins.Contains(name))
-			{
-				Console.WriteLine(GetText("NotAdmin"));
-				Main.NewText(GetText("NotAdmin"), Color.Red);
-				return;
-			}
-
-			Player player = Main.player.FirstOrDefault(n => n.name == name);
-
-			if (player is null)
-			{
-				Console.WriteLine(LocalizationHelper.GetText("Permission.PlayerNotFound", name));
-				Main.NewText(LocalizationHelper.GetText("Permission.PlayerNotFound", name), Color.Red);
-			}
-			else
-			{
-				Console.WriteLine(GetText("AdminTaken", name));
-				Main.NewText(GetText("AdminTaken", name), Color.Lime);
-				PermissionHandler.RemoveAdmin(player);
-			}
-		}
-	}
-
-	/// <summary>
-	/// A command to list all current admins on the server
-	/// </summary>
-	internal class AdminListCommand : ModCommand
-	{
-		public override string Command => "DLAdminList";
-
-		public override CommandType Type => CommandType.Chat | CommandType.Console;
-
-		public override string Description => LocalizationHelper.GetText("Permission.AdminListCommand.Description");
-
-		public override void Action(CommandCaller caller, string input, string[] args)
-		{
-			foreach (string name in PermissionHandler.admins)
-			{
-				if (caller.CommandType == CommandType.Console)
-					Console.WriteLine($"{name}");
-				else
-					Main.NewText($"{name}");
 			}
 		}
 	}

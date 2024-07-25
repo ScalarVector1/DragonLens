@@ -28,7 +28,7 @@ namespace DragonLens
 				ToolHandler.HandlePacket(reader, whoAmI);
 
 			if (type == "AdminUpdate")
-				PermissionHandler.HandlePacket(reader);
+				PermissionHandler.HandlePacket(reader, whoAmI);
 
 			if (type == "ToolDataRequest")
 				PermissionHandler.SendToolData(whoAmI);
