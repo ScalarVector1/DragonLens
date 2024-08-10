@@ -51,8 +51,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 		/// <param name="index">The index of the item in the inventory to change</param>
 		/// <param name="inventory">The ID of the inventory to change, see switch case inside for valid values</param>
 		/// <param name="item">The item to replace that slot with</param>
-		/// <param name="ignore">Player ID to ignore re-sending this to</param>
-		public static void SendItem(int player, int index, int inventory, Item item, int ignore = -1)
+		public static void SendItem(int player, int index, int inventory, Item item)
 		{
 			if (Main.netMode == NetmodeID.SinglePlayer)
 				return;
