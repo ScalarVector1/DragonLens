@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria.GameContent.UI.Elements;
+using Terraria.ID;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
@@ -204,7 +205,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 				Main.mouseItem = temp;
 			}
 
-			ModContent.GetInstance<PlayerManager>().SendItem(UILoader.GetUIState<InventoryManagerWindow>().player.whoAmI, index, invIndex, item);
+			PlayerManagerNetHandler.SendItem(UILoader.GetUIState<InventoryManagerWindow>().player.whoAmI, index, invIndex, item);
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
@@ -222,6 +223,29 @@ namespace DragonLens.Content.Tools.Multiplayer
 					Main.LocalPlayer.mouseInterface = true;
 					Main.HoverItem = item.Clone(); // Fix knockback issue. Issue #73
 					Main.hoverItemName = "a";
+				}
+			}
+			else if (invIndex == 0) // Poor hack for this but indicates the main inventory to highlight hotbar and special slots
+			{
+				if (index <= 9)
+				{
+					var tex = Terraria.GameContent.TextureAssets.Item[ItemID.BoneGlove].Value;
+					spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Gray * 0.35f, 0f, tex.Size() / 2f, 1, 0, 0);
+				}
+				if (index > 49 && index <= 53)
+				{
+					var tex = Terraria.GameContent.TextureAssets.Item[ItemID.GoldCoin].Value;
+					spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Gray * 0.35f, 0f, tex.Size() / 2f, 1, 0, 0);
+				}
+				if (index > 53 && index <= 57)
+				{
+					var tex = Terraria.GameContent.TextureAssets.Item[ItemID.WoodenArrow].Value;
+					spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Gray * 0.35f, 0f, tex.Size() / 2f, 1, 0, 0);
+				}
+				if (index == 58)
+				{
+					var tex = Terraria.GameContent.TextureAssets.Item[ItemID.FeralClaws].Value;
+					spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Gray * 0.35f, 0f, tex.Size() / 2f, 1, 0, 0);
 				}
 			}
 		}

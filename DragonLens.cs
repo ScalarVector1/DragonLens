@@ -15,6 +15,7 @@ using System.IO;
 using System.Threading;
 using Terraria.GameContent;
 using Terraria.ID;
+using DragonLens.Content.Tools.Multiplayer;
 
 namespace DragonLens
 {
@@ -32,6 +33,9 @@ namespace DragonLens
 
 			if (type == "ToolDataRequest")
 				PermissionHandler.SendToolData(whoAmI);
+
+			if (type == "PlayerManager")
+				PlayerManagerNetHandler.HandlePacket(reader, whoAmI);
 		}
 	}
 }

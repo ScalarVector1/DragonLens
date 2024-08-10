@@ -16,11 +16,6 @@ namespace DragonLens.Content.Tools.Multiplayer
 {
 	internal class PlayerManager : Tool
 	{
-		public int player;
-		public int index;
-		public int inventory;
-		public Item item;
-
 		public override string IconKey => "PlayerManager";
 
 		public override void OnActivate()
@@ -31,57 +26,11 @@ namespace DragonLens.Content.Tools.Multiplayer
 			if (state.visible)
 				state.SetPlayers();
 		}
-
-		public override void SendPacket(BinaryWriter writer)
-		{
-			if (item is null)
-				return;
-
-			writer.Write(player);
-			writer.Write(index);
-			writer.Write(inventory);
-			ItemIO.Send(item, writer, true);
-		}
-
-		public override void RecievePacket(BinaryReader reader, int sender)
-		{
-			int pIndex = reader.ReadInt32();
-			Player player = Main.player[pIndex];
-
-			int index = reader.ReadInt32();
-			int invIndex = reader.ReadInt32();
-
-			Item[] inventory = invIndex switch
-			{
-				0 => player.inventory,
-				2 => player.bank.item,
-				4 => player.bank2.item,
-				6 => player.bank3.item,
-				8 => player.bank4.item,
-				_ => player.inventory
-			};
-
-			Item item = ItemIO.Receive(reader, true);
-			inventory[index] = item.Clone();
-
-			if (Main.netMode == NetmodeID.Server)
-				SendItem(pIndex, index, invIndex, item, sender);
-		}
-
-		public void SendItem(int player, int index, int inventory, Item item, int ignore = -1)
-		{
-			if (item is null)
-				return;
-
-			this.player = player;
-			this.index = index;
-			this.inventory = inventory;
-			this.item = item.Clone();
-
-			NetSend(-1, ignore);
-		}
 	}
 
+	/// <summary>
+	/// Handles the stalking function of the player manager
+	/// </summary>
 	internal class PlayerManagerSystem : ModSystem
 	{
 		public Player stalkedPlayer;
@@ -92,6 +41,22 @@ namespace DragonLens.Content.Tools.Multiplayer
 			{
 				Main.screenPosition = stalkedPlayer.Center - new Vector2(Main.screenWidth, Main.screenHeight) / 2f;
 			}
+		}
+	}
+
+	/// <summary>
+	/// Class to refresh player manager list when players log in or out
+	/// </summary>
+	internal class PlayerManagerUpdater : ModPlayer
+	{
+		public override void PlayerDisconnect()
+		{
+			UILoader.GetUIState<PlayerManagerWindow>().SetPlayers();
+		}
+
+		public override void PlayerConnect()
+		{
+			UILoader.GetUIState<PlayerManagerWindow>().SetPlayers();
 		}
 	}
 
@@ -180,7 +145,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 			Width.Set(300, 0);
 			Height.Set(90, 0);
 
-			var admin = new PlayerManagerButton("Toggle Admin", "Gives or revokes admin permissions from this player. Make sure this is someone you can trust! Admins can use all features of DragonLens, including this one!", Assets.GUI.AdminIcon, () => PermissionHandler.CanUseTools(player));
+			var admin = new PlayerManagerButton("Toggle Admin", "Gives or revokes admin permissions from this player. Make sure this is someone you can trust! Admins can use all features of DragonLens, including this one!", Assets.GUI.AdminIcon, () => PermissionHandler.LooksLikeAdmin(player));
 			admin.Left.Set(10, 0);
 			admin.Top.Set(42, 0);
 			admin.OnLeftClick += (a, b) => ToggleAdmin();
@@ -198,7 +163,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 			stalk.OnLeftClick += (a, b) => Stalk();
 			Append(stalk);
 
-			var inv = new PlayerManagerButton("Inventory", "View and edit this player's inventories", Assets.GUI.StalkIcon, () => false);
+			var inv = new PlayerManagerButton("Inventory", "View and edit this player's inventories", Assets.GUI.InventoryIcon, () => false);
 			inv.Left.Set(154, 0);
 			inv.Top.Set(42, 0);
 			inv.OnLeftClick += (a, b) => OpenInventory();
@@ -215,13 +180,23 @@ namespace DragonLens.Content.Tools.Multiplayer
 			spriteBatch.Draw(back, backTarget, Color.Black * 0.5f);
 
 			Main.PlayerRenderer.DrawPlayerHead(Main.Camera, player, dims.TopLeft() + Vector2.One * 20);
-			Utils.DrawBorderString(spriteBatch, player.name, dims.TopLeft() + new Vector2(46, 12), PermissionHandler.CanUseTools(player) ? new Color(100, 235, 235) : Color.White);
+			Utils.DrawBorderString(spriteBatch, player.name, dims.TopLeft() + new Vector2(46, 12), PermissionHandler.LooksLikeAdmin(player) ? new Color(100, 235, 235) : Color.White);
 
 			Texture2D teamIcon = Terraria.GameContent.TextureAssets.Pvp[1].Value;
 			var source = new Rectangle(player.team * 18, 0, 18, 18);
 			spriteBatch.Draw(teamIcon, dims.TopLeft() + new Vector2(272, 12), source, Color.White);
 
 			Utils.DrawBorderString(spriteBatch, $"{Math.Round(player.Center.X / 16)}, {Math.Round(player.Center.Y / 16)}", dims.TopLeft() + new Vector2(200, 52), Color.Gray);
+
+			if (new Rectangle(dims.X, dims.Y, dims.Width, 34).Contains(Main.MouseScreen.ToPoint()))
+			{
+				Tooltip.SetName(player.name);
+				Tooltip.SetTooltip($"Life: {player.statLife}/{player.statLifeMax2}\n" +
+					$"Mana: {player.statMana}/{player.statManaMax2}\n" +
+					$"Position: {Math.Round(player.Center.X / 16)}, {Math.Round(player.Center.Y / 16)}\n" +
+					$"Velocity: {Math.Round(player.velocity.X)}, {Math.Round(player.velocity.Y)}\n" +
+					$"Alive: {!player.dead}");
+			}
 
 			base.Draw(spriteBatch);
 		}
@@ -237,7 +212,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 					return;
 				}
 
-				if (PermissionHandler.CanUseTools(player))
+				if (PermissionHandler.LooksLikeAdmin(player))
 				{
 					PermissionHandler.RemoveAdmin(player);
 					Main.NewText($"{player.name} is no longer an admin.", Color.Yellow);
@@ -252,7 +227,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 
 		public void Kick()
 		{
-			NetMessage.SendData(2, -1, Main.myPlayer);
+			PlayerManagerNetHandler.SendKick(player.whoAmI);
 		}
 
 		public void Stalk()
@@ -267,6 +242,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 		{
 			UILoader.GetUIState<InventoryManagerWindow>().player = player;
 			UILoader.GetUIState<InventoryManagerWindow>().SetInventory();
+			UILoader.GetUIState<InventoryManagerWindow>().basePos = UILoader.GetUIState<PlayerManagerWindow>().basePos + new Vector2(350, 0);
 			UILoader.GetUIState<InventoryManagerWindow>().visible = true;
 		}
 	}
