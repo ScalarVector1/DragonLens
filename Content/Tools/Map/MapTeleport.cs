@@ -98,8 +98,8 @@ namespace DragonLens.Content.Tools.Map
 				{
 					Main.LocalPlayer.Center = target;
 
-					if (NoClip.active)
-						NoClip.desiredPos = target;
+					if (Main.LocalPlayer.GetModPlayer<NoClipPlayer>().active)
+						Main.LocalPlayer.GetModPlayer<NoClipPlayer>().desiredPos = target;
 
 					lastTarget = target;
 					whoTeleported = Main.LocalPlayer.whoAmI;

@@ -2,30 +2,42 @@
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
+using System.IO;
+using Terraria.ID;
 
 namespace DragonLens.Content.Tools.Gameplay
 {
 	internal class NoClip : Tool
 	{
-		public static bool active = false;
+		public static int syncingPlayer;
 
-		public static Vector2 desiredPos;
+		public bool Active
+		{
+			get => Main.LocalPlayer.GetModPlayer<NoClipPlayer>().active;
+
+			set
+			{
+				Main.LocalPlayer.GetModPlayer<NoClipPlayer>().active = value;
+				syncingPlayer = Main.LocalPlayer.whoAmI;
+				NetSend();
+			}
+		}
 
 		public override string IconKey => "Noclip";
 
 		public override void OnActivate()
 		{
-			active = !active;
+			Active = !Active;
 
-			if (active)
-				desiredPos = Main.LocalPlayer.Center;
+			if (Active)
+				Main.LocalPlayer.GetModPlayer<NoClipPlayer>().desiredPos = Main.LocalPlayer.Center;
 		}
 
 		public override void DrawIcon(SpriteBatch spriteBatch, Rectangle position)
 		{
 			base.DrawIcon(spriteBatch, position);
 
-			if (active)
+			if (Active)
 			{
 				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ThemeHandler.ButtonColor.InvertColor());
 
@@ -37,24 +49,66 @@ namespace DragonLens.Content.Tools.Gameplay
 				spriteBatch.Draw(tex, target, color);
 			}
 		}
+
+		public override void SendPacket(BinaryWriter writer)
+		{
+			var mp = Main.player[syncingPlayer].GetModPlayer<NoClipPlayer>();
+			writer.Write(syncingPlayer);
+			writer.Write(mp.desiredPos.X);
+			writer.Write(mp.desiredPos.Y);
+			writer.Write(mp.active);
+		}
+
+		public override void RecievePacket(BinaryReader reader, int sender)
+		{
+			syncingPlayer = reader.ReadInt32();
+			var mp = Main.player[syncingPlayer].GetModPlayer<NoClipPlayer>();
+			mp.desiredPos.X = reader.ReadSingle();
+			mp.desiredPos.Y = reader.ReadSingle();
+			mp.active = reader.ReadBoolean();
+
+			if (Main.netMode == NetmodeID.Server)
+			{
+				NetSend(-1, sender);
+			}
+		}
 	}
 
 	internal class NoClipPlayer : ModPlayer
 	{
+		public Vector2 desiredPos;
+		public bool active;
+
 		public override void PostUpdate()
 		{
-			if (NoClip.active && PermissionHandler.CanUseTools(Player))
+			if (active && Main.LocalPlayer == Player && !PermissionHandler.CanUseTools(Player))
 			{
-				Player.Center = NoClip.desiredPos;
+				active = false;
+				ModContent.GetInstance<NoClip>().NetSend(-1, -1);
+			}
 
+			if (active)
+			{
 				if (Player.controlLeft)
-					NoClip.desiredPos.X -= 15;
+					desiredPos.X -= 15;
 				if (Player.controlRight)
-					NoClip.desiredPos.X += 15;
+					desiredPos.X += 15;
 				if (Player.controlUp)
-					NoClip.desiredPos.Y -= 15;
+					desiredPos.Y -= 15;
 				if (Player.controlDown)
-					NoClip.desiredPos.Y += 15;
+					desiredPos.Y += 15;
+
+				if (Main.netMode == NetmodeID.MultiplayerClient && 
+					Main.LocalPlayer == Player && 
+					Player.Center != desiredPos + Vector2.UnitY * 0.4f &&  // account for gravity
+					Main.GameUpdateCount % 20 == 0) // Bootleg throttle for this to prevent it from spamming
+				{
+					NoClip.syncingPlayer = Main.LocalPlayer.whoAmI;
+					ModContent.GetInstance<NoClip>().NetSend(-1, -1);
+				}
+
+				Player.Center = desiredPos;
+				Player.velocity *= 0;
 			}
 		}
 	}
