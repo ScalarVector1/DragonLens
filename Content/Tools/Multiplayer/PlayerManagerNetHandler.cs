@@ -5,10 +5,10 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Terraria.ID;
-using Terraria.ModLoader.IO;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader.IO;
 
 namespace DragonLens.Content.Tools.Multiplayer
 {

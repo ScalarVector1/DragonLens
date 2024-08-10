@@ -40,7 +40,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 		{
 			if (!Main.mouseItem.IsAir && noItem)
 			{
-				var newItem = Main.mouseItem.Clone();
+				Item newItem = Main.mouseItem.Clone();
 				parent.onValueChanged(newItem);
 
 				Main.LocalPlayer.HeldItem.TurnToAir();
@@ -53,9 +53,9 @@ namespace DragonLens.Content.GUI.FieldEditors
 			}
 			else if (!Main.mouseItem.IsAir && !noItem)
 			{
-				var temp = parent.value;
+				Item temp = parent.value;
 
-				var newItem = Main.mouseItem.Clone();
+				Item newItem = Main.mouseItem.Clone();
 				parent.onValueChanged(newItem);
 
 				Main.mouseItem = temp.Clone();

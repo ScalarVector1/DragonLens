@@ -66,7 +66,6 @@ namespace DragonLens.Content.Tools.Editors
 
 		public StyledScrollbar basicEditorScroll;
 
-
 		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 844, 32);
 
 		public override Vector2 DefaultPosition => new(0.4f, 0.4f);

@@ -73,7 +73,7 @@ namespace DragonLens.Content.GUI
 		/// <param name="editing">The objects that editors should be generated for</param>
 		public void SetEditing(object[] editing)
 		{
-			foreach(object obj in editing)
+			foreach (object obj in editing)
 			{
 				ObjectEditor container = new ObjectEditor(obj);
 				if (container.modPlayerEditorList.Count > 1)

@@ -170,7 +170,7 @@ namespace DragonLens.Content.Tools.Editors
 			basicEditorList.Add(new IntEditor("Defense", n => npc.defense = n, npc.defense, () => npc.defense, "Current defense of this NPC"));
 			basicEditorList.Add(new IntEditor("Damage", n => npc.damage = n, npc.damage, () => npc.damage, "Current contact damage of the NPC"));
 			basicEditorList.Add(new FloatEditor("KB Resist", n => npc.knockBackResist = n, npc.knockBackResist, () => npc.knockBackResist, "Current 'knockback resistance' of the NPC. Note this is a misnomer, knockback is MULTIPLIED by this value."));
-			
+
 			basicEditorList.Add(new IntEditor("AI Style", n => npc.aiStyle = n, npc.aiStyle, () => npc.aiStyle, "The AI style of this NPC. See the wiki for what values represent what NPCs behavior."));
 
 			for (int k = 0; k < npc.ai.Length; k++)
@@ -214,7 +214,7 @@ namespace DragonLens.Content.Tools.Editors
 
 		public void BuildModTE()
 		{
-			moddedEditor.SetEditing(new object[] {tileEntity});
+			moddedEditor.SetEditing(new object[] { tileEntity });
 		}
 		#endregion
 
@@ -223,9 +223,9 @@ namespace DragonLens.Content.Tools.Editors
 			if (!BoundingBox.Contains(Main.MouseScreen.ToPoint()) && entity is null)
 			{
 				// NPCs
-				for(int k = 0; k < Main.maxNPCs; k++)
+				for (int k = 0; k < Main.maxNPCs; k++)
 				{
-					var box = Main.npc[k].Hitbox;
+					Rectangle box = Main.npc[k].Hitbox;
 					box.Inflate(16, 16);
 
 					if (Main.npc[k].active && box.Contains(Main.MouseWorld.ToPoint()))
@@ -234,7 +234,7 @@ namespace DragonLens.Content.Tools.Editors
 						tileEntity = null;
 
 						Main.NewText(Main.npc[k].GivenOrTypeName + " selected for editing.");
-				
+
 						SetupNew();
 
 						return;
@@ -244,7 +244,7 @@ namespace DragonLens.Content.Tools.Editors
 				// Projectiles
 				for (int k = 0; k < Main.maxProjectiles; k++)
 				{
-					var box = Main.projectile[k].Hitbox;
+					Rectangle box = Main.projectile[k].Hitbox;
 					box.Inflate(16, 16);
 
 					if (Main.projectile[k].active && box.Contains(Main.MouseWorld.ToPoint()))
@@ -265,7 +265,7 @@ namespace DragonLens.Content.Tools.Editors
 				Point16 pos = (Main.MouseWorld / 16).ToPoint16();
 				if (TileEntity.ByPosition.ContainsKey(pos))
 				{
-					var te = TileEntity.ByPosition[pos];
+					TileEntity te = TileEntity.ByPosition[pos];
 
 					tileEntity = te;
 					entity = null;
@@ -361,7 +361,7 @@ namespace DragonLens.Content.Tools.Editors
 			parent.entity = null;
 			parent.tileEntity = null;
 			PlayerInput.WritingText = false;
-			Main.blockInput = false;	
+			Main.blockInput = false;
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)

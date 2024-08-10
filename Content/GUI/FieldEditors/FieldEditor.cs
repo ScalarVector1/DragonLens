@@ -50,7 +50,6 @@ namespace DragonLens.Content.GUI.FieldEditors
 
 				return name.CompareTo(editor.name);
 			}
-				
 
 			return base.CompareTo(obj);
 		}

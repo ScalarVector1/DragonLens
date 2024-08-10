@@ -97,7 +97,7 @@ namespace DragonLens.Content.Tools.Editors
 			slot.Left.Set(newPos.X - 182, 0);
 			slot.Top.Set(newPos.Y + 50 + 48, 0);
 
-			defaultButton.Left.Set(newPos.X -212, 0);
+			defaultButton.Left.Set(newPos.X - 212, 0);
 			defaultButton.Top.Set(newPos.Y + 190 + 52, 0);
 
 			basicEditorList.Left.Set(newPos.X + 10, 0);
@@ -108,9 +108,9 @@ namespace DragonLens.Content.Tools.Editors
 			moddedEditor.Left.Set(newPos.X + 342, 0);
 			moddedEditor.Top.Set(newPos.Y + 50, 0);
 
-			prefixList.Left.Set(newPos.X -220, 0);
+			prefixList.Left.Set(newPos.X - 220, 0);
 			prefixList.Top.Set(newPos.Y + 260 + 48, 0);
-			prefixScroll.Left.Set(newPos.X -220 + 180, 0);
+			prefixScroll.Left.Set(newPos.X - 220 + 180, 0);
 			prefixScroll.Top.Set(newPos.Y + 260 + 48, 0);
 		}
 
@@ -376,7 +376,7 @@ namespace DragonLens.Content.Tools.Editors
 		}
 
 		public override int CompareTo(object obj)
-		{ 
+		{
 			if (obj is PrefixButton button)
 			{
 				if (button.dummy.rare != dummy.rare)

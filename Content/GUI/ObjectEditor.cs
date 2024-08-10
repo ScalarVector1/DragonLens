@@ -43,7 +43,7 @@ namespace DragonLens.Content.GUI
 
 		private float height = 32;
 
-		private string nameOverride;
+		private readonly string nameOverride;
 
 		public string smartLabel => obj is ModType mt ? mt.Mod.Name + ": " + mt.Name : obj.GetType().Name;
 		public string Label => nameOverride == string.Empty ? smartLabel : nameOverride;
@@ -109,11 +109,11 @@ namespace DragonLens.Content.GUI
 				{
 					if (tallest != 0)
 						height += tallest + modPlayerEditorList.ListPadding;
-					
+
 					tallest = 0;
 				}
 
-				var item = modPlayerEditorList._items[k + 1];
+				UIElement item = modPlayerEditorList._items[k + 1];
 				if (item.Height.Pixels > tallest)
 					tallest = item.Height.Pixels;
 			}
@@ -144,7 +144,7 @@ namespace DragonLens.Content.GUI
 
 					if (t.IsLiteral || t.IsInitOnly)
 						newEditor.isLocked = true;
-					
+
 					modPlayerEditorList.Add(newEditor);
 				}
 				catch
@@ -187,7 +187,7 @@ namespace DragonLens.Content.GUI
 		{
 			bool anyShown = false;
 
-			foreach(UIElement element in modPlayerEditorList._items)
+			foreach (UIElement element in modPlayerEditorList._items)
 			{
 				if (element is FieldEditor editor)
 				{

@@ -108,7 +108,7 @@ namespace DragonLens.Core.Systems
 			packet.Write(2);
 			packet.Write(visualAdmins.Count);
 
-			foreach (var admin in visualAdmins)
+			foreach (int admin in visualAdmins)
 			{
 				packet.Write(admin);
 			}
@@ -122,7 +122,7 @@ namespace DragonLens.Core.Systems
 		/// <param name="reader"></param>
 		/// <param name="sender"></param>
 		public static void HandlePacket(BinaryReader reader, int whoAmI)
-		{		
+		{
 			int operation = reader.ReadInt32(); //First read the operation type
 			ModLoader.GetMod("DragonLens").Logger.Info("Recieved permission packet: " + operation);
 
@@ -169,7 +169,7 @@ namespace DragonLens.Core.Systems
 
 					Main.NewText($"You are no longer an admin.", Color.Yellow);
 
-					foreach (var item in UILoader.UIStates)
+					foreach (SmartUIState item in UILoader.UIStates)
 					{
 						if (item is ToolbarState)
 							continue;
@@ -189,7 +189,7 @@ namespace DragonLens.Core.Systems
 					visualAdmins.Clear();
 					int count = reader.ReadInt32();
 
-					for(int k = 0; k < count; k++)
+					for (int k = 0; k < count; k++)
 					{
 						visualAdmins.Add(reader.ReadInt32());
 					}
@@ -209,7 +209,7 @@ namespace DragonLens.Core.Systems
 				{
 					worldID = reader.ReadString();
 
-					var mp = Main.LocalPlayer.GetModPlayer<PermissionPlayer>();
+					PermissionPlayer mp = Main.LocalPlayer.GetModPlayer<PermissionPlayer>();
 
 					if (!mp.IDs.ContainsKey(worldID))
 						mp.GenerateID();
@@ -281,13 +281,13 @@ namespace DragonLens.Core.Systems
 			}
 
 			// Read all IDs on local client
-			var lines = File.ReadAllLines(dir);
+			string[] lines = File.ReadAllLines(dir);
 
-			foreach(string line in lines.Where(n => !n.StartsWith("#")))
+			foreach (string line in lines.Where(n => !n.StartsWith("#")))
 			{
 				if (line.Contains(":"))
 				{
-					var parts = line.Split(":");
+					string[] parts = line.Split(":");
 					IDs.Add(parts[0], parts[1]);
 				}
 			}
@@ -297,7 +297,7 @@ namespace DragonLens.Core.Systems
 		{
 			string dir = Path.Join(Main.SavePath, "DragonLensID");
 
-			var newID = Guid.NewGuid().ToString();
+			string newID = Guid.NewGuid().ToString();
 			IDs.Add(PermissionHandler.worldID, newID);
 			File.AppendAllText(dir, $"{PermissionHandler.worldID}:{newID}\n");
 		}
@@ -307,7 +307,7 @@ namespace DragonLens.Core.Systems
 			if (Main.netMode == NetmodeID.SinglePlayer) //single player dosent care about admins
 				return;
 
-			if (Main.netMode == NetmodeID.MultiplayerClient) 
+			if (Main.netMode == NetmodeID.MultiplayerClient)
 			{
 				if (IDs.Count <= 0)
 					LoadIDs();

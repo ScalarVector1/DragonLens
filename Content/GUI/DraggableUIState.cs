@@ -34,7 +34,7 @@ namespace DragonLens.Content.GUI
 		/// </summary>
 		public Rectangle BoundingBox => new((int)basePos.X, (int)basePos.Y, width, height);
 
-		public override bool Visible 
+		public override bool Visible
 		{
 			get => visible;
 			set => visible = value;

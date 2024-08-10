@@ -130,7 +130,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 
 	internal class Seperator : SmartUIElement
 	{
-		string text;
+		readonly string text;
 		public int invIndex;
 
 		public Seperator(string text, int invIndex)
@@ -169,8 +169,8 @@ namespace DragonLens.Content.Tools.Multiplayer
 
 	internal class ItemSlot : SmartUIElement
 	{
-		Item[] inventory;
-		int index;
+		readonly Item[] inventory;
+		readonly int index;
 		public int invIndex;
 
 		Item item => inventory[index];
@@ -191,7 +191,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 		{
 			if (!Main.mouseItem.IsAir && noItem)
 			{
-				var newItem = Main.mouseItem.Clone();
+				Item newItem = Main.mouseItem.Clone();
 				inventory[index] = newItem;
 
 				Main.LocalPlayer.HeldItem.TurnToAir();
@@ -204,9 +204,9 @@ namespace DragonLens.Content.Tools.Multiplayer
 			}
 			else if (!Main.mouseItem.IsAir && !noItem)
 			{
-				var temp = item.Clone();
+				Item temp = item.Clone();
 
-				var newItem = Main.mouseItem.Clone();
+				Item newItem = Main.mouseItem.Clone();
 				inventory[index] = newItem;
 
 				Main.mouseItem = temp;
@@ -222,7 +222,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 			if (!noItem)
 			{
 				Main.inventoryScale = 36 / 52f * 48 / 36f;
-				var clone = item.Clone();
+				Item clone = item.Clone();
 				Terraria.UI.ItemSlot.Draw(spriteBatch, ref clone, 21, GetDimensions().Position());
 
 				if (IsMouseHovering)
@@ -236,22 +236,25 @@ namespace DragonLens.Content.Tools.Multiplayer
 			{
 				if (index <= 9)
 				{
-					var tex = Terraria.GameContent.TextureAssets.Item[ItemID.BoneGlove].Value;
+					Texture2D tex = Terraria.GameContent.TextureAssets.Item[ItemID.BoneGlove].Value;
 					spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Gray * 0.35f, 0f, tex.Size() / 2f, 1, 0, 0);
 				}
+
 				if (index > 49 && index <= 53)
 				{
-					var tex = Terraria.GameContent.TextureAssets.Item[ItemID.GoldCoin].Value;
+					Texture2D tex = Terraria.GameContent.TextureAssets.Item[ItemID.GoldCoin].Value;
 					spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Gray * 0.35f, 0f, tex.Size() / 2f, 1, 0, 0);
 				}
+
 				if (index > 53 && index <= 57)
 				{
-					var tex = Terraria.GameContent.TextureAssets.Item[ItemID.WoodenArrow].Value;
+					Texture2D tex = Terraria.GameContent.TextureAssets.Item[ItemID.WoodenArrow].Value;
 					spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Gray * 0.35f, 0f, tex.Size() / 2f, 1, 0, 0);
 				}
+
 				if (index == 58)
 				{
-					var tex = Terraria.GameContent.TextureAssets.Item[ItemID.FeralClaws].Value;
+					Texture2D tex = Terraria.GameContent.TextureAssets.Item[ItemID.FeralClaws].Value;
 					spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Gray * 0.35f, 0f, tex.Size() / 2f, 1, 0, 0);
 				}
 			}
@@ -259,32 +262,20 @@ namespace DragonLens.Content.Tools.Multiplayer
 			{
 				int id = 0;
 
-				switch (index) // textures for backgrounds
+				id = index switch // textures for backgrounds
 				{
-					case 0: id = ItemID.IronHelmet; break;
-					case 1: id = ItemID.IronChainmail; break;
-					case 2: id = ItemID.IronGreaves; break;
-					case 3:
-					case 4:
-					case 5:
-					case 6: 
-					case 7:
-					case 8:
-					case 9: id = ItemID.BandofRegeneration; break;
-					case 10: id = ItemID.TopHat; break;
-					case 11: id = ItemID.TaxCollectorSuit; break;
-					case 12: id = ItemID.TaxCollectorPants; break;
-					case 13:
-					case 14:
-					case 15:
-					case 16:
-					case 17:
-					case 18:
-					case 19: id = ItemID.GiantBow; break;
-					default: id = 0; break;
-				}
+					0 => ItemID.IronHelmet,
+					1 => ItemID.IronChainmail,
+					2 => ItemID.IronGreaves,
+					3 or 4 or 5 or 6 or 7 or 8 or 9 => ItemID.BandofRegeneration,
+					10 => ItemID.TopHat,
+					11 => ItemID.TaxCollectorSuit,
+					12 => ItemID.TaxCollectorPants,
+					13 or 14 or 15 or 16 or 17 or 18 or 19 => ItemID.GiantBow,
+					_ => 0,
+				};
 
-				var tex = Terraria.GameContent.TextureAssets.Item[id].Value;
+				Texture2D tex = Terraria.GameContent.TextureAssets.Item[id].Value;
 				spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Gray * 0.35f, 0f, tex.Size() / 2f, 1, 0, 0);
 			}
 		}

@@ -52,7 +52,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override void SendPacket(BinaryWriter writer)
 		{
-			var mp = Main.player[syncingPlayer].GetModPlayer<NoClipPlayer>();
+			NoClipPlayer mp = Main.player[syncingPlayer].GetModPlayer<NoClipPlayer>();
 			writer.Write(syncingPlayer);
 			writer.Write(mp.desiredPos.X);
 			writer.Write(mp.desiredPos.Y);
@@ -62,7 +62,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void RecievePacket(BinaryReader reader, int sender)
 		{
 			syncingPlayer = reader.ReadInt32();
-			var mp = Main.player[syncingPlayer].GetModPlayer<NoClipPlayer>();
+			NoClipPlayer mp = Main.player[syncingPlayer].GetModPlayer<NoClipPlayer>();
 			mp.desiredPos.X = reader.ReadSingle();
 			mp.desiredPos.Y = reader.ReadSingle();
 			mp.active = reader.ReadBoolean();
@@ -98,8 +98,8 @@ namespace DragonLens.Content.Tools.Gameplay
 				if (Player.controlDown)
 					desiredPos.Y += 15;
 
-				if (Main.netMode == NetmodeID.MultiplayerClient && 
-					Main.LocalPlayer == Player && 
+				if (Main.netMode == NetmodeID.MultiplayerClient &&
+					Main.LocalPlayer == Player &&
 					Player.Center != desiredPos + Vector2.UnitY * 0.4f &&  // account for gravity
 					Main.GameUpdateCount % 20 == 0) // Bootleg throttle for this to prevent it from spamming
 				{
