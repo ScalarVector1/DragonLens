@@ -1,4 +1,6 @@
-﻿using DragonLens.Core.Systems.ToolSystem;
+﻿using DragonLens.Content.GUI;
+using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using Microsoft.Build.Evaluation;
 using System;
@@ -6,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.GameContent.UI.States;
 using Terraria.ID;
 using Terraria.ModLoader.IO;
 
@@ -141,6 +144,8 @@ namespace DragonLens.Core.Systems
 				else
 				{
 					admins.Add(Main.LocalPlayer.GetModPlayer<PermissionPlayer>().currentServerID);
+
+					Main.NewText($"You are now an admin.", Color.Yellow);
 				}
 			}
 			else if (operation == 1) //Remove admin
@@ -161,6 +166,16 @@ namespace DragonLens.Core.Systems
 				else
 				{
 					admins.Remove(Main.LocalPlayer.GetModPlayer<PermissionPlayer>().currentServerID);
+
+					Main.NewText($"You are no longer an admin.", Color.Yellow);
+
+					foreach (var item in UILoader.UIStates)
+					{
+						if (item is ToolbarState)
+							continue;
+
+						item.Visible = false;
+					}
 				}
 			}
 			else if (operation == 2) //Sync visual only
