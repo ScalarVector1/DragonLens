@@ -19,12 +19,12 @@ namespace DragonLens.Content.Tools.Multiplayer
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="sender"></param>
-		public static void HandlePacket(BinaryReader reader, int sender)
+		public static void HandlePacket(BinaryReader reader)
 		{
 			string type = reader.ReadString();
 
 			if (type == "Item")
-				RecieveItem(reader, sender);
+				RecieveItem(reader);
 
 			if (type == "Kick")
 				RecieveKick(reader);
@@ -69,7 +69,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 			packet.Send();
 		}
 
-		private static void RecieveItem(BinaryReader reader, int sender)
+		private static void RecieveItem(BinaryReader reader)
 		{
 			int pIndex = reader.ReadInt32();
 			Player player = Main.player[pIndex];
@@ -92,7 +92,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 			inventory[index] = item.Clone();
 
 			if (Main.netMode == NetmodeID.Server)
-				SendItem(pIndex, index, invIndex, item, sender);
+				SendItem(pIndex, index, invIndex, item);
 		}
 
 		/// <summary>
