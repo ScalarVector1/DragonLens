@@ -81,10 +81,11 @@ namespace DragonLens.Content.Tools.Multiplayer
 			Item[] inventory = invIndex switch
 			{
 				0 => player.inventory,
-				2 => player.bank.item,
-				4 => player.bank2.item,
-				6 => player.bank3.item,
-				8 => player.bank4.item,
+				2 => player.armor,
+				4 => player.bank.item,
+				6 => player.bank2.item,
+				8 => player.bank3.item,
+				10 => player.bank4.item,
 				_ => player.inventory
 			};
 

@@ -91,32 +91,39 @@ namespace DragonLens.Content.Tools.Multiplayer
 				slots.Add(new ItemSlot(player.inventory, k, 0));
 			}
 
-			slots.Add(new Seperator("Piggy bank", 1));
+			slots.Add(new Seperator("Equipment", 1));
+
+			for (int k = 0; k < player.armor.Length; k++)
+			{
+				slots.Add(new ItemSlot(player.armor, k, 2));
+			}
+
+			slots.Add(new Seperator("Piggy bank", 3));
 
 			for (int k = 0; k < player.bank.item.Length; k++)
 			{
-				slots.Add(new ItemSlot(player.bank.item, k, 2));
+				slots.Add(new ItemSlot(player.bank.item, k, 4));
 			}
 
-			slots.Add(new Seperator("Safe", 3));
+			slots.Add(new Seperator("Safe", 5));
 
 			for (int k = 0; k < player.bank2.item.Length; k++)
 			{
-				slots.Add(new ItemSlot(player.bank2.item, k, 4));
+				slots.Add(new ItemSlot(player.bank2.item, k, 6));
 			}
 
-			slots.Add(new Seperator("Defenders forge", 5));
+			slots.Add(new Seperator("Defenders forge", 7));
 
 			for (int k = 0; k < player.bank3.item.Length; k++)
 			{
-				slots.Add(new ItemSlot(player.bank3.item, k, 6));
+				slots.Add(new ItemSlot(player.bank3.item, k, 8));
 			}
 
-			slots.Add(new Seperator("Void vault", 7));
+			slots.Add(new Seperator("Void vault", 9));
 
 			for (int k = 0; k < player.bank4.item.Length; k++)
 			{
-				slots.Add(new ItemSlot(player.bank4.item, k, 8));
+				slots.Add(new ItemSlot(player.bank4.item, k, 10));
 			}
 		}
 	}
@@ -247,6 +254,38 @@ namespace DragonLens.Content.Tools.Multiplayer
 					var tex = Terraria.GameContent.TextureAssets.Item[ItemID.FeralClaws].Value;
 					spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Gray * 0.35f, 0f, tex.Size() / 2f, 1, 0, 0);
 				}
+			}
+			else if (invIndex == 2) // Equipment
+			{
+				int id = 0;
+
+				switch (index) // textures for backgrounds
+				{
+					case 0: id = ItemID.IronHelmet; break;
+					case 1: id = ItemID.IronChainmail; break;
+					case 2: id = ItemID.IronGreaves; break;
+					case 3:
+					case 4:
+					case 5:
+					case 6: 
+					case 7:
+					case 8:
+					case 9: id = ItemID.BandofRegeneration; break;
+					case 10: id = ItemID.TopHat; break;
+					case 11: id = ItemID.TaxCollectorSuit; break;
+					case 12: id = ItemID.TaxCollectorPants; break;
+					case 13:
+					case 14:
+					case 15:
+					case 16:
+					case 17:
+					case 18:
+					case 19: id = ItemID.GiantBow; break;
+					default: id = 0; break;
+				}
+
+				var tex = Terraria.GameContent.TextureAssets.Item[id].Value;
+				spriteBatch.Draw(tex, GetDimensions().Center(), null, Color.Gray * 0.35f, 0f, tex.Size() / 2f, 1, 0, 0);
 			}
 		}
 
