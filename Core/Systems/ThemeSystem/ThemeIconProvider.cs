@@ -37,6 +37,7 @@ namespace DragonLens.Core.Systems.ThemeSystem
 			"NPCSpawner",
 			"Paint",
 			"PlayerEditor",
+			"PlayerManager",
 			"ProjectileDespawner",
 			"ProjectileSpawner",
 			"RevealMap",
