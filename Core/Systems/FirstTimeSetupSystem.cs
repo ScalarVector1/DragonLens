@@ -5,6 +5,7 @@ using DragonLens.Content.Tools.Despawners;
 using DragonLens.Content.Tools.Editors;
 using DragonLens.Content.Tools.Gameplay;
 using DragonLens.Content.Tools.Map;
+using DragonLens.Content.Tools.Multiplayer;
 using DragonLens.Content.Tools.Spawners;
 using DragonLens.Content.Tools.Visualization;
 using DragonLens.Core.Systems.ThemeSystem;
@@ -53,6 +54,7 @@ namespace DragonLens.Core.Systems
 					.AddTool<Floodlight>()
 					.AddTool<FreeCamera>()
 					.AddTool<LockCamera>()
+					.AddTool<PlayerManager>()
 					);
 
 				n.Add(
@@ -116,6 +118,7 @@ namespace DragonLens.Core.Systems
 					.AddTool<Hitboxes>()
 					.AddTool<FreeCamera>()
 					.AddTool<LockCamera>()
+					.AddTool<PlayerManager>()
 					);
 
 				n.Add(
