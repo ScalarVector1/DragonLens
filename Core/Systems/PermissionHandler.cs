@@ -340,6 +340,15 @@ namespace DragonLens.Core.Systems
 				packet.Write("ToolDataRequest");
 				packet.Send();
 			}
+
+			// Close all windows to make sure non-admins cant have tools already open
+			foreach (SmartUIState item in UILoader.UIStates)
+			{
+				if (item is ToolbarState)
+					continue;
+
+				item.Visible = false;
+			}
 		}
 	}
 }

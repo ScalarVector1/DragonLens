@@ -21,6 +21,12 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public override string IconKey => "Paint";
 
+		public override void Load()
+		{
+			// Load the structure queue to generate images
+			new PreviewRenderQueue().Load(Mod);
+		}
+
 		public override void OnActivate()
 		{
 			PaintWindow state = UILoader.GetUIState<PaintWindow>();
@@ -305,7 +311,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 			dims.Inflate(-4, -4);
 
-			if (preview != null)
+			if (preview != null && preview.preview != null && !preview.preview.IsDisposed)
 			{
 				Texture2D tex = preview.preview;
 				float scale = 1f;

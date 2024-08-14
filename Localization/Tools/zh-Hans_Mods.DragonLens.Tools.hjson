@@ -667,6 +667,6 @@ SystemEditor: {
 }
 
 PlayerManager: {
-	// DisplayName: PlayerManager
-	// Description: The tool has no description! Add one in .hjson files!
+	// DisplayName: Player Manager
+	// Description: Allows you to manage all players connected to the server, such as their admin status, kicking them, or editing their inventories.
 }
