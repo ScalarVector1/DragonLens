@@ -94,32 +94,35 @@ namespace DragonLens.Content.Tools.Editors
 
 		private void BuildBasicEditor()
 		{
-			static string GetLocalizedText(string text)
+			static string Localize(string text)
 			{
-				return LocalizationHelper.GetText($"Tools.SystemEditor.Editors.{text}");
+				return LocalizationHelper.GetToolText($"SystemEditor.Editors.{text}");
 			}
 
-			basicEditorList.Add(new BoolEditor("King slime downed", n => NPC.downedSlimeKing = n, NPC.downedSlimeKing, () => NPC.downedSlimeKing, "If king slime counts as killed or not in this world."));
-			basicEditorList.Add(new BoolEditor("EoC downed", n => NPC.downedBoss1 = n, NPC.downedBoss1, () => NPC.downedBoss1, "If the eye of cthulu counts as killed or not in this world."));
-			basicEditorList.Add(new BoolEditor("Evil boss downed", n => NPC.downedBoss2 = n, NPC.downedBoss2, () => NPC.downedBoss2, "If the world evil boss counts as killed or not in this world."));
-			basicEditorList.Add(new BoolEditor("Skeletron downed", n => NPC.downedBoss3 = n, NPC.downedBoss3, () => NPC.downedBoss3, "If skeletron counts as killed or not in this world."));
-			basicEditorList.Add(new BoolEditor("Queen bee downed", n => NPC.downedQueenBee = n, NPC.downedQueenBee, () => NPC.downedQueenBee, "If queen bee counts as killed or not in this world."));
-			basicEditorList.Add(new BoolEditor("Goblin army downed", n => NPC.downedGoblins = n, NPC.downedGoblins, () => NPC.downedGoblins, "If the goblin army counts as killed or not in this world."));
-			basicEditorList.Add(new BoolEditor("Frost legion downed", n => NPC.downedFrost = n, NPC.downedFrost, () => NPC.downedFrost, "If the frost legion counts as killed or not in this world."));
+			void AddDownedBoolean(string name, Action<bool> onValueChanged, Func<bool> listenForUpdate)
+			{
+				basicEditorList.Add(new BoolEditor(Localize($"{name}.Name"), onValueChanged, listenForUpdate.Invoke(), listenForUpdate, Localize($"{name}.Description")));
+			}
 
-			basicEditorList.Add(new BoolEditor("Hardmode", n => Main.hardMode = n, Main.hardMode, () => Main.hardMode, "If the world is in hardmode."));
-
-			basicEditorList.Add(new BoolEditor("Queen slime downed", n => NPC.downedQueenSlime = n, NPC.downedQueenSlime, () => NPC.downedQueenSlime, "If queen slime counts as killed or not in this world."));
-			basicEditorList.Add(new BoolEditor("Destroyer downed", n => NPC.downedMechBoss1 = n, NPC.downedMechBoss1, () => NPC.downedMechBoss1, "If the destroyer counts as killed or not in this world."));
-			basicEditorList.Add(new BoolEditor("Twins downed", n => NPC.downedMechBoss2 = n, NPC.downedMechBoss2, () => NPC.downedMechBoss2, "If the twins counts as killed or not in this world."));
-			basicEditorList.Add(new BoolEditor("Skeletron prime downed", n => NPC.downedMechBoss3 = n, NPC.downedMechBoss3, () => NPC.downedMechBoss3, "If skeletron primes counts as killed or not in this world."));
-			basicEditorList.Add(new BoolEditor("Plantera downed", n => NPC.downedPlantBoss = n, NPC.downedPlantBoss, () => NPC.downedPlantBoss, "If plantera counts as killed or not in this world."));
-			basicEditorList.Add(new BoolEditor("Golem downed", n => NPC.downedGolemBoss = n, NPC.downedGolemBoss, () => NPC.downedGolemBoss, "If golem counts as killed or not in this world."));
-			basicEditorList.Add(new BoolEditor("Fishron downed", n => NPC.downedFishron = n, NPC.downedFishron, () => NPC.downedFishron, "If duke fishron counts as killed or not in this world."));
-			basicEditorList.Add(new BoolEditor("EoL downed", n => NPC.downedEmpressOfLight = n, NPC.downedEmpressOfLight, () => NPC.downedEmpressOfLight, "If the empress of light counts as killed or not in this world."));
-			basicEditorList.Add(new BoolEditor("Cultist downed", n => NPC.downedAncientCultist = n, NPC.downedAncientCultist, () => NPC.downedAncientCultist, "If the lunatic cultist counts as killed or not in this world."));
-			basicEditorList.Add(new BoolEditor("Moonlord downed", n => NPC.downedMoonlord = n, NPC.downedMoonlord, () => NPC.downedMoonlord, "If the moon lord counts as killed or not in this world."));
-			basicEditorList.Add(new BoolEditor("Pirates downed", n => NPC.downedPirates = n, NPC.downedPirates, () => NPC.downedPirates, "If the pirates count as killed or not in this world."));
+			AddDownedBoolean("KingSlime", n => NPC.downedSlimeKing = n, () => NPC.downedSlimeKing);
+			AddDownedBoolean("EoC", n => NPC.downedBoss1 = n, () => NPC.downedBoss1);
+			AddDownedBoolean("EvilBoss", n => NPC.downedBoss2 = n, () => NPC.downedBoss2);
+			AddDownedBoolean("Skeletron", n => NPC.downedBoss3 = n, () => NPC.downedBoss3);
+			AddDownedBoolean("QueenBee", n => NPC.downedQueenBee = n, () => NPC.downedQueenBee);
+			AddDownedBoolean("GoblinArmy", n => NPC.downedGoblins = n, () => NPC.downedGoblins);
+			AddDownedBoolean("FrostLegion", n => NPC.downedFrost = n, () => NPC.downedFrost);
+			AddDownedBoolean("Hardmode", n => Main.hardMode = n, () => Main.hardMode);
+			AddDownedBoolean("QueenSlime", n => NPC.downedQueenSlime = n, () => NPC.downedQueenSlime);
+			AddDownedBoolean("Destroyer", n => NPC.downedMechBoss1 = n, () => NPC.downedMechBoss1);
+			AddDownedBoolean("Twins", n => NPC.downedMechBoss2 = n, () => NPC.downedMechBoss2);
+			AddDownedBoolean("SkeletronPrime", n => NPC.downedMechBoss3 = n, () => NPC.downedMechBoss3);
+			AddDownedBoolean("Plantera", n => NPC.downedPlantBoss = n, () => NPC.downedPlantBoss);
+			AddDownedBoolean("Golem", n => NPC.downedGolemBoss = n, () => NPC.downedGolemBoss);
+			AddDownedBoolean("Fishron", n => NPC.downedFishron = n, () => NPC.downedFishron);
+			AddDownedBoolean("EoL", n => NPC.downedEmpressOfLight = n, () => NPC.downedEmpressOfLight);
+			AddDownedBoolean("Cultist", n => NPC.downedAncientCultist = n, () => NPC.downedAncientCultist);
+			AddDownedBoolean("Moonlord", n => NPC.downedMoonlord = n, () => NPC.downedMoonlord);
+			AddDownedBoolean("Pirates", n => NPC.downedPirates = n, () => NPC.downedPirates);
 		}
 
 		private void BuildModSystemEditor()

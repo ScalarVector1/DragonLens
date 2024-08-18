@@ -339,7 +339,7 @@ RevealMap: {
 }
 
 BuffSpawner: {
-	DisplayName: Buff生成器
+	DisplayName: 生成Buff
 	Description: 允许你为自己或NPC施加Buff。
 	DurationEditor: 持续时间 (Tick)
 	Applied: 已将{0}施加到{1}
@@ -371,7 +371,7 @@ BuffSpawner: {
 }
 
 DustSpawner: {
-	DisplayName: 粒子生成器
+	DisplayName: 生成粒子
 	Description: 生成粒子，可以预览不同的生成方式和参数选项。
 	DustType: Type：{0}
 	Selected: 已选中{0}，左键单击世界中的任意位置以生成。 右键单击以取消。
@@ -397,7 +397,7 @@ DustSpawner: {
 }
 
 ItemSpawner: {
-	DisplayName: 物品生成器
+	DisplayName: 生成物品
 	Description: 生成任意物品！
 
 	FilterCategories: {
@@ -515,7 +515,7 @@ ItemSpawner: {
 }
 
 NPCSpawner: {
-	DisplayName: NPC生成器
+	DisplayName: 生成NPC
 	Description: 生成NPC。 小到城镇NPC大到Boss。
 	NameExceptionMessage: 一个NPC({0})的名称在获取时引发了异常！请向{1}的开发人员报告！
 	NameException: 这个NPC的名称在获取时引发了异常！请向{0}的开发人员报告！
@@ -562,7 +562,7 @@ NPCSpawner: {
 }
 
 ProjectileSpawner: {
-	DisplayName: 射弹生成器
+	DisplayName: 生成射弹
 	Description: 生成射弹，可调节速度和其他参数。
 	NameExceptionMessage: 一个射弹({0})的名称在获取时引发了异常！请向{1}的开发人员报告！
 	NameException: 这个射弹的名称在获取时引发了异常！请向{0}的开发人员报告！
@@ -596,7 +596,7 @@ ProjectileSpawner: {
 }
 
 TileSpawner: {
-	DisplayName: 物块生成器
+	DisplayName: 生成物块
 	Description: 无需物品也可放置物块！
 	TileType: ID：{0}
 	Selected: 已选中{0}，单击世界中的任意位置生成。 右键单击取消选择。
@@ -647,26 +647,194 @@ CustomizeTool: {
 }
 
 SoundSpawner: {
-	DisplayName: 音效播放器
+	DisplayName: 播放音效
 	Description: 浏览并播放游戏中的音效
 }
 
 EntityEditor: {
-	// DisplayName: Entity Editor
-	// Description: View and edit the values of any entity
-	// VanillaFields: Vanilla Fields
-	// ModFields: Modded Fields
-	// Tutorial: Click an entity to start
-	// Deselect: Deselect
+	DisplayName: 编辑实体
+	Description: 查看并编辑任意实体的数值
+	VanillaFields: 原版字段
+	ModFields: 模组字段
+	Tutorial: 点击选择任意实体
+	Deselect: 取消选择
+	Selected: 已选中{0}
+	SelectedTE: 已选中{0} (Tile Entity)
+
+	BasicEditors: {
+		Position: {
+			Name: 位置
+			Description: 该实体左上角的世界坐标位置
+		}
+
+		Velocity: {
+			Name: 速度
+			Description: 该实体每帧的位置变化量
+		}
+
+		Size: {
+			Name: 大小
+			Description: 该实体碰撞箱的长宽
+		}
+	}
+
+	NPCEditors: {
+		Type: {
+			// Name: Type
+			Description: 该NPC的ID。 请查阅Wiki了解该数值与NPC之间的关系
+		}
+
+		Name: {
+			Name: 名字
+			Description: NPC的名字 (GivenName)
+		}
+
+		MaxLife: {
+			Name: 最大血量
+			Description: NPC的最大血量
+		}
+
+		Life: {
+			Name: 血量
+			Description: NPC当前的血量
+		}
+
+		Defense: {
+			Name: 防御
+			Description: NPC当前的防御值
+		}
+
+		Damage: {
+			Name: 伤害
+			Description: NPC当前的触碰伤害
+		}
+
+		KBResist: {
+			Name: 击退抗性
+			Description: NPC当前的“击退抗性”（knockBackResist）。 别被名字迷惑了，实际受到的击退是基础击退乘以这个数值
+		}
+
+		AIStyle: {
+			// Name: AI Style
+			Description: 该NPC的AI Style。 请查阅Wiki了解该数值与NPC之间的关系
+		}
+
+		AI.Description: AI特殊值
+		LAI.Description: "Local AI特殊值 "
+	}
+
+	TEEditors: {
+		Type: {
+			// Name: type
+			Description: 该TileEntity的ID。 不要轻易更改此数值
+		}
+	}
 }
 
 SystemEditor: {
-	// DisplayName: System Editor
-	// Description: Change global properties about the world and modded systems. This is an advanced tool.
-	// VanillaFields: Vanilla Fields
+	DisplayName: 系统编辑器
+	Description: 编辑该世界和ModSystem的全局属性。 用于高级操作。
+	VanillaFields: 原版字段
+
+	Editors: {
+		KingSlime: {
+			Name: 击败史莱姆王
+			Description: 这个世界中史莱姆王是否算作已击败。
+		}
+
+		EoC: {
+			Name: 击败克苏鲁之眼
+			Description: 这个世界中克苏鲁之眼是否算作已击败。
+		}
+
+		EvilBoss: {
+			Name: 击败邪恶Boss
+			Description: 这个世界中对应的邪恶Boss是否算作已击败。
+		}
+
+		Skeletron: {
+			Name: 击败骷髅王
+			Description: 这个世界中骷髅王是否算作已击败。
+		}
+
+		QueenBee: {
+			Name: 击败蜂后
+			Description: 这个世界中蜂后是否算作已击败。
+		}
+
+		GoblinArmy: {
+			Name: 击败哥布林军团
+			Description: 这个世界中哥布林军团是否算作已击败。
+		}
+
+		FrostLegion: {
+			Name: 击败雪人军团
+			Description: 这个世界中雪人军团是否算作已击败。
+		}
+
+		Hardmode: {
+			Name: 困难模式
+			Description: 世界是否处于困难模式（肉山后）。
+		}
+
+		QueenSlime: {
+			Name: 击败史莱姆皇后
+			Description: 这个世界中史莱姆皇后是否算作已击败。
+		}
+
+		Destroyer: {
+			Name: 击败毁灭者
+			Description: 这个世界中毁灭者是否算作已击败。
+		}
+
+		Twins: {
+			Name: 击败双子魔眼
+			Description: 这个世界中双子魔眼是否算作已击败。
+		}
+
+		SkeletronPrime: {
+			Name: 击败机械骷髅王
+			Description: 这个世界中机械骷髅王是否算作已击败。
+		}
+
+		Plantera: {
+			Name: 击败世纪之花
+			Description: 这个世界中世纪之花是否算作已击败。
+		}
+
+		Golem: {
+			Name: 击败石巨人
+			Description: 这个世界中石巨人是否算作已击败。
+		}
+
+		Fishron: {
+			Name: 击败猪鲨
+			Description: 这个世界中猪鲨公爵是否算作已击败。
+		}
+
+		EoL: {
+			Name: 击败光女
+			Description: 这个世界中光之女皇是否算作已击败。
+		}
+
+		Cultist: {
+			Name: 击败教徒
+			Description: 这个世界中拜月教邪教徒是否算作已击败。
+		}
+
+		Moonlord: {
+			Name: 击败月球领主
+			Description: 这个世界中月球领主是否算作已击败。
+		}
+
+		Pirates: {
+			Name: 击败海盗
+			Description: 这个世界中海盗是否算作已击败。
+		}
+	}
 }
 
 PlayerManager: {
-	// DisplayName: Player Manager
-	// Description: Allows you to manage all players connected to the server, such as their admin status, kicking them, or editing their inventories.
+	DisplayName: 玩家管理器
+	Description: 允许您管理连接到服务器的所有玩家，控制其管理员状态、将其踢出或修改其物品栏。
 }

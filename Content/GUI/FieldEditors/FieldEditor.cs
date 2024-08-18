@@ -126,7 +126,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 				blocker = new();
 				blocker.Width.Set(Width.Pixels, 0);
 				blocker.Height.Set(Height.Pixels, 0);
-				blocker.OnLeftClick += (a, b) => Main.NewText("This field is uneditable!");
+				blocker.OnLeftClick += (a, b) => Main.NewText(LocalizationHelper.GetGUIText("FieldEditor.UneditableBlockMsg"));
 				Append(blocker);
 			}
 
@@ -159,10 +159,10 @@ namespace DragonLens.Content.GUI.FieldEditors
 			Utils.DrawBorderString(spriteBatch, typeof(T).Name, GetDimensions().Position() + new Vector2(8, 18), Color.Gray, 0.65f);
 
 			if (isStatic)
-				Utils.DrawBorderString(spriteBatch, "Static", GetDimensions().Position() + new Vector2(146, -8), Color.Gold, 0.65f, 1f);
+				Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetGUIText("FieldEditor.Static"), GetDimensions().Position() + new Vector2(146, -8), Color.Gold, 0.65f, 1f);
 
 			if (isLocked)
-				Utils.DrawBorderString(spriteBatch, "Uneditable", GetDimensions().Position() + new Vector2(4, -8), Color.SkyBlue, 0.65f);
+				Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetGUIText("FieldEditor.Uneditable"), GetDimensions().Position() + new Vector2(4, -8), Color.SkyBlue, 0.65f);
 
 			if (IsMouseHovering && !hideTooltip)
 			{
