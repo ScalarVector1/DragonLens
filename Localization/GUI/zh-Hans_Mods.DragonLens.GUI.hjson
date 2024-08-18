@@ -155,6 +155,6 @@ EntityEditor: {
 FieldEditor: {
 	Uneditable: 不可编辑
 	UneditableBlockMsg: 这个字段无法被编辑！
-	Static: 静态
+	// Static: Static
 	ModdedFields: 模组字段
 }

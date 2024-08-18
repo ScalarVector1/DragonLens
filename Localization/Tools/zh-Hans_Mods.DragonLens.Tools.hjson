@@ -145,7 +145,7 @@ ItemEditor: {
 PlayerEditor: {
 	DisplayName: 编辑玩家
 	Description: 更改玩家的数据和其它字段！
-	AutogenMsg: 这个属性编辑器是通过反射自动生成的。 更改它可能会产生不可预知的后果，具体取决于字段在模组中的用途。
+	AutogenMsg: 这个字段是通过反射自动生成的。 更改它可能会产生不可预知的后果，具体取决于该字段在模组中的用途。
 	VanillaFields: 原版字段
 	ModPlayers: 模组字段
 
