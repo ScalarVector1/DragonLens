@@ -145,7 +145,7 @@ ItemEditor: {
 PlayerEditor: {
 	DisplayName: 编辑玩家
 	Description: 更改玩家的数据和其它字段！
-	AutogenMsg: 这个字段是通过反射自动生成的。 更改它可能会产生不可预知的后果，具体取决于该字段在模组中的用途。
+	AutogenMsg: 这个属性编辑器是通过反射自动生成的。 更改它可能会产生不可预知的后果，具体取决于字段在模组中的用途。
 	VanillaFields: 原版字段
 	ModPlayers: 模组字段
 
@@ -835,6 +835,47 @@ SystemEditor: {
 }
 
 PlayerManager: {
-	DisplayName: 玩家管理器
+	DisplayName: 管理玩家
 	Description: 允许您管理连接到服务器的所有玩家，控制其管理员状态、将其踢出或修改其物品栏。
+	TryRemoveYourself: 你不能移除自己的权限！
+	RemoveAdmin: "{0}已不是管理员"
+	AddAdmin: "{0}已成为管理员"
+
+	InventoryManager: {
+		Inventory: "{0}的物品栏"
+		Equipment: 装备
+		Piggy: 猪猪存钱罐
+		Safe: 保险箱
+		DefendersForge: 护卫熔炉
+		VoidVault: 虚空宝库
+	}
+
+	Admin: {
+		Name: 管理员权限
+		Tooltip: 授予或取消该玩家的管理员权限。 请确保你信得过这个人，管理员可以使用DragonLens的所有功能，包括玩家管理功能！
+	}
+
+	Kick: {
+		Name: 踢出服务器
+		Tooltip: 强制使这个玩家掉线
+	}
+
+	View: {
+		Name: 镜头跟随
+		Tooltip: 将游戏镜头锁定在该玩家身上
+	}
+
+	Inventory: {
+		Name: 管理物品栏
+		Tooltip: 查看并管理该玩家的物品栏
+	}
+
+	Stats:
+		'''
+		血量：{0}
+		魔力：{1}
+		位置：{2}
+		速度：{3}
+		存活：{4}
+		'''
 }

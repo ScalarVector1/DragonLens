@@ -837,4 +837,45 @@ SystemEditor: {
 PlayerManager: {
 	DisplayName: Player Manager
 	Description: Allows you to manage all players connected to the server, such as their admin status, kicking them, or editing their inventories.
+	TryRemoveYourself: You cannot remove your own permissions!
+	RemoveAdmin: "{0} is no longer an admin."
+	AddAdmin: "{0} is now an admin."
+
+	InventoryManager: {
+		Inventory: "{0}'s Inventory"
+		Equipment: Equipment
+		Piggy: Piggy bank
+		Safe: Safe
+		DefendersForge: Defenders forge
+		VoidVault: Void vault
+	}
+
+	Admin: {
+		Name: Toggle Admin
+		Tooltip: Gives or revokes admin permissions from this player. Make sure this is someone you can trust! Admins can use all features of DragonLens, including this one!
+	}
+
+	Kick: {
+		Name: Kick
+		Tooltip: Forcibly disconnect this player from the game
+	}
+
+	View: {
+		Name: View
+		Tooltip: Move the camera to this players position
+	}
+
+	Inventory: {
+		Name: Inventory
+		Tooltip: View and edit this player's inventories
+	}
+
+	Stats:
+		'''
+		Life: {0}
+		Mana: {1}
+		Position: {2}
+		Velocity: {3}
+		Alive: {4}
+		'''
 }
