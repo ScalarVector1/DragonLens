@@ -3,7 +3,7 @@ BuffDespawner: {
 	Description: Снимает с вас все баффы и дебаффы
 }
 
-ОчисDespawner: {
+DustDespawner: {
 	DisplayName: Очистить частицы
 	Description: Удаляет все частицы в мире
 }
@@ -27,7 +27,7 @@ NPCDespawner: {
 ProjectileDespawner: {
 	DisplayName: Очистить снаряды
 	Description: Удаляет все снаряды в мире
-}Слоты
+}
 
 ShaderCompiler: {
 	DisplayName: Перезагрузка шейдеров
