@@ -1,36 +1,36 @@
 SimpleBoxes: {
-	Name: Упрощённый
-	Description: Стиль рамок DragonLens по умолчанию
+	Name: РЈРїСЂРѕС‰С‘РЅРЅС‹Р№
+	Description: РЎС‚РёР»СЊ СЂР°РјРѕРє DragonLens РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
 }
 
 VanillaBoxes: {
-	Name: Ванила
-	Description: Рамки в стиле ванильного интерфейса
+	Name: Р’Р°РЅРёР»Р°
+	Description: Р Р°РјРєРё РІ СЃС‚РёР»Рµ РІР°РЅРёР»СЊРЅРѕРіРѕ РёРЅС‚РµСЂС„РµР№СЃР°
 }
 
 MinimalBoxes: {
-	Name: Минимализм
-	Description: Самый простой стиль рамок из возможных
+	Name: РњРёРЅРёРјР°Р»РёР·Рј
+	Description: РЎР°РјС‹Р№ РїСЂРѕСЃС‚РѕР№ СЃС‚РёР»СЊ СЂР°РјРѕРє РёР· РІРѕР·РјРѕР¶РЅС‹С…
 }
 
 DragonLensIcons: {
-	Name: По умолчанию
-	Description: Иноки DragonLens по умолчанию
+	Name: РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+	Description: РРЅРѕРєРё DragonLens РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
 }
 
 HEROsIcons: {
 	Name: HERO's Mod
-	Description: Иконки из HERO's мода и подражающие его стилю
+	Description: РРєРѕРЅРєРё РёР· HERO's РјРѕРґР° Рё РїРѕРґСЂР°Р¶Р°СЋС‰РёРµ РµРіРѕ СЃС‚РёР»СЋ
 }
 
 BackgroundColor: {
-	Name: Фон
-	Description: Цвет фона графического интерфейса DragonLens
+	Name: Р¤РѕРЅ
+	Description: Р¦РІРµС‚ С„РѕРЅР° РіСЂР°С„РёС‡РµСЃРєРѕРіРѕ РёРЅС‚РµСЂС„РµР№СЃР° DragonLens
 }
 
 ButtonColor: {
-	Name: Клавиши
-	Description: Цвет клавиш графического интерфейса DragonLens
+	Name: РљР»Р°РІРёС€Рё
+	Description: Р¦РІРµС‚ РєР»Р°РІРёС€ РіСЂР°С„РёС‡РµСЃРєРѕРіРѕ РёРЅС‚РµСЂС„РµР№СЃР° DragonLens
 }
 
 Configs: {
