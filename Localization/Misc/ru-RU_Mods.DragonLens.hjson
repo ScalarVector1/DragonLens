@@ -1,5 +1,5 @@
 Permission: {
-	NotAdmin: You are not an admin!
+	NotAdmin: Вы не администратор!
 	PlayerNotFound: Не удалось найти игрока по никнейму {0}
 	AdminGiven: Вы теперь администратор!
 	AdminTaken: Вы больше не администратор...
