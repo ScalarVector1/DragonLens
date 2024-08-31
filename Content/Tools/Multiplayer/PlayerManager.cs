@@ -118,7 +118,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 			Texture2D icon = ThemeHandler.GetIcon("PlayerManager");
 			spriteBatch.Draw(icon, basePos + Vector2.One * 16, Color.White);
 
-			Utils.DrawBorderStringBig(spriteBatch, "Player Manager", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.6f);
+			Utils.DrawBorderStringBig(spriteBatch, LocalizationHelper.GetToolText("PlayerManager.DisplayName"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.6f);
 
 			base.Draw(spriteBatch);
 		}
@@ -145,25 +145,25 @@ namespace DragonLens.Content.Tools.Multiplayer
 			Width.Set(300, 0);
 			Height.Set(90, 0);
 
-			var admin = new PlayerManagerButton("Toggle Admin", "Gives or revokes admin permissions from this player. Make sure this is someone you can trust! Admins can use all features of DragonLens, including this one!", Assets.GUI.AdminIcon, () => PermissionHandler.LooksLikeAdmin(player));
+			var admin = new PlayerManagerButton("Admin", Assets.GUI.AdminIcon, () => PermissionHandler.LooksLikeAdmin(player));
 			admin.Left.Set(10, 0);
 			admin.Top.Set(42, 0);
 			admin.OnLeftClick += (a, b) => ToggleAdmin();
 			Append(admin);
 
-			var kick = new PlayerManagerButton("Kick", "Forcibly disconnect this player from the game", Assets.GUI.KickIcon, () => false);
+			var kick = new PlayerManagerButton("Kick", Assets.GUI.KickIcon, () => false);
 			kick.Left.Set(58, 0);
 			kick.Top.Set(42, 0);
 			kick.OnLeftClick += (a, b) => Kick();
 			Append(kick);
 
-			var stalk = new PlayerManagerButton("View", "Move the camera to this players position", Assets.GUI.StalkIcon, () => ModContent.GetInstance<PlayerManagerSystem>().stalkedPlayer == player);
+			var stalk = new PlayerManagerButton("View", Assets.GUI.StalkIcon, () => ModContent.GetInstance<PlayerManagerSystem>().stalkedPlayer == player);
 			stalk.Left.Set(106, 0);
 			stalk.Top.Set(42, 0);
 			stalk.OnLeftClick += (a, b) => Stalk();
 			Append(stalk);
 
-			var inv = new PlayerManagerButton("Inventory", "View and edit this player's inventories", Assets.GUI.InventoryIcon, () => false);
+			var inv = new PlayerManagerButton("Inventory", Assets.GUI.InventoryIcon, () => false);
 			inv.Left.Set(154, 0);
 			inv.Top.Set(42, 0);
 			inv.OnLeftClick += (a, b) => OpenInventory();
@@ -191,11 +191,13 @@ namespace DragonLens.Content.Tools.Multiplayer
 			if (new Rectangle(dims.X, dims.Y, dims.Width, 34).Contains(Main.MouseScreen.ToPoint()))
 			{
 				Tooltip.SetName(player.name);
-				Tooltip.SetTooltip($"Life: {player.statLife}/{player.statLifeMax2}\n" +
-					$"Mana: {player.statMana}/{player.statManaMax2}\n" +
-					$"Position: {Math.Round(player.Center.X / 16)}, {Math.Round(player.Center.Y / 16)}\n" +
-					$"Velocity: {Math.Round(player.velocity.X)}, {Math.Round(player.velocity.Y)}\n" +
-					$"Alive: {!player.dead}");
+				string life = $"{player.statLife}/{player.statLifeMax2}";
+				string mana = $"{player.statMana}/{player.statManaMax2}";
+				string position = $"{Math.Round(player.Center.X / 16)}, {Math.Round(player.Center.Y / 16)}";
+				string velocity = $"{Math.Round(player.velocity.X)}, {Math.Round(player.velocity.Y)}";
+				string alive = $"{!player.dead}";
+				Tooltip.SetTooltip(LocalizationHelper.GetToolText("PlayerManager.Stats",
+					life, mana, position, velocity, alive));
 			}
 
 			base.Draw(spriteBatch);
@@ -208,19 +210,19 @@ namespace DragonLens.Content.Tools.Multiplayer
 			{
 				if (player == Main.LocalPlayer)
 				{
-					Main.NewText("You cannot remove your own permissions!", Color.Red);
+					Main.NewText(LocalizationHelper.GetToolText("PlayerManager.TryRemoveYourself"), Color.Red);
 					return;
 				}
 
 				if (PermissionHandler.LooksLikeAdmin(player))
 				{
 					PermissionHandler.RemoveAdmin(player);
-					Main.NewText($"{player.name} is no longer an admin.", Color.Yellow);
+					Main.NewText(LocalizationHelper.GetToolText("PlayerManager.RemoveAdmin", player.name), Color.Yellow);
 				}
 				else
 				{
 					PermissionHandler.AddAdmin(player);
-					Main.NewText($"{player.name} is now an admin.", Color.Yellow);
+					Main.NewText(LocalizationHelper.GetToolText("PlayerManager.AddAdmin", player.name), Color.Yellow);
 				}
 			}
 		}
@@ -249,16 +251,16 @@ namespace DragonLens.Content.Tools.Multiplayer
 
 	internal class PlayerManagerButton : SmartUIElement
 	{
-		public string name;
-		public string tooltip;
+		public string localizationKey;
+		public string name => LocalizationHelper.GetToolText($"PlayerManager.{localizationKey}.Name");
+		public string tooltip => LocalizationHelper.GetToolText($"PlayerManager.{localizationKey}.Tooltip");
 		public Asset<Texture2D> icon;
 
 		public Func<bool> active;
 
-		public PlayerManagerButton(string name, string tooltip, Asset<Texture2D> icon, Func<bool> active)
+		public PlayerManagerButton(string key, Asset<Texture2D> icon, Func<bool> active)
 		{
-			this.name = name;
-			this.tooltip = tooltip;
+			localizationKey = key;
 			this.icon = icon;
 			this.active = active;
 
