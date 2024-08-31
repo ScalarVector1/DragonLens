@@ -151,3 +151,10 @@ EntityEditor: {
 	LiveReaction: "{0} 实时跟拍"
 	Select: 左键单击以选中实体，右键单击以取消。
 }
+
+FieldEditor: {
+	Uneditable: 不可编辑
+	UneditableBlockMsg: 这个字段无法被编辑！
+	// Static: Static
+	ModdedFields: 模组字段
+}

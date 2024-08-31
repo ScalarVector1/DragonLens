@@ -658,15 +658,224 @@ EntityEditor: {
 	ModFields: Modded Fields
 	Tutorial: Click an entity to start
 	Deselect: Deselect
+	Selected: "{0} selected for editing."
+	SelectedTE: "{0} (Tile Entity) selected for editing."
+
+	BasicEditors: {
+		Position: {
+			Name: Position
+			Description: Where the entity top-left is located in world coordinates
+		}
+
+		Velocity: {
+			Name: Velocity
+			Description: How much the entity's position changes each tick
+		}
+
+		Size: {
+			Name: Size
+			Description: The width/height of the entities hitbox
+		}
+	}
+
+	NPCEditors: {
+		Type: {
+			Name: Type
+			Description: The type of NPC this is. See the wiki for what values associate to what NPC.
+		}
+
+		Name: {
+			Name: Name
+			Description: Given name of the NPC.
+		}
+
+		MaxLife: {
+			Name: Max Life
+			Description: Maximum life of this NPC
+		}
+
+		Life: {
+			Name: Life
+			Description: Current life of this NPC
+		}
+
+		Defense: {
+			Name: Defense
+			Description: Current defense of this NPC
+		}
+
+		Damage: {
+			Name: Damage
+			Description: Current contact damage of the NPC
+		}
+
+		KBResist: {
+			Name: KB Resist
+			Description: Current 'knockback resistance' of the NPC. Note this is a misnomer, knockback is MULTIPLIED by this value.
+		}
+
+		AIStyle: {
+			Name: AI Style
+			Description: The AI style of this NPC. See the wiki for what values represent what NPCs behavior.
+		}
+
+		AI.Description: "AI specific value "
+		LAI.Description: "Local AI specific value "
+	}
+
+	TEEditors: {
+		Type: {
+			Name: type
+			Description: ID of the tile entity. Changing this is probably pretty dangerous.
+		}
+	}
 }
 
 SystemEditor: {
 	DisplayName: System Editor
 	Description: Change global properties about the world and modded systems. This is an advanced tool.
 	VanillaFields: Vanilla Fields
+
+	Editors: {
+		KingSlime: {
+			Name: King slime downed
+			Description: If king slime counts as killed or not in this world.
+		}
+
+		EoC: {
+			Name: EoC downed
+			Description: If the eye of cthulhu counts as killed or not in this world.
+		}
+
+		EvilBoss: {
+			Name: Evil boss downed
+			Description: If the world evil boss counts as killed or not in this world.
+		}
+
+		Skeletron: {
+			Name: Skeletron downed
+			Description: If skeletron counts as killed or not in this world.
+		}
+
+		QueenBee: {
+			Name: Queen bee downed
+			Description: If queen bee counts as killed or not in this world.
+		}
+
+		GoblinArmy: {
+			Name: Goblin army downed
+			Description: If the goblin army counts as killed or not in this world.
+		}
+
+		FrostLegion: {
+			Name: Frost legion downed
+			Description: If the frost legion counts as killed or not in this world.
+		}
+
+		Hardmode: {
+			Name: Hardmode
+			Description: If the world is in hardmode.
+		}
+
+		QueenSlime: {
+			Name: Queen slime downed
+			Description: If queen slime counts as killed or not in this world.
+		}
+
+		Destroyer: {
+			Name: Destroyer downed
+			Description: If the destroyer counts as killed or not in this world.
+		}
+
+		Twins: {
+			Name: Twins downed
+			Description: If the twins counts as killed or not in this world.
+		}
+
+		SkeletronPrime: {
+			Name: Skeletron prime downed
+			Description: If the skeletron prime counts as killed or not in this world.
+		}
+
+		Plantera: {
+			Name: Plantera downed
+			Description: If plantera counts as killed or not in this world.
+		}
+
+		Golem: {
+			Name: Golem downed
+			Description: If golem counts as killed or not in this world.
+		}
+
+		Fishron: {
+			Name: Fishron downed
+			Description: If duke fishron counts as killed or not in this world.
+		}
+
+		EoL: {
+			Name: EoL downed
+			Description: If the empress of light counts as killed or not in this world.
+		}
+
+		Cultist: {
+			Name: Cultist downed
+			Description: If the lunatic cultist counts as killed or not in this world.
+		}
+
+		Moonlord: {
+			Name: Moonlord downed
+			Description: If the moon lord counts as killed or not in this world.
+		}
+
+		Pirates: {
+			Name: Pirates downed
+			Description: If the pirates count as killed or not in this world.
+		}
+	}
 }
 
 PlayerManager: {
 	DisplayName: Player Manager
 	Description: Allows you to manage all players connected to the server, such as their admin status, kicking them, or editing their inventories.
+	TryRemoveYourself: You cannot remove your own permissions!
+	RemoveAdmin: "{0} is no longer an admin."
+	AddAdmin: "{0} is now an admin."
+
+	InventoryManager: {
+		Inventory: "{0}'s Inventory"
+		Equipment: Equipment
+		Piggy: Piggy bank
+		Safe: Safe
+		DefendersForge: Defenders forge
+		VoidVault: Void vault
+	}
+
+	Admin: {
+		Name: Toggle Admin
+		Tooltip: Gives or revokes admin permissions from this player. Make sure this is someone you can trust! Admins can use all features of DragonLens, including this one!
+	}
+
+	Kick: {
+		Name: Kick
+		Tooltip: Forcibly disconnect this player from the game
+	}
+
+	View: {
+		Name: View
+		Tooltip: Move the camera to this players position
+	}
+
+	Inventory: {
+		Name: Inventory
+		Tooltip: View and edit this player's inventories
+	}
+
+	Stats:
+		'''
+		Life: {0}
+		Mana: {1}
+		Position: {2}
+		Velocity: {3}
+		Alive: {4}
+		'''
 }

@@ -92,7 +92,7 @@ namespace DragonLens.Content.GUI
 				return;
 
 			Vector2 pos = GetDimensions().Position();
-			Utils.DrawBorderString(spriteBatch, "Modded fields", pos + new Vector2(120, 30), Color.White, 1, 0f, 0.5f);
+			Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetGUIText("FieldEditor.ModdedFields"), pos + new Vector2(120, 30), Color.White, 1, 0f, 0.5f);
 
 			Texture2D background = Terraria.GameContent.TextureAssets.MagicPixel.Value;
 
