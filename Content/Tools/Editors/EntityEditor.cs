@@ -128,11 +128,16 @@ namespace DragonLens.Content.Tools.Editors
 
 		private void BuildBasicEditor()
 		{
+			static string Localize(string text)
+			{
+				return LocalizationHelper.GetToolText($"EntityEditor.BasicEditors.{text}");
+			}
+
 			if (entity != null)
 			{
-				basicEditorList.Add(new Vector2Editor("Position", n => entity.position = n, entity.position, () => entity.position, "Where the entity top-left is located in world coordinates"));
-				basicEditorList.Add(new Vector2Editor("Velocity", n => entity.velocity = n, entity.velocity, () => entity.velocity, "How much the entity's position changes each tick"));
-				basicEditorList.Add(new Vector2Editor("Size", n => entity.Size = n, entity.Size, () => entity.Size, "The width/height of the entities hitbox"));
+				basicEditorList.Add(new Vector2Editor(Localize("Position.Name"), n => entity.position = n, entity.position, () => entity.position, Localize("Position.Description")));
+				basicEditorList.Add(new Vector2Editor(Localize("Velocity.Name"), n => entity.velocity = n, entity.velocity, () => entity.velocity, Localize("Velocity.Description")));
+				basicEditorList.Add(new Vector2Editor(Localize("Size.Name"), n => entity.Size = n, entity.Size, () => entity.Size, Localize("Size.Description")));
 
 				if (entity is NPC)
 					BuildBasicNPC();
@@ -162,27 +167,32 @@ namespace DragonLens.Content.Tools.Editors
 		#region NPC
 		private void BuildBasicNPC()
 		{
+			static string Localize(string text)
+			{
+				return LocalizationHelper.GetToolText($"EntityEditor.NPCEditors.{text}");
+			}
+			
 			NPC npc = entity as NPC;
-			basicEditorList.Add(new IntEditor("Type", n => npc.type = n, npc.type, () => npc.type, "The type of NPC this is. See the wiki for what values associate to what NPC."));
-			basicEditorList.Add(new StringEditor("Name", n => npc.GivenName = n, npc.GivenOrTypeName, () => npc.GivenOrTypeName, "Given name of the NPC."));
-			basicEditorList.Add(new IntEditor("Max Life", n => npc.lifeMax = n, npc.lifeMax, () => npc.lifeMax, "Maximum life of this NPC"));
-			basicEditorList.Add(new IntEditor("Life", n => npc.life = n, npc.life, () => npc.life, "Current life of this NPC"));
-			basicEditorList.Add(new IntEditor("Defense", n => npc.defense = n, npc.defense, () => npc.defense, "Current defense of this NPC"));
-			basicEditorList.Add(new IntEditor("Damage", n => npc.damage = n, npc.damage, () => npc.damage, "Current contact damage of the NPC"));
-			basicEditorList.Add(new FloatEditor("KB Resist", n => npc.knockBackResist = n, npc.knockBackResist, () => npc.knockBackResist, "Current 'knockback resistance' of the NPC. Note this is a misnomer, knockback is MULTIPLIED by this value."));
+			basicEditorList.Add(new IntEditor(Localize("Type.Name"), n => npc.type = n, npc.type, () => npc.type, Localize("Type.Description")));
+			basicEditorList.Add(new StringEditor(Localize("Name.Name"), n => npc.GivenName = n, npc.GivenOrTypeName, () => npc.GivenOrTypeName, Localize("Name.Description")));
+			basicEditorList.Add(new IntEditor(Localize("MaxLife.Name"), n => npc.lifeMax = n, npc.lifeMax, () => npc.lifeMax, Localize("MaxLife.Description")));
+			basicEditorList.Add(new IntEditor(Localize("Life.Name"), n => npc.life = n, npc.life, () => npc.life, Localize("Life.Description")));
+			basicEditorList.Add(new IntEditor(Localize("Defense.Name"), n => npc.defense = n, npc.defense, () => npc.defense, Localize("Defense.Description")));
+			basicEditorList.Add(new IntEditor(Localize("Damage.Name"), n => npc.damage = n, npc.damage, () => npc.damage, Localize("Damage.Description")));
+			basicEditorList.Add(new FloatEditor(Localize("KBResist.Name"), n => npc.knockBackResist = n, npc.knockBackResist, () => npc.knockBackResist, Localize("KBResist.Description")));
 
-			basicEditorList.Add(new IntEditor("AI Style", n => npc.aiStyle = n, npc.aiStyle, () => npc.aiStyle, "The AI style of this NPC. See the wiki for what values represent what NPCs behavior."));
+			basicEditorList.Add(new IntEditor(Localize("AIStyle.Name"), n => npc.aiStyle = n, npc.aiStyle, () => npc.aiStyle, Localize("AIStyle.Description")));
 
 			for (int k = 0; k < npc.ai.Length; k++)
 			{
 				int i = k; // Else these track k and we get an index OOB because k increments afterwards
-				basicEditorList.Add(new FloatEditor("AI " + k, n => npc.ai[i] = n, npc.ai[i], () => npc.ai[i], "AI specific value " + k));
+				basicEditorList.Add(new FloatEditor("AI " + k, n => npc.ai[i] = n, npc.ai[i], () => npc.ai[i], Localize("AI.Description") + k));
 			}
 
 			for (int k = 0; k < npc.localAI.Length; k++)
 			{
 				int i = k; // Else these track k and we get an index OOB because k increments afterwards
-				basicEditorList.Add(new FloatEditor("LAI " + k, n => npc.localAI[i] = n, npc.localAI[i], () => npc.localAI[i], "Local AI specific value " + k));
+				basicEditorList.Add(new FloatEditor("LAI " + k, n => npc.localAI[i] = n, npc.localAI[i], () => npc.localAI[i], Localize("LAI.Description") + k));
 			}
 		}
 
@@ -209,7 +219,12 @@ namespace DragonLens.Content.Tools.Editors
 		#region TE
 		public void BuildBasicTE()
 		{
-			basicEditorList.Add(new IntEditor("type", n => tileEntity.type = (byte)n, tileEntity.type, () => tileEntity.type, "ID of the tile entity. Changing this is probably pretty dangerous."));
+			static string Localize(string text)
+			{
+				return LocalizationHelper.GetToolText($"EntityEditor.TEEditors.{text}");
+			}
+
+			basicEditorList.Add(new IntEditor(Localize("Type.Name"), n => tileEntity.type = (byte)n, tileEntity.type, () => tileEntity.type, Localize("Type.Description")));
 		}
 
 		public void BuildModTE()
@@ -233,7 +248,7 @@ namespace DragonLens.Content.Tools.Editors
 						entity = Main.npc[k];
 						tileEntity = null;
 
-						Main.NewText(Main.npc[k].GivenOrTypeName + " selected for editing.");
+						Main.NewText(LocalizationHelper.GetToolText("EntityEditor.Selected", Main.npc[k].GivenOrTypeName));
 
 						SetupNew();
 
@@ -252,7 +267,7 @@ namespace DragonLens.Content.Tools.Editors
 						entity = Main.projectile[k];
 						tileEntity = null;
 
-						Main.NewText(Main.projectile[k].Name + " selected for editing.");
+						Main.NewText(LocalizationHelper.GetToolText("EntityEditor.Selected", Main.projectile[k].Name));
 
 						SetupNew();
 
@@ -270,7 +285,7 @@ namespace DragonLens.Content.Tools.Editors
 					tileEntity = te;
 					entity = null;
 
-					Main.NewText(te.Position + " (Tile Entity) selected for editing.");
+					Main.NewText(LocalizationHelper.GetToolText("EntityEditor.SelectedTE", te.Position));
 
 					SetupNew();
 
@@ -283,7 +298,7 @@ namespace DragonLens.Content.Tools.Editors
 		{
 			static string GetLocalizedText(string text)
 			{
-				return LocalizationHelper.GetText($"Tools.EntityEditor.{text}");
+				return LocalizationHelper.GetToolText($"EntityEditor.{text}");
 			}
 
 			Vector2 pos = basePos;

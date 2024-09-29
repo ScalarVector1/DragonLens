@@ -77,7 +77,8 @@ namespace DragonLens.Content.Tools.Multiplayer
 			Texture2D icon = ThemeHandler.GetIcon("PlayerManager");
 			spriteBatch.Draw(icon, basePos + Vector2.One * 16, Color.White);
 
-			Utils.DrawBorderStringBig(spriteBatch, $"{player.name}'s Inventory", basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.6f);
+			string name = LocalizationHelper.GetToolText("PlayerManager.InventoryManager.Inventory", player.name);
+			Utils.DrawBorderStringBig(spriteBatch, name, basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.6f);
 
 			base.Draw(spriteBatch);
 		}
@@ -98,7 +99,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 				slots.Add(new ItemSlot(player.armor, k, 2));
 			}
 
-			slots.Add(new Seperator("Piggy bank", 3));
+			slots.Add(new Seperator("Piggy", 3));
 
 			for (int k = 0; k < player.bank.item.Length; k++)
 			{
@@ -112,14 +113,14 @@ namespace DragonLens.Content.Tools.Multiplayer
 				slots.Add(new ItemSlot(player.bank2.item, k, 6));
 			}
 
-			slots.Add(new Seperator("Defenders forge", 7));
+			slots.Add(new Seperator("DefendersForge", 7));
 
 			for (int k = 0; k < player.bank3.item.Length; k++)
 			{
 				slots.Add(new ItemSlot(player.bank3.item, k, 8));
 			}
 
-			slots.Add(new Seperator("Void vault", 9));
+			slots.Add(new Seperator("VoidVault", 9));
 
 			for (int k = 0; k < player.bank4.item.Length; k++)
 			{
@@ -130,12 +131,12 @@ namespace DragonLens.Content.Tools.Multiplayer
 
 	internal class Seperator : SmartUIElement
 	{
-		readonly string text;
+		readonly string localizationKey;
 		public int invIndex;
 
-		public Seperator(string text, int invIndex)
+		public Seperator(string key, int invIndex)
 		{
-			this.text = text;
+			localizationKey = key;
 			this.invIndex = invIndex;
 
 			Width.Set(520, 0);
@@ -148,6 +149,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 			var backTarget = GetDimensions().ToRectangle();
 			spriteBatch.Draw(back, backTarget, Color.Black * 0.5f);
 
+			string text = LocalizationHelper.GetToolText($"PlayerManager.InventoryManager.{localizationKey}");
 			Utils.DrawBorderString(spriteBatch, text, GetDimensions().Position() + new Vector2(12, 4), Color.White, 0.8f);
 		}
 

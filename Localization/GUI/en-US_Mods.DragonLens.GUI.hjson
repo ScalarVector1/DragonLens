@@ -161,3 +161,10 @@ EntityEditor: {
 	LiveReaction: Live {0} Reaction
 	Select: Click on an entity in the world to select it. Right click to cancel.
 }
+
+FieldEditor: {
+	Uneditable: Uneditable
+	UneditableBlockMsg: This field is uneditable!
+	Static: Static
+	ModdedFields: Modded fields
+}
