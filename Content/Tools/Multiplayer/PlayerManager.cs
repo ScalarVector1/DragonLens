@@ -51,12 +51,14 @@ namespace DragonLens.Content.Tools.Multiplayer
 	{
 		public override void PlayerDisconnect()
 		{
-			UILoader.GetUIState<PlayerManagerWindow>().SetPlayers();
+			if (Main.netMode != NetmodeID.Server)
+				UILoader.GetUIState<PlayerManagerWindow>().SetPlayers();
 		}
 
 		public override void PlayerConnect()
 		{
-			UILoader.GetUIState<PlayerManagerWindow>().SetPlayers();
+			if (Main.netMode != NetmodeID.Server)
+				UILoader.GetUIState<PlayerManagerWindow>().SetPlayers();
 		}
 	}
 
