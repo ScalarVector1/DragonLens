@@ -6,6 +6,7 @@ using DragonLens.Helpers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameInput;
 using Terraria.ID;
@@ -101,6 +102,17 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 		}
 
+		public override void SetupSorts()
+		{
+			SortModes.Add(new("ID", (a, b) => (a as NPCButton).npc.type - (b as NPCButton).npc.type));
+			SortModes.Add(new("Alphabetical", (a, b) => a.Identifier.CompareTo(b.Identifier)));
+			SortModes.Add(new("Damage", (a, b) => -1 * ((a as NPCButton).npc.damage - (b as NPCButton).npc.damage)));
+			SortModes.Add(new("Life", (a, b) => -1 * ((a as NPCButton).npc.life - (b as NPCButton).npc.life)));
+			SortModes.Add(new("Value", (a, b) => -1 * ((int)(a as NPCButton).npc.value - (int)(b as NPCButton).npc.value)));
+
+			SortFunction = SortModes.First().Function;
+		}
+
 		public override void DraggableUdpate(GameTime gameTime)
 		{
 			base.DraggableUdpate(gameTime);
@@ -173,6 +185,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public UnlockableNPCEntryIcon icon;
 
 		public override string Identifier => name;
+		public override string Key => (npc.ModNPC?.Mod?.Name ?? "Terraria") + ":" + (npc.ModNPC?.Name ?? NPCID.Search.GetName(npc.type));
 
 		public NPCButton(NPC npc, Browser browser) : base(browser)
 		{
@@ -284,11 +297,6 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void SafeRightClick(UIMouseEvent evt)
 		{
 			NPC.NewNPC(null, (int)Main.LocalPlayer.Center.X, (int)Main.LocalPlayer.Center.Y, npc.type);
-		}
-
-		public override int CompareTo(object obj)
-		{
-			return npc.type - (obj as NPCButton).npc.type;
 		}
 	}
 }

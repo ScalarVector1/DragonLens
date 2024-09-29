@@ -3,6 +3,8 @@ using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Helpers;
 using System.Collections.Generic;
 using System.IO;
+using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
@@ -41,6 +43,7 @@ namespace DragonLens.Content.GUI
 		private readonly string presetPath;
 
 		public override string Identifier => name;
+		public override string Key => name;
 
 		public LayoutPresetButton(Browser parent, string name, string presetPath, string tooltip) : base(parent)
 		{

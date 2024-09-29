@@ -1,6 +1,16 @@
 Browser: {
 	ListView: 列表视图
 	Filters: 筛选
+	// Sorts: Sorting mode
+
+	Sort: {
+		// ID: By ID
+		// Alphabetical: Alphabetical
+		// Damage: By Damage
+		// Defense: By Defense
+		// Value: By Gold Value
+		// Life: By Maximum Life
+	}
 
 	ButtonSizeSlider: {
 		Name: 按钮大小

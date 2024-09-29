@@ -162,6 +162,15 @@ namespace DragonLens.Content.Tools.Spawners
 			filters.AddFilter(new Filter(Assets.Filters.Hostile, "Tools.ProjectileSpawner.Filters.Hostile", n => !(n is ProjectileButton && (n as ProjectileButton).proj.hostile)));
 		}
 
+		public override void SetupSorts()
+		{
+			SortModes.Add(new("ID", (a, b) => (a as ProjectileButton).proj.type - (b as ProjectileButton).proj.type));
+			SortModes.Add(new("Alphabetical", (a, b) => a.Identifier.CompareTo(b.Identifier)));
+			SortModes.Add(new("Damage", (a, b) => -1 * ((a as ProjectileButton).proj.damage - (b as ProjectileButton).proj.damage)));
+
+			SortFunction = SortModes.First().Function;
+		}
+
 		public override void DraggableUdpate(GameTime gameTime)
 		{
 			base.DraggableUdpate(gameTime);
@@ -220,6 +229,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public string name;
 
 		public override string Identifier => name;
+		public override string Key => (proj.ModProjectile?.Mod?.Name ?? "Terraria") + ":" + (proj.ModProjectile?.Name ?? ProjectileID.Search.GetName(proj.type));
 
 		public ProjectileButton(Projectile proj, Browser browser) : base(browser)
 		{
@@ -267,11 +277,6 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void SafeRightClick(UIMouseEvent evt)
 		{
 			Projectile.NewProjectile(null, Main.LocalPlayer.Center, ProjectileBrowser.velocity, proj.type, proj.damage, proj.knockBack, Main.myPlayer, ProjectileBrowser.ai0, ProjectileBrowser.ai1, ProjectileBrowser.ai2);
-		}
-
-		public override int CompareTo(object obj)
-		{
-			return proj.type - (obj as ProjectileButton).proj.type;
 		}
 	}
 }

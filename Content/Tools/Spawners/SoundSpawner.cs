@@ -1,6 +1,8 @@
 ﻿using DragonLens.Content.GUI;
 using DragonLens.Helpers;
 using System.Collections.Generic;
+using System.Linq;
+using Terraria;
 using Terraria.Audio;
 using Terraria.GameInput;
 using Terraria.ID;
@@ -52,6 +54,13 @@ namespace DragonLens.Content.Tools.Spawners
 			grid.AddRange(buttons);
 		}
 
+		public override void SetupSorts()
+		{
+			SortModes.Add(new("Alphabetical", (a, b) => a.Identifier.CompareTo(b.Identifier)));
+
+			SortFunction = SortModes.First().Function;
+		}
+
 		public override void DraggableUdpate(GameTime gameTime)
 		{
 			base.DraggableUdpate(gameTime);
@@ -68,6 +77,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public string name;
 
 		public override string Identifier => name;
+		public override string Key => name;
 
 		public SoundButton(SoundStyle Sound, string name, Browser browser) : base(browser)
 		{
@@ -91,11 +101,6 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void SafeClick(UIMouseEvent evt)
 		{
 			SoundEngine.PlaySound(Sound);
-		}
-
-		public override int CompareTo(object obj)
-		{
-			return name.CompareTo((obj as SoundButton).name);
 		}
 	}
 }

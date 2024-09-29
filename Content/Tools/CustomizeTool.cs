@@ -6,8 +6,11 @@ using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using System;
 using System.Collections.Generic;
+using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
+using System.Linq;
 
 namespace DragonLens.Content.Tools
 {
@@ -74,6 +77,13 @@ namespace DragonLens.Content.Tools
 			grid.AddRange(buttons);
 		}
 
+		public override void SetupSorts()
+		{
+			SortModes.Add(new("Alphabetical", (a, b) => a.Identifier.CompareTo(b.Identifier)));
+
+			SortFunction = SortModes.First().Function;
+		}
+
 		public static void OpenForToolbar(ToolbarElement bar)
 		{
 			trackedElement = bar;
@@ -106,6 +116,7 @@ namespace DragonLens.Content.Tools
 		public Tool tool;
 
 		public override string Identifier => tool.DisplayName;
+		public override string Key => tool.Mod?.Name ?? "Terraria" + ":" + tool.Name;
 
 		public ToolBrowserButton(Tool tool, Browser browser) : base(browser)
 		{
@@ -137,11 +148,6 @@ namespace DragonLens.Content.Tools
 			ToolBrowser.TrackedToolbar.AddTool(tool);
 
 			UILoader.GetUIState<ToolbarState>().Refresh();
-		}
-
-		public override int CompareTo(object obj)
-		{
-			return tool.DisplayName.CompareTo((obj as ToolBrowserButton).tool.DisplayName);
 		}
 	}
 }

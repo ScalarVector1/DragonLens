@@ -5,6 +5,7 @@ using DragonLens.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Terraria;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader.UI.Elements;
@@ -57,6 +58,14 @@ namespace DragonLens.Content.Tools.Spawners
 			{
 				filters.AddFilter(new TileModFilter(mod));
 			}
+		}
+
+		public override void SetupSorts()
+		{ 
+			SortModes.Add(new("ID", (a, b) => (a as TileButton).tileType - (b as TileButton).tileType));
+			SortModes.Add(new("Alphabetical", (a, b) => a.Identifier.CompareTo(b.Identifier)));
+
+			SortFunction = SortModes.First().Function;
 		}
 
 		public override void DraggableUdpate(GameTime gameTime)
@@ -192,6 +201,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public int tileType;
 
 		public override string Identifier => ProcessName(TileID.Search.GetName(tileType));
+		public override string Key => (ModContent.GetModTile(tileType)?.Mod?.Name ?? "Terraria") + ":" + (ModContent.GetModTile(tileType)?.Name ?? TileID.Search.GetName(tileType));
 
 		public TileButton(int tileType, Browser browser) : base(browser)
 		{
@@ -238,11 +248,6 @@ namespace DragonLens.Content.Tools.Spawners
 			TileBrowser.selected = tileType;
 			TileBrowser.variant = 0;
 			Main.NewText(TileSpawner.GetText("Selected", Identifier));
-		}
-
-		public override int CompareTo(object obj)
-		{
-			return tileType - (obj as TileButton).tileType;
 		}
 	}
 }

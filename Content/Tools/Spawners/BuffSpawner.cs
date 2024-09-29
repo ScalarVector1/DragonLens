@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Terraria;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader.UI.Elements;
@@ -116,6 +117,14 @@ namespace DragonLens.Content.Tools.Spawners
 			filters.AddFilter(new Filter(Assets.Filters.Hostile, "Tools.BuffSpawner.Filters.Debuff", n => !(n is BuffButton && Main.debuff[(n as BuffButton).type])));
 		}
 
+		public override void SetupSorts()
+		{
+			SortModes.Add(new("ID", (a, b) => (a as BuffButton).type - (b as BuffButton).type));
+			SortModes.Add(new("Alphabetical", (a, b) => a.Identifier.CompareTo(b.Identifier)));
+
+			SortFunction = SortModes.First().Function;
+		}
+
 		public override void DraggableUdpate(GameTime gameTime)
 		{
 			base.DraggableUdpate(gameTime);
@@ -218,6 +227,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public int type;
 
 		public override string Identifier => Lang.GetBuffName(type);
+		public override string Key => (ModContent.GetModBuff(type)?.Mod?.Name ?? "Terraria") + ":" + (ModContent.GetModBuff(type)?.Name ?? BuffID.Search.GetName(type));
 
 		public BuffButton(int type, Browser browser) : base(browser)
 		{
@@ -254,11 +264,6 @@ namespace DragonLens.Content.Tools.Spawners
 		{
 			Main.LocalPlayer.AddBuff(type, BuffBrowser.duration);
 			Main.NewText(BuffSpawner.GetText("Applied", Lang.GetBuffName(type), Main.LocalPlayer.name));
-		}
-
-		public override int CompareTo(object obj)
-		{
-			return type - (obj as BuffButton).type;
 		}
 	}
 }

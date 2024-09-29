@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Terraria;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader.UI.Elements;
@@ -123,6 +124,14 @@ namespace DragonLens.Content.Tools.Spawners
 			}
 		}
 
+		public override void SetupSorts()
+		{
+			SortModes.Add(new("ID", (a, b) => (a as DustButton).dust.type - (b as DustButton).dust.type));
+			SortModes.Add(new("Alphabetical", (a, b) => a.Identifier.CompareTo(b.Identifier)));
+
+			SortFunction = SortModes.First().Function;
+		}
+
 		public override void DraggableUdpate(GameTime gameTime)
 		{
 			base.DraggableUdpate(gameTime);
@@ -180,11 +189,11 @@ namespace DragonLens.Content.Tools.Spawners
 		public string name;
 
 		public override string Identifier => name;
+		public override string Key => (ModContent.GetModDust(dust.type)?.Mod?.Name ?? "Terraria") + ":" + (ModContent.GetModDust(dust.type)?.Name ?? dust.type.ToString());
 
 		public DustButton(Dust dust, Browser browser) : base(browser)
 		{
 			this.dust = dust;
-
 			if (dust.type > DustID.Count)
 			{
 				name = DustLoader.GetDust(dust.type).Name;
@@ -251,11 +260,6 @@ namespace DragonLens.Content.Tools.Spawners
 		{
 			DustBrowser.selected = dust;
 			Main.NewText(DustSpawner.GetText("Selected", Identifier));
-		}
-
-		public override int CompareTo(object obj)
-		{
-			return dust.type - (obj as DustButton).dust.type;
 		}
 	}
 }

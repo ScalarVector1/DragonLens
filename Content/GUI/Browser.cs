@@ -1,11 +1,16 @@
 ﻿using DragonLens.Content.Filters;
 using DragonLens.Content.GUI.FieldEditors;
+using DragonLens.Content.Sorts;
+using DragonLens.Content.Tools.Spawners;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
+using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using ReLogic.Localization.IME;
 using ReLogic.OS;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria.GameContent;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -17,10 +22,13 @@ namespace DragonLens.Content.GUI
 	/// </summary>
 	internal abstract class Browser : DraggableUIState
 	{
+		public BrowserTool tool;
+
 		private UIGrid options;
 		private StyledScrollbar scrollBar;
 		private ToggleButton listButton;
 		private ToggleButton filterButton;
+		private ToggleButton sortButton;
 		public FilterPanel filters;
 
 		internal SearchBar searchBar;
@@ -38,6 +46,9 @@ namespace DragonLens.Content.GUI
 		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 500, 64);
 
 		public event FilterDelegate FilterEvent;
+		public int sortIndex = 0;
+		public List<Sort> SortModes = new();
+		public Func<BrowserButton, BrowserButton, int> SortFunction;
 
 		public override int InsertionIndex(List<GameInterfaceLayer> layers)
 		{
@@ -85,6 +96,15 @@ namespace DragonLens.Content.GUI
 		public virtual void SetupFilters(FilterPanel filters) { }
 
 		/// <summary>
+		/// Initialize sorting functions for this browser here
+		/// </summary>
+		public virtual void SetupSorts() 
+		{
+			// "sensible" default sort based on key prop
+			SortFunction = (a, b) => a.Key.CompareTo(b.Key);
+		}
+
+		/// <summary>
 		/// Any initialization you need to do should be done here so it is appropriately refrehed.
 		/// </summary>
 		public virtual void PostInitialize() { }
@@ -129,12 +149,23 @@ namespace DragonLens.Content.GUI
 			};
 			Append(filterButton);
 
+			sortButton = new("DragonLens/Assets/GUI/Sort", () => false, LocalizationHelper.GetGUIText("Browser.Sorts"), () => LocalizationHelper.GetGUIText($"Browser.Sort.{SortModes[sortIndex].Name}"));
+			sortButton.OnLeftClick += (n, k) =>
+			{
+				sortIndex++;
+				sortIndex %= SortModes.Count;
+				SortFunction = SortModes[sortIndex].Function;
+				SortGrid();
+			};
+			Append(sortButton);
+
 			filters = new(this);
 			filters.Width.Set(0, 0);
 			filters.Height.Set(420, 0);
 			Append(filters);
 
 			SetupFilters(filters);
+			SetupSorts();
 			PostInitialize();
 		}
 
@@ -149,7 +180,7 @@ namespace DragonLens.Content.GUI
 			searchBar.Left.Set(newPos.X + 10, 0);
 			searchBar.Top.Set(newPos.Y + 66, 0);
 
-			sizeSlider.Left.Set(newPos.X + 310, 0);
+			sizeSlider.Left.Set(newPos.X + 354, 0);
 			sizeSlider.Top.Set(newPos.Y + 74, 0);
 
 			listButton.Left.Set(newPos.X + 220, 0);
@@ -157,6 +188,9 @@ namespace DragonLens.Content.GUI
 
 			filterButton.Left.Set(newPos.X + 262, 0);
 			filterButton.Top.Set(newPos.Y + 66, 0);
+
+			sortButton.Left.Set(newPos.X + 304, 0);
+			sortButton.Top.Set(newPos.Y + 66, 0);
 
 			filters.Left.Set(newPos.X + width + 10, 0);
 			filters.Top.Set(newPos.Y, 0);
@@ -204,6 +238,9 @@ namespace DragonLens.Content.GUI
 		public static int drawDelayTimer = 2; //Here so we dont draw on the first frame of the grid populating, causing a lag bonanza since every single button tries to draw.
 
 		public abstract string Identifier { get; }
+		public abstract string Key { get; } // Key used for favorites
+
+		public bool Favorite => parent?.tool?.Favorites?.Contains(Key) ?? false;
 
 		public BrowserButton(Browser parent)
 		{
@@ -228,6 +265,16 @@ namespace DragonLens.Content.GUI
 				MarginTop = 0;
 				MarginBottom = 0;
 				return;
+			}
+
+			if (IsMouseHovering && !Main.oldKeyState.IsKeyDown(Main.FavoriteKey) && Main.keyState.IsKeyDown(Main.FavoriteKey))
+			{
+				if (Favorite)
+					parent.tool.Favorites.Remove(Key);
+				else
+					parent.tool.Favorites.Add(Key);
+
+				parent.SortGrid();
 			}
 
 			if (parent.listMode)
@@ -294,7 +341,24 @@ namespace DragonLens.Content.GUI
 			GUIHelper.DrawBox(spriteBatch, drawBox, ThemeHandler.ButtonColor);
 			SafeDraw(spriteBatch, drawBox);
 
+			if (Favorite)
+			{
+				var tex = Assets.GUI.Star.Value;
+				spriteBatch.Draw(tex, drawBox.TopLeft(), null, Color.White, 0, new Vector2(2, 4), 1, 0, 0);
+			}
+
 			base.Draw(spriteBatch);
+		}
+
+		public sealed override int CompareTo(object obj)
+		{
+			if (obj is not BrowserButton other)
+				return base.CompareTo(obj);
+
+			if (Favorite != other.Favorite)
+				return Favorite.CompareTo(other.Favorite) * -1;
+
+			return parent.SortFunction(this, other);
 		}
 	}
 

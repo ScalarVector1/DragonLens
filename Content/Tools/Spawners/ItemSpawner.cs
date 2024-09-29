@@ -98,6 +98,17 @@ namespace DragonLens.Content.Tools.Spawners
 			filters.AddFilter(new Filter(Assets.Filters.Unknown, "Tools.ItemSpawner.Filters.Deprecated", n => n is ItemButton ib && !ItemID.Sets.Deprecated[ib.item.type]));
 		}
 
+		public override void SetupSorts()
+		{
+			SortModes.Add(new("ID", (a, b) => (a as ItemButton).item.type - (b as ItemButton).item.type));
+			SortModes.Add(new("Alphabetical", (a, b) => a.Identifier.CompareTo(b.Identifier)));
+			SortModes.Add(new("Damage", (a, b) => -1 * ((a as ItemButton).item.damage - (b as ItemButton).item.damage)));
+			SortModes.Add(new("Defense", (a, b) => -1 * ((a as ItemButton).item.defense - (b as ItemButton).item.defense)));
+			SortModes.Add(new("Value", (a, b) => -1 * ((a as ItemButton).item.value - (b as ItemButton).item.value)));
+
+			SortFunction = SortModes.First().Function;
+		}
+
 		public override void DraggableUdpate(GameTime gameTime)
 		{
 			base.DraggableUdpate(gameTime);
@@ -113,6 +124,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public int stackDelay = 0;
 
 		public override string Identifier => item.Name;
+		public override string Key => (item.ModItem?.Mod?.Name ?? "Terraria") + ":" + (item.ModItem?.Name ?? ItemID.Search.GetName(item.type));
 
 		public ItemButton(Item item, Browser browser) : base(browser)
 		{
@@ -184,11 +196,6 @@ namespace DragonLens.Content.Tools.Spawners
 				else if (Main.mouseItem.stack < Main.mouseItem.maxStack)
 					Main.mouseItem.stack++;
 			}
-		}
-
-		public override int CompareTo(object obj)
-		{
-			return item.type - (obj as ItemButton).item.type;
 		}
 	}
 }
