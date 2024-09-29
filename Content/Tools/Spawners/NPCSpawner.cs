@@ -22,7 +22,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SendPacket(BinaryWriter writer)
 		{
-			writer.Write(NPCBrowser.selected is null ? 0 : NPCBrowser.selected.type);
+			writer.Write(NPCBrowser.selected is null ? 0 : NPCBrowser.selected.netID);
 			writer.WriteVector2(Main.MouseWorld);
 		}
 
@@ -36,7 +36,7 @@ namespace DragonLens.Content.Tools.Spawners
 			if (Main.netMode == NetmodeID.Server && sender >= 0)
 			{
 				if (NPCBrowser.selected != null)
-					NPCBrowser.selected.type = type;
+					NPCBrowser.selected.netID = type;
 
 				Main.mouseX = (int)pos.X;
 				Main.mouseY = (int)pos.Y;
@@ -64,11 +64,17 @@ namespace DragonLens.Content.Tools.Spawners
 		public override void PopulateGrid(UIGrid grid)
 		{
 			var buttons = new List<NPCButton>();
-			// `0` corresponds to NPCID.None - that is, no NPC.
-			for (int k = 1; k < NPCLoader.NPCCount; k++)
+
+			// -65 is the lowest negative netID, may need to be changed, unfortunately I dont think this is saved as a constant anywhere?
+			for (int k = -65; k < NPCLoader.NPCCount; k++)
 			{
+				// `0` corresponds to NPCID.None - that is, no NPC.
+				if (k == 0)
+					continue;
+
 				var npc = new NPC();
 				npc.SetDefaults_ForNetId(k, 1);
+				npc.netID = k;
 
 				buttons.Add(new NPCButton(npc, this));
 			}
@@ -131,7 +137,7 @@ namespace DragonLens.Content.Tools.Spawners
 			if (selected != null && !BoundingBox.Contains(Main.MouseScreen.ToPoint()) && !filters.IsMouseHovering)
 			{
 				PlayerInput.SetZoom_World();
-				NPC.NewNPC(null, (int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, selected.type);
+				NPC.NewNPC(null, (int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, selected.netID);
 				ToolHandler.NetSend<NPCSpawner>();
 				PlayerInput.SetZoom_UI();
 			}
@@ -185,7 +191,7 @@ namespace DragonLens.Content.Tools.Spawners
 		public UnlockableNPCEntryIcon icon;
 
 		public override string Identifier => name;
-		public override string Key => (npc.ModNPC?.Mod?.Name ?? "Terraria") + ":" + (npc.ModNPC?.Name ?? NPCID.Search.GetName(npc.type));
+		public override string Key => (npc.ModNPC?.Mod?.Name ?? "Terraria") + ":" + (npc.ModNPC?.Name ?? NPCID.Search.GetName(npc.type) + $"({npc.netID})");
 
 		public NPCButton(NPC npc, Browser browser) : base(browser)
 		{
@@ -195,6 +201,9 @@ namespace DragonLens.Content.Tools.Spawners
 			try
 			{
 				name = npc.TypeName;
+
+				if (string.IsNullOrEmpty(name)) // Fall back to internal name
+					name = npc?.ModNPC?.Name ?? "Unknown";
 			}
 			catch
 			{
@@ -202,9 +211,9 @@ namespace DragonLens.Content.Tools.Spawners
 				name = NPCSpawner.GetText("NameException", npc.ModNPC.Mod.DisplayName);
 			}
 
-			icon = new(npc.type);
+			icon = new(npc.netID);
 
-			entry = Main.BestiaryDB.FindEntryByNPCID(npc.type);
+			entry = Main.BestiaryDB.FindEntryByNPCID(npc.netID);
 
 			OverrideSamplerState = SamplerState.PointClamp;
 			UseImmediateMode = true;
@@ -283,7 +292,7 @@ namespace DragonLens.Content.Tools.Spawners
 			if (IsMouseHovering)
 			{
 				Tooltip.SetName(Identifier);
-				Tooltip.SetTooltip(NPCSpawner.GetText("NPCType", npc.type));
+				Tooltip.SetTooltip(NPCSpawner.GetText("NPCType", npc.type, npc.netID));
 			}
 		}
 
