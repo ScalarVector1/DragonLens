@@ -52,6 +52,9 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override void SendPacket(BinaryWriter writer)
 		{
+			if (Main.netMode != NetmodeID.Server)
+				NoClip.syncingPlayer = Main.LocalPlayer.whoAmI;
+
 			NoClipPlayer mp = Main.player[syncingPlayer].GetModPlayer<NoClipPlayer>();
 			writer.Write(syncingPlayer);
 			writer.Write(mp.desiredPos.X);

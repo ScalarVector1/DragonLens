@@ -1,6 +1,16 @@
 Browser: {
 	ListView: Показать списком
 	Filters: Фильтры
+	// Sorts: Sorting mode
+
+	Sort: {
+		// ID: By ID
+		// Alphabetical: Alphabetical
+		// Damage: By Damage
+		// Defense: By Defense
+		// Value: By Gold Value
+		// Life: By Maximum Life
+	}
 
 	ButtonSizeSlider: {
 		Name: Изменить масштаб
@@ -25,7 +35,7 @@ EmergencyCustomizeMenu: {
 FirstTimeLayoutPresetMenu: {
 	Welcome: Добро пожаловать в DragonLens!
 	SelectLayout: Пожалуйста, выберете шаблон для начала работы
-	Selected: "Шаблон «{0}» выбран! Используйте инструмент кастомизации (иконка гаечного ключа) чтобы выбрать другой шаблон или кастомизировать текущий."
+	Selected: Шаблон «{0}» выбран! Используйте инструмент кастомизации (иконка гаечного ключа) чтобы выбрать другой шаблон или кастомизировать текущий.
 }
 
 LayoutPresetBrowser: {
@@ -95,7 +105,7 @@ ToolbarCustomizationElements: {
 
 	HideOptionButton: {
 		Name: Уровень скрытия: {0}
-		Tooltip:  Позволяет задать условия видимости для этой панели инструментов. NEWBLOCK {0} NEWBLOCK Нажатие переключит на: {1}
+		Tooltip: Позволяет задать условия видимости для этой панели инструментов. NEWBLOCK {0} NEWBLOCK Нажатие переключит на: {1}
 
 		Never: {
 			Name: Нормальный
@@ -150,4 +160,11 @@ ThemeMenu.Name: Редактор тем
 EntityEditor: {
 	LiveReaction: Live {0} Reaction
 	Select: Кликните по сущности в мире, чтобы выбрать ей. ПКМ для отмены.
+}
+
+FieldEditor: {
+	// Uneditable: Uneditable
+	// UneditableBlockMsg: This field is uneditable!
+	// Static: Static
+	// ModdedFields: Modded fields
 }

@@ -266,11 +266,11 @@ Paint: {
 	}
 }
 
-BTool: {
-	DisplayName: Изменить частоту появления существ
-	Description: Измените частоту появления существ или полностью выключите его.
-	EnemySpawnRate: Частота появления
-	SpawnRate: Частота появления: {0}x
+SpawnTool: {
+	// DisplayName: Enemy spawn adjuster
+	// Description: Change the rate at which enemies spawn, or disable natural spawns altogether
+	// EnemySpawnRate: Enemy spawn rate
+	// SpawnRate: Spawn rate: {0}x
 }
 
 Time: {
@@ -343,7 +343,7 @@ BuffSpawner: {
 	Description: Позволяет вам наложить любой бафф или дебафф на себя или на другое существо
 	DurationEditor: Длительность (в тиках)
 	Applied: На {1} был наложен эффект {0}
-	Selected: "Выбран эффект {0}, нажмите ЛКМ по любому существу, чтобы наложить этот эффект на него. Нажмите ПКМ, чтобы отменить выбор. Вы можете нажать ПКМ по иконке эффекта в браузере, чтобы наложить его на себя."
+	Selected: Выбран эффект {0}, нажмите ЛКМ по любому существу, чтобы наложить этот эффект на него. Нажмите ПКМ, чтобы отменить выбор. Вы можете нажать ПКМ по иконке эффекта в браузере, чтобы наложить его на себя.
 
 	FilterCategories: {
 		Mod: Сортировать по модам
@@ -363,9 +363,9 @@ BuffSpawner: {
 			Description: Эффекты с положительными свойствами
 		}
 
-		DeBuff: {
-			Name: Дебаффы
-			Description: Эффекты с негативными свойствами
+		Debuff: {
+			// Name: Debuff
+			// Description: Buffs with negative effects
 		}
 	}
 }
@@ -374,10 +374,10 @@ DustSpawner: {
 	DisplayName: Браузер частиц
 	Description: Позволяет призывать любые частицы с различными способами появления и параметрами.
 	DustType: Тип: {0}
-	Selected: "Выбрана частица {0}, нажмите ЛКМ где угодно в мире, чтобы призвать. Нажмите ПКМ, чтобы отменить выбор."
+	Selected: Выбрана частица {0}, нажмите ЛКМ где угодно в мире, чтобы призвать. Нажмите ПКМ, чтобы отменить выбор.
 
 	FieldEditors: {
-		NewDustPerfect: Отсутствие разброса 
+		NewDustPerfect: Отсутствие разброса
 		Scale: Размер
 		Alpha: Непрозрачность
 		Velocity: Скорость
@@ -433,7 +433,7 @@ ItemSpawner: {
 		}
 
 		Placeable: {
-			Name: Можно поставить 
+			Name: Можно поставить
 			Description: Все предметы, которые можно поставить
 		}
 
@@ -521,7 +521,7 @@ NPCSpawner: {
 	NameException: Имя этого существа выдало ошибку при попытке его получить! Доложите это разработчикам {0}!
 	BestiaryEntryException: Существо ({0}) выдало ошибку при попытке получения его иконки из бестиария! Доложите это разработчикам {1}!
 	NPCType: Тип: {0}
-	Selected: "Выбрано существо {0}, нажмите ЛКМ где угодно в мире, чтобы призвать. Нажмите ПКМ, чтобы отменить выбор."
+	Selected: Выбрано существо {0}, нажмите ЛКМ где угодно в мире, чтобы призвать. Нажмите ПКМ, чтобы отменить выбор.
 
 	FilterCategories: {
 		Mod: Сортировать по модам
@@ -567,7 +567,7 @@ ProjectileSpawner: {
 	NameExceptionMessage: Снаряд ({0}) выдал ошибку при попытке получения его названия! Доложите это разработчикам {1}!
 	NameException: Название этого снаряда выдало ошибку при попытке его получить! Доложите это разработчикам {0}!
 	ProjectileType: Тип: {0}
-	Selected: "Выбран снаряд {0}, нажмите ЛКМ где угодно в мире, чтобы призвать. Нажмите ПКМ, чтобы отменить выбор."
+	Selected: Выбран снаряд {0}, нажмите ЛКМ где угодно в мире, чтобы призвать. Нажмите ПКМ, чтобы отменить выбор.
 	FieldEditors.Velocity: Скорость
 
 	FilterCategories: {
@@ -599,7 +599,7 @@ TileSpawner: {
 	DisplayName: Бразуер блоков
 	Description: Позволяет устанавливать любые блоки без соответствующих предметов!
 	TileType: Тип: {0}
-	Selected: "Выбран блок {0}, нажмите ЛКМ где угодно в мире, чтобы установить. Нажмите ПКМ, чтобы отменить выбор."
+	Selected: Выбран блок {0}, нажмите ЛКМ где угодно в мире, чтобы установить. Нажмите ПКМ, чтобы отменить выбор.
 	FilterCategories.Mod: Сортировать по модам
 
 	Filters: {
@@ -658,15 +658,224 @@ EntityEditor: {
 	ModFields: Модовые параметры
 	Tutorial: Нажмите ЛКМ по существу, чтобы начать редактировать его
 	Deselect: Отменить выбор
+	// Selected: "{0} selected for editing."
+	// SelectedTE: "{0} (Tile Entity) selected for editing."
+
+	BasicEditors: {
+		Position: {
+			// Name: Position
+			// Description: Where the entity top-left is located in world coordinates
+		}
+
+		Velocity: {
+			// Name: Velocity
+			// Description: How much the entity's position changes each tick
+		}
+
+		Size: {
+			// Name: Size
+			// Description: The width/height of the entities hitbox
+		}
+	}
+
+	NPCEditors: {
+		Type: {
+			// Name: Type
+			// Description: The type of NPC this is. See the wiki for what values associate to what NPC.
+		}
+
+		Name: {
+			// Name: Name
+			// Description: Given name of the NPC.
+		}
+
+		MaxLife: {
+			// Name: Max Life
+			// Description: Maximum life of this NPC
+		}
+
+		Life: {
+			// Name: Life
+			// Description: Current life of this NPC
+		}
+
+		Defense: {
+			// Name: Defense
+			// Description: Current defense of this NPC
+		}
+
+		Damage: {
+			// Name: Damage
+			// Description: Current contact damage of the NPC
+		}
+
+		KBResist: {
+			// Name: KB Resist
+			// Description: Current 'knockback resistance' of the NPC. Note this is a misnomer, knockback is MULTIPLIED by this value.
+		}
+
+		AIStyle: {
+			// Name: AI Style
+			// Description: The AI style of this NPC. See the wiki for what values represent what NPCs behavior.
+		}
+
+		// AI.Description: "AI specific value "
+		// LAI.Description: "Local AI specific value "
+	}
+
+	TEEditors: {
+		Type: {
+			// Name: type
+			// Description: ID of the tile entity. Changing this is probably pretty dangerous.
+		}
+	}
 }
 
 SystemEditor: {
 	DisplayName: Редактор системы
 	Description: Измените глобальные параметры и законы мира и систем из модов.
 	VanillaFields: Ванильные параметры
+
+	Editors: {
+		KingSlime: {
+			// Name: King slime downed
+			// Description: If king slime counts as killed or not in this world.
+		}
+
+		EoC: {
+			// Name: EoC downed
+			// Description: If the eye of cthulhu counts as killed or not in this world.
+		}
+
+		EvilBoss: {
+			// Name: Evil boss downed
+			// Description: If the world evil boss counts as killed or not in this world.
+		}
+
+		Skeletron: {
+			// Name: Skeletron downed
+			// Description: If skeletron counts as killed or not in this world.
+		}
+
+		QueenBee: {
+			// Name: Queen bee downed
+			// Description: If queen bee counts as killed or not in this world.
+		}
+
+		GoblinArmy: {
+			// Name: Goblin army downed
+			// Description: If the goblin army counts as killed or not in this world.
+		}
+
+		FrostLegion: {
+			// Name: Frost legion downed
+			// Description: If the frost legion counts as killed or not in this world.
+		}
+
+		Hardmode: {
+			// Name: Hardmode
+			// Description: If the world is in hardmode.
+		}
+
+		QueenSlime: {
+			// Name: Queen slime downed
+			// Description: If queen slime counts as killed or not in this world.
+		}
+
+		Destroyer: {
+			// Name: Destroyer downed
+			// Description: If the destroyer counts as killed or not in this world.
+		}
+
+		Twins: {
+			// Name: Twins downed
+			// Description: If the twins counts as killed or not in this world.
+		}
+
+		SkeletronPrime: {
+			// Name: Skeletron prime downed
+			// Description: If the skeletron prime counts as killed or not in this world.
+		}
+
+		Plantera: {
+			// Name: Plantera downed
+			// Description: If plantera counts as killed or not in this world.
+		}
+
+		Golem: {
+			// Name: Golem downed
+			// Description: If golem counts as killed or not in this world.
+		}
+
+		Fishron: {
+			// Name: Fishron downed
+			// Description: If duke fishron counts as killed or not in this world.
+		}
+
+		EoL: {
+			// Name: EoL downed
+			// Description: If the empress of light counts as killed or not in this world.
+		}
+
+		Cultist: {
+			// Name: Cultist downed
+			// Description: If the lunatic cultist counts as killed or not in this world.
+		}
+
+		Moonlord: {
+			// Name: Moonlord downed
+			// Description: If the moon lord counts as killed or not in this world.
+		}
+
+		Pirates: {
+			// Name: Pirates downed
+			// Description: If the pirates count as killed or not in this world.
+		}
+	}
 }
 
 PlayerManager: {
 	DisplayName: Управление игроками
 	Description: Позволяет управлять игроками, подключившимися к этому серверу. Например, изменять их статус администратора, выгонять их и менять содержимое их инвентарей.
+	// TryRemoveYourself: You cannot remove your own permissions!
+	// RemoveAdmin: "{0} is no longer an admin."
+	// AddAdmin: "{0} is now an admin."
+
+	InventoryManager: {
+		// Inventory: "{0}'s Inventory"
+		// Equipment: Equipment
+		// Piggy: Piggy bank
+		// Safe: Safe
+		// DefendersForge: Defenders forge
+		// VoidVault: Void vault
+	}
+
+	Admin: {
+		// Name: Toggle Admin
+		// Tooltip: Gives or revokes admin permissions from this player. Make sure this is someone you can trust! Admins can use all features of DragonLens, including this one!
+	}
+
+	Kick: {
+		// Name: Kick
+		// Tooltip: Forcibly disconnect this player from the game
+	}
+
+	View: {
+		// Name: View
+		// Tooltip: Move the camera to this players position
+	}
+
+	Inventory: {
+		// Name: Inventory
+		// Tooltip: View and edit this player's inventories
+	}
+
+	/* Stats:
+		'''
+		Life: {0}
+		Mana: {1}
+		Position: {2}
+		Velocity: {3}
+		Alive: {4}
+		''' */
 }
