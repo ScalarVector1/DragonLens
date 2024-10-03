@@ -20,7 +20,7 @@ ItemDespawner: {
 
 NPCDespawner: {
 	DisplayName: Очистить существ
-	Description: Удаляет всех враждебных существ в мире. Нажмите ПКМ, чтобы 'очистить' существ более привычным образом. NEWBLOCK Удерживайте SHIFT, чтобы также удалить/убить дружественных существ.
+	Description: Удаляет всех враждебных существ в мире. Нажмите ПКМ, чтобы избавиться от существ более привычным образом. NEWBLOCK Удерживайте SHIFT, чтобы также удалить всех дружественных существ.
 	RightClickName: Убить существ
 }
 
@@ -31,7 +31,7 @@ ProjectileDespawner: {
 
 ShaderCompiler: {
 	DisplayName: Перезагрузка шейдеров
-	Description: Рекомпиляция и повторная загрузка всех шейдеров [ИНСТРУМЕНТ ВСЕ ЕЩЁ В РАЗРАБОТКЕ]
+	Description: Рекомпиляция и повторная загрузка всех шейдеров [ИНСТРУМЕНТ ВСЁ ЕЩЁ В РАЗРАБОТКЕ]
 	Busy: Перезагрузчик шейдеров занят! Пожалуйста, подождите.
 	Triggered: Начата перезагрузка шейдеров...
 	Completed: Перезагрузка шейдеров завершена за {0} мс.
@@ -47,10 +47,10 @@ AccessoryTray: {
 
 ItemEditor: {
 	DisplayName: Редактор предметов
-	Description: Измените характеристики и другие свойства предметов!
-	AutogenMsg: Возможность редактирования этого параметра была автоматически сгенерирована с помощью отражения. Его изменение может привести к неизвестным последствиям, в зависимости от того, что это за мод.
-	VanillaFields: Ванильные свойства
-	Modded: Модовые свойства
+	Description: Позволяет изменять характеристики и другие свойства предметов
+	AutogenMsg: Возможность редактирования этого параметра была автоматически сгенерирована методом отражения. Его изменение может привести к неизвестным последствиям в зависимости от того, что это за мод.
+	VanillaFields: Ванильные параметры
+	Modded: Модовые параметры
 	Prefixes: Перековка
 	PlaceItemHere:
 		'''
@@ -62,7 +62,7 @@ ItemEditor: {
 	Editors: {
 		Damage: {
 			Name: Урон
-			Description: Сколько урона будет наносить этот предмет или выпускаемые им снаряды.
+			Description: Сколько урона будет наносить этот предмет и выпускаемые им снаряды.
 		}
 
 		CritChance: {
@@ -82,7 +82,7 @@ ItemEditor: {
 
 		UseTime: {
 			Name: Время использования
-			Description: Сколько тиков пройдёт, перед тем, как этот предмет используется повторно вне зависимости от периодичности нажатий клавиш.
+			Description: Сколько тиков пройдёт перед тем, как этот предмет используется повторно вне зависимости от периодичности нажатий клавиш.
 		}
 
 		UseAnimation: {
@@ -92,12 +92,12 @@ ItemEditor: {
 
 		AutoReuse: {
 			Name: Автоатака
-			Description: Будет ли этот предмет автоматически использоваться, если не отпускать ЛКМ.
+			Description: Будет ли этот предмет автоматически использоваться, если удерживать ЛКМ.
 		}
 
 		ReuseDelay: {
 			Name: Пауза между использованиями
-			Description: Сколько тиков будет длиться задержка после окончания использования этого предмета, перед тем, как его можно будет использовать снова.
+			Description: Сколько тиков пройдёт после окончания использования этого предмета перед тем, как его можно будет использовать снова.
 		}
 
 		PickaxePower: {
@@ -122,7 +122,7 @@ ItemEditor: {
 
 		Value: {
 			Name: Стоимость
-			Description: Цена продажи этого предмета в медных монетах.
+			Description: Базовая цена на продажу этого предмета в медных монетах.
 		}
 
 		ProjectileType: {
@@ -144,10 +144,10 @@ ItemEditor: {
 
 PlayerEditor: {
 	DisplayName: Редактор игрока
-	Description: Измените характеристики и другие свойства вашего персонажа!
-	AutogenMsg: Возможность редактирования этого параметра была автоматически сгенерирована с помощью отражения. Его изменение может привести к неизвестным последствиям, в зависимости от того, что это за мод.
-	VanillaFields: Ванильные свойства
-	ModPlayers: Модовые свойства
+	Description: Позволяет изменять характеристики и другие свойства вашего персонажа
+	AutogenMsg: Возможность редактирования этого параметра была автоматически сгенерирована методом отражения. Его изменение может привести к неизвестным последствиям в зависимости от того, что это за мод.
+	VanillaFields: Ванильные параметры
+	ModPlayers: Модовые параметры
 
 	Editors: {
 		MaxLife: {
@@ -162,32 +162,32 @@ PlayerEditor: {
 
 		ExtraLife: {
 			Name: Дополнительное здоровье
-			Description: Позволяет вам добавить любое количество здоровья к базовому значению.
+			Description: Позволяет вам прибавить любое количество здоровья к базовому значению.
 		}
 
 		ExtraMana: {
 			Name: Дополнительная мана
-			Description: Позволяет вам добавить любое количество маны к базовому значению.
+			Description: Позволяет вам прибавить любое количество маны к базовому значению.
 		}
 
 		ExtraDefense: {
 			Name: Дополнительная защита
-			Description: Позволяет вам добавить любое количество защиты к базовому значению.
+			Description: Позволяет вам прибавить любое количество защиты к базовому значению.
 		}
 
 		ExtraEndurance: {
-			Name: Дополнительное сопротивление урону
-			Description: Позволяет вам добавить любое количество сопротивления урону к базовому значению.
+			Name: Дополнительное сопротивление к урону
+			Description: Позволяет вам прибавить любое количество сопротивления урону к базовому значению.
 		}
 
 		ExtraMinionSlots: {
 			Name: Дополнительные слоты для миньонов
-			Description: Позволяет вам добавить любое количество слотов для миньонов к базовому значению.
+			Description: Позволяет вам прибавить любое количество слотов для миньонов к базовому значению.
 		}
 
 		ExtraSpeed: {
 			Name: Дополнительная скорость передвижения
-			Description: Позволяет вам добавить любое количество скорости передвижения к базовому значению.
+			Description: Позволяет вам прибавить любое количество скорости передвижения к базовому значению.
 		}
 
 		InfWingTime: {
@@ -199,111 +199,132 @@ PlayerEditor: {
 
 Difficulty: {
 	DisplayName: Сменить режим сложности
-	Description: Переключайтесь между 3 режимами сложности игры. NEWBLOCK Нажмите ПКМ, чтобы вкл./выкл. режим путешествия.
-	RightClickName: Вкл./Выкл. режим путешествия.
+	Description: Позволяет переключаться между тремя режимами сложности игры. NEWBLOCK Нажмите ПКМ, чтобы вкл./выкл. режим Путешествие.
+	RightClickName: Вкл./Выкл. режим Путешествие.
 	GameInNormalMode: Установлен классический режим
-	GameInExpertMode: Установлен режим Эксперта
-	GameInMasterMode: Установлен режим Мастера
-	JourneyToggleDisabled: Переключение режима путешествия отключено в мультиплеере
-	JourneyEnabled: Режим путешествия включён
-	JourneyDisabled: Режим путешествия отключён
+	GameInExpertMode: Установлен режим Эксперт
+	GameInMasterMode: Установлен режим Мастер
+	JourneyToggleDisabled: Переключение режима Путешествие отключено в мультиплеере
+	JourneyEnabled: Режим Путешествие включён
+	JourneyDisabled: Режим Путешествие отключён
 }
 
 FastForward: {
 	DisplayName: Ускорение
-	Description: Нажмите ЛКМ, чтобы ускорить всю игру, вплоть до ускорения в 4 раза. Нажмите ПКМ, чтобы переключаться между ускорениями в обратном порядке, от большего к меньшему.
+	Description: Нажмите ЛКМ, чтобы ускорить всю игру вплоть до ускорения в 4 раза. Нажмите ПКМ, чтобы переключаться между ускорениями в обратном порядке, от большего к меньшему.
 	RightClickName: Замедление
 	MultiplayerDisabled: Ускорение отключено в мультиплеере
 }
 
 Godmode: {
 	DisplayName: Режим бога
-	Description: Нажмите ЛКМ, чтобы перестать получать урон, терять ману и умирать. Нажмите ПКМ, чтобы все еще иметь возможность получать урон, но не умирать
+	Description: Нажмите ЛКМ, чтобы перестать получать урон, терять ману и умирать. Нажмите ПКМ, чтобы все еще иметь возможность получать урон и терять ману, но не умирать
 	RightClickName: Режим бессмертия
 	PreventedDeath: Режим бессмертия предотвратил смерть со следующей причиной: {0}
 }
 
 InfiniteReach: {
-	DisplayName: Всесильное строительство
+	DisplayName: Безграничное строительство
 	Description: Включает неограниченную досягаемость и мгновенную установку блоков и стен
 }
 
 Magnet: {
 	DisplayName: Магнит предметов
-	Description: Нажмите ЛКМ, чтобы притягивать все предметы, лежащие на земле к вам. Нажмите ПКМ, чтобы уничтожать все предметы, лежащие на земле.
+	Description: Нажмите ЛКМ, чтобы притягивать к себе все предметы, лежащие на земле. Нажмите ПКМ, чтобы уничтожать все предметы, лежащие на земле.
 	RightClickName: Уничтожитель предметов
 }
 
 NoClip: {
 	DisplayName: Ноуклип
-	Description: Вы можете передвигаться, игнорируя коллизию блоков
+	Description: Позволяет свободно передвигаться, игнорируя коллизию блоков
 }
 
 Paint: {
 	DisplayName: Инструменты копирования
-	Description: Копируйте и вставляйте части мира
+	Description: Позволяет копировать и вставлять части мира
 	CreateStructure: Копировать
 	FirstPointSet: Первая точка установлена!
-	StructureSaved: Выделенная область сохранена в меню инструмента!
+	StructureSaved: Выделенная область сохранена в меню этого инструмента!
 	TempStructure: Временный обьект {0}
 
 	Advertise: {
 		Title:
 			'''
 			Скачать
-			Прямо сейчас!
+			прямо
+			сейчас!
 			'''
 		Content:
 			'''
-			Ознакомтесь с модом Structure Helper, в нем гораздо больше полезных функций!
+			Ознакомтесь с модом
+			Structure Helper, в котором гораздо больше полезных функций!
 			С ним вы сможете: NEWLN
-			> Экспортировать выделенные вами обьекты! NEWLN
-			> Использовать Нуль-блоки, чтобы ваши структуры не были только прямоугольными! NEWLN
-			> Устанавливать сундуки со своим или случайным содержимым! NEWLN
-			> Генерировать структуры в своём моде с помощью сохраненных файлы!
+			> Экспортировать выде-
+			ленные вами структуры и процедурно генерирова-
+			ть их в своих модах
+			> Использовать нуль-
+			блоки, позволяющие вашим структурам быть не толь-
+			ко прямоугольной формы!
+			> Устанавливать сундуки со своим или случайным содержимым!
 			'''
 		Downloaded: StructureHelper скачивается. Вернитесь в главное меню, а затем перейдите в список модов, чтобы его включить!
 	}
 }
 
 SpawnTool: {
-	// DisplayName: Enemy spawn adjuster
-	// Description: Change the rate at which enemies spawn, or disable natural spawns altogether
-	// EnemySpawnRate: Enemy spawn rate
-	// SpawnRate: Spawn rate: {0}x
+	DisplayName: Изменить частоту появления существ
+	Description: Позволяет изменять частоту появления существ и отключать их появление.
+	EnemySpawnRate: Частота появления
+	SpawnRate: Частота появления: {0}x
 }
 
 Time: {
 	DisplayName: Изменить время
-	Description: Измените или остановите цикл дня и ночи.
+	Description: Позволяет управлять циклом дня и ночи.
 	UITitle: Установить время
 	Day: День
 	Night: Ночь
 	CurrentTime: ({0}: кадр {1} из {2})
 	Resume: Возобновить время
 	Freeze: Остановить время
-	FreezeTooltip: Остановите течение времени. Это сохранит текущий момент времени между мирами и перезапусками игры!
+	FreezeTooltip: Позволяет останавливать течение времени. Это в том числе сохранит текущий момент времени между мирами и перезапусками игры!
 }
 
 Weather: {
 	DisplayName: Изменить погоду
-	Description: Измените погоду
+	Description: Позволяет изменять погоду
 	UITitle: Установить погодные условия
 	Combinations:
 		'''
 		Полезные сочетания:
-		Сильный дождь + Ветер быстрее 20 миль/ч = Буря
-		Естественный дождь + Снежный биом = Метель
+		Сильный дождь + ветер > 20 миль/ч = буря
+		Естественный дождь + снежный биом = метель
 		'''
 	RainIntensity: Интенсивность дождя
 	RainLow: слабая
 	RainMedium: средняя
 	RainHigh: сильная
 	WindStrength: Сила ветра
-	WindSixtyWest: 60 миль/ч с востока
-	WindSixtyEast: 60 миль/ч с запада
-	WindTwentyWest: 20 миль/ч c востока
-	WindTwentyEast: 20 миль/ч с запада
+	WindSixtyWest:
+			'''
+			60 миль/ч
+			с востока
+			'''
+	WindSixtyEast:
+			'''
+			60 миль/ч
+			с запада
+			'''
+	WindTwentyWest:
+			'''
+			20 миль/ч
+			c востока
+			'''
+	WindTwentyEast:
+			'''
+			20 миль/ч
+			с запада
+			'''
 
 	RainButton: {
 		Name: Дождь
@@ -318,7 +339,7 @@ Weather: {
 	FreezeWeatherButton: {
 		Freeze: Остановить погоду
 		Resume: Возобновить погоду
-		Tooltip: Остановите естественное изменение погоды. Это сохранит текущие погодные условия между мирами и перезапусками игры!
+		Tooltip: Позволяет останавливать естественное изменение погоды. Это сохранит текущие погодные условия между мирами и перезапусками игры!
 	}
 }
 
@@ -329,7 +350,7 @@ HideMap: {
 
 MapTeleport: {
 	DisplayName: Телепортация по карте
-	Description: Вкл./Выкл. возможность телепортироваться по карте. Нажмите ПКМ где-угодно на карте, чтобы телепортироваться в это место.
+	Description: Вкл./Выкл. возможность телепортироваться по карте. Нажмите ПКМ по любому месту на карте, чтобы телепортироваться туда
 	OutsideWorldWarning: Вы не можете телепортироваться за границы мира!
 }
 
@@ -340,10 +361,10 @@ RevealMap: {
 
 BuffSpawner: {
 	DisplayName: Браузер баффов
-	Description: Позволяет вам наложить любой бафф или дебафф на себя или на другое существо
+	Description: Позволяет вам наложить любой бафф или дебафф на себя или на других существ.
 	DurationEditor: Длительность (в тиках)
-	Applied: На {1} был наложен эффект {0}
-	Selected: Выбран эффект {0}, нажмите ЛКМ по любому существу, чтобы наложить этот эффект на него. Нажмите ПКМ, чтобы отменить выбор. Вы можете нажать ПКМ по иконке эффекта в браузере, чтобы наложить его на себя.
+	Applied: На {1} был наложен эффект «{0}»
+	Selected: Выбран эффект «{0}», нажмите ЛКМ по любому существу, чтобы наложить этот эффект на него. Нажмите ПКМ, чтобы отменить выбор. Вы можете нажать ПКМ по иконке эффекта в браузере, чтобы наложить его на себя.
 
 	FilterCategories: {
 		Mod: Сортировать по модам
@@ -364,8 +385,8 @@ BuffSpawner: {
 		}
 
 		Debuff: {
-			// Name: Debuff
-			// Description: Buffs with negative effects
+			Name: Дебаффы
+			Description: Эффекты с негативными свойствами
 		}
 	}
 }
@@ -374,7 +395,7 @@ DustSpawner: {
 	DisplayName: Браузер частиц
 	Description: Позволяет призывать любые частицы с различными способами появления и параметрами.
 	DustType: Тип: {0}
-	Selected: Выбрана частица {0}, нажмите ЛКМ где угодно в мире, чтобы призвать. Нажмите ПКМ, чтобы отменить выбор.
+	Selected: Выбрана частица «{0}», нажмите ЛКМ где угодно в мире, чтобы призвать её. Нажмите ПКМ, чтобы отменить выбор.
 
 	FieldEditors: {
 		NewDustPerfect: Отсутствие разброса
@@ -387,7 +408,7 @@ DustSpawner: {
 	FilterCategories.Mod: Сортировать по модам
 
 	Filters: {
-		Mod.Description: Частица из мода {0}
+		Mod.Description: Частицы из мода {0}
 
 		Vanilla: {
 			Name: Ванилла
@@ -398,19 +419,19 @@ DustSpawner: {
 
 ItemSpawner: {
 	DisplayName: Браузер предметов
-	Description: Позволяет призывать любые предметы из игры!
+	Description: Позволяет призывать любые предметы из игры.
 
 	FilterCategories: {
-		Mod: Сортировать по модам
-		Damage: Сортировать по урону
-		Equipment: Сортировать по типу снаряжения
-		Utility: Сортировать по типу инструмента
+		Mod: По модам
+		Damage: По типу урона
+		Equipment: По типу снаряжения
+		Utility: По типу инструмента
 		Misc: Прочие фильтры
 	}
 
 	Filters: {
 		DamageClass.Description: Предметы, наносящие {0}
-		Mod.Description: Предметы из мода {0}
+		Mod.Description: Предметы из {0}
 
 		Vanilla: {
 			Name: Ванилла
@@ -429,7 +450,7 @@ ItemSpawner: {
 
 		Armor: {
 			Name: Броня
-			Description: Все предметы, которые можно одеть в слоты для брони
+			Description: Все предметы, которые можно надеть в слоты для брони
 		}
 
 		Placeable: {
@@ -469,12 +490,12 @@ ItemSpawner: {
 
 		Expert: {
 			Name: Эксперт
-			Description: Все предметы, эксклюзивные для режима Эксперта
+			Description: Все предметы, эксклюзивные для режима Эксперт
 		}
 
 		Master: {
 			Name: Мастер
-			Description: Все предметы, эксклюзивные для режима Мастера
+			Description: Все предметы, эксклюзивные для режима Мастер
 		}
 
 		Vanity: {
@@ -508,7 +529,7 @@ ItemSpawner: {
 		}
 
 		Material: {
-			Name: Материал
+			Name: Материалы
 			Description: Все предметы, являющиеся материалами для создания других предметов
 		}
 	}
@@ -516,12 +537,16 @@ ItemSpawner: {
 
 NPCSpawner: {
 	DisplayName: Браузер существ
-	Description: Позволяет призывать любых существ из игры!
+	Description: Позволяет призывать любых существ из игры.
 	NameExceptionMessage: Существо ({0}) выдало ошибку при попытке получения его имени! Доложите это разработчикам {1}!
 	NameException: Имя этого существа выдало ошибку при попытке его получить! Доложите это разработчикам {0}!
 	BestiaryEntryException: Существо ({0}) выдало ошибку при попытке получения его иконки из бестиария! Доложите это разработчикам {1}!
-	NPCType: Тип: {0}
-	Selected: Выбрано существо {0}, нажмите ЛКМ где угодно в мире, чтобы призвать. Нажмите ПКМ, чтобы отменить выбор.
+	NPCType:
+		'''
+		ID: {0}
+		NetID: {1}
+		'''
+	Selected: Выбрано существо «{0}», нажмите ЛКМ где угодно в мире, чтобы призвать его. Нажмите ПКМ, чтобы отменить выбор.
 
 	FilterCategories: {
 		Mod: Сортировать по модам
@@ -531,7 +556,7 @@ NPCSpawner: {
 	}
 
 	Filters: {
-		Bestiary.Description: Существа, соответствующие параметру "{0}" в бестиарии
+		Bestiary.Description: Существа, соответствующие параметру «{0}» в бестиарии
 		Mod.Description: Существа из мода {0}
 
 		Vanilla: {
@@ -551,12 +576,12 @@ NPCSpawner: {
 
 		Friendly: {
 			Name: Дружественные
-			Description: Существа, являющиеся дружественными
+			Description: Существа, являющиеся дружественными по отношению к игроку
 		}
 
 		Hostile: {
 			Name: Враждебные
-			Description: Существа, являющиеся враждебными
+			Description: Существа, являющиеся враждебными по отношению к игроку
 		}
 	}
 }
@@ -567,7 +592,7 @@ ProjectileSpawner: {
 	NameExceptionMessage: Снаряд ({0}) выдал ошибку при попытке получения его названия! Доложите это разработчикам {1}!
 	NameException: Название этого снаряда выдало ошибку при попытке его получить! Доложите это разработчикам {0}!
 	ProjectileType: Тип: {0}
-	Selected: Выбран снаряд {0}, нажмите ЛКМ где угодно в мире, чтобы призвать. Нажмите ПКМ, чтобы отменить выбор.
+	Selected: Выбран снаряд «{0}», нажмите ЛКМ где угодно в мире, чтобы призвать его. Нажмите ПКМ, чтобы отменить выбор.
 	FieldEditors.Velocity: Скорость
 
 	FilterCategories: {
@@ -599,7 +624,7 @@ TileSpawner: {
 	DisplayName: Бразуер блоков
 	Description: Позволяет устанавливать любые блоки без соответствующих предметов!
 	TileType: Тип: {0}
-	Selected: Выбран блок {0}, нажмите ЛКМ где угодно в мире, чтобы установить. Нажмите ПКМ, чтобы отменить выбор.
+	Selected: Выбран блок «{0}», нажмите ЛКМ где угодно в мире, чтобы установить его. Нажмите ПКМ, чтобы отменить выбор.
 	FilterCategories.Mod: Сортировать по модам
 
 	Filters: {
@@ -614,13 +639,13 @@ TileSpawner: {
 
 Floodlight: {
 	DisplayName: Глобальное освещение
-	Description: Сделайте ярче весь экран!
+	Description: Позволяет делать ярче весь экран.
 	RightClickName: Ослабить глобальное освещение
 }
 
 FreeCamera: {
 	DisplayName: Свободная камера
-	Description: Позволяет вам свободно передвигать камеру при помощи клавиш передвижения. Удерживайте SHIFT, чтобы ускориться. Удерживайте CTRL, чтобы замедлиться. Взаимоисключает закреплённую камеру.
+	Description: Позволяет свободно передвигать камеру при помощи клавиш передвижения. Удерживайте SHIFT, чтобы ускориться. Удерживайте CTRL, чтобы замедлиться. Взаимоисключает режим закреплённой камеры.
 }
 
 Hitboxes: {
@@ -637,245 +662,245 @@ Hitboxes: {
 
 LockCamera: {
 	DisplayName: Закрепить камеру
-	Description: Закрепить камеру в её текущем положении. Взаимоисключает свободную камеру.
+	Description: Позволяет закреплять камеру в её текущем положении. Взаимоисключает режим свободной камеры.
 }
 
 CustomizeTool: {
 	DisplayName: Кастомизация инструментов
-	Description: Настройте свои панели инструментов под себя!
+	Description: Позволяет настраивать панели инструментов этого мода под себя.
 	ToolBrowser: Добавить инструмент
 }
 
 SoundSpawner: {
 	DisplayName: Браузер звуков
-	Description: Позволяет проигрывать любые звуки из игры!
+	Description: Позволяет проигрывать любые звуки из игры.
 }
 
 EntityEditor: {
 	DisplayName: Редактор существ
-	Description: Измените характеристики существ!
+	Description: Позволяет изменять характеристики существ.
 	VanillaFields: Ванильные параметры
 	ModFields: Модовые параметры
-	Tutorial: Нажмите ЛКМ по существу, чтобы начать редактировать его
+	Tutorial: Нажмите ЛКМ по существу
 	Deselect: Отменить выбор
-	// Selected: "{0} selected for editing."
-	// SelectedTE: "{0} (Tile Entity) selected for editing."
+	Selected: "Выбрано существо «{0}», теперь вы можете редактировать его."
+	SelectedTE: "Выбрано статичное существо «{0}», теперь вы можете редактировать его."
 
 	BasicEditors: {
 		Position: {
-			// Name: Position
-			// Description: Where the entity top-left is located in world coordinates
+			Name: Местоположение
+			Description: Где в мире будет находиться существо, считая от его левого вехнего края (по координатам).
 		}
 
 		Velocity: {
-			// Name: Velocity
-			// Description: How much the entity's position changes each tick
+			Name: Скорость
+			Description: Сколько пикселей существо сможет преодолеть за один тик.
 		}
 
 		Size: {
-			// Name: Size
-			// Description: The width/height of the entities hitbox
+			Name: Размер
+			Description: Насколько широким и высоким будет хитбокс существа.
 		}
 	}
 
 	NPCEditors: {
 		Type: {
-			// Name: Type
-			// Description: The type of NPC this is. See the wiki for what values associate to what NPC.
+			Name: Тип существа
+			Description: Ознакомьтесь с вики, чтобы узнать необходимый вам тип существа.
 		}
 
 		Name: {
-			// Name: Name
-			// Description: Given name of the NPC.
+			Name: Имя
+			Description: Какое имя будет у существа.
 		}
 
 		MaxLife: {
-			// Name: Max Life
-			// Description: Maximum life of this NPC
+			Name: Максимальное здоровье
+			Description: Сколько максимального здоровья будет у существа.
 		}
 
 		Life: {
-			// Name: Life
-			// Description: Current life of this NPC
+			Name: Текущее здоровье
+			Description: Сколько здоровья будет у существа в данный момент времени.
 		}
 
 		Defense: {
-			// Name: Defense
-			// Description: Current defense of this NPC
+			Name: Защита
+			Description: Сколько защиты будет у существа.
 		}
 
 		Damage: {
-			// Name: Damage
-			// Description: Current contact damage of the NPC
+			Name: Контактный урон
+			Description: Сколько урона будет наносить существо при контакте.
 		}
 
 		KBResist: {
-			// Name: KB Resist
-			// Description: Current 'knockback resistance' of the NPC. Note this is a misnomer, knockback is MULTIPLIED by this value.
+			Name: Сопротивление к отбрасыванию
+			Description: Насколько устойчиво существо будет к отбрасыванию. В действительности, полученное отбрасывание будет умножаться на это значение.
 		}
 
 		AIStyle: {
-			// Name: AI Style
-			// Description: The AI style of this NPC. See the wiki for what values represent what NPCs behavior.
+			Name: Тип ИИ
+			Description: Ознакомьтесь с вики, чтобы узнать необходимый вам тип ИИ.
 		}
 
-		// AI.Description: "AI specific value "
-		// LAI.Description: "Local AI specific value "
+		AI.Description: Конкретный тип ИИ
+		LAI.Description: Локальный конкретный тип ИИ
 	}
 
 	TEEditors: {
 		Type: {
-			// Name: type
-			// Description: ID of the tile entity. Changing this is probably pretty dangerous.
+			Name: Тип
+			Description: ID статичного существа. Изменение этого параметра может привести к странным последствиям.
 		}
 	}
 }
 
 SystemEditor: {
 	DisplayName: Редактор системы
-	Description: Измените глобальные параметры и законы мира и систем из модов.
+	Description: Позволяет изменять глобальные параметры, законы мира и системы из модов.
 	VanillaFields: Ванильные параметры
 
 	Editors: {
 		KingSlime: {
-			// Name: King slime downed
-			// Description: If king slime counts as killed or not in this world.
+			Name: Убит Король слизней
+			Description: Будет ли Король слизней считаться убитым в этом мире.
 		}
 
 		EoC: {
-			// Name: EoC downed
-			// Description: If the eye of cthulhu counts as killed or not in this world.
+			Name: Убит Глаз Ктулху
+			Description: Будет ли Глаз Ктулху считаться убитым в этом мире.
 		}
 
 		EvilBoss: {
-			// Name: Evil boss downed
-			// Description: If the world evil boss counts as killed or not in this world.
+			Name: Убит босс мирового зла
+			Description: Будет ли Пожиратель миров/Мозг Ктулху считаться убитым в этом мире.
 		}
 
 		Skeletron: {
-			// Name: Skeletron downed
-			// Description: If skeletron counts as killed or not in this world.
+			Name: Убит Скелетрон
+			Description: Будет ли Скелетрон считаться убитым в этом мире.
 		}
 
 		QueenBee: {
-			// Name: Queen bee downed
-			// Description: If queen bee counts as killed or not in this world.
+			Name: Убита Королева пчёл
+			Description: Будет ли Королева пчёл считаться убитой в этом мире.
 		}
 
 		GoblinArmy: {
-			// Name: Goblin army downed
-			// Description: If the goblin army counts as killed or not in this world.
+			Name: Побеждена Армия гоблинов
+			Description: Будет ли Армия гоблинов считаться поверженной в этом мире.
 		}
 
 		FrostLegion: {
-			// Name: Frost legion downed
-			// Description: If the frost legion counts as killed or not in this world.
+			Name: Побеждён Морозный легион
+			Description: Будет ли Морозный легион считаться поверженным в этом мире.
 		}
 
 		Hardmode: {
-			// Name: Hardmode
-			// Description: If the world is in hardmode.
+			Name: Хардмод
+			Description: Будет ли Стена плоти считаться убитой в этом мире.
 		}
 
 		QueenSlime: {
-			// Name: Queen slime downed
-			// Description: If queen slime counts as killed or not in this world.
+			Name: Убита Королева слизней
+			Description: Будет ли Королева слизней считаться убитой в этом мире.
 		}
 
 		Destroyer: {
-			// Name: Destroyer downed
-			// Description: If the destroyer counts as killed or not in this world.
+			Name: Убит Уничтожитель
+			Description: Будет ли Уничтожитель считаться убитым в этом мире.
 		}
 
 		Twins: {
-			// Name: Twins downed
-			// Description: If the twins counts as killed or not in this world.
+			Name: Убиты Близнецы
+			Description: Будут ли Близнецы считаться убитыми в этом мире.
 		}
 
 		SkeletronPrime: {
-			// Name: Skeletron prime downed
-			// Description: If the skeletron prime counts as killed or not in this world.
+			Name: Убит Скелетрон Прайм
+			Description: Будет ли Скелетрон прайм считаться убитым в этом мире.
 		}
 
 		Plantera: {
-			// Name: Plantera downed
-			// Description: If plantera counts as killed or not in this world.
+			Name: Убита Плантера
+			Description: Будет ли Плантера считаться убитой в этом мире.
 		}
 
 		Golem: {
-			// Name: Golem downed
-			// Description: If golem counts as killed or not in this world.
+			Name: Убит Голем
+			Description: Будет ли Голем считаться убитым в этом мире.
 		}
 
 		Fishron: {
-			// Name: Fishron downed
-			// Description: If duke fishron counts as killed or not in this world.
+			Name: Убит Герцог Рыброн
+			Description: Будет ли Герцог Рыброн считаться убитым в этом мире.
 		}
 
 		EoL: {
-			// Name: EoL downed
-			// Description: If the empress of light counts as killed or not in this world.
+			Name: Убита Императрица света
+			Description: Будет ли Императрица света считаться убитой в этом мире.
 		}
 
 		Cultist: {
-			// Name: Cultist downed
-			// Description: If the lunatic cultist counts as killed or not in this world.
+			Name: Убит Культист-лунатик
+			Description: Будет ли Культист-лунатик считаться убитым в этом мире.
 		}
 
 		Moonlord: {
-			// Name: Moonlord downed
-			// Description: If the moon lord counts as killed or not in this world.
+			Name: Убит Лунный лорд
+			Description: Будет ли Лунный повелитель считаться убитым в этом мире.
 		}
 
 		Pirates: {
-			// Name: Pirates downed
-			// Description: If the pirates count as killed or not in this world.
+			Name: Побеждено Пиратское нашествие
+			Description: Будет ли Пиратское нашествие считаться поверженным в этом мире.
 		}
 	}
 }
 
 PlayerManager: {
 	DisplayName: Управление игроками
-	Description: Позволяет управлять игроками, подключившимися к этому серверу. Например, изменять их статус администратора, выгонять их и менять содержимое их инвентарей.
-	// TryRemoveYourself: You cannot remove your own permissions!
-	// RemoveAdmin: "{0} is no longer an admin."
-	// AddAdmin: "{0} is now an admin."
+	Description: Позволяет управлять игроками, подключившимися к этому серверу. Например изменять их статус администратора, выгонять их и менять содержимое их инвентарей.
+	TryRemoveYourself: Вы не можете снять статус администратора с себя же!
+	RemoveAdmin: "Игрок {0} больше не является администратором"
+	AddAdmin: "Игрок {0} теперь является администратором"
 
 	InventoryManager: {
-		// Inventory: "{0}'s Inventory"
-		// Equipment: Equipment
-		// Piggy: Piggy bank
-		// Safe: Safe
-		// DefendersForge: Defenders forge
-		// VoidVault: Void vault
+		Inventory: "Инвентарь игрока {0}"
+		Equipment: Снаряжение
+		Piggy: Свинья-копилка
+		Safe: Сейф
+		DefendersForge: Печь защитника
+		VoidVault: Пустотное хранилище
 	}
 
 	Admin: {
-		// Name: Toggle Admin
-		// Tooltip: Gives or revokes admin permissions from this player. Make sure this is someone you can trust! Admins can use all features of DragonLens, including this one!
+		Name: Выдать/отобрать права администратора
+		Tooltip: Даёт или снимает права администратора с игрока. Не давайте прав администратора тому, кому не доверяете! Администраторы смогут использовать все инструменты мода DragonLens, в том числе и этот!
 	}
 
 	Kick: {
-		// Name: Kick
-		// Tooltip: Forcibly disconnect this player from the game
+		Name: Выгнать
+		Tooltip: Принудительно отключает игрока с этого сервера
 	}
 
 	View: {
-		// Name: View
-		// Tooltip: Move the camera to this players position
+		Name: Понаблюдать
+		Tooltip: Позволяет следить за игроком, закрепляя вашу камеру за его персонажем
 	}
 
 	Inventory: {
-		// Name: Inventory
-		// Tooltip: View and edit this player's inventories
+		Name: Инвентарь
+		Tooltip: Позволяет просматривать и изменять содержимое инвентаря игрока
 	}
 
-	/* Stats:
+	Stats:
 		'''
-		Life: {0}
-		Mana: {1}
-		Position: {2}
-		Velocity: {3}
-		Alive: {4}
-		''' */
+		Здоровье: {0}
+		Мана: {1}
+		Местоположение: {2}
+		Скорость: {3}
+		Жив: {4}
+		'''
 }
