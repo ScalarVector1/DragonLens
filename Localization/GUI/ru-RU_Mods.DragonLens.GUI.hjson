@@ -1,15 +1,15 @@
 Browser: {
 	ListView: Показать списком
 	Filters: Фильтры
-	// Sorts: Sorting mode
+	Sorts: Тип сортировки
 
 	Sort: {
-		// ID: By ID
-		// Alphabetical: Alphabetical
-		// Damage: By Damage
-		// Defense: By Defense
-		// Value: By Gold Value
-		// Life: By Maximum Life
+		ID: по ID
+		Alphabetical: по алфавиту
+		Damage: по типу урона
+		Defense: по защите
+		Value: по цене
+		Life: по максимальному здоровью
 	}
 
 	ButtonSizeSlider: {
@@ -29,7 +29,7 @@ DraggableUIState: {
 
 EmergencyCustomizeMenu: {
 	CustomizeToolbars: Кастомизировать
-	CustomizeTools: Кастомизировать
+	CustomizeTools: Кастом.
 }
 
 FirstTimeLayoutPresetMenu: {
@@ -108,40 +108,68 @@ ToolbarCustomizationElements: {
 		Tooltip: Позволяет задать условия видимости для этой панели инструментов. NEWBLOCK {0} NEWBLOCK Нажатие переключит на: {1}
 
 		Never: {
-			Name: Нормальный
-			Tip: Всегда видна.
+			Name: обычный
+			Tip: Видна всегда.
 		}
 
 		InventoryOpen: {
-			Name: Только с закрытым инвентарём
+			Name: только с закрытым инвентарём
 			Tip: Видна только в том случае, если инвентарь закрыт
 		}
 
 		InventoryClosed: {
-			Name: Только с открытым инвентарём
+			Name: только с открытым инвентарём
 			Tip: Видна только в том случае, если инвентарь открыт
 		}
 
 		NoMapScreen: {
-			Name: Только с открытой картой
+			Name: только с открытой картой
 			Tip: Видна только на карте. NEWBLOCK Примечание: инструменты, открывающие свои меню потребуют закрыть карту для использования!
 		}
 	}
 
 	NewBarButton: {
-		Name: Добавить панель инструментов
-		Tooltip: Создайте новую пустую панель инструментов!
+		Name:
+			'''
+			Добавить панель
+			инструментов
+			'''
+		# Do not delete blank lines. This is to avoid the weird problem of text popping out of boxes
+		Tooltip:
+			'''
+			Создайте новую пустую панель инструментов!
+
+
+			'''
 	}
 
 	SaveLayoutButton: {
-		Name: Сохранить и продолжить
-		Tooltip: Сохраняет шаблон и закрывает меню кастомизации
+		Name:
+			'''
+			Сохранить
+			и выйти
+			'''
+		Tooltip:
+			'''
+			Сохраняет шаблон и закрывает меню кастомизации
+
+
+			'''
 		LayoutSaved: Шаблон сохранён!
 	}
 
 	LoadLayoutButton: {
-		Name: Загрузить шаблон
-		Tooltip: Загрузить существующий шаблон
+		Name:
+			'''
+			Загрузить
+			шаблон
+			'''
+		Tooltip:
+			'''
+			Загрузить существующий шаблон
+
+
+			'''
 	}
 
 	VisualConfigButton: {
@@ -150,8 +178,17 @@ ToolbarCustomizationElements: {
 	}
 
 	FunctionalConfigButton: {
-		Name: Настройки инструментв
-		Tooltip: Открывает конфигурацию для изменения функциональности/настроек инструментов
+		Name:
+			'''
+			Настройка
+			инструментов
+			'''
+		Tooltip:
+			'''
+			Открывает конфигурацию для изменения функциональности/настроек инструментов
+
+
+			'''
 	}
 }
 
@@ -163,8 +200,8 @@ EntityEditor: {
 }
 
 FieldEditor: {
-	// Uneditable: Uneditable
-	// UneditableBlockMsg: This field is uneditable!
-	// Static: Static
-	// ModdedFields: Modded fields
+	Uneditable: Неизменяемый
+	UneditableBlockMsg: Этот параметр нельзя изменить!
+	Static: Статичный
+	ModdedFields: Модовые параметры
 }
