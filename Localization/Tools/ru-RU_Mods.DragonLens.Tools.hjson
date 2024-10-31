@@ -428,8 +428,8 @@ ItemSpawner: {
 		}
 
 		Armor: {
-			Name: Броня
-			Description: Все предметы, которые можно одеть в слоты для брони
+			Name: Защита
+			Description: Все предметы, увеличивающие защиту
 		}
 
 		Placeable: {
