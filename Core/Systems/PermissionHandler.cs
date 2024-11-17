@@ -238,6 +238,13 @@ namespace DragonLens.Core.Systems
 		public override void SaveWorldData(TagCompound tag)
 		{
 			tag["worldID"] = worldID;
+
+			// safety check to make sure we never try to save nulls?
+			if (admins is null)
+				return;
+
+			admins.RemoveAll(n => n is null);
+
 			tag["admins"] = admins.ToList();
 		}
 
