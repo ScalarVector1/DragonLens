@@ -211,6 +211,10 @@ namespace DragonLens.Core.Systems
 
 					PermissionPlayer mp = Main.LocalPlayer.GetModPlayer<PermissionPlayer>();
 
+					// Safety check to make sure we dont generate a duplicate ID since that seems to be possible in rare cases?
+					if (mp.IDs.Count <= 0)
+						mp.LoadIDs();
+
 					if (!mp.IDs.ContainsKey(worldID))
 						mp.GenerateID();
 
@@ -288,7 +292,7 @@ namespace DragonLens.Core.Systems
 				if (line.Contains(":"))
 				{
 					string[] parts = line.Split(":");
-					IDs.Add(parts[0], parts[1]);
+					IDs.TryAdd(parts[0], parts[1]);
 				}
 			}
 		}
