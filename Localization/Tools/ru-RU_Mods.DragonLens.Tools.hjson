@@ -57,7 +57,7 @@ ItemEditor: {
 		Поместите ваш
 		предмет сюда!
 		'''
-	SetDefaults: Сбросить изменения
+	SetDefaults: Сброс изменений
 
 	Editors: {
 		Damage: {
