@@ -520,11 +520,11 @@ NPCSpawner: {
 	NameExceptionMessage: A NPCs ({0}) name threw an exception while getting it! Report to {1} developers!
 	NameException: This NPCs name threw an exception while getting it! Report to {0} developers!
 	BestiaryEntryException: An NPC ({0}) throws an exception while drawing its bestiary entry! Report to {1} developers!
-	NPCType: 
-			'''
-			Type: {0}
+	NPCType:
+		'''
+		Type: {0}
 		NetID: {1}
-			'''
+		'''
 	Selected: "{0} selected, click anywhere in the world to spawn. Right click to deselect."
 
 	FilterCategories: {
