@@ -353,7 +353,7 @@ namespace DragonLens.Content.Tools.Editors
 			{
 				Helpers.GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
 
-				string name = PrefixLoader.GetPrefix(prefixID) is null ? PrefixID.Search.GetName(prefixID) : PrefixLoader.GetPrefix(prefixID).DisplayName.Value;
+				string name = PrefixLoader.GetPrefix(prefixID) is null ? Lang.prefix[prefixID].Value : PrefixLoader.GetPrefix(prefixID).DisplayName.Value;
 
 				Utils.DrawBorderString(spriteBatch, name, GetDimensions().Center() + Vector2.UnitY * 2, ItemRarity.GetColor(dummy.rare), 1, 0.5f, 0.5f);
 
