@@ -112,6 +112,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 				Player.Center = desiredPos;
 				Player.velocity *= 0;
+				Player.gfxOffY = 0;
 			}
 		}
 	}
