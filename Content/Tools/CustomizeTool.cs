@@ -6,11 +6,11 @@ using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using System;
 using System.Collections.Generic;
-using Terraria.ID;
+using System.Linq;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
-using System.Linq;
 
 namespace DragonLens.Content.Tools
 {
