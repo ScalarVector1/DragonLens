@@ -305,7 +305,11 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SafeRightClick(UIMouseEvent evt)
 		{
-			NPC.NewNPC(null, (int)Main.LocalPlayer.Center.X, (int)Main.LocalPlayer.Center.Y, npc.type);
+			// TODO: This lacks the packet syncing included when left-clicking
+			//       to select an NPC and then spawning at the cursor in-world.
+			//       Related: NPCBrowser.SafeClick
+			//       We could replicate the logic or stub the values.  Shrug.
+			NPC.NewNPC(null, (int)Main.LocalPlayer.Center.X, (int)Main.LocalPlayer.Center.Y, npc.netID);
 		}
 	}
 }
