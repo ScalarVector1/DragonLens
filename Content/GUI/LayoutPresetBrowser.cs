@@ -3,6 +3,7 @@ using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Helpers;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader.UI.Elements;
@@ -28,6 +29,13 @@ namespace DragonLens.Content.GUI
 			grid.Add(new LayoutPresetButton(this, "HEROsMod", Path.Join(Main.SavePath, "DragonLensLayouts", "HEROs mod imitation")));
 			grid.Add(new LayoutPresetButton(this, "Cheatsheet", Path.Join(Main.SavePath, "DragonLensLayouts", "Cheatsheet imitation")));
 			grid.Add(new LayoutPresetButton(this, "Empty", Path.Join(Main.SavePath, "DragonLensLayouts", "Empty")));
+		}
+		
+		public override void SetupSorts()
+		{
+			SortModes.Add(new("Alphabetical", (a, b) => a.Identifier.CompareTo(b.Identifier)));
+
+			SortFunction = SortModes.First().Function;
 		}
 
 		public override void PostInitialize()
