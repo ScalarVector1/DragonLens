@@ -3,8 +3,8 @@ using DragonLens.Core.Systems.ToolbarSystem;
 using DragonLens.Helpers;
 using System.Collections.Generic;
 using System.IO;
-using Terraria.ID;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
