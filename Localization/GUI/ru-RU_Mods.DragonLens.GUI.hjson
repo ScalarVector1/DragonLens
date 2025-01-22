@@ -134,7 +134,6 @@ ToolbarCustomizationElements: {
 			Добавить панель
 			инструментов
 			'''
-		# Do not delete blank lines. This is to avoid the weird problem of text popping out of boxes
 		Tooltip:
 			'''
 			Создайте новую пустую панель инструментов!
