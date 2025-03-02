@@ -51,11 +51,8 @@ namespace DragonLens.Content.Tools.Map
 
 		public override void SendPacket(BinaryWriter writer)
 		{
-			if (MapTeleportSystem.whoTeleported != -1)
-			{
-				writer.WriteVector2(MapTeleportSystem.lastTarget);
-				writer.Write(MapTeleportSystem.whoTeleported);
-			}
+			writer.WriteVector2(MapTeleportSystem.lastTarget);
+			writer.Write(MapTeleportSystem.whoTeleported);
 		}
 
 		public override void RecievePacket(BinaryReader reader, int sender)
@@ -63,14 +60,17 @@ namespace DragonLens.Content.Tools.Map
 			Vector2 target = reader.ReadVector2();
 			int who = reader.ReadInt32();
 
-			Main.player[who].Center = target;
-
-			if (Main.netMode == NetmodeID.Server)
+			if (who != -1)
 			{
-				MapTeleportSystem.lastTarget = target;
-				MapTeleportSystem.whoTeleported = who;
+				Main.player[who].Center = target;
 
-				NetSend(-1, sender);
+				if (Main.netMode == NetmodeID.Server)
+				{
+					MapTeleportSystem.lastTarget = target;
+					MapTeleportSystem.whoTeleported = who;
+
+					NetSend(-1, sender);
+				}
 			}
 		}
 	}

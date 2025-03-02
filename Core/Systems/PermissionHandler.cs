@@ -67,6 +67,14 @@ namespace DragonLens.Core.Systems
 			packet.Write(0);
 			packet.Write(player.whoAmI);
 			packet.Send();
+
+			if (Main.netMode == NetmodeID.Server)
+			{
+				admins.Add(player.GetModPlayer<PermissionPlayer>().currentServerID);
+				visualAdmins.Add(player.whoAmI);
+
+				SendVisualAdmins();
+			}
 		}
 
 		/// <summary>
@@ -80,6 +88,14 @@ namespace DragonLens.Core.Systems
 			packet.Write(1);
 			packet.Write(player.whoAmI);
 			packet.Send();
+
+			if (Main.netMode == NetmodeID.Server)
+			{
+				admins.Remove(player.GetModPlayer<PermissionPlayer>().currentServerID);
+				visualAdmins.Remove(player.whoAmI);
+
+				SendVisualAdmins();
+			}
 		}
 
 		/// <summary>
@@ -131,7 +147,10 @@ namespace DragonLens.Core.Systems
 				if (Main.netMode == NetmodeID.Server)
 				{
 					Player player = Main.player[reader.ReadInt32()];
-					admins.Add(player.GetModPlayer<PermissionPlayer>().currentServerID);
+
+					if (!admins.Contains(player.GetModPlayer<PermissionPlayer>().currentServerID))
+						admins.Add(player.GetModPlayer<PermissionPlayer>().currentServerID);
+
 					visualAdmins.Add(player.whoAmI);
 
 					ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
@@ -143,7 +162,8 @@ namespace DragonLens.Core.Systems
 				}
 				else
 				{
-					admins.Add(Main.LocalPlayer.GetModPlayer<PermissionPlayer>().currentServerID);
+					if (!admins.Contains(Main.LocalPlayer.GetModPlayer<PermissionPlayer>().currentServerID))
+						admins.Add(Main.LocalPlayer.GetModPlayer<PermissionPlayer>().currentServerID);
 
 					Main.NewText($"You are now an admin.", Color.Yellow);
 				}
@@ -153,7 +173,7 @@ namespace DragonLens.Core.Systems
 				if (Main.netMode == NetmodeID.Server)
 				{
 					Player player = Main.player[reader.ReadInt32()];
-					admins.Remove(player.GetModPlayer<PermissionPlayer>().currentServerID);
+					admins.RemoveAll(n => n == player.GetModPlayer<PermissionPlayer>().currentServerID);
 					visualAdmins.Remove(player.whoAmI);
 
 					ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
@@ -165,8 +185,7 @@ namespace DragonLens.Core.Systems
 				}
 				else
 				{
-					admins.Remove(Main.LocalPlayer.GetModPlayer<PermissionPlayer>().currentServerID);
-
+					admins.RemoveAll(n => n == Main.LocalPlayer.GetModPlayer<PermissionPlayer>().currentServerID);
 					Main.NewText($"You are no longer an admin.", Color.Yellow);
 
 					foreach (SmartUIState item in UILoader.UIStates)
