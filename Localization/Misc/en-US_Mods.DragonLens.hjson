@@ -25,9 +25,7 @@ Permission: {
 
 MOTD:
 	'''
-	Thank you for using DragonLens V.{0}!
-
-	Be sure to check the customize tool (wrench icon) to set up the mod with the tools you need.
-
+	Thank you for installing DragonLens V.{0}!
+	Use the 'Customize Tools' option to add the tools you need.
 	Additional documentation can be found at https://github.com/ScalarVector1/DragonLens/wiki
 	'''
