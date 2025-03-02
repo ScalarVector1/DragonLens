@@ -235,6 +235,8 @@ namespace DragonLens.Content.Tools.Editors
 		{
 			if (!BoundingBox.Contains(Main.MouseScreen.ToPoint()) && entity is null && tileEntity is null)
 			{
+				PlayerInput.SetZoom_World();
+
 				// Tile entity
 				var pos = (Main.MouseWorld / 16).ToPoint16();
 				if (TileEntity.ByPosition.ContainsKey(pos))
@@ -248,6 +250,7 @@ namespace DragonLens.Content.Tools.Editors
 
 					SetupNew();
 
+					PlayerInput.SetZoom_UI();
 					return;
 				}
 
@@ -266,6 +269,7 @@ namespace DragonLens.Content.Tools.Editors
 
 						SetupNew();
 
+						PlayerInput.SetZoom_UI();
 						return;
 					}
 				}
@@ -285,9 +289,11 @@ namespace DragonLens.Content.Tools.Editors
 
 						SetupNew();
 
+						PlayerInput.SetZoom_UI();
 						return;
 					}
 				}
+				PlayerInput.SetZoom_UI();
 			}
 		}
 
@@ -385,16 +391,17 @@ namespace DragonLens.Content.Tools.Editors
 				if (entity != null && entity.active)
 				{
 					preview.Inflate(-4, -4);
-					var source = new Rectangle((int)entity.Center.X - 100, (int)entity.Center.Y - 100, 200, 200);
-					source.Offset((-Main.screenPosition).ToPoint());
+					var previewPos = (entity.Center - Main.Camera.ScaledPosition) * Main.GameViewMatrix.Zoom;
+					var source = new Rectangle((int)previewPos.X - 100, (int)previewPos.Y - 100, 200, 200);
+
 					spriteBatch.Draw(Main.screenTarget, preview, source, Color.White);
 				}
 
 				if (tileEntity != null)
 				{
 					preview.Inflate(-4, -4);
-					var source = new Rectangle(tileEntity.Position.X * 16 - 100, tileEntity.Position.Y * 16 - 100, 200, 200);
-					source.Offset((-Main.screenPosition).ToPoint());
+					var previewPos = (tileEntity.Position.ToVector2() * 16 - Main.Camera.ScaledPosition) * Main.GameViewMatrix.Zoom;
+					var source = new Rectangle((int)previewPos.X - 100, (int)previewPos.Y - 100, 200, 200);
 					spriteBatch.Draw(Main.screenTarget, preview, source, Color.White);
 				}
 
