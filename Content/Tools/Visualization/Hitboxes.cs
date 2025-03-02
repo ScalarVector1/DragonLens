@@ -5,6 +5,7 @@ using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using System;
 using System.Collections.Generic;
+using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
 
@@ -76,6 +77,8 @@ namespace DragonLens.Content.Tools.Visualization
 			state.ProjectileOption.DrawBoxes(Main.spriteBatch);
 			state.PlayerOption.DrawBoxes(Main.spriteBatch);
 			state.ItemOption.DrawBoxes(Main.spriteBatch);
+			state.MeleeOption.DrawBoxes(Main.spriteBatch);
+			state.TileEntityOption.DrawBoxes(Main.spriteBatch);
 
 			Main.spriteBatch.End();
 
@@ -89,6 +92,8 @@ namespace DragonLens.Content.Tools.Visualization
 		public HitboxOption ProjectileOption;
 		public HitboxOption PlayerOption;
 		public HitboxOption ItemOption;
+		public HitboxOption MeleeOption;
+		public HitboxOption TileEntityOption;
 
 		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 220, 32);
 
@@ -102,7 +107,7 @@ namespace DragonLens.Content.Tools.Visualization
 		public override void SafeOnInitialize()
 		{
 			width = 264;
-			height = 260;
+			height = 350;
 
 			NPCOption = new HitboxOption(() =>
 			{
@@ -175,6 +180,48 @@ namespace DragonLens.Content.Tools.Visualization
 				return list;
 			}, "Item", 0.6f);
 			Append(ItemOption);
+
+			MeleeOption = new HitboxOption(() =>
+			{
+				var list = new List<Rectangle>();
+
+				foreach (Player player in Main.player)
+				{
+					if (player.active)
+					{
+						var mp = player.GetModPlayer<MeleeHitboxTracker>();
+
+						if (mp.fresh)
+						{
+							Rectangle box = mp.lastMeleeBox;
+							box.Offset((-Main.screenPosition).ToPoint());
+							list.Add(box);
+
+							mp.fresh = false;
+						}
+					}
+				}
+
+				return list;
+			}, "Melee", 0.15f);
+			Append(MeleeOption);
+
+			TileEntityOption = new HitboxOption(() =>
+			{
+				var list = new List<Rectangle>();
+
+				foreach (KeyValuePair<int, TileEntity> pair in TileEntity.ByID)
+				{
+					var te = TileEntity.ByID[pair.Key];
+
+					Rectangle box = new Rectangle(te.Position.X * 16, te.Position.Y * 16, 16, 16);
+					box.Offset((-Main.screenPosition).ToPoint());
+					list.Add(box);				
+				}
+
+				return list;
+			}, "TileEntity", 0.85f);
+			Append(TileEntityOption);
 		}
 
 		public override void AdjustPositions(Vector2 newPos)
@@ -190,6 +237,12 @@ namespace DragonLens.Content.Tools.Visualization
 
 			ItemOption.Left.Set(basePos.X + 134, 0);
 			ItemOption.Top.Set(basePos.Y + 150, 0);
+
+			MeleeOption.Left.Set(basePos.X + 8, 0);
+			MeleeOption.Top.Set(basePos.Y + 244, 0);
+
+			TileEntityOption.Left.Set(basePos.X + 134, 0);
+			TileEntityOption.Top.Set(basePos.Y + 244, 0);
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
@@ -343,6 +396,24 @@ namespace DragonLens.Content.Tools.Visualization
 
 			var draggerTarget = new Rectangle(dims.X + (int)(progress * dims.Width) - 5, dims.Y - 6, 10, 20);
 			GUIHelper.DrawBox(spriteBatch, draggerTarget, ThemeHandler.ButtonColor);
+		}
+	}
+
+	internal class MeleeHitboxTracker : ModPlayer
+	{
+		public Rectangle lastMeleeBox;
+		public bool fresh;
+
+		public override void Load()
+		{
+			On_Player.ItemCheck_MeleeHitNPCs += StealHitbox;
+		}
+
+		private void StealHitbox(On_Player.orig_ItemCheck_MeleeHitNPCs orig, Player self, Item sItem, Rectangle itemRectangle, int originalDamage, float knockBack)
+		{
+			self.GetModPlayer<MeleeHitboxTracker>().lastMeleeBox = itemRectangle;
+			self.GetModPlayer<MeleeHitboxTracker>().fresh = true;
+			orig(self, sItem, itemRectangle, originalDamage, knockBack);
 		}
 	}
 }

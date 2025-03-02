@@ -657,6 +657,8 @@ Hitboxes: {
 		Projectile: Хитбоксы снарядов
 		Player: Хитбоксы игроков
 		Item: Хитбоксы предметов
+		// Melee: Melee Hitboxes
+		// TileEntity: Tile Entity Hitboxes
 	}
 }
 

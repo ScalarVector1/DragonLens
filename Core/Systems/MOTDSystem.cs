@@ -18,16 +18,19 @@ namespace DragonLens.Core.Systems
 				string MOTD = LocalizationHelper.GetText("MOTD", Mod.Version);
 				Main.NewText(MOTD, new Color(200, 235, 255));
 			}
+
+			seenMotd = Mod.Version;
 		}
 
 		public override void SaveData(TagCompound tag)
 		{
-			tag["seenMotd"] = seenMotd.ToString();
+			if (seenMotd != null)
+				tag["seenMotd"] = seenMotd.ToString();
 		}
 
 		public override void LoadData(TagCompound tag)
 		{
-			seenMotd = Version.Parse(tag.GetString("seenMotd"));
+			seenMotd = Version.Parse(tag.GetString("seenMotd") ?? "0.0.0");
 		}
 	}
 }

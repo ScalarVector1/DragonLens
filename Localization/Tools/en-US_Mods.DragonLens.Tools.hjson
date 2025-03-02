@@ -636,6 +636,8 @@ Hitboxes: {
 		Projectile: Projectile Hitboxes
 		Player: Player Hitboxes
 		Item: Item Hitboxes
+		Melee: Melee Hitboxes
+		TileEntity: Tile Entity Hitboxes
 	}
 }
 

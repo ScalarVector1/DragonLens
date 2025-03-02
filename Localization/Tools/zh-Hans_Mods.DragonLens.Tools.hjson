@@ -632,6 +632,8 @@ Hitboxes: {
 		Projectile: 射弹碰撞箱
 		Player: 玩家碰撞箱
 		Item: 物品碰撞箱
+		// Melee: Melee Hitboxes
+		// TileEntity: Tile Entity Hitboxes
 	}
 }
 
