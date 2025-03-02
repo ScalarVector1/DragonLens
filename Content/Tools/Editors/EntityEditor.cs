@@ -6,8 +6,6 @@ using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ModLoader.UI.Elements;
@@ -101,7 +99,7 @@ namespace DragonLens.Content.Tools.Editors
 
 				basicEditorScroll.Remove();
 
-				width = 600;
+				width = 400;
 				height = 130;
 
 				entity = null;
@@ -171,8 +169,8 @@ namespace DragonLens.Content.Tools.Editors
 			{
 				return LocalizationHelper.GetToolText($"EntityEditor.NPCEditors.{text}");
 			}
-			
-			NPC npc = entity as NPC;
+
+			var npc = entity as NPC;
 			basicEditorList.Add(new IntEditor(Localize("Type.Name"), n => npc.type = n, npc.type, () => npc.type, Localize("Type.Description")));
 			basicEditorList.Add(new StringEditor(Localize("Name.Name"), n => npc.GivenName = n, npc.GivenOrTypeName, () => npc.GivenOrTypeName, Localize("Name.Description")));
 			basicEditorList.Add(new IntEditor(Localize("MaxLife.Name"), n => npc.lifeMax = n, npc.lifeMax, () => npc.lifeMax, Localize("MaxLife.Description")));
@@ -198,8 +196,8 @@ namespace DragonLens.Content.Tools.Editors
 
 		private void BuildModNPC()
 		{
-			NPC npc = entity as NPC;
-			List<object> modEditorList = new();
+			var npc = entity as NPC;
+			List<object> modEditorList = [];
 
 			if (npc.ModNPC != null)
 				modEditorList.Add(npc.ModNPC);
@@ -235,8 +233,24 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void SafeClick(UIMouseEvent evt)
 		{
-			if (!BoundingBox.Contains(Main.MouseScreen.ToPoint()) && entity is null)
+			if (!BoundingBox.Contains(Main.MouseScreen.ToPoint()) && entity is null && tileEntity is null)
 			{
+				// Tile entity
+				var pos = (Main.MouseWorld / 16).ToPoint16();
+				if (TileEntity.ByPosition.ContainsKey(pos))
+				{
+					TileEntity te = TileEntity.ByPosition[pos];
+
+					tileEntity = te;
+					entity = null;
+
+					Main.NewText(LocalizationHelper.GetToolText("EntityEditor.SelectedTE", te.Position));
+
+					SetupNew();
+
+					return;
+				}
+
 				// NPCs
 				for (int k = 0; k < Main.maxNPCs; k++)
 				{
@@ -274,24 +288,52 @@ namespace DragonLens.Content.Tools.Editors
 						return;
 					}
 				}
+			}
+		}
 
+		public Rectangle GetSelectionBox()
+		{
+			if (!BoundingBox.Contains(Main.MouseScreen.ToPoint()) && entity is null && tileEntity is null)
+			{
 				// Tile entity
-
-				Point16 pos = (Main.MouseWorld / 16).ToPoint16();
+				var pos = (Main.MouseWorld / 16).ToPoint16();
 				if (TileEntity.ByPosition.ContainsKey(pos))
+					return new Rectangle(pos.X * 16, pos.Y * 16, 16, 16);
+
+				// NPCs
+				for (int k = 0; k < Main.maxNPCs; k++)
 				{
-					TileEntity te = TileEntity.ByPosition[pos];
+					Rectangle box = Main.npc[k].Hitbox;
+					box.Inflate(16, 16);
 
-					tileEntity = te;
-					entity = null;
+					if (Main.npc[k].active && box.Contains(Main.MouseWorld.ToPoint()))
+						return box;
+				}
 
-					Main.NewText(LocalizationHelper.GetToolText("EntityEditor.SelectedTE", te.Position));
+				// Projectiles
+				for (int k = 0; k < Main.maxProjectiles; k++)
+				{
+					Rectangle box = Main.projectile[k].Hitbox;
+					box.Inflate(16, 16);
 
-					SetupNew();
-
-					return;
+					if (Main.projectile[k].active && box.Contains(Main.MouseWorld.ToPoint()))
+						return box;
 				}
 			}
+
+			if (entity != null)
+			{
+				Rectangle box = entity.Hitbox;
+				box.Inflate(16, 16);
+				return box;
+			}
+
+			if (tileEntity != null)
+			{
+				return new Rectangle(tileEntity.Position.X * 16, tileEntity.Position.Y * 16, 16, 16);
+			}
+
+			return default;
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
@@ -315,28 +357,18 @@ namespace DragonLens.Content.Tools.Editors
 			Texture2D icon = ThemeHandler.GetIcon("EntityEditor");
 			spriteBatch.Draw(icon, basePos + Vector2.One * 16, Color.White);
 
-			Utils.DrawBorderStringBig(spriteBatch, GetLocalizedText("DisplayName"), basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.6f);
+			string label = GetLocalizedText("DisplayName");
 
-			// Preview portrait
-			var preview = new Rectangle((int)pos.X - 220, (int)pos.Y, 200, 200);
+			if (entity is NPC npc)
+				label += $": {(!string.IsNullOrEmpty(npc.FullName) ? npc.FullName : npc.ModNPC?.Name ?? "NPC")}";
 
-			GUIHelper.DrawBox(spriteBatch, preview, ThemeHandler.ButtonColor);
-
-			if (entity != null && entity.active)
-			{
-				preview.Inflate(-4, -4);
-				var source = new Rectangle((int)entity.Center.X - 100, (int)entity.Center.Y - 100, 200, 200);
-				source.Offset((-Main.screenPosition).ToPoint());
-				spriteBatch.Draw(Main.screenTarget, preview, source, Color.White);
-			}
+			if (entity is Projectile proj)
+				label += $": {(!string.IsNullOrEmpty(proj.Name) ? proj.Name : proj.ModProjectile?.Name ?? "Projectile")}";
 
 			if (tileEntity != null)
-			{
-				preview.Inflate(-4, -4);
-				var source = new Rectangle(tileEntity.Position.X * 16 - 100, tileEntity.Position.Y * 16 - 100, 200, 200);
-				source.Offset((-Main.screenPosition).ToPoint());
-				spriteBatch.Draw(Main.screenTarget, preview, source, Color.White);
-			}
+				label += $": Tile Entity @ {tileEntity.Position}";
+
+			Utils.DrawBorderStringBig(spriteBatch, label, basePos + new Vector2(icon.Width + 24, 16), Color.White, 0.6f);
 
 			// Labels
 			if ((entity is null || !entity.active) && tileEntity is null)
@@ -345,6 +377,27 @@ namespace DragonLens.Content.Tools.Editors
 			}
 			else
 			{
+				// Preview portrait
+				var preview = new Rectangle((int)pos.X - 220, (int)pos.Y, 200, 200);
+
+				GUIHelper.DrawBox(spriteBatch, preview, ThemeHandler.ButtonColor);
+
+				if (entity != null && entity.active)
+				{
+					preview.Inflate(-4, -4);
+					var source = new Rectangle((int)entity.Center.X - 100, (int)entity.Center.Y - 100, 200, 200);
+					source.Offset((-Main.screenPosition).ToPoint());
+					spriteBatch.Draw(Main.screenTarget, preview, source, Color.White);
+				}
+
+				if (tileEntity != null)
+				{
+					preview.Inflate(-4, -4);
+					var source = new Rectangle(tileEntity.Position.X * 16 - 100, tileEntity.Position.Y * 16 - 100, 200, 200);
+					source.Offset((-Main.screenPosition).ToPoint());
+					spriteBatch.Draw(Main.screenTarget, preview, source, Color.White);
+				}
+
 				Utils.DrawBorderString(spriteBatch, GetLocalizedText("VanillaFields"), pos + new Vector2(120, 80), Color.White, 1, 0f, 0.5f);
 
 				Texture2D background = Terraria.GameContent.TextureAssets.MagicPixel.Value;
@@ -353,7 +406,6 @@ namespace DragonLens.Content.Tools.Editors
 			}
 
 			base.Draw(spriteBatch);
-
 		}
 	}
 
@@ -381,11 +433,85 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			if (GetDimensions().ToRectangle().Contains(Main.MouseScreen.ToPoint()))
-				Main.LocalPlayer.mouseInterface = true;
+			if (parent.entity != null || parent.tileEntity != null)
+			{
+				if (GetDimensions().ToRectangle().Contains(Main.MouseScreen.ToPoint()))
+					Main.LocalPlayer.mouseInterface = true;
 
-			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
-			Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetToolText("EntityEditor.Deselect"), GetDimensions().Center(), Color.LightGray, 1, 0.5f, 0.5f);
+				GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
+				Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetToolText("EntityEditor.Deselect"), GetDimensions().Center(), Color.LightGray, 1, 0.5f, 0.5f);
+			}
+		}
+	}
+
+	internal class SelectionRenderer : ModSystem
+	{
+		public override void Load()
+		{
+			Terraria.On_Main.DrawInterface += DrawHitboxes;
+		}
+
+		private void DrawHitboxes(Terraria.On_Main.orig_DrawInterface orig, Main self, GameTime gameTime)
+		{
+			EntityEditorState state = UILoader.GetUIState<EntityEditorState>();
+
+			if (state.visible)
+			{
+				Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+
+				if (state.entity is null && state.tileEntity is null)
+				{
+					// NPCs
+					for (int k = 0; k < Main.maxNPCs; k++)
+					{
+						if (Main.npc[k].active)
+						{
+							Rectangle box = Main.npc[k].Hitbox;
+							box.Inflate(16, 16);
+							box.Offset((-Main.screenPosition).ToPoint());
+
+							GUIHelper.DrawOutline(Main.spriteBatch, box, Color.Orange * 0.2f);
+						}
+					}
+
+					// Projectiles
+					for (int k = 0; k < Main.maxProjectiles; k++)
+					{
+						if (Main.projectile[k].active)
+						{
+							Rectangle box = Main.projectile[k].Hitbox;
+							box.Inflate(16, 16);
+							box.Offset((-Main.screenPosition).ToPoint());
+
+							GUIHelper.DrawOutline(Main.spriteBatch, box, Color.Orange * 0.2f);
+						}
+					}
+
+					// Tile entity
+					foreach (KeyValuePair<Point16, TileEntity> pair in TileEntity.ByPosition)
+					{
+						var box = new Rectangle(pair.Key.X * 16, pair.Key.Y * 16, 16, 16);
+						box.Offset((-Main.screenPosition).ToPoint());
+
+						GUIHelper.DrawOutline(Main.spriteBatch, box, Color.Orange * 0.2f);
+					}
+				}
+
+				Rectangle selectionBox = state.GetSelectionBox();
+
+				if (selectionBox != default)
+				{
+					Rectangle toDraw = selectionBox;
+					toDraw.Offset((-Main.screenPosition).ToPoint());
+
+					var color = Color.Lerp(Color.Orange, Color.LightYellow, 0.5f + MathF.Sin(Main.GameUpdateCount * 0.3f) * 0.5f);
+					GUIHelper.DrawOutline(Main.spriteBatch, toDraw, color);
+				}
+
+				Main.spriteBatch.End();
+			}
+
+			orig(self, gameTime);
 		}
 	}
 }

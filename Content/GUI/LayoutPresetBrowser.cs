@@ -30,7 +30,7 @@ namespace DragonLens.Content.GUI
 			grid.Add(new LayoutPresetButton(this, "Cheatsheet", Path.Join(Main.SavePath, "DragonLensLayouts", "Cheatsheet imitation")));
 			grid.Add(new LayoutPresetButton(this, "Empty", Path.Join(Main.SavePath, "DragonLensLayouts", "Empty")));
 		}
-		
+
 		public override void SetupSorts()
 		{
 			SortModes.Add(new("Alphabetical", (a, b) => a.Identifier.CompareTo(b.Identifier)));

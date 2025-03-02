@@ -189,7 +189,7 @@ namespace DragonLens.Content.Tools.Visualization
 				{
 					if (player.active)
 					{
-						var mp = player.GetModPlayer<MeleeHitboxTracker>();
+						MeleeHitboxTracker mp = player.GetModPlayer<MeleeHitboxTracker>();
 
 						if (mp.fresh)
 						{
@@ -212,11 +212,11 @@ namespace DragonLens.Content.Tools.Visualization
 
 				foreach (KeyValuePair<int, TileEntity> pair in TileEntity.ByID)
 				{
-					var te = TileEntity.ByID[pair.Key];
+					TileEntity te = TileEntity.ByID[pair.Key];
 
 					Rectangle box = new Rectangle(te.Position.X * 16, te.Position.Y * 16, 16, 16);
 					box.Offset((-Main.screenPosition).ToPoint());
-					list.Add(box);				
+					list.Add(box);
 				}
 
 				return list;

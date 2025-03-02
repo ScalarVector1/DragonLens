@@ -98,7 +98,7 @@ namespace DragonLens.Content.GUI
 		/// <summary>
 		/// Initialize sorting functions for this browser here
 		/// </summary>
-		public virtual void SetupSorts() 
+		public virtual void SetupSorts()
 		{
 			// "sensible" default sort based on key prop
 			SortFunction = (a, b) => a.Key.CompareTo(b.Key);
@@ -343,7 +343,7 @@ namespace DragonLens.Content.GUI
 
 			if (Favorite)
 			{
-				var tex = Assets.GUI.Star.Value;
+				Texture2D tex = Assets.GUI.Star.Value;
 				spriteBatch.Draw(tex, drawBox.TopLeft(), null, Color.White, 0, new Vector2(2, 4), 1, 0, 0);
 			}
 

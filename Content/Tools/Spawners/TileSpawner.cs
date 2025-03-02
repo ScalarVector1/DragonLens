@@ -61,7 +61,7 @@ namespace DragonLens.Content.Tools.Spawners
 		}
 
 		public override void SetupSorts()
-		{ 
+		{
 			SortModes.Add(new("ID", (a, b) => (a as TileButton).tileType - (b as TileButton).tileType));
 			SortModes.Add(new("Alphabetical", (a, b) => a.Identifier.CompareTo(b.Identifier)));
 
