@@ -51,8 +51,11 @@ namespace DragonLens.Content.Tools.Map
 
 		public override void SendPacket(BinaryWriter writer)
 		{
-			writer.WriteVector2(MapTeleportSystem.lastTarget);
-			writer.Write(MapTeleportSystem.whoTeleported);
+			if (MapTeleportSystem.whoTeleported != -1)
+			{
+				writer.WriteVector2(MapTeleportSystem.lastTarget);
+				writer.Write(MapTeleportSystem.whoTeleported);
+			}
 		}
 
 		public override void RecievePacket(BinaryReader reader, int sender)
@@ -75,7 +78,7 @@ namespace DragonLens.Content.Tools.Map
 	internal class MapTeleportSystem : ModSystem
 	{
 		public static Vector2 lastTarget; //These are here for MP sync purposes
-		public static int whoTeleported;
+		public static int whoTeleported = -1;
 
 		public override void Load()
 		{
@@ -85,6 +88,11 @@ namespace DragonLens.Content.Tools.Map
 		public override void Unload()
 		{
 			Main.OnPostFullscreenMapDraw -= TeleportFromMap;
+		}
+
+		public override void OnWorldLoad()
+		{
+			whoTeleported = -1;
 		}
 
 		private void TeleportFromMap(Vector2 arg1, float arg2)
