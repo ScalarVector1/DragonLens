@@ -293,6 +293,7 @@ namespace DragonLens.Content.Tools.Editors
 						return;
 					}
 				}
+
 				PlayerInput.SetZoom_UI();
 			}
 		}
@@ -391,7 +392,7 @@ namespace DragonLens.Content.Tools.Editors
 				if (entity != null && entity.active)
 				{
 					preview.Inflate(-4, -4);
-					var previewPos = (entity.Center - Main.Camera.ScaledPosition) * Main.GameViewMatrix.Zoom;
+					Vector2 previewPos = (entity.Center - Main.Camera.ScaledPosition) * Main.GameViewMatrix.Zoom;
 					var source = new Rectangle((int)previewPos.X - 100, (int)previewPos.Y - 100, 200, 200);
 
 					spriteBatch.Draw(Main.screenTarget, preview, source, Color.White);
@@ -400,7 +401,7 @@ namespace DragonLens.Content.Tools.Editors
 				if (tileEntity != null)
 				{
 					preview.Inflate(-4, -4);
-					var previewPos = (tileEntity.Position.ToVector2() * 16 - Main.Camera.ScaledPosition) * Main.GameViewMatrix.Zoom;
+					Vector2 previewPos = (tileEntity.Position.ToVector2() * 16 - Main.Camera.ScaledPosition) * Main.GameViewMatrix.Zoom;
 					var source = new Rectangle((int)previewPos.X - 100, (int)previewPos.Y - 100, 200, 200);
 					spriteBatch.Draw(Main.screenTarget, preview, source, Color.White);
 				}
