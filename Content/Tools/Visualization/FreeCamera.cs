@@ -74,4 +74,15 @@ namespace DragonLens.Content.Tools.Visualization
 				Main.screenPosition = FreeCamera.freeCameraPos;
 		}
 	}
+
+	internal class FreeCameraPlayer : ModPlayer
+	{
+		public override void PreUpdateMovement()
+		{
+			if (FreeCamera.active)
+			{
+				Player.velocity.X *= 0;
+			}
+		}
+	}
 }

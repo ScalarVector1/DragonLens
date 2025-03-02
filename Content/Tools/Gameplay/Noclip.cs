@@ -1,4 +1,5 @@
-﻿using DragonLens.Core.Systems;
+﻿using DragonLens.Content.Tools.Visualization;
+using DragonLens.Core.Systems;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
@@ -92,14 +93,18 @@ namespace DragonLens.Content.Tools.Gameplay
 
 			if (active)
 			{
-				if (Player.controlLeft)
-					desiredPos.X -= 15;
-				if (Player.controlRight)
-					desiredPos.X += 15;
-				if (Player.controlUp)
-					desiredPos.Y -= 15;
-				if (Player.controlDown)
-					desiredPos.Y += 15;
+				// Check free cam to stop movement while freecam is active
+				if (!FreeCamera.active)
+				{
+					if (Player.controlLeft)
+						desiredPos.X -= 15;
+					if (Player.controlRight)
+						desiredPos.X += 15;
+					if (Player.controlUp)
+						desiredPos.Y -= 15;
+					if (Player.controlDown)
+						desiredPos.Y += 15;
+				}
 
 				if (Main.netMode == NetmodeID.MultiplayerClient &&
 					Main.LocalPlayer == Player &&
