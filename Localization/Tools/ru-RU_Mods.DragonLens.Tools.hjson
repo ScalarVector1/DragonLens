@@ -653,12 +653,12 @@ Hitboxes: {
 	Description: Отображает хитбоксы
 
 	Options: {
-		NPC: Хитбоксы существ
-		Projectile: Хитбоксы снарядов
-		Player: Хитбоксы игроков
-		Item: Хитбоксы предметов
-		// Melee: Melee Hitboxes
-		// TileEntity: Tile Entity Hitboxes
+		NPC: Существ
+		Projectile: Снарядов
+		Player: Игроков
+		Item: Предметов
+		Melee: Оружия ближ. боя
+		TileEntity: Тайлы-существа
 	}
 }
 
