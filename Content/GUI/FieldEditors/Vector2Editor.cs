@@ -7,6 +7,8 @@ namespace DragonLens.Content.GUI.FieldEditors
 		public TextField xEntry;
 		public TextField yEntry;
 
+		public bool typing;
+
 		public override bool Editing => xEntry.typing || yEntry.typing;
 
 		public Vector2Editor(string name, Action<Vector2> onValueChanged, Vector2 initialValue, Func<Vector2> listenForUpdate = null, string description = "") : base(94, name, onValueChanged, listenForUpdate, initialValue, description)
@@ -28,18 +30,26 @@ namespace DragonLens.Content.GUI.FieldEditors
 
 		public override void OnRecieveNewValue(Vector2 newValue)
 		{
-			xEntry.currentValue = newValue.X.ToString();
-			yEntry.currentValue = newValue.Y.ToString();
+			if (!typing)
+			{
+				xEntry.currentValue = newValue.X.ToString();
+				yEntry.currentValue = newValue.Y.ToString();
+			}
 		}
 
 		public override void EditorUpdate(GameTime gameTime)
 		{
-			if (xEntry.updated || yEntry.updated)
+			if (xEntry.typing || yEntry.typing)
+				typing = true;
+
+			if (typing && !xEntry.typing && !yEntry.typing)
 			{
 				bool xValid = float.TryParse(xEntry.currentValue, out float x);
 				bool yValid = float.TryParse(yEntry.currentValue, out float y);
 				onValueChanged(new Vector2(x, y));
 				value = new Vector2(x, y);
+
+				typing = false;
 			}
 		}
 

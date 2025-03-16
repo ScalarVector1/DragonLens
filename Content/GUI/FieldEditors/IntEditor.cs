@@ -5,6 +5,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 	internal class IntEditor : FieldEditor<int>
 	{
 		public TextField entry;
+		public bool typing;
 
 		public override bool Editing => entry.typing;
 
@@ -24,8 +25,14 @@ namespace DragonLens.Content.GUI.FieldEditors
 
 		public override void EditorUpdate(GameTime gameTime)
 		{
-			if (entry.updated)
+			if (entry.typing)
+				typing = true;
+
+			if (typing && !entry.typing)
+			{
 				onValueChanged(int.TryParse(entry.currentValue, out int value) ? value : 0);
+				typing = false;
+			}
 		}
 	}
 }
