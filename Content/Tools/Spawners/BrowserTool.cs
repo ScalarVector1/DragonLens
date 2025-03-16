@@ -17,6 +17,7 @@ namespace DragonLens.Content.Tools.Spawners
 		{
 			T state = UILoader.GetUIState<T>();
 			state.visible = !state.visible;
+			state.Recalculate();
 
 			BrowserButton.drawDelayTimer = 2;
 

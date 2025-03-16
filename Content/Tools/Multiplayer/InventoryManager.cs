@@ -126,6 +126,9 @@ namespace DragonLens.Content.Tools.Multiplayer
 			{
 				slots.Add(new ItemSlot(player.bank4.item, k, 10));
 			}
+
+			Recalculate();
+			Recalculate();
 		}
 	}
 

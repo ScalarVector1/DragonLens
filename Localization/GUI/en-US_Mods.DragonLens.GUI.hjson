@@ -167,4 +167,5 @@ FieldEditor: {
 	UneditableBlockMsg: This field is uneditable!
 	Static: Static
 	ModdedFields: Modded fields
+	NoFields: No modded fields available
 }

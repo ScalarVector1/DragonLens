@@ -133,6 +133,9 @@ namespace DragonLens.Content.Tools.Multiplayer
 			{
 				playerList.Add(new PlayerManagerEntry(player));
 			}
+
+			Recalculate();
+			Recalculate();
 		}
 	}
 
@@ -248,6 +251,8 @@ namespace DragonLens.Content.Tools.Multiplayer
 			UILoader.GetUIState<InventoryManagerWindow>().SetInventory();
 			UILoader.GetUIState<InventoryManagerWindow>().basePos = UILoader.GetUIState<PlayerManagerWindow>().basePos + new Vector2(350, 0);
 			UILoader.GetUIState<InventoryManagerWindow>().visible = true;
+
+			UILoader.GetUIState<InventoryManagerWindow>().RecalculateEverything();
 		}
 	}
 

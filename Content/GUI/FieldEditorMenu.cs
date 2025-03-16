@@ -16,6 +16,8 @@ namespace DragonLens.Content.GUI
 {
 	internal class FieldEditorMenu : SmartUIElement
 	{
+		public bool hide = false;
+
 		public UIGrid modEditorList;
 		public StyledScrollbar modEditorScroll;
 
@@ -27,7 +29,7 @@ namespace DragonLens.Content.GUI
 		{
 			this.userInterface = userInterface;
 			Width.Set(496, 0);
-			Height.Set(550, 0);
+			Height.Set(590, 0);
 		}
 
 		public override void OnInitialize()
@@ -64,6 +66,9 @@ namespace DragonLens.Content.GUI
 					if (element is ObjectEditor container)
 						container.Filter(searchBar.currentValue);
 				}
+
+				Recalculate();
+				Recalculate();
 			}
 		}
 
@@ -88,15 +93,20 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			if (modEditorList.Count <= 0)
+			if (hide)
 				return;
 
 			Vector2 pos = GetDimensions().Position();
 			Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetGUIText("FieldEditor.ModdedFields"), pos + new Vector2(120, 30), Color.White, 1, 0f, 0.5f);
 
 			Texture2D background = Terraria.GameContent.TextureAssets.MagicPixel.Value;
-
 			spriteBatch.Draw(background, modEditorList.GetDimensions().ToRectangle(), Color.Black * 0.25f);
+
+			if (modEditorList.Count <= 0)
+			{
+				Utils.DrawBorderString(spriteBatch, LocalizationHelper.GetGUIText("FieldEditor.NoFields"), pos + new Vector2(240, 310), Color.Gray, 1, 0.5f, 0.5f);
+			}
+
 			base.Draw(spriteBatch);
 		}
 	}

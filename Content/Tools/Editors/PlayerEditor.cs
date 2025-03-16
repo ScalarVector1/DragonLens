@@ -111,6 +111,8 @@ namespace DragonLens.Content.Tools.Editors
 		{
 			BuildBasicEditor();
 			BuildModPlayerEditor();
+			Recalculate();
+			Recalculate();
 		}
 
 		private void BuildBasicEditor()

@@ -80,14 +80,13 @@ namespace DragonLens.Content.GUI
 			}
 
 			SafeOnInitialize();
+			RecalculateEverything();
 
 			base.OnInitialize();
 		}
 
 		public sealed override void SafeUpdate(GameTime gameTime)
 		{
-			Recalculate();
-
 			if (!Main.mouseLeft && dragging)
 				dragging = false;
 
@@ -98,13 +97,25 @@ namespace DragonLens.Content.GUI
 				if (dragOff == Vector2.Zero)
 					dragOff = Main.MouseScreen - basePos;
 
+				var oldPos = basePos;
 				basePos = Main.MouseScreen - dragOff;
+
+				if (oldPos != basePos)
+					RecalculateEverything();
 			}
 			else
 			{
 				dragOff = Vector2.Zero;
 			}
 
+			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
+				Main.LocalPlayer.mouseInterface = true;
+
+			DraggableUdpate(gameTime);
+		}
+
+		public void RecalculateEverything()
+		{
 			closeButton.Left.Set(basePos.X + width - 24, 0);
 			closeButton.Top.Set(basePos.Y + 8, 0);
 
@@ -125,11 +136,6 @@ namespace DragonLens.Content.GUI
 
 			AdjustPositions(basePos);
 			Recalculate();
-
-			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
-				Main.LocalPlayer.mouseInterface = true;
-
-			DraggableUdpate(gameTime);
 		}
 	}
 }

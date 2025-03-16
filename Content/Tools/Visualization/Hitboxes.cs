@@ -222,6 +222,8 @@ namespace DragonLens.Content.Tools.Visualization
 				return list;
 			}, "TileEntity", 0.85f);
 			Append(TileEntityOption);
+
+			Recalculate();
 		}
 
 		public override void AdjustPositions(Vector2 newPos)

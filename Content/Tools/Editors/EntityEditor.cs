@@ -33,6 +33,8 @@ namespace DragonLens.Content.Tools.Editors
 
 	internal class EntityEditorState : DraggableUIState
 	{
+		public bool ready;
+
 		public Entity entity;
 		public TileEntity tileEntity; // Tile entities are not entities. How inconvenient.
 
@@ -74,6 +76,11 @@ namespace DragonLens.Content.Tools.Editors
 
 			button = new(this);
 			Append(button);
+
+			ready = false;
+			moddedEditor.hide = true;
+
+			RecalculateEverything();
 		}
 
 		public override void AdjustPositions(Vector2 newPos)
@@ -92,15 +99,13 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override void DraggableUdpate(GameTime gameTime)
 		{
-			if ((entity is null || !entity.active) && tileEntity is null)
+			if (ready && (entity is null || !entity.active) && tileEntity is null)
 			{
 				basicEditorList.Clear();
 				moddedEditor.Clear();
+				moddedEditor.hide = true;
 
 				basicEditorScroll.Remove();
-
-				width = 400;
-				height = 130;
 
 				entity = null;
 				tileEntity = null;
@@ -108,20 +113,46 @@ namespace DragonLens.Content.Tools.Editors
 				Main.blockInput = false;
 
 				Main.LocalPlayer.mouseInterface = true;
+
+				Recalculate();
+				RecalculateEverything();
+				
+				ready = false;
+			}
+			else if (!ready && (entity != null && entity.active || tileEntity != null))
+			{
+				Append(basicEditorScroll);
+				moddedEditor.hide = false;
+
+				Recalculate();
+				RecalculateEverything();
+				
+				ready = true;
+			}
+		}
+
+		public override void Recalculate()
+		{
+			if ((entity is null || !entity.active) && tileEntity is null)
+			{
+				width = 400;
+				height = 130;
 			}
 			else
 			{
-				Append(basicEditorScroll);
-
 				width = 844;
 				height = 648;
 			}
+
+			base.Recalculate();
 		}
 
 		public void SetupNew()
 		{
 			BuildBasicEditor();
 			BuildModEditor();
+			Recalculate();
+			Recalculate();
 		}
 
 		private void BuildBasicEditor()

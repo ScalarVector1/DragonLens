@@ -135,6 +135,8 @@ namespace DragonLens.Content.Tools.Editors
 			Append(slotsScroll);
 
 			slots.SetScrollbar(slotsScroll);
+
+			Recalculate();
 		}
 
 		public override void AdjustPositions(Vector2 newPos)
@@ -146,8 +148,8 @@ namespace DragonLens.Content.Tools.Editors
 			slots.Height.Set(400, 0);
 			height = 480;
 
-			slotsScroll.Left.Set((int)newPos.X + 290, 0);
-			slotsScroll.Top.Set((int)newPos.Y + 60, 0);
+			slotsScroll?.Left.Set((int)newPos.X + 290, 0);
+			slotsScroll?.Top.Set((int)newPos.Y + 60, 0);
 
 			slots.Left.Set((int)newPos.X + 16, 0);
 			slots.Top.Set((int)newPos.Y + 62, 0);
@@ -239,6 +241,9 @@ namespace DragonLens.Content.Tools.Editors
 
 				parent.slots.Remove(this);
 			}
+
+			parent.Recalculate();
+			parent.Recalculate();
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)

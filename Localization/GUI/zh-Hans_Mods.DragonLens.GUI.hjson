@@ -167,4 +167,5 @@ FieldEditor: {
 	UneditableBlockMsg: 这个字段无法被编辑！
 	// Static: Static
 	ModdedFields: 模组字段
+	// NoFields: No modded fields available
 }

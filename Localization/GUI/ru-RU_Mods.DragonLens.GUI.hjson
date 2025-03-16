@@ -203,4 +203,5 @@ FieldEditor: {
 	UneditableBlockMsg: Этот параметр нельзя изменить!
 	Static: Статичный
 	ModdedFields: Модовые параметры
+	// NoFields: No modded fields available
 }

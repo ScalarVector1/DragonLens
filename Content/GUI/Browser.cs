@@ -4,13 +4,11 @@ using DragonLens.Content.Sorts;
 using DragonLens.Content.Tools.Spawners;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
-using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using ReLogic.Localization.IME;
 using ReLogic.OS;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria.GameContent;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -47,7 +45,7 @@ namespace DragonLens.Content.GUI
 
 		public event FilterDelegate FilterEvent;
 		public int sortIndex = 0;
-		public List<Sort> SortModes = new();
+		public List<Sort> SortModes = [];
 		public Func<BrowserButton, BrowserButton, int> SortFunction;
 
 		public override int InsertionIndex(List<GameInterfaceLayer> layers)
@@ -66,13 +64,17 @@ namespace DragonLens.Content.GUI
 		/// </summary>
 		public void SortGrid()
 		{
-			options.UpdateOrder();
-
-			foreach (var item in options._items)
+			foreach (UIElement item in options._items)
 			{
 				if (item is BrowserButton button)
 					button.ShrinkIfFiltered();
 			}
+
+			options.UpdateOrder();
+
+			// UIGrid is funny and wants this.
+			Recalculate();
+			Recalculate();
 		}
 
 		/// <summary>
@@ -141,7 +143,12 @@ namespace DragonLens.Content.GUI
 			Append(sizeSlider);
 
 			listButton = new("DragonLens/Assets/GUI/Play", () => listMode, LocalizationHelper.GetGUIText("Browser.ListView"));
-			listButton.OnLeftClick += (n, k) => listMode = !listMode;
+			listButton.OnLeftClick += (n, k) =>
+			{
+				listMode = !listMode;
+				Recalculate();
+				Recalculate();
+			};
 			Append(listButton);
 
 			filterButton = new("DragonLens/Assets/GUI/Filter", () => filtersVisible, LocalizationHelper.GetGUIText("Browser.Filters"));
@@ -152,6 +159,9 @@ namespace DragonLens.Content.GUI
 					filters.Width.Set(220, 0);
 				else
 					filters.Width.Set(0, 0);
+
+				filters.Recalculate();
+				Recalculate();
 			};
 			Append(filterButton);
 
@@ -168,6 +178,12 @@ namespace DragonLens.Content.GUI
 			filters = new(this);
 			filters.Width.Set(0, 0);
 			filters.Height.Set(420, 0);
+
+			if (filtersVisible)
+				filters.Width.Set(220, 0);
+			else
+				filters.Width.Set(0, 0);
+
 			Append(filters);
 
 			SetupFilters(filters);
@@ -211,6 +227,8 @@ namespace DragonLens.Content.GUI
 			OnInitialize();
 			PopulateGrid(options);
 			SortGrid();
+
+			Recalculate();
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
@@ -293,27 +311,19 @@ namespace DragonLens.Content.GUI
 
 				parent.SortGrid();
 			}
-
-			if (parent.listMode)
-				UpdateAsList();
-			else
-				UpdateAsGrid();
 		}
 
 		private void UpdateAsGrid()
 		{
 			int size = (int)MathHelper.Clamp(parent.buttonSize, 36, 108);
 
-			if (GetDimensions().Width != size || MarginLeft == 0)
-			{
-				Width.Set(size, 0);
-				Height.Set(size, 0);
+			Width.Set(size, 0);
+			Height.Set(size, 0);
 
-				MarginLeft = 2;
-				MarginRight = 2;
-				MarginTop = 2;
-				MarginBottom = 2;
-			}
+			MarginLeft = 2;
+			MarginRight = 2;
+			MarginTop = 2;
+			MarginBottom = 2;
 		}
 
 		private void UpdateAsList()
@@ -327,6 +337,19 @@ namespace DragonLens.Content.GUI
 			MarginRight = 2;
 			MarginTop = 2;
 			MarginBottom = 2;
+		}
+
+		public override void Recalculate()
+		{
+			if (!filtered)
+			{
+				if (parent.listMode)
+					UpdateAsList();
+				else
+					UpdateAsGrid();
+			}
+
+			base.Recalculate();
 		}
 
 		public virtual void SafeDraw(SpriteBatch spriteBatch, Rectangle iconArea) { }

@@ -131,7 +131,7 @@ namespace DragonLens.Content.GUI
 
 		private void TryAddEditor<T, E>(FieldInfo t, object mt) where E : FieldEditor<T>
 		{
-			if (t.FieldType == typeof(T))
+			if (t.FieldType == typeof(T) && t.DeclaringType.Assembly != typeof(DragonLens).Assembly)
 			{
 				try
 				{

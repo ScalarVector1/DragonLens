@@ -143,6 +143,9 @@ namespace DragonLens.Content.Tools.Gameplay
 					selecting = false;
 					selectingSecondPoint = false;
 
+					Recalculate();
+					Recalculate();
+
 					Main.NewText(Paint.GetTextValue("StructureSaved"));
 				}
 			}
