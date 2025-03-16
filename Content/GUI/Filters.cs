@@ -125,7 +125,7 @@ namespace DragonLens.Content.GUI
 			else
 				parent.FilterEvent -= filter.shouldFilter;
 
-			BrowserButton.drawDelayTimer = 2;
+			parent.SortGrid();
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)

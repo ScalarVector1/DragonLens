@@ -67,6 +67,12 @@ namespace DragonLens.Content.GUI
 		public void SortGrid()
 		{
 			options.UpdateOrder();
+
+			foreach (var item in options._items)
+			{
+				if (item is BrowserButton button)
+					button.ShrinkIfFiltered();
+			}
 		}
 
 		/// <summary>
@@ -236,6 +242,7 @@ namespace DragonLens.Content.GUI
 		public Browser parent;
 
 		public static int drawDelayTimer = 2; //Here so we dont draw on the first frame of the grid populating, causing a lag bonanza since every single button tries to draw.
+		public bool filtered;
 
 		public abstract string Identifier { get; }
 		public abstract string Key { get; } // Key used for favorites
@@ -252,9 +259,8 @@ namespace DragonLens.Content.GUI
 			this.parent = parent;
 		}
 
-		public override void SafeUpdate(GameTime gameTime)
+		public void ShrinkIfFiltered()
 		{
-			//Will likely need a better solution to optimize when not constantly searching
 			if (!Identifier.ToLower().Contains(parent.searchBar.currentValue.ToLower()) || parent.ShouldBeFiltered(this))
 			{
 				Width.Set(0, 0);
@@ -264,8 +270,19 @@ namespace DragonLens.Content.GUI
 				MarginRight = 0;
 				MarginTop = 0;
 				MarginBottom = 0;
-				return;
+
+				filtered = true;
 			}
+			else
+			{
+				filtered = false;
+			}
+		}
+
+		public override void SafeUpdate(GameTime gameTime)
+		{
+			if (filtered)
+				return;
 
 			if (IsMouseHovering && !Main.oldKeyState.IsKeyDown(Main.FavoriteKey) && Main.keyState.IsKeyDown(Main.FavoriteKey))
 			{
@@ -316,7 +333,7 @@ namespace DragonLens.Content.GUI
 
 		public sealed override void Draw(SpriteBatch spriteBatch)
 		{
-			if (GetDimensions().Width <= 0)
+			if (filtered)
 				return;
 
 			if (!parent.GetDimensions().ToRectangle().Intersects(GetDimensions().ToRectangle()))
@@ -369,10 +386,7 @@ namespace DragonLens.Content.GUI
 			base.SafeUpdate(gameTime);
 
 			if (updated)
-			{
-				BrowserButton.drawDelayTimer = 2;
 				(Parent as Browser)?.SortGrid();
-			}
 		}
 
 		public override void Draw(SpriteBatch spriteBatch)
