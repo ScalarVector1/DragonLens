@@ -1,4 +1,4 @@
 displayName = DragonLens
 author = ScalarVector & Tomat & HeartPlusUp & QuestionMark
-version = 1.8.5
+version = 1.9.0
 dllReferences = StructureHelper

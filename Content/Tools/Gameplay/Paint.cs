@@ -4,6 +4,7 @@ using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using Steamworks;
+using StructureHelper.Models;
 using StructureHelper.Util;
 using System;
 using System.Collections.Generic;
@@ -136,10 +137,10 @@ namespace DragonLens.Content.Tools.Gameplay
 					target = new Rectangle(Math.Min(secondPoint.X, target.X), Math.Min(secondPoint.Y, target.Y), 0, 0);
 					secondPoint = new Point16(Math.Max(secondPoint.X, firstPoint.X), Math.Max(secondPoint.Y, firstPoint.Y));
 
-					target.Width = secondPoint.X - target.X;
-					target.Height = secondPoint.Y - target.Y;
+					target.Width = secondPoint.X - target.X + 1;
+					target.Height = secondPoint.Y - target.Y + 1;
 
-					structureButtons.Add(new StructureButton(this, StructureHelper.Saver.SaveStructure(target)));
+					structureButtons.Add(new StructureButton(this, StructureHelper.API.Saver.SaveToStructureData(target.X, target.Y, target.Width, target.Height)));
 					selecting = false;
 					selectingSecondPoint = false;
 
@@ -181,25 +182,8 @@ namespace DragonLens.Content.Tools.Gameplay
 				//Prevents re-placing the same structure in the same place which could cause lag
 				if (PlaceTarget != lastPlaced)
 				{
-					StructureHelper.Generator.Generate(structure.strucutre, PlaceTarget);
+					StructureHelper.API.Generator.GenerateFromData(structure.strucutre, PlaceTarget);
 					lastPlaced = PlaceTarget;
-
-					for (int x = -1; x <= structure.strucutre.GetInt("Width") + 1; x++)
-					{
-						WorldGen.SquareTileFrame(PlaceTarget.X + x, PlaceTarget.Y, true);
-						WorldGen.SquareTileFrame(PlaceTarget.X + x, PlaceTarget.Y + 1, true);
-
-						if (x <= 0 || x >= structure.strucutre.GetInt("Width"))
-						{
-							for (int y = -1; y <= structure.strucutre.GetInt("Height") + 1; y++)
-							{
-								WorldGen.SquareTileFrame(PlaceTarget.X + x, PlaceTarget.Y + y, true);
-							}
-						}
-
-						WorldGen.SquareTileFrame(PlaceTarget.X + x, PlaceTarget.Y + structure.strucutre.GetInt("Height") + 1, true);
-						WorldGen.SquareTileFrame(PlaceTarget.X + x, PlaceTarget.Y + structure.strucutre.GetInt("Height"), true);
-					}
 				}
 			}
 		}
@@ -258,20 +242,20 @@ namespace DragonLens.Content.Tools.Gameplay
 	internal class StructureButton : SmartUIElement
 	{
 		public PaintWindow parent;
-		public TagCompound strucutre;
+		public StructureData strucutre;
 		public StructurePreview preview;
 
 		public Terraria.GameContent.UI.Elements.UIImageButton closeButton;
 
-		public StructureButton(PaintWindow parent, TagCompound tag)
+		public StructureButton(PaintWindow parent, StructureData structureData)
 		{
 			this.parent = parent;
-			strucutre = tag;
+			strucutre = structureData;
 
 			// StructurePreview constructor requires a spritebatch to be active
 			Main.spriteBatch.Begin();
 
-			preview = new(Paint.GetTextValue("TempStructure", strucutre.GetHashCode()), tag);
+			preview = new(Paint.GetTextValue("TempStructure", strucutre.GetHashCode()), structureData);
 
 			// End the spritebatch after the preview is created
 			Main.spriteBatch.End();
@@ -293,6 +277,9 @@ namespace DragonLens.Content.Tools.Gameplay
 
 				if (parent.structure == this)
 					parent.structure = null;
+
+				parent.Recalculate();
+				parent.Recalculate();
 			};
 
 			Append(closeButton);
