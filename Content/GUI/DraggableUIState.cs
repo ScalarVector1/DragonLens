@@ -97,7 +97,7 @@ namespace DragonLens.Content.GUI
 				if (dragOff == Vector2.Zero)
 					dragOff = Main.MouseScreen - basePos;
 
-				var oldPos = basePos;
+				Vector2 oldPos = basePos;
 				basePos = Main.MouseScreen - dragOff;
 
 				if (oldPos != basePos)
