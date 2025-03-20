@@ -23,7 +23,7 @@ namespace DragonLens.Content.GUI
 
 		public override void Update(GameTime gameTime)
 		{
-			var value = GetValue();
+			float value = GetValue();
 
 			// UIGrids and lists update a frame later than scrolling, so we need to be recalculating for 2 frames
 			if (value != oldValue)

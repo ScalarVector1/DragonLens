@@ -116,7 +116,7 @@ namespace DragonLens.Content.Tools.Editors
 
 				Recalculate();
 				RecalculateEverything();
-				
+
 				ready = false;
 			}
 			else if (!ready && (entity != null && entity.active || tileEntity != null))
@@ -126,7 +126,7 @@ namespace DragonLens.Content.Tools.Editors
 
 				Recalculate();
 				RecalculateEverything();
-				
+
 				ready = true;
 			}
 		}
