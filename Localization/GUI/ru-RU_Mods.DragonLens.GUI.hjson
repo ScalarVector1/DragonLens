@@ -195,7 +195,7 @@ ThemeMenu.Name: Редактор тем
 
 EntityEditor: {
 	LiveReaction: Live {0} Reaction
-	Select: Кликните по сущности в мире, чтобы выбрать ей. ПКМ для отмены.
+	Select: Кликните по сущности в мире, чтобы выбрать её. Нажмите ПКМ для отмены.
 }
 
 FieldEditor: {
@@ -203,5 +203,5 @@ FieldEditor: {
 	UneditableBlockMsg: Этот параметр нельзя изменить!
 	Static: Статичный
 	ModdedFields: Модовые параметры
-	// NoFields: No modded fields available
+	NoFields: Нет доступных модовых параметров
 }
