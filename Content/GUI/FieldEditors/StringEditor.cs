@@ -7,7 +7,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 		public TextField entry;
 		public bool typing;
 
-		public override bool Editing => entry.typing;
+		public override bool Editing => typing;
 
 		public StringEditor(string name, Action<string> onValueChanged, string initialValue, Func<string> listenForUpdates = null, string description = "") : base(70, name, onValueChanged, listenForUpdates, initialValue, description)
 		{

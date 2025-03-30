@@ -175,23 +175,7 @@ namespace DragonLens.Helpers
 		/// <param name="config">The config to open up</param>
 		public static void OpenConfig(ModConfig config)
 		{
-			IngameFancyUI.CoverNextFrame();
-			Main.playerInventory = false;
-			Main.editChest = false;
-			Main.npcChatText = "";
-			Main.inFancyUI = true;
-
-			Type interfaceType = typeof(ModLoader).Assembly.GetType("Terraria.ModLoader.UI.Interface");
-			FieldInfo modConfigList = interfaceType.GetField("modConfigList", BindingFlags.Static | BindingFlags.NonPublic);
-
-			Type uiModConfig = typeof(ModLoader).Assembly.GetType("Terraria.ModLoader.Config.UI.UIModConfig");
-			FieldInfo modConfig = interfaceType.GetField("modConfig", BindingFlags.Static | BindingFlags.NonPublic);
-			MethodInfo setMod = uiModConfig.GetMethod("SetMod", BindingFlags.Instance | BindingFlags.NonPublic);
-
-			var ui = (UIState)modConfig.GetValue(null);
-
-			setMod.Invoke(ui, new object[] { ModContent.GetInstance<DragonLens>(), config });
-			Main.InGameUI.SetState(ui);
+			config.Open();
 		}
 
 		/// <summary>

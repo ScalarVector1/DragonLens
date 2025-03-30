@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria.DataStructures;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
@@ -65,31 +66,48 @@ namespace DragonLens.Content.GUI
 				{
 					TryAddEditor<bool, BoolEditor>(fieldInfo, obj);
 					TryAddEditor<int, IntEditor>(fieldInfo, obj);
+					TryAddEditor<short, ShortEditor>(fieldInfo, obj);
+					TryAddEditor<long, LongEditor>(fieldInfo, obj);
 					TryAddEditor<float, FloatEditor>(fieldInfo, obj);
+					TryAddEditor<double, DoubleEditor>(fieldInfo, obj);
 					TryAddEditor<Vector2, Vector2Editor>(fieldInfo, obj);
+					TryAddEditor<Point16, Point16Editor>(fieldInfo, obj);
 					TryAddEditor<Color, ColorEditor>(fieldInfo, obj);
 					TryAddEditor<string, StringEditor>(fieldInfo, obj);
 					TryAddEditor<NPC, NPCEditor>(fieldInfo, obj);
 					TryAddEditor<Projectile, ProjectileEditor>(fieldInfo, obj);
 					TryAddEditor<Player, PlayerEditor>(fieldInfo, obj);
 					TryAddEditor<Item, ItemEditor>(fieldInfo, obj);
+					TryAddEditor<Rectangle, RectangleEditor>(fieldInfo, obj);
 				}
 
 				foreach (PropertyInfo propInfo in obj.GetType().GetProperties().Where(n => n.SetMethod != null))
 				{
+					// These are some tmod props we dont want to let people edit and would spam for every global
 					if (propInfo.Name == "Entity")
+						continue;
+
+					if (propInfo.Name == "PerEntityIndex")
+						continue;
+
+					if (propInfo.Name == "StaticIndex")
 						continue;
 
 					TryAddEditor<bool, BoolEditor>(propInfo, obj);
 					TryAddEditor<int, IntEditor>(propInfo, obj);
+					TryAddEditor<short, ShortEditor>(propInfo, obj);
+					TryAddEditor<long, LongEditor>(propInfo, obj);
 					TryAddEditor<float, FloatEditor>(propInfo, obj);
+					TryAddEditor<double, DoubleEditor>(propInfo, obj);
 					TryAddEditor<Vector2, Vector2Editor>(propInfo, obj);
+					TryAddEditor<Point16, Point16Editor>(propInfo, obj);
 					TryAddEditor<Color, ColorEditor>(propInfo, obj);
 					TryAddEditor<string, StringEditor>(propInfo, obj);
 					TryAddEditor<NPC, NPCEditor>(propInfo, obj);
 					TryAddEditor<Projectile, ProjectileEditor>(propInfo, obj);
 					TryAddEditor<Player, PlayerEditor>(propInfo, obj);
 					TryAddEditor<Item, ItemEditor>(propInfo, obj);
+					TryAddEditor<Rectangle, RectangleEditor>(propInfo, obj);
 				}
 			}
 

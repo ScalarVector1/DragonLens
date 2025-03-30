@@ -71,7 +71,7 @@ namespace DragonLens.Content.Tools.Visualization
 		{
 			HitboxWindow state = UILoader.GetUIState<HitboxWindow>();
 
-			Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+			Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
 
 			state.NPCOption.DrawBoxes(Main.spriteBatch);
 			state.ProjectileOption.DrawBoxes(Main.spriteBatch);
@@ -315,6 +315,9 @@ namespace DragonLens.Content.Tools.Visualization
 
 		public void DrawBoxes(SpriteBatch sb)
 		{
+			if (boxState == BoxType.none)
+				return;
+
 			List<Rectangle> boxes = getBoxes();
 
 			boxes.ForEach(n =>

@@ -30,6 +30,8 @@ namespace DragonLens.Content.GUI.FieldEditors
 		// In order to check if there is a composition string before backspace is typed, we need to check the previous state
 		private bool _oldHasCompositionString;
 
+		public static TextField CurrentSelected;
+
 		public TextField(InputType inputType = InputType.text)
 		{
 			this.inputType = inputType;
@@ -41,6 +43,8 @@ namespace DragonLens.Content.GUI.FieldEditors
 		{
 			typing = true;
 			Main.blockInput = true;
+
+			CurrentSelected = this;
 		}
 
 		public void SetNotTyping()
@@ -72,7 +76,7 @@ namespace DragonLens.Content.GUI.FieldEditors
 			if (updated)
 				reset = true;
 
-			if (Main.mouseLeft && !IsMouseHovering)
+			if (Main.mouseLeft && !IsMouseHovering || CurrentSelected != this)
 				SetNotTyping();
 		}
 

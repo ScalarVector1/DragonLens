@@ -496,7 +496,7 @@ namespace DragonLens.Content.Tools.Editors
 
 			if (state.visible)
 			{
-				Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
+				Main.spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
 
 				if (state.entity is null && state.tileEntity is null)
 				{

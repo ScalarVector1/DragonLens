@@ -145,9 +145,9 @@ namespace DragonLens.Content.Tools
 
 		public override void SafeClick(UIMouseEvent evt)
 		{
-			ToolBrowser.TrackedToolbar.AddTool(tool);
+			ToolBrowser.TrackedToolbar?.AddTool(tool);
 
-			UILoader.GetUIState<ToolbarState>().Refresh();
+			UILoader.GetUIState<ToolbarState>()?.Refresh();
 		}
 	}
 }
