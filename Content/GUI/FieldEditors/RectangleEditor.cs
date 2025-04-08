@@ -51,8 +51,8 @@ namespace DragonLens.Content.GUI.FieldEditors
 			{
 				xEntry.currentValue = newValue.X.ToString();
 				yEntry.currentValue = newValue.Y.ToString();
-				wEntry.currentValue= newValue.Width.ToString();
-				hEntry.currentValue= newValue.Height.ToString();
+				wEntry.currentValue = newValue.Width.ToString();
+				hEntry.currentValue = newValue.Height.ToString();
 			}
 		}
 
@@ -65,8 +65,8 @@ namespace DragonLens.Content.GUI.FieldEditors
 			{
 				bool xValid = int.TryParse(xEntry.currentValue, out int x);
 				bool yValid = int.TryParse(yEntry.currentValue, out int y);
-				bool wValid = int.TryParse(wEntry.currentValue,out int w);
-				bool hValid = int.TryParse(hEntry.currentValue,out int h);
+				bool wValid = int.TryParse(wEntry.currentValue, out int w);
+				bool hValid = int.TryParse(hEntry.currentValue, out int h);
 
 				onValueChanged(new Rectangle(x, y, w, h));
 				value = new Rectangle(x, y, w, h);

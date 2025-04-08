@@ -173,7 +173,7 @@ namespace DragonLens.Content.GUI
 			draggedElement = parent;
 			parent.beingDragged = true;
 			dragOffset = parent.GetDimensions().Center() - Main.MouseScreen;
-			
+
 			draggedElement.Refresh();
 		}
 
