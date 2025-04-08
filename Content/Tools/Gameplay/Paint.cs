@@ -207,7 +207,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			if (structure != null && !selecting)
 			{
 				spriteBatch.End();
-				spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+				spriteBatch.Begin(default, default, default, default, Main.Rasterizer, default, Main.GameViewMatrix.TransformationMatrix);
 
 				Vector2 pos2 = PlaceTarget.ToVector2() * 16 - Main.screenPosition;
 
@@ -222,7 +222,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			if (selecting && selectingSecondPoint)
 			{
 				spriteBatch.End();
-				spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+				spriteBatch.Begin(default, default, default, default, Main.Rasterizer, default, Main.GameViewMatrix.TransformationMatrix);
 
 				var point1 = target.TopLeft().ToPoint16();
 				var point2 = new Point16(Player.tileTargetX, Player.tileTargetY);

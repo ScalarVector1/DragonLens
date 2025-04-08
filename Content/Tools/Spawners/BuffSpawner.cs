@@ -186,8 +186,7 @@ namespace DragonLens.Content.Tools.Spawners
 					PlayerInput.SetZoom_World();
 
 					spriteBatch.End();
-					spriteBatch.Begin(default, default, default, default, default, default,
-						Main.GameViewMatrix.TransformationMatrix);
+					spriteBatch.Begin(default, default, default, default, Main.Rasterizer, default, Main.GameViewMatrix.TransformationMatrix);
 
 					foreach (NPC npc in Main.npc)
 					{
