@@ -276,7 +276,7 @@ namespace DragonLens.Core.Loaders.UILoading
 		/// <param name="evt">The mouse event that occured to fire this listener</param>
 		public virtual void SafeUpdate(GameTime gameTime) { }
 
-		public sealed override void Update(GameTime gameTime)
+		public override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
 			SafeUpdate(gameTime);

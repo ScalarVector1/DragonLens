@@ -22,11 +22,6 @@ namespace DragonLens.Content.GUI
 			return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
 		}
 
-		public override void SafeUpdate(GameTime gameTime)
-		{
-			Recalculate();
-		}
-
 		/// <summary>
 		/// Refresh the entire HUD with new toolbars, like when you would want to load a template
 		/// </summary>
@@ -41,7 +36,7 @@ namespace DragonLens.Content.GUI
 					continue;
 
 				var element = new ToolbarElement(toolbar);
-				element.Refresh();
+				element.Populate();
 
 				toolbarElements.Add(element);
 				Append(element);
@@ -52,10 +47,10 @@ namespace DragonLens.Content.GUI
 			//We want to shove based on size order, larger toolbars should be shoved last
 			toolbarElements.Sort((a, b) => a.toolbar.toolList.Count > b.toolbar.toolList.Count ? 1 : -1);
 
-			foreach (ToolbarElement element in toolbarElements)
+			/*foreach (ToolbarElement element in toolbarElements)
 			{
 				element.SmartShove();
-			}
+			}*/
 
 			if (CustomizeTool.customizing)
 				Customize();

@@ -474,6 +474,8 @@ namespace DragonLens.Content.GUI
 
 				if (!Main.mouseLeft)
 					dragging = false;
+
+				parent.Recalculate();
 			}
 			else
 			{

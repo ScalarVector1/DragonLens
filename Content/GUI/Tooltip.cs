@@ -57,7 +57,7 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			if (text == string.Empty)
+			if (text is null || text == string.Empty)
 				return;
 
 			ReLogic.Graphics.DynamicSpriteFont font = Terraria.GameContent.FontAssets.MouseText.Value;

@@ -62,6 +62,11 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 		public AutomaticHideOption automaticHideOption;
 
 		/// <summary>
+		/// Last known collapse direction for this toolbar
+		/// </summary>
+		public CollapseDirection lastKnownCollapse;
+
+		/// <summary>
 		/// The tools that a toolbar contains buttons to use
 		/// </summary>
 		public List<Tool> toolList = new();
@@ -108,6 +113,8 @@ namespace DragonLens.Core.Systems.ToolbarSystem
 			this.relativePosition = relativePosition;
 			this.orientation = orientation;
 			this.automaticHideOption = automaticHideOption;
+
+			lastKnownCollapse = CollapseDirection;
 		}
 
 		/// <summary>

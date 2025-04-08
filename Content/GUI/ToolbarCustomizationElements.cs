@@ -147,11 +147,11 @@ namespace DragonLens.Content.GUI
 	{
 		public ToolbarElement parent;
 
-		public static bool debounce;
+		public bool debounce;
 
-		public static bool dragging;
-		public static Vector2 dragOffset;
-		public static ToolbarElement draggedElement;
+		public bool dragging;
+		public Vector2 dragOffset;
+		public ToolbarElement draggedElement;
 
 		public Toolbar Toolbar => parent.toolbar;
 		public Toolbar DraggedToolbar => draggedElement.toolbar;
@@ -173,6 +173,8 @@ namespace DragonLens.Content.GUI
 			draggedElement = parent;
 			parent.beingDragged = true;
 			dragOffset = parent.GetDimensions().Center() - Main.MouseScreen;
+			
+			draggedElement.Refresh();
 		}
 
 		public override void SafeMouseUp(UIMouseEvent evt)
@@ -181,7 +183,6 @@ namespace DragonLens.Content.GUI
 			parent.beingDragged = false;
 
 			parent.Refresh();
-			parent.Customize();
 
 			dragOffset = Vector2.Zero;
 			draggedElement = null;
@@ -208,11 +209,13 @@ namespace DragonLens.Content.GUI
 					if (DraggedToolbar.orientation == Orientation.Horizontal)
 					{
 						DraggedToolbar.orientation = Orientation.Vertical;
+						draggedElement.Refresh();
 						debounce = true;
 					}
 					else
 					{
 						DraggedToolbar.orientation = Orientation.Horizontal;
+						draggedElement.Refresh();
 						debounce = true;
 					}
 				}
@@ -244,8 +247,14 @@ namespace DragonLens.Content.GUI
 					DraggedToolbar.orientation = Orientation.Horizontal;
 				}
 
+				if (DraggedToolbar.CollapseDirection != DraggedToolbar.lastKnownCollapse)
+				{
+					draggedElement.Refresh();
+					DraggedToolbar.lastKnownCollapse = DraggedToolbar.CollapseDirection;
+				}
+
 				draggedElement.Recalculate();
-				draggedElement.Refresh();
+				draggedElement.UpdatePosition();
 			}
 			else
 			{
