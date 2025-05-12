@@ -19,7 +19,6 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// </summary>
 		public static ReadOnlyCollection<Tool> Tools => ModContent.GetContent<Tool>().ToList().AsReadOnly();
 
-
 		/// <summary>
 		/// Helper method for quickly sending the packet of a given tool from outside of itself
 		/// </summary>
@@ -169,7 +168,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// <param name="triggersSet"></param>
 		public override void ProcessTriggers(TriggersSet triggersSet)
 		{
-			var content = ModContent.GetContent<Tool>();
+			IEnumerable<Tool> content = ModContent.GetContent<Tool>();
 
 			foreach (Tool tool in ModContent.GetContent<Tool>())
 			{
