@@ -111,7 +111,7 @@ namespace DragonLens.Core.Systems
 				return;
 			}
 
-			foreach (Tool tool in ToolHandler.Tools)
+			foreach (Tool tool in ModContent.GetContent<Tool>())
 			{
 				tool.NetSend(sender, -1);
 			}
@@ -359,7 +359,7 @@ namespace DragonLens.Core.Systems
 			{
 				PermissionHandler.AddAdmin(Player);
 
-				foreach (Tool tool in ToolHandler.Tools) // The hosts settings get applied
+				foreach (Tool tool in ModContent.GetContent<Tool>()) // The hosts settings get applied
 				{
 					tool.NetSend();
 				}

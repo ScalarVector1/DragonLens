@@ -11,7 +11,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 	/// <summary>
 	/// A singleton type which can be extended to add new tools. Tools function primarily as a 'kick-off-point' for other GUIs or state changes.
 	/// </summary>
-	internal abstract class Tool : ModType
+	public abstract class Tool : ModType
 	{
 		/// <summary>
 		/// The hotkey keybind for this tool.
@@ -37,13 +37,13 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// The display name of the tool to the end user.
 		/// Auto-assigned to a localization key if not overridden.
 		/// </summary>
-		public virtual string DisplayName => LocalizationHelper.GetText($"Tools.{LocalizationKey}.DisplayName");
+		public virtual string DisplayName => Language.GetText($"Mods.{Mod.Name}.Tools.{LocalizationKey}.DisplayName").Value;
 
 		/// <summary>
 		/// The description that should show up when queried for more information about this tool.
 		/// Auto-assigned to a localization key if not overridden.
 		/// </summary>
-		public virtual string Description => LocalizationHelper.GetText($"Tools.{LocalizationKey}.Description");
+		public virtual string Description => Language.GetText($"Mods.{Mod.Name}.Tools.{LocalizationKey}.Description").Value;
 
 		/// <summary>
 		/// What happens when the user activates this tool, either by clicking on it or using it's hotkey.
@@ -59,7 +59,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// The name of this tools right click funcitonality. Used for hotkeys.
 		/// Auto-assigned to a localization key if not overridden.
 		/// </summary>
-		public virtual string RightClickName => LocalizationHelper.GetText($"Tools.{LocalizationKey}.RightClickName");
+		public virtual string RightClickName => Language.GetText($"Mods.{Mod.Name}.Tools.{LocalizationKey}.RightClickName").Value;
 
 		/// <summary>
 		/// What happens if this tool is right clicked. Only used if HasRightClick is true.
@@ -116,7 +116,6 @@ namespace DragonLens.Core.Systems.ToolSystem
 		protected sealed override void Register()
 		{
 			ModTypeLookup<Tool>.Register(this);
-			ToolHandler.AddTool(this);
 
 			keybind = KeybindLoader.RegisterKeybind(Mod, LocalizationKey, Keys.None);
 			Language.GetOrRegister($"Mods.{Mod.Name}.Tools.{LocalizationKey}.DisplayName", () => Name);

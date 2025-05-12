@@ -38,6 +38,8 @@ namespace DragonLens.Content.GUI
 		public bool beingDragged;
 		public bool wasRefreshed;
 
+		public bool lastVisible;
+
 		public ToolbarElement(Toolbar toolbar)
 		{
 			this.toolbar = toolbar;
@@ -287,6 +289,12 @@ namespace DragonLens.Content.GUI
 			{
 				Left.Set(0, -1);
 				Top.Set(0, -1);
+			}
+
+			if (toolbar.Invisible != lastVisible)
+			{
+				Parent.Recalculate();
+				lastVisible = toolbar.Invisible;
 			}
 
 			wasRefreshed = false;
