@@ -8,6 +8,8 @@ namespace DragonLens.Content.Tools.Despawners
 	{
 		public override string IconKey => "ItemDespawner";
 
+		public override bool SyncOnClientJoint => false;
+
 		public override void OnActivate()
 		{
 			foreach (Item item in Main.item)

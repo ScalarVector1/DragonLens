@@ -45,7 +45,9 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void RecievePacket(BinaryReader reader, int sender)
 		{
 			Main.time = reader.ReadDouble();
-			Main.dayTime = reader.ReadBoolean();
+			var day = reader.ReadBoolean();
+			Main.dayTime = day;
+			TimePauseSystem.savedDay = day;
 			TimePauseSystem.savedTime = reader.ReadInt32();
 			Main.moonPhase = reader.ReadInt32();
 

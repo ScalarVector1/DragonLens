@@ -13,6 +13,8 @@ namespace DragonLens.Content.Tools.Despawners
 
 		public override bool HasRightClick => true;
 
+		public override bool SyncOnClientJoint => false;
+
 		public override void OnActivate()
 		{
 			foreach (NPC npc in Main.npc)

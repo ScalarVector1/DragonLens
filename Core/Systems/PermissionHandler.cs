@@ -113,7 +113,8 @@ namespace DragonLens.Core.Systems
 
 			foreach (Tool tool in ModContent.GetContent<Tool>())
 			{
-				tool.NetSend(sender, -1);
+				if (tool.SyncOnClientJoint)
+					tool.NetSend(sender, -1);
 			}
 		}
 
@@ -361,7 +362,8 @@ namespace DragonLens.Core.Systems
 
 				foreach (Tool tool in ModContent.GetContent<Tool>()) // The hosts settings get applied
 				{
-					tool.NetSend();
+					if (tool.SyncOnClientJoint)
+						tool.NetSend();
 				}
 			}
 			else // Otherwise ask for the servers tool data

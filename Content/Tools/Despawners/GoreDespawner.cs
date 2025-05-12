@@ -6,6 +6,8 @@ namespace DragonLens.Content.Tools.Despawners
 	{
 		public override string IconKey => "GoreDespawner";
 
+		public override bool SyncOnClientJoint => false;
+
 		public override void OnActivate()
 		{
 			foreach (Gore gore in Main.gore)

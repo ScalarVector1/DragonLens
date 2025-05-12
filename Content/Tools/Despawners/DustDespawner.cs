@@ -6,6 +6,8 @@ namespace DragonLens.Content.Tools.Despawners
 	{
 		public override string IconKey => "DustDespawner";
 
+		public override bool SyncOnClientJoint => false;
+
 		public override void OnActivate()
 		{
 			foreach (Dust dust in Main.dust)

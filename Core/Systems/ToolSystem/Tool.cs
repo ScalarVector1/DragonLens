@@ -46,11 +46,6 @@ namespace DragonLens.Core.Systems.ToolSystem
 		public virtual string Description => Language.GetText($"Mods.{Mod.Name}.Tools.{LocalizationKey}.Description").Value;
 
 		/// <summary>
-		/// What happens when the user activates this tool, either by clicking on it or using it's hotkey.
-		/// </summary>
-		public abstract void OnActivate();
-
-		/// <summary>
 		/// If this tool has functionality on right click.
 		/// </summary>
 		public virtual bool HasRightClick => false;
@@ -60,6 +55,17 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// Auto-assigned to a localization key if not overridden.
 		/// </summary>
 		public virtual string RightClickName => Language.GetText($"Mods.{Mod.Name}.Tools.{LocalizationKey}.RightClickName").Value;
+
+		/// <summary>
+		/// If this tool should send a sync packet to new clients when they join the server, to get them in sync with the servers state. This should be false for
+		/// things which dont set state but rather use recieve packet to trigger an event, like the NPC clearing tool
+		/// </summary>
+		public virtual bool SyncOnClientJoint => true;
+
+		/// <summary>
+		/// What happens when the user activates this tool, either by clicking on it or using it's hotkey.
+		/// </summary>
+		public abstract void OnActivate();
 
 		/// <summary>
 		/// What happens if this tool is right clicked. Only used if HasRightClick is true.
@@ -99,11 +105,13 @@ namespace DragonLens.Core.Systems.ToolSystem
 			if (Main.netMode == NetmodeID.SinglePlayer) //single player dosent care about packets
 				return;
 
+#if DEBUG
 			if (Main.netMode == NetmodeID.Server)
 				Mod.Logger.Info($"Sending packet for tool {DisplayName} ({Name}) from server");
 
 			if (Main.netMode == NetmodeID.MultiplayerClient)
 				Mod.Logger.Info($"Sending packet for tool {DisplayName} ({Name}) from {Main.LocalPlayer.whoAmI}");
+#endif
 
 			ModPacket packet = Mod.GetPacket();
 			packet.Write("ToolPacket");

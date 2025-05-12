@@ -8,12 +8,16 @@ namespace DragonLens.Content.Tools.Despawners
 	{
 		public override string IconKey => "ProjectileDespawner";
 
+		public override bool SyncOnClientJoint => false;
+
 		public override void OnActivate()
 		{
 			foreach (Projectile proj in Main.projectile)
 			{
 				proj.active = false;
 			}
+
+			NetSend();
 		}
 
 		public override void RecievePacket(BinaryReader reader, int sender)

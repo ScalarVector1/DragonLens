@@ -6,6 +6,8 @@ namespace DragonLens.Content.Tools.Despawners
 	{
 		public override string IconKey => "BuffDespawner";
 
+		public override bool SyncOnClientJoint => false;
+
 		public override void OnActivate()
 		{
 			for (int k = 0; k < Player.MaxBuffs; k++)
