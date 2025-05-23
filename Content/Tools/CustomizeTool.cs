@@ -1,4 +1,5 @@
-﻿using DragonLens.Content.Filters.ToolFilters;
+﻿using DragonLens.Content.Filters;
+using DragonLens.Content.Filters.ToolFilters;
 using DragonLens.Content.GUI;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
@@ -81,8 +82,13 @@ namespace DragonLens.Content.Tools
 
 		public override void SetupFilters(FilterPanel filters)
 		{
-			// Add only mods that have tools
-			foreach (Mod mod in ModContent.GetContent<Tool>().Select(t => t.Mod).Distinct())
+			filters.AddSeperator("Tools.CustomizeTool.FilterCategories.Mod");
+
+			// Add tools from DragonLens
+			filters.AddFilter(new Filter(Assets.Filters.Vanilla, "Tools.CustomizeTool.Filters.DragonLens", n => !(n is ToolBrowserButton && (n as ToolBrowserButton).tool.Mod == ModContent.GetInstance<DragonLens>())) { isModFilter = true });
+
+			// Add any other mods that have tools, excluding DragonLens
+			foreach (Mod mod in ModContent.GetContent<Tool>().Select(t => t.Mod).Distinct().Where(mod => mod != ModContent.GetInstance<DragonLens>()))
 			{
 				filters.AddFilter(new ToolModFilter(mod));
 			}

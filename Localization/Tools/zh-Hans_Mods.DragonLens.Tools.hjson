@@ -646,6 +646,16 @@ CustomizeTool: {
 	DisplayName: 自定义工具
 	Description: 自定义你的工具栏布局！
 	ToolBrowser: 添加工具
+	// FilterCategories.Mod: Mod filters
+
+	Filters: {
+		// Mod.Description: Tools added by the mod {0}
+
+		DragonLens: {
+			// Name: DragonLens
+			// Description: Tools added by DragonLens
+		}
+	}
 }
 
 SoundSpawner: {
