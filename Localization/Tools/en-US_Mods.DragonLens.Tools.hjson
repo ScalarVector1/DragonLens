@@ -650,6 +650,16 @@ CustomizeTool: {
 	DisplayName: Customize tool
 	Description: Customize your toolbar layout!
 	ToolBrowser: Add tool
+	FilterCategories.Mod: Mod filters
+
+	Filters: {
+		Mod.Description: Tools added by the mod {0}
+
+		DragonLens: {
+			Name: DragonLens
+			Description: Tools added by DragonLens
+		}
+	}
 }
 
 SoundSpawner: {

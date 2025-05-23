@@ -671,6 +671,16 @@ CustomizeTool: {
 	DisplayName: Кастомизация инструментов
 	Description: Позволяет настраивать панели инструментов этого мода под себя.
 	ToolBrowser: Добавить инструмент
+	// FilterCategories.Mod: Mod filters
+
+	Filters: {
+		// Mod.Description: Tools added by the mod {0}
+
+		DragonLens: {
+			// Name: DragonLens
+			// Description: Tools added by DragonLens
+		}
+	}
 }
 
 SoundSpawner: {
