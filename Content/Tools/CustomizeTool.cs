@@ -22,6 +22,11 @@ namespace DragonLens.Content.Tools
 
 		public override string IconKey => "Customize";
 
+		public static string GetText(string key, params object[] args)
+		{
+			return LocalizationHelper.GetText($"Tools.CustomizeTool.{key}", args);
+		}
+
 		public override void OnActivate()
 		{
 			if (!customizing)

@@ -15,7 +15,7 @@ namespace DragonLens.Content.Filters.ToolFilters
 
 		public override string Name => mod.DisplayName;
 
-		public override string Description => Helpers.LocalizationHelper.GetText("Tools.CustomizeTool.Filters.Mod.Description", mod.DisplayName);
+		public override string Description => CustomizeTool.GetText("Filters.Mod.Description", mod.DisplayName);
 
 		public static bool FilterByMod(BrowserButton button, Mod mod)
 		{
@@ -35,9 +35,6 @@ namespace DragonLens.Content.Filters.ToolFilters
 			Texture2D tex = null;
 
 			string path = $"{mod.Name}/icon_small";
-
-			//if (mod.Name == "DragonLens")
-				//tex = ModContent.Request<Texture2D>(dlPath).Value;
 
 			if (ModContent.HasAsset(path))
 				tex = ModContent.Request<Texture2D>(path).Value;
