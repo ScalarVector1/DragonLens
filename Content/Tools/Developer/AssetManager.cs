@@ -115,7 +115,7 @@ namespace DragonLens.Content.Tools.Developer
 		public Asset<Texture2D> asset;
 		public Mod mod;
 
-		public override string Identifier => (mod?.Name ?? "Terraria") + "\\" + asset.Name;
+		public override string Identifier => (mod?.Name ?? "Terraria") + " - " + Path.GetFileName(asset.Name);
 
 		public override string Key => (mod?.Name ?? "Terraria") + ":" + asset.Name;
 
@@ -195,7 +195,7 @@ namespace DragonLens.Content.Tools.Developer
 			{
 				Tooltip.SetName(Identifier);
 
-				string tip = "";
+				string tip = asset.Name + "\n\n";
 
 				if (!string.IsNullOrEmpty(mod.SourceFolder))
 					tip += "Click to force reload";
@@ -216,7 +216,7 @@ namespace DragonLens.Content.Tools.Developer
 
 		public string sourcePath;
 
-		public override string Identifier => (mod?.Name ?? "Terraria") + "\\" + asset.Name;
+		public override string Identifier => (mod?.Name ?? "Terraria") + " - " + Path.GetFileName(asset.Name);
 
 		public override string Key => (mod?.Name ?? "Terraria") + ":" + asset.Name;
 
@@ -309,13 +309,13 @@ namespace DragonLens.Content.Tools.Developer
 
 			Color color = string.IsNullOrEmpty(sourcePath) ? Color.Gray : Color.Lerp(Main.DiscoColor, Color.White, 0.5f);
 
-			Utils.DrawBorderString(spriteBatch, preview[..2], iconArea.TopLeft() + new Vector2(6, 12), color);
+			Utils.DrawBorderString(spriteBatch, preview[..Math.Min(preview.Length, 4)], iconArea.Center(), color, 0.7f * (iconArea.Width / 32f), 0.5f, 0.1f);
 
 			if (IsMouseHovering)
 			{
 				Tooltip.SetName(Identifier);
 
-				string tip = "";
+				string tip = asset.Name + "\n\n";
 
 				if (!string.IsNullOrEmpty(mod.SourceFolder))
 					tip += "Click to force reload";
