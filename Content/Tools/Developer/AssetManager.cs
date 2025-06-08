@@ -105,8 +105,29 @@ namespace DragonLens.Content.Tools.Developer
 		public override void SetupSorts()
 		{
 			SortModes.Add(new("Alphabetical", (a, b) => a.Identifier.CompareTo(b.Identifier)));
+			SortModes.Add(new("AlphabeticalPath", CompareAssetButtons));
 
 			SortFunction = SortModes.First().Function;
+		}
+
+		public int CompareAssetButtons(object a, object b)
+		{
+			string pathA = "";
+			string pathB = "";
+
+			if (a is TextureAssetButton texA)
+				pathA = texA.mod + texA.asset.Name;
+
+			if (b is TextureAssetButton texB)
+				pathB = texB.mod + texB.asset.Name;
+
+			if (a is ShaderAssetButton shdA)
+				pathA = shdA.mod + shdA.asset.Name;
+
+			if (b is ShaderAssetButton shdB)
+				pathB = shdB.mod + shdB.asset.Name;
+
+			return pathA.CompareTo(pathB);
 		}
 	}
 
