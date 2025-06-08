@@ -187,7 +187,17 @@ namespace DragonLens.Content.Tools.Developer
 			if (IsMouseHovering)
 			{
 				Tooltip.SetName(Identifier);
-				Tooltip.SetTooltip("Click to force reload\n\nRight-click to export");
+
+				string tip = "";
+
+				if (!string.IsNullOrEmpty(mod.SourceFolder))
+					tip += "Click to force reload";
+				else
+					tip += "[c/FFCCCC:Not loaded from source]";
+
+					tip += "\nRight click to export";
+
+				Tooltip.SetTooltip(tip);
 			}
 		}
 	}
@@ -249,6 +259,8 @@ namespace DragonLens.Content.Tools.Developer
 
 		public async void ReloadFromSource()
 		{
+			Main.NewText($"Starting shader compilation for {asset.Name}", Color.SkyBlue);
+
 			string xnbPath = Path.Combine(mod.SourceFolder, asset.Name);
 			xnbPath = Path.ChangeExtension(xnbPath, "xnb");
 
@@ -297,7 +309,11 @@ namespace DragonLens.Content.Tools.Developer
 				Tooltip.SetName(Identifier);
 
 				string tip = "";
-				tip += "Click to force reload";
+
+				if (!string.IsNullOrEmpty(mod.SourceFolder))
+					tip += "Click to force reload";
+				else
+					tip += "[c/FFCCCC:Not loaded from source]";
 
 				if (sourcePath != null)
 					tip += $"\n\nSource code found at [c/CCCCFF:{sourcePath}]";
