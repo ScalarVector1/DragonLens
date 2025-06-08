@@ -44,3 +44,4 @@ CollapseAll.DisplayName: 收起全部侧栏
 // SystemEditor.DisplayName: "{$Mods.DragonLens.Tools.SystemEditor.DisplayName}"
 // PlayerManager.DisplayName: "{$Mods.DragonLens.Tools.PlayerManager.DisplayName}"
 // AssetInvalidator.DisplayName: Asset Invalidator
+// AssetManager.DisplayName: Asset Manager

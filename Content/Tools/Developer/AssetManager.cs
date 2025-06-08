@@ -37,6 +37,10 @@ namespace DragonLens.Content.Tools.Developer
 
 		public override string Name => ModContent.GetInstance<AssetManager>().DisplayName;
 
+		public override string IconTexture => "AssetManager";
+
+		public override Vector2 DefaultPosition => new(0.2f, 0.4f);
+
 		public override void PostInitialize()
 		{
 			reloadButton = new(this);

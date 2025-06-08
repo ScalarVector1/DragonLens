@@ -882,8 +882,8 @@ PlayerManager: {
 		'''
 }
 
-AssetInvalidator: {
-	// DisplayName: Asset Browser
+AssetManager: {
+	// DisplayName: Asset Manager
 	// Description: Browse, export, or reload the assets of mods; this includes textures and shaders.
 
 	FilterCategories: {

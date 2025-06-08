@@ -79,11 +79,11 @@ namespace DragonLens.Content.Tools.Developer
 		/// <param name="sourcePath"></param>
 		private void TryCopyIncludes(string sourcePath)
 		{
-			var lines = File.ReadAllLines(sourcePath);
+			string[] lines = File.ReadAllLines(sourcePath);
 
-			foreach(string include in lines.Where(n => n.StartsWith("#include")))
+			foreach (string include in lines.Where(n => n.StartsWith("#include")))
 			{
-				var groups = Regex.Match(include, "#include[\t ]+\"(.*)\"").Groups;
+				GroupCollection groups = Regex.Match(include, "#include[\t ]+\"(.*)\"").Groups;
 
 				if (groups.Count > 1)
 				{
@@ -130,8 +130,16 @@ namespace DragonLens.Content.Tools.Developer
 			string output = "";
 			string error = "";
 
-			process.OutputDataReceived += (sender, args) => { if (args.Data != null) output += args.Data + "\n"; };
-			process.ErrorDataReceived += (sender, args) => { if (args.Data != null) error += args.Data + "\n"; };
+			process.OutputDataReceived += (sender, args) =>
+			{
+				if (args.Data != null)
+					output += args.Data + "\n";
+			};
+			process.ErrorDataReceived += (sender, args) =>
+			{
+				if (args.Data != null)
+					error += args.Data + "\n";
+			};
 
 			process.Start();
 
@@ -146,7 +154,7 @@ namespace DragonLens.Content.Tools.Developer
 			if (!string.IsNullOrEmpty(error))
 				DragonLens.instance.Logger.Error(error);
 
-			foreach (var file in Directory.EnumerateFiles(Path.GetDirectoryName(target)))
+			foreach (string file in Directory.EnumerateFiles(Path.GetDirectoryName(target)))
 			{
 				File.Delete(file);
 			}

@@ -886,7 +886,7 @@ PlayerManager: {
 		'''
 }
 
-AssetInvalidator: {
+AssetManager: {
 	DisplayName: Asset Manager
 	Description: Browse, export, or reload the assets of mods; this includes textures and shaders.
 
@@ -898,12 +898,12 @@ AssetInvalidator: {
 	Filters: {
 		Texture: {
 			Name: Texture assets
-			Description: Assets which are textures (Texture2D). These are .png files in your mod.
+			Description: Assets which are textures (Texture2D), these are .png files in your mod typically
 		}
 
 		Effect: {
 			Name: Effect/Shader assets
-			Description: Assets which are shaders (Effect). These are .xnb files in your mod, and usually have a .fx source code file as well.
+			Description: Assets which are shaders (Effect), these are .xnb files in your mod typically, and usually have a .fx source code file aswell
 		}
 	}
 }
