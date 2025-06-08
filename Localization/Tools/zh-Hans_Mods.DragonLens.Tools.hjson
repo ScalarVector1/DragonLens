@@ -883,6 +883,23 @@ PlayerManager: {
 }
 
 AssetInvalidator: {
-	// DisplayName: AssetInvalidator
-	// Description: The tool has no description! Add one in .hjson files!
+	// DisplayName: Asset Browser
+	// Description: Browse, export, or reload the assets of mods; this includes textures and shaders.
+
+	FilterCategories: {
+		// Mod: Mod filters
+		// Type: Type filters
+	}
+
+	Filters: {
+		Texture: {
+			// Name: Texture assets
+			// Description: Assets which are textures (Texture2D), these are .png files in your mod typically
+		}
+
+		Effect: {
+			// Name: Effect/Shader assets
+			// Description: Assets which are shaders (Effect), these are .xnb files in your mod typically, and usually have a .fx source code file aswell
+		}
+	}
 }

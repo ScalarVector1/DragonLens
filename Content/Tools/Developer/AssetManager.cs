@@ -9,18 +9,17 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Terraria.ModLoader.Assets;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
 namespace DragonLens.Content.Tools.Developer
 {
-	internal class AssetInvalidator : BrowserTool<AssetBrowser>
+	internal class AssetManager : BrowserTool<AssetBrowser>
 	{
 		public static ShaderCompiler compiler = new();
 
-		public override string IconKey => "AssetInvalidator";
+		public override string IconKey => "AssetManager";
 
 		public override bool SyncOnClientJoint => false;
 
@@ -36,7 +35,7 @@ namespace DragonLens.Content.Tools.Developer
 	{
 		public ReloadButton reloadButton;
 
-		public override string Name => "Asset Browser";
+		public override string Name => ModContent.GetInstance<AssetManager>().DisplayName;
 
 		public override void PostInitialize()
 		{
@@ -58,8 +57,8 @@ namespace DragonLens.Content.Tools.Developer
 
 			foreach (Mod mod in ModLoader.Mods)
 			{
-				//if (mod is DragonLens)
-				//continue;
+				if (mod is DragonLens)
+					continue;
 
 				AssetRepository repo = mod.Assets;
 
@@ -84,7 +83,7 @@ namespace DragonLens.Content.Tools.Developer
 
 		public override void SetupFilters(FilterPanel filters)
 		{
-			filters.AddSeperator("Tools.ItemSpawner.FilterCategories.Mod");
+			filters.AddSeperator("Tools.AssetManager.FilterCategories.Mod");
 
 			foreach (Mod mod in ModLoader.Mods)
 			{
@@ -93,6 +92,10 @@ namespace DragonLens.Content.Tools.Developer
 
 				filters.AddFilter(new AssetModFilter(mod));
 			}
+
+			filters.AddSeperator("Tools.AssetManager.FilterCategories.Type");
+			filters.AddFilter(new(Assets.Filters.Vanilla, "Tools.AssetManager.Filters.Texture", n => n is not TextureAssetButton));
+			filters.AddFilter(new(Assets.Filters.Magic, "Tools.AssetManager.Filters.Effect", n => n is not ShaderAssetButton));
 		}
 
 		public override void SetupSorts()
@@ -195,7 +198,7 @@ namespace DragonLens.Content.Tools.Developer
 				else
 					tip += "[c/FFCCCC:Not loaded from source]";
 
-					tip += "\nRight click to export";
+				tip += "\nRight click to export";
 
 				Tooltip.SetTooltip(tip);
 			}
@@ -264,7 +267,7 @@ namespace DragonLens.Content.Tools.Developer
 			string xnbPath = Path.Combine(mod.SourceFolder, asset.Name);
 			xnbPath = Path.ChangeExtension(xnbPath, "xnb");
 
-			await AssetInvalidator.compiler.StartShaderBuild(sourcePath, xnbPath);
+			await AssetManager.compiler.StartShaderBuild(sourcePath, xnbPath);
 			Main.QueueMainThreadAction(ReloadFromBinary);
 		}
 
