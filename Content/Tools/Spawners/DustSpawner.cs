@@ -213,7 +213,7 @@ namespace DragonLens.Content.Tools.Spawners
 			{
 				//We use reflection here to steal the name from DustID of this vanilla dust
 				System.Reflection.FieldInfo[] fields = typeof(DustID).GetFields();
-				name = fields.FirstOrDefault(n => (short)n.GetValue(null) == dust.type).Name;
+				name = fields.FirstOrDefault(n => n.FieldType == typeof(short) && (short)n.GetValue(null) == dust.type).Name;
 
 				name = Regex.Replace(name, "([a-z])([A-Z])", "$1 $2");
 

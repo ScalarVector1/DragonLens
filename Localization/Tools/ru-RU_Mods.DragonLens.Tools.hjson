@@ -906,3 +906,8 @@ PlayerManager: {
 		Жив: {4}
 		'''
 }
+
+AssetInvalidator: {
+	// DisplayName: AssetInvalidator
+	// Description: The tool has no description! Add one in .hjson files!
+}

@@ -237,7 +237,7 @@ namespace DragonLens.Content.Tools.Spawners
 			base.SafeUpdate(gameTime);
 		}
 
-		protected override void DrawSelf(SpriteBatch spriteBatch)
+		public override void DrawSelf(SpriteBatch spriteBatch)
 		{
 			int size = (int)MathHelper.Clamp(parent.buttonSize, 36, 108);
 			var iconBox = GetDimensions().ToRectangle();
