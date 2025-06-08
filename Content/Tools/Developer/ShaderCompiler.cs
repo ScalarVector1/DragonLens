@@ -6,62 +6,27 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
+using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
 using static Terraria.ModLoader.Core.TmodFile;
 
 namespace DragonLens.Content.Tools.Developer
 {
-	internal class ShaderCompiler : Tool
+	internal class ShaderCompiler
 	{
 		public static readonly string cachePath = Path.Join(Main.SavePath, "DragonLensShaderCache");
 
 		public static readonly string compilerPath = Path.Join(Main.SavePath, "DragonLensShaderCache", "EasyXnb.exe");
 
-		public static bool busy;
-
-		public static bool needsReload;
-
-		public override string IconKey => "ShaderCompiler";
+		private static readonly SemaphoreSlim shaderBuildSemaphore = new(1, 1);
 
 		public ShaderCompiler() : base()
 		{
 			if (!File.Exists(compilerPath))
 				Setup();
-		}
-
-		public override void OnActivate()
-		{
-			if (busy)
-			{
-				Main.NewText(LocalizationHelper.GetToolText("ShaderCompiler.Busy"), Color.Orange);
-				return;
-			}
-
-			Main.NewText(LocalizationHelper.GetToolText("ShaderCompiler.Triggered"));
-			busy = true;
-
-			Stopwatch watch = new();
-
-			var thread = new Thread(() =>
-			{
-				watch.Start();
-
-				foreach (Mod mod in ModLoader.Mods)
-				{
-					if (PrepAllShaders(mod))
-					{
-						CompileShaders(mod);
-						CopyShadersBack(mod);
-					}
-				}
-
-				watch.Stop();
-				Main.NewText(LocalizationHelper.GetToolText("ShaderCompiler.Completed", watch.ElapsedMilliseconds));
-				needsReload = true;
-				busy = false;
-			});
-			thread.Start();
 		}
 
 		/// <summary>
@@ -90,33 +55,66 @@ namespace DragonLens.Content.Tools.Developer
 			File.WriteAllBytes(Path.Combine(cachePath, name), ModLoader.GetMod("DragonLens").GetFileBytes($"EasyXnb/{name}"));
 		}
 
-		public static bool PrepAllShaders(Mod mod)
+		/// <summary>
+		/// Starts an async shader build
+		/// </summary>
+		/// <param name="path"></param>
+		public async Task<bool> StartShaderBuild(string path, string dest)
 		{
-			if (Main.dedServ)
-				return false;
+			await shaderBuildSemaphore.WaitAsync();
 
-			MethodInfo info = typeof(Mod).GetProperty("File", BindingFlags.NonPublic | BindingFlags.Instance).GetGetMethod(true);
-			var file = (TmodFile)info.Invoke(mod, null);
-
-			if (file is null)
-				return false;
-
-			IEnumerable<FileEntry> shaders = file.Where(n => n.Name.StartsWith("Effects/") && n.Name.Count(a => a == '/') <= 1 && n.Name.EndsWith(".fx"));
-
-			if (shaders.Count() <= 0)
-				return false;
-
-			foreach (FileEntry entry in shaders)
+			try
 			{
-				string fileName = entry.Name.Replace("Effects/", "");
-				File.WriteAllBytes(Path.Combine(cachePath, fileName), mod.GetFileBytes(entry.Name));
+				return await Task.Run(() => BuildShader(path, dest));
 			}
-
-			return true;
+			finally
+			{
+				shaderBuildSemaphore.Release();
+			}
 		}
 
-		public void CompileShaders(Mod mod)
+		/// <summary>
+		/// Scans the source for include statements and tries to copy them over if applicable
+		/// </summary>
+		/// <param name="sourcePath"></param>
+		private void TryCopyIncludes(string sourcePath)
 		{
+			var lines = File.ReadAllLines(sourcePath);
+
+			foreach(string include in lines.Where(n => n.StartsWith("#include")))
+			{
+				var groups = Regex.Match(include, "#include[\t ]+\"(.*)\"").Groups;
+
+				if (groups.Count > 1)
+				{
+					string includePath = groups[1].Value;
+					includePath = Path.Combine(Path.GetDirectoryName(sourcePath), includePath);
+
+					if (File.Exists(includePath))
+					{
+						string target = Path.Combine(cachePath, "Source", Path.GetFileName(includePath));
+						Directory.CreateDirectory(Path.GetDirectoryName(target));
+						File.Copy(includePath, target, true);
+
+						DragonLens.instance.Logger.Info($"Copying import {includePath}");
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Inner logic to build the effect
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
+		private bool BuildShader(string path, string dest)
+		{
+			string target = Path.Combine(cachePath, "Source", Path.GetFileName(path));
+			Directory.CreateDirectory(Path.GetDirectoryName(target));
+			File.Copy(path, target, true);
+
+			TryCopyIncludes(path);
+
 			Process process = new()
 			{
 				StartInfo = {
@@ -129,114 +127,42 @@ namespace DragonLens.Content.Tools.Developer
 				}
 			};
 
+			string output = "";
+			string error = "";
+
+			process.OutputDataReceived += (sender, args) => { if (args.Data != null) output += args.Data + "\n"; };
+			process.ErrorDataReceived += (sender, args) => { if (args.Data != null) error += args.Data + "\n"; };
+
 			process.Start();
 
-			string output = process.StandardOutput.ReadToEnd();
-			Mod.Logger.Info(output);
-			string err = process.StandardError.ReadToEnd();
-			Mod.Logger.Error(err);
+			process.BeginOutputReadLine();
+			process.BeginErrorReadLine();
 
 			process.WaitForExit();
 
-			Main.NewText(LocalizationHelper.GetToolText("ShaderCompiler.Recompiled", mod.DisplayName), Color.SkyBlue);
+			if (!string.IsNullOrEmpty(output))
+				DragonLens.instance.Logger.Info(output);
 
-			if (!Directory.Exists(Path.Combine(cachePath, mod.Name)))
-				Directory.CreateDirectory(Path.Combine(cachePath, mod.Name));
+			if (!string.IsNullOrEmpty(error))
+				DragonLens.instance.Logger.Error(error);
 
-			//Copy the compiled shaders into the mod-specific cache subdir
-			IEnumerable<string> files = Directory.GetFiles(cachePath).Where(n => n.EndsWith(".xnb"));
-
-			foreach (string path in files)
+			foreach (var file in Directory.EnumerateFiles(Path.GetDirectoryName(target)))
 			{
-				string target = Path.Combine(cachePath, mod.Name, Path.GetFileName(path));
-
-				if (File.Exists(target))
-					File.Replace(path, target, null);
-				else
-					File.Copy(path, target);
-			}
-		}
-
-		public static void CopyShadersBack(Mod mod)
-		{
-			MethodInfo info = typeof(Mod).GetProperty("File", BindingFlags.NonPublic | BindingFlags.Instance).GetGetMethod(true);
-			var file = (TmodFile)info.Invoke(mod, null);
-
-			if (file is null)
-				return;
-
-			if (file.path.StartsWith(ModLoader.ModPath) && Directory.Exists(Path.Combine(cachePath, mod.Name)))
-			{
-				IEnumerable<string> files = Directory.GetFiles(Path.Combine(cachePath, mod.Name)).Where(n => n.EndsWith(".xnb"));
-
-				foreach (string path in files)
-				{
-					string target = Path.Join(file.path.Replace("\\Mods\\", "\\ModSources\\").Replace(".tmod", ""), "Effects", Path.GetFileName(path));
-
-					if (File.Exists(target))
-						File.Replace(path, target, null);
-					else
-						File.Copy(path, target);
-				}
-			}
-		}
-
-		public static void LoadAllShaders(Mod mod)
-		{
-			if (Main.dedServ)
-				return;
-
-			MethodInfo info = typeof(Mod).GetProperty("File", BindingFlags.NonPublic | BindingFlags.Instance).GetGetMethod(true);
-			var file = (TmodFile)info.Invoke(mod, null);
-
-			if (file is null)
-				return;
-
-			IEnumerable<FileEntry> shaders = file.Where(n => n.Name.StartsWith("Effects/") && n.Name.Count(a => a == '/') <= 1 && n.Name.EndsWith(".xnb"));
-
-			if (shaders.Count() <= 0)
-				return;
-
-			foreach (FileEntry entry in shaders)
-			{
-				string path = entry.Name.Replace(".xnb", "").Replace("Effects/", "Effects\\");
-				LoadShader(path, mod);
+				File.Delete(file);
 			}
 
-			Main.NewText($"Re-loaded shaders for {mod.DisplayName}!", Color.MediumPurple);
-		}
+			string compiledPath = Path.ChangeExtension(Path.Combine(cachePath, Path.GetFileName(path)), "xnb");
 
-		public static void LoadShader(string path, Mod mod)
-		{
-			var modEffects = mod.Assets.GetLoadedAssets().OfType<ReLogic.Content.Asset<Effect>>().ToDictionary(x => x.Name);
-			var contentManager = new ContentManager(Main.instance.Content.ServiceProvider, Path.Join(ModLoader.ModPath.Replace("\\Mods", "\\ModSources"), mod.Name));
-
-			Effect originalEffect = null;
-			if (modEffects.ContainsKey(path))
+			if (File.Exists(compiledPath))
 			{
-				originalEffect = modEffects[path].Value;
+				File.Move(compiledPath, dest, true);
+				Main.NewText(LocalizationHelper.GetToolText("ShaderCompiler.Recompiled", path), Color.SkyBlue);
+				return true;
 			}
-
-			FieldInfo ownValueField = modEffects[path].GetType().GetField("ownValue", BindingFlags.Instance | BindingFlags.NonPublic);
-			ownValueField.SetValue(modEffects[path], contentManager.Load<Effect>(path));
-		}
-	}
-
-	/// <summary>
-	/// Allows us to reload all shaders at a safe time once they're ready
-	/// </summary>
-	public class ShaderSystem : ModSystem
-	{
-		public override void PostUpdateEverything()
-		{
-			if (ShaderCompiler.needsReload)
+			else
 			{
-				foreach (Mod mod in ModLoader.Mods)
-				{
-					ShaderCompiler.LoadAllShaders(mod);
-				}
-
-				ShaderCompiler.needsReload = false;
+				Main.NewText($"Failed to compile: {error}", Color.Red);
+				return false;
 			}
 		}
 	}

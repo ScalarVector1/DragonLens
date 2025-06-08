@@ -12,6 +12,13 @@ namespace DragonLens
 {
 	public class DragonLens : Mod
 	{
+		public static DragonLens instance;
+
+		public DragonLens()
+		{
+			instance = this;
+		}
+
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
 		{
 			string type = reader.ReadString();

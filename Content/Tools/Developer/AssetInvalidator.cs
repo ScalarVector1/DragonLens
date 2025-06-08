@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Terraria.ModLoader.Assets;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -17,6 +18,8 @@ namespace DragonLens.Content.Tools.Developer
 {
 	internal class AssetInvalidator : BrowserTool<AssetBrowser>
 	{
+		public static ShaderCompiler compiler = new();
+
 		public override string IconKey => "AssetInvalidator";
 
 		public override bool SyncOnClientJoint => false;
@@ -237,27 +240,44 @@ namespace DragonLens.Content.Tools.Developer
 					return;
 				}
 
-				string path = Path.Combine(mod.SourceFolder, asset.Name);
-				path = Path.ChangeExtension(path, "xnb");
+				if (!string.IsNullOrEmpty(sourcePath) && File.Exists(sourcePath))
+					ReloadFromSource();
+				else
+					ReloadFromBinary();
+			}
+		}
 
-				Stream stream = File.OpenRead(path);
+		public async void ReloadFromSource()
+		{
+			string xnbPath = Path.Combine(mod.SourceFolder, asset.Name);
+			xnbPath = Path.ChangeExtension(xnbPath, "xnb");
 
-				byte[] xnbHeader = new byte[4];
+			await AssetInvalidator.compiler.StartShaderBuild(sourcePath, xnbPath);
+			Main.QueueMainThreadAction(ReloadFromBinary);
+		}
 
-				stream.Read(xnbHeader, 0, xnbHeader.Length);
-				if (xnbHeader[0] == 'X' &&
-					xnbHeader[1] == 'N' &&
-					xnbHeader[2] == 'B' &&
-					ContentManager.targetPlatformIdentifiers.Contains((char)xnbHeader[3]))
-				{
-					using var xnbReader = new BinaryReader(stream);
-					using ContentReader reader = Main.instance.Content.GetContentReaderFromXnb(asset.Name, ref stream, xnbReader, (char)xnbHeader[3], null);
+		public void ReloadFromBinary()
+		{
+			string path = Path.Combine(mod.SourceFolder, asset.Name);
+			path = Path.ChangeExtension(path, "xnb");
 
-					var newValue = reader.ReadAsset<Effect>() as Effect;
-					asset.ownValue = newValue;
+			Stream stream = File.OpenRead(path);
 
-					Main.NewText($"Loaded new value from [c/CCCCFF:{path}]");
-				}
+			byte[] xnbHeader = new byte[4];
+
+			stream.Read(xnbHeader, 0, xnbHeader.Length);
+			if (xnbHeader[0] == 'X' &&
+				xnbHeader[1] == 'N' &&
+				xnbHeader[2] == 'B' &&
+				ContentManager.targetPlatformIdentifiers.Contains((char)xnbHeader[3]))
+			{
+				using var xnbReader = new BinaryReader(stream);
+				using ContentReader reader = Main.instance.Content.GetContentReaderFromXnb(asset.Name, ref stream, xnbReader, (char)xnbHeader[3], null);
+
+				var newValue = reader.ReadAsset<Effect>() as Effect;
+				asset.ownValue = newValue;
+
+				Main.NewText($"Loaded new value from [c/CCCCFF:{path}]");
 			}
 		}
 
@@ -282,7 +302,7 @@ namespace DragonLens.Content.Tools.Developer
 				if (sourcePath != null)
 					tip += $"\n\nSource code found at [c/CCCCFF:{sourcePath}]";
 				else
-					tip += "\n\n[c/FFAAAA:Could not find source code :(]";
+					tip += "\n\n[c/FFAAAA:Could not find source code...]";
 
 				Tooltip.SetTooltip(tip);
 			}
