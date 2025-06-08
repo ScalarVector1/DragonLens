@@ -6,6 +6,7 @@ Browser: {
 	Sort: {
 		ID: By ID
 		Alphabetical: Alphabetical
+		AlphabeticalPath: Alphabetical by Path
 		Damage: By Damage
 		Defense: By Defense
 		Value: By Gold Value
