@@ -22,13 +22,6 @@ namespace DragonLens.Content.Tools.Developer
 		public override string IconKey => "AssetManager";
 
 		public override bool SyncOnClientJoint => false;
-
-		public override void OnActivate()
-		{
-			AssetBrowser state = UILoader.GetUIState<AssetBrowser>();
-			state.Refresh();
-			base.OnActivate();
-		}
 	}
 
 	internal class AssetBrowser : Browser
