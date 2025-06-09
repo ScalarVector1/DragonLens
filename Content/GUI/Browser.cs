@@ -22,7 +22,7 @@ namespace DragonLens.Content.GUI
 	{
 		public BrowserTool tool;
 
-		private UIGrid options;
+		internal UIGrid options;
 		private StyledScrollbar scrollBar;
 		private ToggleButton listButton;
 		private ToggleButton filterButton;
@@ -302,7 +302,7 @@ namespace DragonLens.Content.GUI
 			if (filtered)
 				return;
 
-			if (IsMouseHovering && !Main.oldKeyState.IsKeyDown(Main.FavoriteKey) && Main.keyState.IsKeyDown(Main.FavoriteKey))
+			if (IsMouseHovering && !Main.oldKeyState.IsKeyDown(Main.FavoriteKey) && Main.keyState.IsKeyDown(Main.FavoriteKey) && parent.tool != null)
 			{
 				if (Favorite)
 					parent.tool.Favorites.Remove(Key);

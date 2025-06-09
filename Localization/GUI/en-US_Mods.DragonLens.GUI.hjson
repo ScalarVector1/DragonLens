@@ -10,6 +10,7 @@ Browser: {
 		Defense: By Defense
 		Value: By Gold Value
 		Life: By Maximum Life
+		AlphabeticalPath: Alphabetical by Path
 	}
 
 	ButtonSizeSlider: {

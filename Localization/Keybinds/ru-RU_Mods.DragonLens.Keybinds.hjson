@@ -43,3 +43,5 @@ SoundSpawner.DisplayName: "{$Mods.DragonLens.Tools.SoundSpawner.DisplayName}"
 EntityEditor.DisplayName: "{$Mods.DragonLens.Tools.EntityEditor.DisplayName}"
 SystemEditor.DisplayName: "{$Mods.DragonLens.Tools.SystemEditor.DisplayName}"
 PlayerManager.DisplayName: "{$Mods.DragonLens.Tools.PlayerManager.DisplayName}"
+// AssetInvalidator.DisplayName: Asset Invalidator
+// AssetManager.DisplayName: Asset Manager
