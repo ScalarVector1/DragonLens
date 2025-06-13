@@ -910,6 +910,6 @@ AssetManager: {
 
 Pause: {
 	DisplayName: Pause
-	Description: The tool has no description! Add one in .hjson files!
-	RightClickName: Pause Right Click
+	Description: Pauses the game. You can right click this tool to advance by a single frame while paused.
+	RightClickName: (Pause) Step single frame
 }
