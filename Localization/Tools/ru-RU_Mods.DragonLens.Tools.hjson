@@ -938,3 +938,9 @@ AssetManager: {
 		}
 	}
 }
+
+Pause: {
+	// DisplayName: Pause
+	// Description: The tool has no description! Add one in .hjson files!
+	// RightClickName: Pause Right Click
+}

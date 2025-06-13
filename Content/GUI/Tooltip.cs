@@ -69,12 +69,12 @@ namespace DragonLens.Content.GUI
 			Vector2 pos = Main.MouseScreen + new Vector2(32, 32);
 
 			if (pos.X > Main.screenWidth - (width + 10))
-				pos.X = Main.screenWidth - (width + 10);
+				pos.X = Main.screenWidth - (width + 10) - 16;
 
 			height += ChatManager.GetStringSize(font, tooltip, Vector2.One * 0.9f, 200).Y + 36;
 
 			if (pos.Y + height > Main.screenHeight)
-				pos.Y -= height;
+				pos.Y = Main.screenHeight - height - 16;
 
 			Utils.DrawInvBG(Main.spriteBatch, new Rectangle((int)pos.X - 10, (int)pos.Y - 10, (int)width + 20, (int)height + 20), new Color(20, 20, 55) * 0.925f);
 

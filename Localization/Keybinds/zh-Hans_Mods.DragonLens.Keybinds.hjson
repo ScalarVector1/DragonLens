@@ -45,3 +45,5 @@ CollapseAll.DisplayName: 收起全部侧栏
 // PlayerManager.DisplayName: "{$Mods.DragonLens.Tools.PlayerManager.DisplayName}"
 // AssetInvalidator.DisplayName: Asset Invalidator
 // AssetManager.DisplayName: Asset Manager
+// Pause.DisplayName: Pause
+// PauseRightClick.DisplayName: Pause Right Click

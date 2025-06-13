@@ -45,3 +45,5 @@ SystemEditor.DisplayName: "{$Mods.DragonLens.Tools.SystemEditor.DisplayName}"
 PlayerManager.DisplayName: "{$Mods.DragonLens.Tools.PlayerManager.DisplayName}"
 AssetInvalidator.DisplayName: Asset Invalidator
 AssetManager.DisplayName: Asset Manager
+Pause.DisplayName: Pause
+PauseRightClick.DisplayName: Pause Right Click
