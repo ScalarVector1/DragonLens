@@ -145,12 +145,5 @@ namespace DragonLens.Content.GUI
 			AdjustPositions(basePos);
 			Recalculate();
 		}
-
-		public override void Draw(SpriteBatch spriteBatch)
-		{
-			base.Draw(spriteBatch);
-
-			spriteBatch.Draw(Terraria.GameContent.TextureAssets.MagicPixel.Value, DragBox, Color.Red * 0.5f);
-		}
 	}
 }
