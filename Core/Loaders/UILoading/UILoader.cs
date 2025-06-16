@@ -14,6 +14,7 @@ namespace DragonLens.Core.Loaders.UILoading
 		/// The collection of automatically craetaed UserInterfaces for SmartUIStates.
 		/// </summary>
 		public static List<UserInterface> UserInterfaces = new();
+		public static List<UserInterface> SortedUserInterfaces = new();
 
 		/// <summary>
 		/// The collection of all automatically loaded SmartUIStates.
@@ -64,7 +65,7 @@ namespace DragonLens.Core.Loaders.UILoading
 		public static void AddLayer(List<GameInterfaceLayer> layers, UIState state, int index, bool visible, InterfaceScaleType scale)
 		{
 			string name = state == null ? "Unknown" : state.ToString();
-			layers.Insert(index, new LegacyGameInterfaceLayer("BrickAndMortar: " + name,
+			layers.Insert(index, new LegacyGameInterfaceLayer("DragonLens: " + name,
 				delegate
 				{
 					if (visible)
@@ -80,12 +81,21 @@ namespace DragonLens.Core.Loaders.UILoading
 		/// <param name="gameTime"></param>
 		public override void UpdateUI(GameTime gameTime)
 		{
-			if (Main.ingameOptionsWindow || Main.InGameUI.IsVisible)
+			if (Main.ingameOptionsWindow || Main.InGameUI.IsVisible || SortedUserInterfaces is null)
 				return;
-			foreach (UserInterface eachState in UserInterfaces)
+
+			foreach (UserInterface eachState in SortedUserInterfaces)
 			{
 				if (eachState?.CurrentState != null && ((SmartUIState)eachState.CurrentState).Visible)
+				{
 					eachState.Update(gameTime);
+
+					if (eachState.LeftMouse.WasDown && eachState.LeftMouse.LastDown is not null && eachState.LeftMouse.LastDown is not UIState)
+						Main.mouseLeft = false;
+
+					if (eachState.RightMouse.WasDown && eachState.RightMouse.LastDown is not null && eachState.RightMouse.LastDown is not UIState)
+						Main.mouseRight = false;
+				}
 			}
 		}
 
@@ -117,11 +127,24 @@ namespace DragonLens.Core.Loaders.UILoading
 		/// <param name="layers"></param>
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
 		{
-			for (int k = 0; k < UIStates.Count; k++)
+			List<Tuple<UserInterface, int>> orderedInterfaces = new();
+
+			for (int k = 0; k < UserInterfaces.Count; k++)
 			{
-				SmartUIState state = UIStates[k];
-				AddLayer(layers, state, state.InsertionIndex(layers), state.Visible, state.Scale);
+				UserInterface inter = UserInterfaces[k];
+
+				if (inter.CurrentState is not SmartUIState)
+					continue;
+
+				SmartUIState state = inter.CurrentState as SmartUIState;
+
+				int index = state.InsertionIndex(layers);
+				AddLayer(layers, state, index, state.Visible, state.Scale);
+				orderedInterfaces.Add(new Tuple<UserInterface, int>(inter, index));
 			}
+
+			orderedInterfaces.Sort((a, b) => a.Item2.CompareTo(b.Item2) * -1);
+			SortedUserInterfaces = orderedInterfaces.Select(a => a.Item1).ToList();
 		}
 	}
 }

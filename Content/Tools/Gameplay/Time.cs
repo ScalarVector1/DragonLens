@@ -77,7 +77,7 @@ namespace DragonLens.Content.Tools.Gameplay
 		public TimePauseButton pause;
 		public MoonPhaseButton[] moonButtons;
 
-		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 400, 32);
+		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 400, 54);
 
 		public override Vector2 DefaultPosition => new(0.5f, 0.5f);
 

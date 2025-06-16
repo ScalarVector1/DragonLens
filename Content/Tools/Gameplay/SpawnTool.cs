@@ -67,7 +67,7 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public SpawnSlider slider;
 
-		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 360, 32);
+		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 360, 54);
 
 		public override Vector2 DefaultPosition => new(0.5f, 0.7f);
 

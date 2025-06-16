@@ -9,6 +9,8 @@ namespace DragonLens.Content.GUI
 	/// </summary>
 	public abstract class DraggableUIState : SmartUIState
 	{
+		public static bool draggingAny;
+
 		private UIImageButton closeButton;
 		private UIImageButton helpButton;
 
@@ -88,11 +90,17 @@ namespace DragonLens.Content.GUI
 		public sealed override void SafeUpdate(GameTime gameTime)
 		{
 			if (!Main.mouseLeft && dragging)
-				dragging = false;
-
-			if (DragBox.Contains(Main.MouseScreen.ToPoint()) && Main.mouseLeft || dragging)
 			{
+				dragging = false;
+				draggingAny = false;
+			}
+
+			if (DragBox.Contains(Main.MouseScreen.ToPoint()) && Main.mouseLeft && !draggingAny || dragging)
+			{
+				Main.mouseLeft = false;
+
 				dragging = true;
+				draggingAny = true;
 
 				if (dragOff == Vector2.Zero)
 					dragOff = Main.MouseScreen - basePos;
@@ -136,6 +144,13 @@ namespace DragonLens.Content.GUI
 
 			AdjustPositions(basePos);
 			Recalculate();
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			base.Draw(spriteBatch);
+
+			spriteBatch.Draw(Terraria.GameContent.TextureAssets.MagicPixel.Value, DragBox, Color.Red * 0.5f);
 		}
 	}
 }

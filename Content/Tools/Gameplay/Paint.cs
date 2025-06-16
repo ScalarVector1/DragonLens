@@ -67,7 +67,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public Point16 PlaceTarget => new Point16(Player.tileTargetX, Player.tileTargetY) + placeOffset;
 
-		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 400, 32);
+		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 400, 54);
 
 		public override Vector2 DefaultPosition => new(0.7f, 0.5f);
 
