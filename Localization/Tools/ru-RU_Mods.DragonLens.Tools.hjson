@@ -935,7 +935,7 @@ AssetManager: {
 	RBMToExport: Нажмите ПКМ, чтобы экспортировать.
 	SourceCodeFound: Искодный код эффекта найден по пути [c/CCCCFF:{0}]
 	NotFindSourceCode: Исходный код эффекта не найден.
-	StartingCompilation: Starting shader compilation for {0}
+	StartingCompilation: Начата компиляция шейдера {0}
 
 	Rescan: {
 		DisplayName: Пересканирование
