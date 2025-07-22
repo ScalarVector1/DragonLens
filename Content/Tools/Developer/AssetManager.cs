@@ -147,7 +147,7 @@ namespace DragonLens.Content.Tools.Developer
 			{
 				if (string.IsNullOrEmpty(mod.SourceFolder))
 				{
-					Main.NewText("Mod is not loaded from source, reloading this asset will have no effect.", Color.Red);
+					Main.NewText(LocalizationHelper.GetToolText("AssetManager.NotSourseMod"), Color.Red);
 					return;
 				}
 
@@ -161,17 +161,17 @@ namespace DragonLens.Content.Tools.Developer
 						var newValue = Texture2D.FromStream(Main.graphics.GraphicsDevice, stream);
 						asset.ownValue = newValue;
 
-						Main.NewText($"Loaded new value from [c/CCCCFF:{path}]");
+						Main.NewText(LocalizationHelper.GetToolText("AssetManager.LoadedNewValue", path));
 					}
 				}
 				else
 				{
-					Main.NewText($"Could not reload as path does not exist! Tried: [c/FFCCCC:{path}]");
+					Main.NewText(LocalizationHelper.GetToolText("AssetManager.PathDoesntExist", path));
 				}
 			}
 			else
 			{
-				Main.NewText("You cannot reload this asset");
+				Main.NewText(LocalizationHelper.GetToolText("AssetManager.CannotReload"));
 			}
 		}
 
@@ -195,7 +195,7 @@ namespace DragonLens.Content.Tools.Developer
 				stream.Close();
 			}
 
-			Main.NewText($"Exported to [c/CCCCFF:{path}]");
+			Main.NewText(LocalizationHelper.GetToolText("AssetManager.Exported", path));
 		}
 
 		public override void SafeDraw(SpriteBatch spriteBatch, Rectangle iconArea)
@@ -212,11 +212,11 @@ namespace DragonLens.Content.Tools.Developer
 				string tip = asset.Name + "\n\n";
 
 				if (!string.IsNullOrEmpty(mod.SourceFolder))
-					tip += "Click to force reload";
+					tip += LocalizationHelper.GetToolText("AssetManager.ClickToReload");
 				else
-					tip += "[c/FFCCCC:Not loaded from source]";
+					tip += $"[c/FFCCCC:{LocalizationHelper.GetToolText("AssetManager.NotFromSourse")}]";
 
-				tip += "\nRight click to export";
+				tip += $"\n{LocalizationHelper.GetToolText("AssetManager.RBMToExport")}";
 
 				Tooltip.SetTooltip(tip);
 			}
@@ -267,7 +267,7 @@ namespace DragonLens.Content.Tools.Developer
 			{
 				if (string.IsNullOrEmpty(mod.SourceFolder))
 				{
-					Main.NewText("Mod is not loaded from source, reloading this asset will have no effect.", Color.Red);
+					Main.NewText(LocalizationHelper.GetToolText("AssetManager.NotSourseMod"), Color.Red);
 					return;
 				}
 
@@ -280,7 +280,7 @@ namespace DragonLens.Content.Tools.Developer
 
 		public async void ReloadFromSource()
 		{
-			Main.NewText($"Starting shader compilation for {asset.Name}", Color.SkyBlue);
+			Main.NewText(LocalizationHelper.GetToolText("AssetManager.StartingCompilation", asset.Name), Color.SkyBlue);
 
 			string xnbPath = Path.Combine(mod.SourceFolder, asset.Name);
 			xnbPath = Path.ChangeExtension(xnbPath, "xnb");
@@ -310,7 +310,7 @@ namespace DragonLens.Content.Tools.Developer
 				var newValue = reader.ReadAsset<Effect>() as Effect;
 				asset.ownValue = newValue;
 
-				Main.NewText($"Loaded new value from [c/CCCCFF:{path}]");
+				Main.NewText(LocalizationHelper.GetToolText("AssetManager.LoadedNewValue", path));
 			}
 		}
 
@@ -332,14 +332,14 @@ namespace DragonLens.Content.Tools.Developer
 				string tip = asset.Name + "\n\n";
 
 				if (!string.IsNullOrEmpty(mod.SourceFolder))
-					tip += "Click to force reload";
+					tip += LocalizationHelper.GetToolText("AssetManager.ClickToReload");
 				else
-					tip += "[c/FFCCCC:Not loaded from source]";
+					tip += $"[c/FFCCCC:{LocalizationHelper.GetToolText("AssetManager.NotFromSourse")}]";
 
 				if (sourcePath != null)
-					tip += $"\n\nSource code found at [c/CCCCFF:{sourcePath}]";
+					tip += $"\n\n{LocalizationHelper.GetToolText("AssetManager.SourceCodeFound", sourcePath)}]";
 				else
-					tip += "\n\n[c/FFAAAA:Could not find source code...]";
+					tip += $"\n\n[c/FFAAAA:{LocalizationHelper.GetToolText("AssetManager.NotFindSourceCode")}]";
 
 				Tooltip.SetTooltip(tip);
 			}
@@ -372,8 +372,8 @@ namespace DragonLens.Content.Tools.Developer
 
 			if (IsMouseHovering)
 			{
-				Tooltip.SetName("Re-scan");
-				Tooltip.SetTooltip("re-scans for modded assets. This may be needed if mods lazy load assets.");
+				Tooltip.SetName(LocalizationHelper.GetToolText("AssetManager.Rescan.DisplayName"));
+				Tooltip.SetTooltip(LocalizationHelper.GetToolText("AssetManager.Rescan.Description"));
 			}
 		}
 	}
