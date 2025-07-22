@@ -10,7 +10,7 @@ Browser: {
 		Defense: по защите
 		Value: по цене
 		Life: по максимальному здоровью
-		// AlphabeticalPath: Alphabetical by Path
+		AlphabeticalPath: по алфавиту (путь)
 	}
 
 	ButtonSizeSlider: {

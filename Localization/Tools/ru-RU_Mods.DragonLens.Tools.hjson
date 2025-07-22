@@ -1,4 +1,4 @@
-BuffDespawner: {
+﻿BuffDespawner: {
 	DisplayName: Очистить баффы
 	Description: Снимает с вас все баффы и дебаффы
 }
@@ -59,6 +59,11 @@ ItemEditor: {
 		'''
 	SetDefaults: Сброс изменений
 
+	Filters: {
+		FromMod: Из мода:
+		FromVanilla: Из ванильной игры
+	}
+
 	Editors: {
 		Damage: {
 			Name: Урон
@@ -77,7 +82,7 @@ ItemEditor: {
 
 		UseStyle: {
 			Name: Тип использования
-			Description: 0: None - Нельзя использовать NEWLN 1: Swing - Взмах NEWLN 3: Thrust - Выпад NEWLN 4: HoldUp - Удержание над головой NEWLN 5: Shoot - Стрельба NEWLN 6: DrinkLong - Длинная анимация питья NEWLN 7: DrinkOld - Старая анимация питья NEWLN 8: GolfPlay - Клюшка для гольфа NEWLN 9: DrinkLiquid - Новая анимация питья NEWLN 10: HiddenAnimation - Без анимации использования NEWLN 11: MowTheLawn - Газонокосилка NEWLN 12: Guitar - Гитара NEWLN 13: Rapier - Кинжалы NEWLN 14: RaiseLamp - Фонарь
+			Description: 0: None (нельзя использовать) NEWLN 1: Swing (взмах) NEWLN 3: Thrust(выпад) NEWLN 4: HoldUp (удержание над головой) NEWLN 5: Shoot (стрельба) NEWLN 6: DrinkLong (длинная анимация питья) NEWLN 7: DrinkOld (старая анимация питья) NEWLN 8: GolfPlay (клюшка для гольфа) NEWLN 9: DrinkLiquid (новая анимация питья) NEWLN 10: HiddenAnimation (без анимации использования) NEWLN 11: MowTheLawn (газонокосилка) NEWLN 12: Guitar (гитара) NEWLN 13: Rapier (кинжалы) NEWLN 14: RaiseLamp (фонарь)
 		}
 
 		UseTime: {
@@ -199,14 +204,14 @@ PlayerEditor: {
 
 Difficulty: {
 	DisplayName: Сменить режим сложности
-	Description: Позволяет переключаться между тремя режимами сложности игры. NEWBLOCK Нажмите ПКМ, чтобы вкл./выкл. режим Путешествие.
+	Description: Позволяет переключаться между тремя режимами сложности игры. NEWBLOCK Нажмите ПКМ, чтобы вкл./выкл. режим путешествия.
 	RightClickName: Вкл./Выкл. режим Путешествие.
 	GameInNormalMode: Установлен классический режим
-	GameInExpertMode: Установлен режим Эксперт
-	GameInMasterMode: Установлен режим Мастер
-	JourneyToggleDisabled: Переключение режима Путешествие отключено в мультиплеере
-	JourneyEnabled: Режим Путешествие включён
-	JourneyDisabled: Режим Путешествие отключён
+	GameInExpertMode: Установлен режим эксперта
+	GameInMasterMode: Установлен режим мастера
+	JourneyToggleDisabled: Переключение режима путешествия отключено в мультиплеере
+	JourneyEnabled: Режим путешествия включён
+	JourneyDisabled: Режим путешествия отключён
 }
 
 FastForward: {
@@ -671,14 +676,14 @@ CustomizeTool: {
 	DisplayName: Кастомизация инструментов
 	Description: Позволяет настраивать панели инструментов этого мода под себя.
 	ToolBrowser: Добавить инструмент
-	// FilterCategories.Mod: Mod filters
+	FilterCategories.Mod: Модовые фильтры
 
 	Filters: {
-		// Mod.Description: Tools added by the mod {0}
+		Mod.Description: Инструменты, добавленные модом {0}
 
 		DragonLens: {
-			// Name: DragonLens
-			// Description: Tools added by DragonLens
+			Name: DragonLens
+			Description: Инструменты, добавленные модом DragonLens
 		}
 	}
 }
@@ -918,29 +923,47 @@ PlayerManager: {
 }
 
 AssetManager: {
-	// DisplayName: Asset Manager
-	// Description: Browse, export, or reload the assets of mods; this includes textures and shaders.
+	DisplayName: Браузер ассетов
+	Description: Позволяет искать, экпортировать и перезагружать модовые ассеты, такие как текстуры и шейдеры.
+	NotSourseMod: Данный мод загружен не из исходного кода — перезагрузка ассета не дала эффекта.
+	LoadedNewValue: Загружено новое значение из [c/CCCCFF:{0}]
+	PathDoesntExist: Перезагрузка не удалась, ибо искомый путь не существует. Искомый путь: [c/FFCCCC:{0}]
+	CannotReload: Вы не можете перезагрузить данный ассет.
+	Exported: Экспортированно по пути [c/CCCCFF:{0}]
+	ClickToReload: Нажмите ЛКМ для принудительной перезагрузки.
+	NotFromSourse: Загружено не из исходного кода.
+	RBMToExport: Нажмите ПКМ, чтобы экспортировать.
+	SourceCodeFound: Искодный код эффекта найден по пути [c/CCCCFF:{0}]
+	NotFindSourceCode: Исходный код эффекта не найден.
+	StartingCompilation: Starting shader compilation for {0}
+
+	Rescan: {
+		DisplayName: Пересканирование
+		Description: Пересканирует модовые ассеты. Это может потребоваться, если моды загружают свои ассеты с задержкой.
+	}
 
 	FilterCategories: {
-		// Mod: Mod filters
-		// Type: Type filters
+		Mod: По модам
+		Type: По типу
 	}
 
 	Filters: {
+		Mod.Description: Ассеты из {0}
+
 		Texture: {
-			// Name: Texture assets
-			// Description: Assets which are textures (Texture2D), these are .png files in your mod typically
+			Name: Ассеты текстур
+			Description: Ассеты, являющиеся текстурами (Texture2D). Обычно хранятся в формате .png
 		}
 
 		Effect: {
-			// Name: Effect/Shader assets
-			// Description: Assets which are shaders (Effect), these are .xnb files in your mod typically, and usually have a .fx source code file aswell
+			Name: Ассеты эффектов/шейдеров
+			Description: Ассеты, являющиеся шейдерами (Effect). Обычно зранятся в формате .xnb и имеют .fx-файл исходного кода
 		}
 	}
 }
 
 Pause: {
-	// DisplayName: Pause
-	// Description: Pauses the game. You can right click this tool to advance by a single frame while paused.
-	// RightClickName: (Pause) Step single frame
+	DisplayName: Пауза
+	Description: Позволяет останавливать игру. Нажмите ПКМ во время паузы, чтобы перейти на один кадр вперёд.
+	RightClickName: (Пауза) Перейти на один кадр вперёд
 }
