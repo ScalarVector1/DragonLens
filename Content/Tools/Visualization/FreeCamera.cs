@@ -11,7 +11,10 @@ namespace DragonLens.Content.Tools.Visualization
 		public static Vector2 freeCameraPos;
 
 		public override string IconKey => "FreeCamera";
-
+		public override void ResetForNonAdmin(Player player)
+		{
+			active = false;
+		}
 		public override void OnActivate()
 		{
 			active = !active;

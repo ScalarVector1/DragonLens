@@ -22,7 +22,7 @@
     <DotNetPath Condition=" '$(DotNetPath)' == '' ">dotnet</DotNetPath>
   </PropertyGroup>
   <ItemGroup>
-	<PackageReference Include="AssGen" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+	<PackageReference Include="AssGen" Version="3.0.1" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="StructureHelper">

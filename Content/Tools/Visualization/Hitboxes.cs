@@ -15,6 +15,21 @@ namespace DragonLens.Content.Tools.Visualization
 	{
 		public override string IconKey => "Hitboxes";
 
+		public override void ResetForNonAdmin(Player player)
+		{
+			// Hide the hitbox window entirely for non-admins
+			HitboxWindow state = UILoader.GetUIState<HitboxWindow>();
+			state.visible = false;
+
+			// Also force all options to "none" so no boxes are drawn
+			state.NPCOption?.boxState = HitboxOption.BoxType.none;
+			state.ProjectileOption?.boxState = HitboxOption.BoxType.none;
+			state.PlayerOption?.boxState = HitboxOption.BoxType.none;
+			state.ItemOption?.boxState = HitboxOption.BoxType.none;
+			state.MeleeOption?.boxState = HitboxOption.BoxType.none;
+			state.TileEntityOption?.boxState = HitboxOption.BoxType.none;
+		}
+
 		public override void OnActivate()
 		{
 			HitboxWindow state = UILoader.GetUIState<HitboxWindow>();
