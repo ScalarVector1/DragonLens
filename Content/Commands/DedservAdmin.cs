@@ -26,13 +26,13 @@ namespace DragonLens.Content.Commands
 				throw new UsageException("You must provide a players name!");
 			}
 
-			string name = input[(Command.Length + 1)..];
+			string name = input[(Command.Length + 1)..].ToLower();
 
 			Player player = Main.player.FirstOrDefault(n => n.name.ToLower() == name);
 
 			if (player != null)
 			{
-				if (PermissionHandler.CanUseTools(player) || true)
+				if (PermissionHandler.CanUseTools(player))
 				{
 					ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral($"The server made {name} not an admin!"), Color.Orange);
 					PermissionHandler.RemoveAdmin(player);
