@@ -17,6 +17,12 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override bool HasRightClick => true;
 
+		public override void ResetForNonAdmin(Player player)
+		{
+			godMode = false;
+			dogMode = false;
+		}
+
 		public override void OnActivate()
 		{
 			godMode = !godMode;

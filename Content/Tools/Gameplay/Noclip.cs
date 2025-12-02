@@ -3,6 +3,7 @@ using DragonLens.Core.Systems;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
+using System;
 using System.IO;
 using Terraria.ID;
 
@@ -26,6 +27,10 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override string IconKey => "Noclip";
 
+		public override void ResetForNonAdmin(Player player)
+		{
+			Active = false;
+		}
 		public override void OnActivate()
 		{
 			Active = !Active;
