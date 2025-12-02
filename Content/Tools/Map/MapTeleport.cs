@@ -14,7 +14,10 @@ namespace DragonLens.Content.Tools.Map
 		public static bool active = true;
 
 		public override string IconKey => "MapTeleport";
-
+		public override void ResetForNonAdmin(Player player)
+		{
+			active = false;
+		}
 		public override void OnActivate()
 		{
 			active = !active;

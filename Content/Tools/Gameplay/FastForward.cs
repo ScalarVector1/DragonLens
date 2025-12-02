@@ -13,7 +13,10 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override string IconKey => "FastForward";
 
 		public override bool HasRightClick => true;
-
+		public override void ResetForNonAdmin(Player player)
+		{
+			speedup = 0;
+		}
 		public override void OnActivate()
 		{
 			if (Main.netMode != NetmodeID.SinglePlayer)

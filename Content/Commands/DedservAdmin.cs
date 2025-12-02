@@ -26,7 +26,7 @@ namespace DragonLens.Content.Commands
 				throw new UsageException("You must provide a players name!");
 			}
 
-			string name = input[(Command.Length + 1)..];
+			string name = input[(Command.Length + 1)..].ToLower();
 
 			Player player = Main.player.FirstOrDefault(n => n.name.ToLower() == name);
 

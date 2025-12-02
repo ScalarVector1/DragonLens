@@ -60,14 +60,30 @@ Configs: {
 
 	BoxStyle: {
 		Tooltip: ""
-		simple.Label: "{$Mods.DragonLens.BoxStyle.simple}"
-		vanilla.Label: "{$Mods.DragonLens.BoxStyle.vanilla}"
+
+		simple: {
+			Label: "{$Mods.DragonLens.BoxStyle.simple}"
+			// Tooltip: ""
+		}
+
+		vanilla: {
+			Label: "{$Mods.DragonLens.BoxStyle.vanilla}"
+			// Tooltip: ""
+		}
 	}
 
 	IconStyle: {
 		Tooltip: ""
-		basic.Label: "{$Mods.DragonLens.IconStyle.basic}"
-		HEROs.Label: "{$Mods.DragonLens.IconStyle.HEROs}"
+
+		basic: {
+			Label: "{$Mods.DragonLens.IconStyle.basic}"
+			// Tooltip: ""
+		}
+
+		HEROs: {
+			Label: "{$Mods.DragonLens.IconStyle.HEROs}"
+			// Tooltip: ""
+		}
 	}
 
 	ToolConfig: {

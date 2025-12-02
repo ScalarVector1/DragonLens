@@ -1,6 +1,7 @@
 ﻿using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
+using System;
 using Terraria.ModLoader.IO;
 
 namespace DragonLens.Content.Tools.Visualization
@@ -12,6 +13,10 @@ namespace DragonLens.Content.Tools.Visualization
 		public override string IconKey => "Lighting";
 
 		public override bool HasRightClick => true;
+		public override void ResetForNonAdmin(Player player)
+		{
+			strength = 0f;
+		}
 
 		public override void OnActivate()
 		{

@@ -12,6 +12,11 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override string IconKey => "InfiniteReach";
 
+		public override void ResetForNonAdmin(Player player)
+		{
+			active = false;
+		}
+
 		public override void OnActivate()
 		{
 			active = !active;
