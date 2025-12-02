@@ -39,20 +39,26 @@ namespace DragonLens.Content.Tools.Gameplay
 			writer.Write(Main.time);
 			writer.Write(Main.dayTime);
 			writer.Write(TimePauseSystem.savedTime);
+			writer.Write(TimePauseSystem.savedDay);
 			writer.Write(Main.moonPhase);
 		}
 
 		public override void RecievePacket(BinaryReader reader, int sender)
 		{
-			Main.time = reader.ReadDouble();
-			bool day = reader.ReadBoolean();
-			Main.dayTime = day;
-			TimePauseSystem.savedDay = day;
+			Main.time = reader.ReadDouble(); 
+			Main.dayTime = reader.ReadBoolean();
 			TimePauseSystem.savedTime = reader.ReadInt32();
+			TimePauseSystem.savedDay = reader.ReadBoolean();
 			Main.moonPhase = reader.ReadInt32();
 
 			if (Main.netMode == NetmodeID.Server)
 				NetSend(-1, sender);
+		}
+
+		public override void ResetForNonAdmin(Player player)
+		{
+			TimePauseSystem.savedTime = -1;
+			TimePauseSystem.savedDay = false;
 		}
 	}
 

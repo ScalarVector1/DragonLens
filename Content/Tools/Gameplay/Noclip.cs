@@ -27,10 +27,6 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override string IconKey => "Noclip";
 
-		public override void ResetForNonAdmin(Player player)
-		{
-			Active = false;
-		}
 		public override void OnActivate()
 		{
 			Active = !Active;
@@ -80,6 +76,11 @@ namespace DragonLens.Content.Tools.Gameplay
 			{
 				NetSend(-1, sender);
 			}
+		}
+
+		public override void ResetForNonAdmin(Player player)
+		{
+			Active = false;
 		}
 	}
 

@@ -91,6 +91,12 @@ namespace DragonLens.Content.Tools.Gameplay
 			if (Main.netMode == NetmodeID.Server)
 				NetSend(-1, sender);
 		}
+
+		public override void ResetForNonAdmin(Player player)
+		{
+			active = false;
+			voidActive = false;
+		}
 	}
 
 	internal class MagnetPlayer : ModPlayer

@@ -1,4 +1,4 @@
-﻿BuffDespawner: {
+BuffDespawner: {
 	DisplayName: Clear buffs
 	Description: Removes all buffs and debuffs from yourself
 }
@@ -20,11 +20,11 @@ ItemDespawner: {
 
 NPCDespawner: {
 	DisplayName: Clear NPCs
-	Description: 
-	'''
-	Removes all hostile NPCs currently in the world. Right click for a more traditional 'butcher'. 
-	hold SHIFT to clear/butcher friendly NPCs aswell
-	'''
+	Description:
+		'''
+		Removes all hostile NPCs currently in the world. Right click for a more traditional 'butcher'. 
+		hold SHIFT to clear/butcher friendly NPCs aswell
+		'''
 	RightClickName: Traditional butcher
 }
 
@@ -86,23 +86,23 @@ ItemEditor: {
 
 		UseStyle: {
 			Name: Use Style
-			Description: 
-			'''
-			0: None
-			1: Swing
-			3: Thrust 
-			4: HoldUp
-			5: Shoot 
-			6: DrinkLong
-			7: DrinkOld
-			8: GolfPlay
-			9: DrinkLiquid
-			10: HiddenAnimation
-			11: MowTheLawn
-			12: Guitar 
-			13: Rapier
-			14: RaiseLamp
-			'''
+			Description:
+				'''
+				0: None
+				1: Swing
+				3: Thrust 
+				4: HoldUp
+				5: Shoot 
+				6: DrinkLong
+				7: DrinkOld
+				8: GolfPlay
+				9: DrinkLiquid
+				10: HiddenAnimation
+				11: MowTheLawn
+				12: Guitar 
+				13: Rapier
+				14: RaiseLamp
+				'''
 		}
 
 		UseTime: {
@@ -152,11 +152,11 @@ ItemEditor: {
 
 		ProjectileType: {
 			Name: Projectile Type
-			Description: 
-			'''
-			The kind of projectile this item will shoot on use. 
-			Use the projectile spawner to preview differnet projectile types.
-			'''
+			Description:
+				'''
+				The kind of projectile this item will shoot on use. 
+				Use the projectile spawner to preview differnet projectile types.
+				'''
 		}
 
 		ShootSpeed: {
@@ -228,11 +228,11 @@ PlayerEditor: {
 
 Difficulty: {
 	DisplayName: Difficulty switcher
-	Description: 
-	'''
-	Cycle through the 3 main game difficulties
-	Right click to toggle journey mode
-	'''
+	Description:
+		'''
+		Cycle through the 3 main game difficulties
+		Right click to toggle journey mode
+		'''
 	RightClickName: Toggle journey mode
 	GameInNormalMode: The game is now in normal mode
 	GameInExpertMode: The game is now in expert mode

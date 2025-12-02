@@ -43,6 +43,11 @@ namespace DragonLens.Content.Tools.Gameplay
 			if (Main.netMode == NetmodeID.Server)
 				NetSend(-1, sender);
 		}
+
+		public override void ResetForNonAdmin(Player player)
+		{
+			SpawnSystem.spawnRateModifier = 1;
+		}
 	}
 
 	internal class SpawnSystem : GlobalNPC
