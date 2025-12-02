@@ -20,7 +20,11 @@ ItemDespawner: {
 
 NPCDespawner: {
 	DisplayName: Clear NPCs
-	Description: Removes all hostile NPCs currently in the world. Right click for a more traditional 'butcher'. NEWBLOCK hold SHIFT to clear/butcher friendly NPCs aswell
+	Description: 
+	'''
+	Removes all hostile NPCs currently in the world. Right click for a more traditional 'butcher'. 
+	hold SHIFT to clear/butcher friendly NPCs aswell
+	'''
 	RightClickName: Traditional butcher
 }
 
@@ -82,7 +86,23 @@ ItemEditor: {
 
 		UseStyle: {
 			Name: Use Style
-			Description: 0: None NEWLN 1: Swing NEWLN 3: Thrust NEWLN 4: HoldUp NEWLN 5: Shoot NEWLN 6: DrinkLong NEWLN 7: DrinkOld NEWLN 8: GolfPlay NEWLN 9: DrinkLiquid NEWLN 10: HiddenAnimation NEWLN 11: MowTheLawn NEWLN 12: Guitar NEWLN 13: Rapier NEWLN 14: RaiseLamp
+			Description: 
+			'''
+			0: None
+			1: Swing
+			3: Thrust 
+			4: HoldUp
+			5: Shoot 
+			6: DrinkLong
+			7: DrinkOld
+			8: GolfPlay
+			9: DrinkLiquid
+			10: HiddenAnimation
+			11: MowTheLawn
+			12: Guitar 
+			13: Rapier
+			14: RaiseLamp
+			'''
 		}
 
 		UseTime: {
@@ -132,7 +152,11 @@ ItemEditor: {
 
 		ProjectileType: {
 			Name: Projectile Type
-			Description: The kind of projectile this item will shoot on use. NEWBLOCK Use the projectile spawner to preview differnet projectile types.
+			Description: 
+			'''
+			The kind of projectile this item will shoot on use. 
+			Use the projectile spawner to preview differnet projectile types.
+			'''
 		}
 
 		ShootSpeed: {
@@ -204,7 +228,11 @@ PlayerEditor: {
 
 Difficulty: {
 	DisplayName: Difficulty switcher
-	Description: Cycle through the 3 main game difficulties NEWBLOCK Right click to toggle journey mode
+	Description: 
+	'''
+	Cycle through the 3 main game difficulties
+	Right click to toggle journey mode
+	'''
 	RightClickName: Toggle journey mode
 	GameInNormalMode: The game is now in normal mode
 	GameInExpertMode: The game is now in expert mode
@@ -261,10 +289,10 @@ Paint: {
 		Content:
 			'''
 			For more useful features, check out the full Structure Helper mod!
-			You'll be able to: NEWLN
-			> Export structures to files! NEWLN
-			> Use null tiles to generate non-square structures! NEWLN
-			> Place chests with custom, random loot pools! NEWLN
+			You'll be able to:
+			> Export structures to files!
+			> Use null tiles to generate non-square structures!
+			> Place chests with custom, random loot pools!
 			> Generate structures in your own mods from files!
 			'''
 		Downloaded: StructureHelper is being downloaded. Return to the main menu and go to the workshop menu to enable it!

@@ -22,12 +22,15 @@ namespace DragonLens.Content.Tools.Visualization
 			state.visible = false;
 
 			// Also force all options to "none" so no boxes are drawn
-			state.NPCOption?.boxState = HitboxOption.BoxType.none;
-			state.ProjectileOption?.boxState = HitboxOption.BoxType.none;
-			state.PlayerOption?.boxState = HitboxOption.BoxType.none;
-			state.ItemOption?.boxState = HitboxOption.BoxType.none;
-			state.MeleeOption?.boxState = HitboxOption.BoxType.none;
-			state.TileEntityOption?.boxState = HitboxOption.BoxType.none;
+			if (state.NPCOption != null) // this is dumb but the assaignment to a nullable is annoying and refuses to compile on older SDKs
+			{
+				state.NPCOption.boxState = HitboxOption.BoxType.none;
+				state.ProjectileOption.boxState = HitboxOption.BoxType.none;
+				state.PlayerOption.boxState = HitboxOption.BoxType.none;
+				state.ItemOption.boxState = HitboxOption.BoxType.none;
+				state.MeleeOption.boxState = HitboxOption.BoxType.none;
+				state.TileEntityOption.boxState = HitboxOption.BoxType.none;
+			}
 		}
 
 		public override void OnActivate()
