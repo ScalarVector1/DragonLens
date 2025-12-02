@@ -95,7 +95,7 @@ namespace DragonLens.Content.Tools.Visualization
 		public HitboxOption MeleeOption;
 		public HitboxOption TileEntityOption;
 
-		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 220, 32);
+		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 264, 54);
 
 		public override Vector2 DefaultPosition => new(0.7f, 0.5f);
 

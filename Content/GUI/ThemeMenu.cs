@@ -137,6 +137,8 @@ namespace DragonLens.Content.GUI
 			{
 				icons.Add(new IconProviderButton(pair.Value));
 			}
+
+			Recalculate();
 		}
 	}
 

@@ -108,7 +108,7 @@ namespace DragonLens.Content.Tools.Editors
 
 		public bool initialized = false;
 
-		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 400, 32);
+		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 320, 54);
 
 		public override Vector2 DefaultPosition => new(0.6f, 0.25f);
 

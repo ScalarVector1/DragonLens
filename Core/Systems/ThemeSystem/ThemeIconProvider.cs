@@ -10,6 +10,7 @@ namespace DragonLens.Core.Systems.ThemeSystem
 		private static readonly List<string> defaultKeysInner = new()
 		{
 			"AccessoryTray",
+			"AssetManager",
 			"BuffDespawner",
 			"BuffSpawner",
 			"Customize",
@@ -40,6 +41,7 @@ namespace DragonLens.Core.Systems.ThemeSystem
 			"PlayerManager",
 			"ProjectileDespawner",
 			"ProjectileSpawner",
+			"Pause",
 			"RevealMap",
 			"SoundSpawner",
 			"SpawnTool",
