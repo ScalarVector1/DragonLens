@@ -45,7 +45,7 @@ namespace DragonLens.Content.Tools.Editors
 
 		public static FieldInfo systemList = typeof(SystemLoader).GetField("Systems", BindingFlags.NonPublic | BindingFlags.Static);
 
-		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 844, 32);
+		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 844, 54);
 
 		public override Vector2 DefaultPosition => new(0.4f, 0.4f);
 

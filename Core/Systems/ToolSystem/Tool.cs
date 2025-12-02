@@ -123,13 +123,13 @@ namespace DragonLens.Core.Systems.ToolSystem
 
 			ModPacket packet = Mod.GetPacket();
 			packet.Write("ToolPacket");
-			packet.Write(Name);
+			packet.Write($"{Mod.Name}/{Name}");
 			SendPacket(packet);
 
 			packet.Send(toClient, ignoreClient);
 		}
 
-		protected sealed override void Register()
+		public sealed override void Register()
 		{
 			ModTypeLookup<Tool>.Register(this);
 

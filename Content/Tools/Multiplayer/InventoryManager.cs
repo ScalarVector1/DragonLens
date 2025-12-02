@@ -24,7 +24,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 		public UIGrid slots = new();
 		public StyledScrollbar slotScroll;
 
-		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 580, 32);
+		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 580, 54);
 
 		public override Vector2 DefaultPosition => new(0.5f, 0.5f);
 

@@ -21,6 +21,14 @@
     <!-- Fallback. -->
     <DotNetPath Condition=" '$(DotNetPath)' == '' ">dotnet</DotNetPath>
   </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.2" PrivateAssets="all" />
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Update="$(tMLSteamPath)$(tMLPath)" Publicize="true" />
+		<Reference Update="$(tMLSteamPath)\Libraries\ReLogic\1.0.0\ReLogic.dll" Publicize="true" />
+		<Reference Update="$(tMLSteamPath)\Libraries\FNA\1.0.0\FNA.dll" Publicize="true" />
+	</ItemGroup>
   <ItemGroup>
 	<PackageReference Include="AssGen" Version="3.0.1" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>

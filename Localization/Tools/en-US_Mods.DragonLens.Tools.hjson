@@ -650,6 +650,16 @@ CustomizeTool: {
 	DisplayName: Customize tool
 	Description: Customize your toolbar layout!
 	ToolBrowser: Add tool
+	FilterCategories.Mod: Mod filters
+
+	Filters: {
+		Mod.Description: Tools added by the mod {0}
+
+		DragonLens: {
+			Name: DragonLens
+			Description: Tools added by DragonLens
+		}
+	}
 }
 
 SoundSpawner: {
@@ -884,4 +894,32 @@ PlayerManager: {
 		Velocity: {3}
 		Alive: {4}
 		'''
+}
+
+AssetManager: {
+	DisplayName: Asset Manager
+	Description: Browse, export, or reload the assets of mods; this includes textures and shaders.
+
+	FilterCategories: {
+		Mod: Mod filters
+		Type: Type filters
+	}
+
+	Filters: {
+		Texture: {
+			Name: Texture assets
+			Description: Assets which are textures (Texture2D), these are .png files in your mod typically
+		}
+
+		Effect: {
+			Name: Effect/Shader assets
+			Description: Assets which are shaders (Effect), these are .xnb files in your mod typically, and usually have a .fx source code file aswell
+		}
+	}
+}
+
+Pause: {
+	DisplayName: Pause
+	Description: Pauses the game. You can right click this tool to advance by a single frame while paused.
+	RightClickName: (Pause) Step single frame
 }

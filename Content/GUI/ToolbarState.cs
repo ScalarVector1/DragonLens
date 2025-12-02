@@ -163,7 +163,7 @@ namespace DragonLens.Content.GUI
 
 		private void RefreshUI(Vector2 newSize)
 		{
-			UILoader.GetUIState<ToolbarState>().Refresh();
+			UILoader.GetUIState<ToolbarState>()?.Refresh();
 		}
 
 		private void DrawToolbars(Vector2 arg1, float arg2)

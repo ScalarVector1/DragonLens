@@ -67,7 +67,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 		public UIList playerList = [];
 		public StyledScrollbar playerScroll;
 
-		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 400, 32);
+		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 340, 54);
 
 		public override Vector2 DefaultPosition => new(0.4f, 0.5f);
 
