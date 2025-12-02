@@ -32,7 +32,7 @@ namespace DragonLens.Content.Commands
 
 			if (player != null)
 			{
-				if (PermissionHandler.CanUseTools(player) || true)
+				if (PermissionHandler.CanUseTools(player))
 				{
 					ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral($"The server made {name} not an admin!"), Color.Orange);
 					PermissionHandler.RemoveAdmin(player);
