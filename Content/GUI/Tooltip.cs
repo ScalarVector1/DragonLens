@@ -61,8 +61,8 @@ namespace DragonLens.Content.GUI
 
 			ReLogic.Graphics.DynamicSpriteFont font = Terraria.GameContent.FontAssets.MouseText.Value;
 
-			float nameWidth = ChatManager.GetStringSize(font, text, Vector2.One).X;
-			float tipWidth = ChatManager.GetStringSize(font, tooltip, Vector2.One * 0.9f, 200).X;
+			float nameWidth = text == null ? 0 : ChatManager.GetStringSize(font, text, Vector2.One).X;
+			float tipWidth = tooltip == null ? 0 : ChatManager.GetStringSize(font, tooltip, Vector2.One * 0.9f, 200).X;
 
 			float width = Math.Max(nameWidth, tipWidth);
 			float height = -16;
@@ -71,7 +71,10 @@ namespace DragonLens.Content.GUI
 			if (pos.X > Main.screenWidth - (width + 10))
 				pos.X = Main.screenWidth - (width + 10) - 16;
 
-			height += ChatManager.GetStringSize(font, tooltip, Vector2.One * 0.9f, 200).Y + 36;
+			if (tooltip != null)
+				height += ChatManager.GetStringSize(font, tooltip, Vector2.One * 0.9f, 200).Y + 36;
+			else
+				height += 32;
 
 			if (pos.Y + height > Main.screenHeight)
 				pos.Y = Main.screenHeight - height - 16;
