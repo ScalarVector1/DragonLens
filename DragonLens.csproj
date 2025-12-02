@@ -30,7 +30,7 @@
 		<Reference Update="$(tMLSteamPath)\Libraries\FNA\1.0.0\FNA.dll" Publicize="true" />
 	</ItemGroup>
   <ItemGroup>
-	<PackageReference Include="AssGen" OutputItemType="Analyzer" ReferenceOutputAssembly="false" Version="3.0.0" />
+	<PackageReference Include="AssGen" Version="3.0.1" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="StructureHelper">

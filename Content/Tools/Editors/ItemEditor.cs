@@ -134,7 +134,9 @@ namespace DragonLens.Content.Tools.Editors
 			basicEditorList.Add(new IntEditor(GetLocalizedText("CritChance.Name"), n => item.crit = n, item.crit, () => item.crit, GetLocalizedText("CritChance.Description")));
 			basicEditorList.Add(new FloatEditor(GetLocalizedText("Knockback.Name"), n => item.knockBack = n, item.knockBack, () => item.knockBack, GetLocalizedText("Knockback.Description")));
 
-			basicEditorList.Add(new IntEditor(GetLocalizedText("UseStyle.Name"), n => item.useStyle = n, item.useStyle, () => item.useStyle, GetLocalizedText("UseStyle.Description")));
+			ReLogic.Graphics.DynamicSpriteFont font = Terraria.GameContent.FontAssets.MouseText.Value;
+
+			basicEditorList.Add(new IntEditor(GetLocalizedText("UseStyle.Name"), n => item.useStyle = n, item.useStyle, () => item.useStyle, GUIHelper.WrapString(GetLocalizedText("UseStyle.Description"), 400, font, 1f)));
 			basicEditorList.Add(new IntEditor(GetLocalizedText("UseTime.Name"), n => item.useTime = n, item.useTime, () => item.useTime, GetLocalizedText("UseTime.Description")));
 			basicEditorList.Add(new IntEditor(GetLocalizedText("UseAnimation.Name"), n => item.useAnimation = n, item.useAnimation, () => item.useAnimation, GetLocalizedText("UseAnimation.Description")));
 			basicEditorList.Add(new BoolEditor(GetLocalizedText("AutoReuse.Name"), n => item.autoReuse = n, item.autoReuse, () => item.autoReuse, GetLocalizedText("AutoReuse.Description")));
@@ -372,7 +374,15 @@ namespace DragonLens.Content.Tools.Editors
 				if (IsMouseHovering)
 				{
 					Tooltip.SetName(name);
-					Tooltip.SetTooltip("From mod: " + (prefix != null ? prefix.Mod.DisplayName : "Vanilla"));
+
+					if (prefix != null)
+					{
+						Tooltip.SetTooltip(LocalizationHelper.GetToolText("ItemEditor.Filters.FromMod", prefix.Mod.DisplayName));
+					}
+					else
+					{
+						Tooltip.SetTooltip(LocalizationHelper.GetToolText("ItemEditor.Filters.FromVanilla"));
+					}
 				}
 			}
 		}

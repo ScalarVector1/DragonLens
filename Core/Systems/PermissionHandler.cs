@@ -30,6 +30,21 @@ namespace DragonLens.Core.Systems
 		public static List<int> visualAdmins = new();
 
 		/// <summary>
+		/// Resets all tools for a player who is not an admin.
+		/// </summary>
+		/// <param name="player">The player to reset tools for.</param>
+		public static void ResetToolsForNonAdmin(Player player)
+		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
+
+			foreach (Tool tool in ModContent.GetContent<Tool>())
+			{
+				tool.ResetForNonAdmin(player);
+			}
+		}
+
+		/// <summary>
 		/// Determines if a player can use tools or not, based on their netmode and admin status.
 		/// </summary>
 		/// <param name="player">The player to query for usability.</param>
@@ -196,6 +211,9 @@ namespace DragonLens.Core.Systems
 
 						item.Visible = false;
 					}
+
+					// Client loses admin permissions -> reset all tools
+					ResetToolsForNonAdmin(Main.LocalPlayer);
 				}
 			}
 			else if (operation == 2) //Sync visual only
@@ -354,6 +372,9 @@ namespace DragonLens.Core.Systems
 				packet.Write("AdminUpdate");
 				packet.Write(2);
 				packet.Send();
+
+				// Client enters world -> reset all tools
+				PermissionHandler.ResetToolsForNonAdmin(Player);
 			}
 
 			if (Netplay.Connection.Socket.GetRemoteAddress().IsLocalHost()) // The host is automatically an admin!

@@ -63,6 +63,14 @@ namespace DragonLens.Core.Systems.ToolSystem
 		public virtual bool SyncOnClientJoint => true;
 
 		/// <summary>
+		/// Resets cheat abilities (e.g godmode) for non-admin players.
+		/// </summary>
+		/// <param name="player"></param>
+		public virtual void ResetForNonAdmin(Player player)
+		{
+		}
+
+		/// <summary>
 		/// What happens when the user activates this tool, either by clicking on it or using it's hotkey.
 		/// </summary>
 		public abstract void OnActivate();
