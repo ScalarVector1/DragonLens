@@ -79,6 +79,11 @@ namespace DragonLens.Content.Tools.Gameplay
 				NetSend(-1, sender);
 		}
 
+		public override void ResetForNonAdmin(Player player)
+		{
+			WeatherSystem.weatherFrozen = false;
+		}
+
 		public static string GetText(string key, params object[] args)
 		{
 			return LocalizationHelper.GetText($"Tools.Weather.{key}", args);
