@@ -77,16 +77,30 @@ namespace DragonLens.Core.Systems
 		/// <param name="player">The player to add. They must not already be an admin.</param>
 		public static void AddAdmin(Player player)
 		{
-			ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
-			packet.Write("AdminUpdate");
-			packet.Write(0);
-			packet.Write(player.whoAmI);
-			packet.Send();
+			if (Main.netMode == NetmodeID.MultiplayerClient)
+			{
+				ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
+				packet.Write("AdminUpdate");
+				packet.Write(0);
+				packet.Write(player.whoAmI);
+				packet.Send();
+				return;
+			}
 
 			if (Main.netMode == NetmodeID.Server)
 			{
-				admins.Add(player.GetModPlayer<PermissionPlayer>().currentServerID);
-				visualAdmins.Add(player.whoAmI);
+				string id = player.GetModPlayer<PermissionPlayer>().currentServerID;
+
+				if (!string.IsNullOrEmpty(id) && !admins.Contains(id))
+					admins.Add(id);
+
+				if (!visualAdmins.Contains(player.whoAmI))
+					visualAdmins.Add(player.whoAmI);
+
+				ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
+				packet.Write("AdminUpdate");
+				packet.Write(0);
+				packet.Send(player.whoAmI);
 
 				SendVisualAdmins();
 			}
@@ -98,16 +112,29 @@ namespace DragonLens.Core.Systems
 		/// <param name="player">The player to remove. They must be an admin.</param>
 		public static void RemoveAdmin(Player player)
 		{
-			ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
-			packet.Write("AdminUpdate");
-			packet.Write(1);
-			packet.Write(player.whoAmI);
-			packet.Send();
+			if (Main.netMode == NetmodeID.MultiplayerClient)
+			{
+				ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
+				packet.Write("AdminUpdate");
+				packet.Write(1);
+				packet.Write(player.whoAmI);
+				packet.Send();
+				return;
+			}
 
 			if (Main.netMode == NetmodeID.Server)
 			{
-				admins.Remove(player.GetModPlayer<PermissionPlayer>().currentServerID);
+				string id = player.GetModPlayer<PermissionPlayer>().currentServerID;
+
+				if (!string.IsNullOrEmpty(id))
+					admins.RemoveAll(n => n == id);
+
 				visualAdmins.Remove(player.whoAmI);
+
+				ModPacket packet = ModLoader.GetMod("DragonLens").GetPacket();
+				packet.Write("AdminUpdate");
+				packet.Write(1);
+				packet.Send(player.whoAmI);
 
 				SendVisualAdmins();
 			}
