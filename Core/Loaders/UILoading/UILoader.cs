@@ -1,7 +1,10 @@
-﻿using System;
+﻿using DragonLens.Core.Systems;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Terraria.ID;
 using Terraria.UI;
+using static ReLogic.Peripherals.RGB.Corsair.CorsairDeviceGroup;
 
 namespace DragonLens.Core.Loaders.UILoading
 {
@@ -62,14 +65,14 @@ namespace DragonLens.Core.Loaders.UILoading
 		/// <param name="index">Where this layer should be inserted</param>
 		/// <param name="visible">The logic dictating the visibility of this layer</param>
 		/// <param name="scale">The scale settings this layer should scale with</param>
-		public static void AddLayer(List<GameInterfaceLayer> layers, UIState state, int index, bool visible, InterfaceScaleType scale)
+		public static void AddLayer(List<GameInterfaceLayer> layers, UserInterface ui, int index, Func<bool> visible, InterfaceScaleType scale)
 		{
-			string name = state == null ? "Unknown" : state.ToString();
+			string name = ui?.CurrentState?.ToString() ?? "Unknown";
 			layers.Insert(index, new LegacyGameInterfaceLayer("DragonLens: " + name,
 				delegate
 				{
-					if (visible)
-						state.Draw(Main.spriteBatch);
+					if (visible())
+						ui.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
 
 					return true;
 				}, scale));
@@ -86,8 +89,11 @@ namespace DragonLens.Core.Loaders.UILoading
 
 			foreach (UserInterface eachState in SortedUserInterfaces)
 			{
-				if (eachState?.CurrentState != null && ((SmartUIState)eachState.CurrentState).Visible)
+				if (eachState?.CurrentState is SmartUIState s && s.Visible)
 				{
+					if (Main.netMode != NetmodeID.SinglePlayer && !PermissionHandler.CanUseTools(Main.LocalPlayer))
+						continue;
+
 					eachState.Update(gameTime);
 
 					if (eachState.LeftMouse.WasDown && eachState.LeftMouse.LastDown is not null && eachState.LeftMouse.LastDown is not UIState)
@@ -96,6 +102,7 @@ namespace DragonLens.Core.Loaders.UILoading
 					if (eachState.RightMouse.WasDown && eachState.RightMouse.LastDown is not null && eachState.RightMouse.LastDown is not UIState)
 						Main.mouseRight = false;
 				}
+
 			}
 		}
 
@@ -139,7 +146,13 @@ namespace DragonLens.Core.Loaders.UILoading
 				SmartUIState state = inter.CurrentState as SmartUIState;
 
 				int index = state.InsertionIndex(layers);
-				AddLayer(layers, state, index, state.Visible, state.Scale);
+				AddLayer(layers, inter, index, () =>
+				{
+					if (Main.dedServ || Main.netMode == NetmodeID.SinglePlayer)
+						return state.Visible;
+
+					return state.Visible && PermissionHandler.CanUseTools(Main.LocalPlayer);
+				}, state.Scale);
 				orderedInterfaces.Add(new Tuple<UserInterface, int>(inter, index));
 			}
 
