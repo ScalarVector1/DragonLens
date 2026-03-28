@@ -114,11 +114,11 @@ namespace DragonLens.Core.Systems.ToolSystem
 				return;
 
 #if DEBUG
-			if (Main.netMode == NetmodeID.Server)
-				Mod.Logger.Info($"Sending packet for tool {DisplayName} ({Name}) from server");
+			//if (Main.netMode == NetmodeID.Server)
+			//	Mod.Logger.Info($"Sending packet for tool {DisplayName} ({Name}) from server");
 
-			if (Main.netMode == NetmodeID.MultiplayerClient)
-				Mod.Logger.Info($"Sending packet for tool {DisplayName} ({Name}) from {Main.LocalPlayer.whoAmI}");
+			//if (Main.netMode == NetmodeID.MultiplayerClient)
+			//	Mod.Logger.Info($"Sending packet for tool {DisplayName} ({Name}) from {Main.LocalPlayer.whoAmI}");
 #endif
 
 			ModPacket packet = Mod.GetPacket();

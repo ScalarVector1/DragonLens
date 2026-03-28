@@ -183,7 +183,7 @@ namespace DragonLens.Core.Systems
 		public static void HandlePacket(BinaryReader reader, int whoAmI)
 		{
 			int operation = reader.ReadInt32(); //First read the operation type
-			ModLoader.GetMod("DragonLens").Logger.Info("Recieved permission packet: " + operation);
+			//ModLoader.GetMod("DragonLens").Logger.Info("Recieved permission packet: " + operation);
 
 			if (operation == 0) //Set admin
 			{
