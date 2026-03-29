@@ -1,6 +1,7 @@
 ﻿using DragonLens.Content.Filters;
 using DragonLens.Content.Filters.TileFilters;
 using DragonLens.Content.GUI;
+using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 	internal class TileBrowser : Browser
 	{
+		public override Tool OwnerTool => ModContent.GetInstance<TileSpawner>();
 		public static int selected = -1;
 
 		public static int variant = 0;
@@ -236,7 +238,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 			spriteBatch.Draw(tex, iconBox.Center(), new Rectangle((int)sourcePos.X, (int)sourcePos.Y, 16, 16), Color.White, 0, Vector2.One * 8, scale, 0, 0);
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Tooltip.SetName(Identifier);
 				Tooltip.SetTooltip(TileSpawner.GetText("TileType", tileType));

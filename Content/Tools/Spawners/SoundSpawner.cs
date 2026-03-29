@@ -1,4 +1,5 @@
 ﻿using DragonLens.Content.GUI;
+using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 	internal class SoundBrowser : Browser
 	{
+		public override Tool OwnerTool => ModContent.GetInstance<SoundSpawner>();
 		public override string Name => SoundSpawner.GetText("DisplayName");
 
 		public override string IconTexture => "SoundSpawner";
@@ -92,7 +94,7 @@ namespace DragonLens.Content.Tools.Spawners
 			spriteBatch.Draw(tex, iconBox.Center(), null, Color.White, 0, tex.Size() / 2f, 1, 0, 0);
 			Utils.DrawBorderString(spriteBatch, name[..2], iconBox.TopLeft() + Vector2.One * 6, Color.Gray);
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Tooltip.SetName(Identifier);
 			}

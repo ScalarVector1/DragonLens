@@ -70,6 +70,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 	internal class SpawnWindow : DraggableUIState
 	{
+		public override Tool OwnerTool => ModContent.GetInstance<SpawnTool>();
 		public SpawnSlider slider;
 
 		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 360, 54);

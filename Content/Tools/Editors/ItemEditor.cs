@@ -371,7 +371,7 @@ namespace DragonLens.Content.Tools.Editors
 					spriteBatch.Draw(tex, GetDimensions().ToRectangle().TopLeft() + new Vector2(16, 16), null, Color.White, 0, tex.Size() / 2f, 0.5f, 0, 0);
 				}
 
-				if (IsMouseHovering)
+				if (IsMouseHovering && CanShowTooltip)
 				{
 					Tooltip.SetName(name);
 

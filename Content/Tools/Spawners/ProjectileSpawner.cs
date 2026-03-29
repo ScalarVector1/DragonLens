@@ -75,6 +75,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 	internal class ProjectileBrowser : Browser
 	{
+		public override Tool OwnerTool => ModContent.GetInstance<ProjectileSpawner>();
 		public static Projectile selected;
 
 		public static Vector2 velocity;
@@ -261,7 +262,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 			spriteBatch.Draw(tex, iconBox.Center(), frame, Color.White, 0, frame.Size() / 2, scale, 0, 0);
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Tooltip.SetName(proj.Name);
 				Tooltip.SetTooltip(ProjectileSpawner.GetText("ProjectileType", proj.type));

@@ -1,4 +1,6 @@
 ﻿using DragonLens.Content.GUI;
+using DragonLens.Content.Tools.Multiplayer;
+using DragonLens.Content.Tools.Visualization;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
@@ -49,6 +51,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 	internal class PaintWindow : DraggableUIState
 	{
+		public override Tool OwnerTool => ModContent.GetInstance<Paint>();
 		public bool firstSet;
 
 		public UIGrid structureButtons;
@@ -87,7 +90,7 @@ namespace DragonLens.Content.Tools.Gameplay
 				Append(adPanel);
 			}
 
-			sampleButton = new("DragonLens/Assets/GUI/Picker", () => selecting, Paint.GetTextValue("CreateStructure"));
+			sampleButton = new(Assets.GUI.Picker, () => selecting, Paint.GetTextValue("CreateStructure"));
 			sampleButton.OnLeftClick += (a, b) => selecting = !selecting;
 			Append(sampleButton);
 

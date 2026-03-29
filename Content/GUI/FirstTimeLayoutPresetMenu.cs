@@ -121,7 +121,7 @@ namespace DragonLens.Content.GUI
 			Texture2D tex = texture.Value;
 			spriteBatch.Draw(tex, GetDimensions().Position() + new Vector2(8, 36), null, Color.White, 0, Vector2.Zero, 0.5f, 0, 0);
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Tooltip.SetName(name);
 				Tooltip.SetTooltip(tooltip);

@@ -1,4 +1,5 @@
 ﻿using DragonLens.Content.GUI;
+using DragonLens.Content.Tools.Editors;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
@@ -79,6 +80,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 	internal class TimeWindow : DraggableUIState
 	{
+		public override Tool OwnerTool => ModContent.GetInstance<Time>();
 		public TimeSlider slider;
 		public TimePauseButton pause;
 		public MoonPhaseButton[] moonButtons;
@@ -272,7 +274,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 			spriteBatch.Draw(icon, dims.TopLeft() + Vector2.One * 5, Color.White);
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				string name = LocalizationHelper.GetText($"Tools.Time.{(TimePauseSystem.savedTime == -1 ? "Freeze" : "Resume")}");
 				Tooltip.SetName(name);

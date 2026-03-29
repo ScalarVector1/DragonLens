@@ -168,7 +168,7 @@ namespace DragonLens.Content.GUI
 			target.Inflate(-12, -12);
 			theme.DrawBox(spriteBatch, target, ThemeHandler.ButtonColor);
 
-			if (IsMouseHovering && !Main.mouseLeft)
+			if (IsMouseHovering && !Main.mouseLeft && CanShowTooltip)
 			{
 				Tooltip.SetName(theme.Name);
 				Tooltip.SetTooltip(theme.Description);
@@ -207,7 +207,7 @@ namespace DragonLens.Content.GUI
 			Texture2D tex = theme.GetIcon("ItemSpawner");
 			spriteBatch.Draw(tex, target.Center.ToVector2(), null, Color.White, 0, tex.Size() / 2f, 1, 0, 0);
 
-			if (IsMouseHovering && !Main.mouseLeft)
+			if (IsMouseHovering && !Main.mouseLeft && CanShowTooltip)
 			{
 				Tooltip.SetName(theme.Name);
 				Tooltip.SetTooltip(theme.Description);

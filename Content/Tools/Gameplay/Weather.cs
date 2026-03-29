@@ -114,6 +114,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 	internal class WeatherWindow : DraggableUIState
 	{
+		public override Tool OwnerTool => ModContent.GetInstance<Weather>();
 		public CloudSlider cloudSlider;
 		public WindSlider windSlider;
 
@@ -336,7 +337,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			if (Main.raining)
 				GUIHelper.DrawOutline(spriteBatch, dims, ThemeHandler.ButtonColor.InvertColor());
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Tooltip.SetName(Weather.GetText("RainButton.Name"));
 				Tooltip.SetTooltip(Weather.GetText("RainButton.Tooltip"));
@@ -376,7 +377,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			if (Sandstorm.Happening)
 				GUIHelper.DrawOutline(spriteBatch, dims, ThemeHandler.ButtonColor.InvertColor());
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Tooltip.SetName(Weather.GetText("SandstormButton.Name"));
 				Tooltip.SetTooltip(Weather.GetText("SandstormButton.Tooltip"));
@@ -415,7 +416,7 @@ namespace DragonLens.Content.Tools.Gameplay
 				Assets.GUI.Play.Value :
 				Assets.GUI.Pause.Value;
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				string name = Weather.GetText($"FreezeWeatherButton.{(WeatherSystem.weatherFrozen ? "Resume" : "Freeze")}");
 				Tooltip.SetName(name);

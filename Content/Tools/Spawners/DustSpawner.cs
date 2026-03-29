@@ -2,6 +2,7 @@
 using DragonLens.Content.Filters.DustFilters;
 using DragonLens.Content.GUI;
 using DragonLens.Content.GUI.FieldEditors;
+using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,8 @@ namespace DragonLens.Content.Tools.Spawners
 
 	internal class DustBrowser : Browser
 	{
+		public override Tool OwnerTool => ModContent.GetInstance<DustSpawner>();
+
 		public static Dust selected;
 
 		public static bool perfect;
@@ -249,7 +252,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 			spriteBatch.Draw(tex, iconBox.Center(), frame, Color.White, 0, new Vector2(frame.Width, frame.Height) / 2, scale, 0, 0);
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Tooltip.SetName(Identifier);
 				Tooltip.SetTooltip(DustSpawner.GetText("DustType", dust.type));

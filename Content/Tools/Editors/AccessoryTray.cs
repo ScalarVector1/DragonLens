@@ -1,4 +1,5 @@
 ﻿using DragonLens.Content.GUI;
+using DragonLens.Content.Tools.Developer;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
@@ -102,6 +103,7 @@ namespace DragonLens.Content.Tools.Editors
 
 	internal class AccessoryTrayUI : DraggableUIState
 	{
+		public override Tool OwnerTool => ModContent.GetInstance<AccessoryTray>();
 		public UIGrid slots;
 
 		public StyledScrollbar slotsScroll;

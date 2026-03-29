@@ -2,6 +2,7 @@
 using DragonLens.Content.Filters.BuffFilters;
 using DragonLens.Content.GUI;
 using DragonLens.Content.GUI.FieldEditors;
+using DragonLens.Content.Tools.Gameplay;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using System;
@@ -19,6 +20,7 @@ namespace DragonLens.Content.Tools.Spawners
 	internal class BuffSpawner : BrowserTool<BuffBrowser>
 	{
 		public override string IconKey => "BuffSpawner";
+
 
 		public override void SendPacket(BinaryWriter writer)
 		{
@@ -86,6 +88,8 @@ namespace DragonLens.Content.Tools.Spawners
 
 	internal class BuffBrowser : Browser
 	{
+		public override Tool OwnerTool => ModContent.GetInstance<BuffSpawner>();
+
 		public static int selected = -1;
 
 		public static int duration = 180;
@@ -274,7 +278,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 			spriteBatch.Draw(tex, iconBox.Center(), new Rectangle(0, 0, tex.Width, tex.Height), Color.White, 0, new Vector2(tex.Width, tex.Height) / 2, scale, 0, 0);
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Tooltip.SetName(Lang.GetBuffName(type));
 				Tooltip.SetTooltip(Main.GetBuffTooltip(Main.LocalPlayer, type));

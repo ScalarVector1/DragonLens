@@ -1,7 +1,10 @@
-﻿using DragonLens.Core.Systems.ThemeSystem;
+﻿using DragonLens.Content.GUI;
+using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
+using System.Linq;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
@@ -13,6 +16,11 @@ namespace DragonLens.Core.Systems.ToolSystem
 	/// </summary>
 	public abstract class Tool : ModType
 	{
+		/// <summary>
+		/// Whether this tool is "open/enabled/toggled". Will draw a highlight.
+		/// </summary>
+		public virtual bool IsActive => UILoader.UIStates?.OfType<DraggableUIState>().Any(state => state.Visible && state.OwnerTool == this) ?? false;
+
 		/// <summary>
 		/// The hotkey keybind for this tool.
 		/// </summary>
@@ -158,6 +166,17 @@ namespace DragonLens.Core.Systems.ToolSystem
 				scale = tex.Width > tex.Height ? target.Width / tex.Width : target.Height / tex.Height;
 
 			spriteBatch.Draw(tex, target.Center(), null, Color.White, 0, tex.Size() / 2f, scale, 0, 0);
+
+			if (IsActive)
+			{
+				// Draw yellow outline if the tool is active
+				GUIHelper.DrawOutline(spriteBatch, new Rectangle(target.X - 4, target.Y - 4, 46, 46), ThemeHandler.ButtonColor.InvertColor());
+
+				// Draw glow in special cases.
+				Texture2D glowTex = Assets.Misc.GlowAlpha.Value;
+				var color = new Color(255, 220, 100, 0);
+				spriteBatch.Draw(glowTex, new Rectangle(target.X, target.Y, 38, 38), color);
+			}
 		}
 	}
 }
