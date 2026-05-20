@@ -37,21 +37,9 @@ namespace DragonLens.Content.GUI
 		public bool listMode;
 		public bool filtersVisible;
 		public int buttonSize = 36;
+
 		public virtual int MinButtonSize => 36;
 		public virtual int BrowserWidth => 500;
-		public override bool OwnsMouse(Point mouse)
-		{
-			if (BoundingBox.Contains(mouse))
-				return true;
-
-			if (!filtersVisible || filters is null)
-				return false;
-
-			Rectangle filterBounds = filters.GetDimensions().ToRectangle();
-			filterBounds.Height = (int)MathHelper.Min(420, filters.filters.GetTotalHeight() + 20);
-
-			return filterBounds.Contains(mouse);
-		}
 
 		public abstract string Name { get; }
 
@@ -67,6 +55,20 @@ namespace DragonLens.Content.GUI
 		public override int InsertionIndex(List<GameInterfaceLayer> layers)
 		{
 			return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
+		}
+
+		public override bool OwnsMouse(Point mouse)
+		{
+			if (BoundingBox.Contains(mouse))
+				return true;
+
+			if (!filtersVisible || filters is null)
+				return false;
+
+			Rectangle filterBounds = filters.GetDimensions().ToRectangle();
+			filterBounds.Height = (int)MathHelper.Min(420, filters.filters.GetTotalHeight() + 20);
+
+			return filterBounds.Contains(mouse);
 		}
 
 		/// <summary>

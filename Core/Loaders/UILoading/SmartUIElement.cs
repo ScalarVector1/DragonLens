@@ -7,7 +7,7 @@ namespace DragonLens.Core.Loaders.UILoading
 	/// </summary>
 	public class SmartUIElement : UIElement
 	{
-		public bool CanShowTooltip => UILoader.CanShowTooltip(this);
+		public bool CanShowTooltip => UILoader.IsOnTopmostHoveredState(this);
 
 		#region XButton1
 		/// <summary>
