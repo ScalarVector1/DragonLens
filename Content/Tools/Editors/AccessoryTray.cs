@@ -19,6 +19,8 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override string IconKey => "AccessoryTray";
 
+		public override bool IsHighlighted => UILoader.GetUIState<AccessoryTrayUI>()?.Visible ?? false;
+
 		public override void OnActivate()
 		{
 			if (Main.netMode != NetmodeID.SinglePlayer)
@@ -103,7 +105,6 @@ namespace DragonLens.Content.Tools.Editors
 
 	internal class AccessoryTrayUI : DraggableUIState
 	{
-		public override Tool OwnerTool => ModContent.GetInstance<AccessoryTray>();
 		public UIGrid slots;
 
 		public StyledScrollbar slotsScroll;

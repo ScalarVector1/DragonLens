@@ -28,6 +28,8 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override string IconKey => "Noclip";
 
+		public override bool IsHighlighted => Active;
+
 		public override void OnActivate()
 		{
 			Active = !Active;
@@ -39,18 +41,6 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void DrawIcon(SpriteBatch spriteBatch, Rectangle position)
 		{
 			base.DrawIcon(spriteBatch, position);
-
-			if (Active)
-			{
-				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ThemeHandler.ButtonColor.InvertColor());
-
-				Texture2D tex = Assets.Misc.GlowAlpha.Value;
-				Color color = Color.White;
-				color.A = 0;
-				var target = new Rectangle(position.X, position.Y, 38, 38);
-
-				spriteBatch.Draw(tex, target, color);
-			}
 		}
 
 		public override void SendPacket(BinaryWriter writer)

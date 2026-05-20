@@ -1,4 +1,5 @@
 ﻿using DragonLens.Content.GUI;
+using DragonLens.Content.Tools.Gameplay;
 using DragonLens.Content.Tools.Spawners;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
@@ -15,6 +16,8 @@ namespace DragonLens.Content.Tools.Visualization
 	internal class Hitboxes : Tool
 	{
 		public override string IconKey => "Hitboxes";
+
+		public override bool IsHighlighted => UILoader.GetUIState<HitboxWindow>()?.Visible ?? false;
 
 		public override void ResetForNonAdmin(Player player)
 		{
@@ -107,7 +110,6 @@ namespace DragonLens.Content.Tools.Visualization
 
 	internal class HitboxWindow : DraggableUIState
 	{
-		public override Tool OwnerTool => ModContent.GetInstance<Hitboxes>();
 		public HitboxOption NPCOption;
 		public HitboxOption ProjectileOption;
 		public HitboxOption PlayerOption;

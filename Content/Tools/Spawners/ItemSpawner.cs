@@ -24,7 +24,6 @@ namespace DragonLens.Content.Tools.Spawners
 
 	internal class ItemBrowser : Browser
 	{
-		public override Tool OwnerTool => ModContent.GetInstance<ItemSpawner>();
 		public override string Name => ItemSpawner.GetText("DisplayName");
 
 		public override string IconTexture => "ItemSpawner";

@@ -20,6 +20,8 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override string LocalizationKey => "PlayerEditor";
 
+		public override bool IsHighlighted => UILoader.GetUIState<PlayerEditorState>()?.Visible ?? false;
+
 		public override void OnActivate()
 		{
 			PlayerEditorState state = UILoader.GetUIState<PlayerEditorState>();

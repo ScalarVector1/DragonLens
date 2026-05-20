@@ -15,6 +15,8 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public override string IconKey => "SpawnTool";
 
+		public override bool IsHighlighted => UILoader.GetUIState<SpawnWindow>()?.Visible ?? false;
+
 		public override void OnActivate()
 		{
 			SpawnWindow state = UILoader.GetUIState<SpawnWindow>();
@@ -70,7 +72,6 @@ namespace DragonLens.Content.Tools.Gameplay
 
 	internal class SpawnWindow : DraggableUIState
 	{
-		public override Tool OwnerTool => ModContent.GetInstance<SpawnTool>();
 		public SpawnSlider slider;
 
 		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 360, 54);

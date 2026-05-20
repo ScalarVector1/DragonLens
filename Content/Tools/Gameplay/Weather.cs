@@ -16,6 +16,8 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public override string IconKey => "Weather";
 
+		public override bool IsHighlighted => UILoader.GetUIState<WeatherWindow>()?.Visible ?? false;
+
 		public override void OnActivate()
 		{
 			WeatherWindow state = UILoader.GetUIState<WeatherWindow>();
@@ -114,7 +116,6 @@ namespace DragonLens.Content.Tools.Gameplay
 
 	internal class WeatherWindow : DraggableUIState
 	{
-		public override Tool OwnerTool => ModContent.GetInstance<Weather>();
 		public CloudSlider cloudSlider;
 		public WindSlider windSlider;
 

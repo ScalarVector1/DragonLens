@@ -24,7 +24,6 @@ namespace DragonLens.Content.Tools.Spawners
 
 	internal class SoundBrowser : Browser
 	{
-		public override Tool OwnerTool => ModContent.GetInstance<SoundSpawner>();
 		public override string Name => SoundSpawner.GetText("DisplayName");
 
 		public override string IconTexture => "SoundSpawner";

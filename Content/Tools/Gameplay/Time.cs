@@ -17,6 +17,8 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public override string IconKey => "Time";
 
+		public override bool IsHighlighted => UILoader.GetUIState<TimeWindow>()?.Visible ?? false;
+
 		public override void OnActivate()
 		{
 			TimeWindow state = UILoader.GetUIState<TimeWindow>();
@@ -80,7 +82,6 @@ namespace DragonLens.Content.Tools.Gameplay
 
 	internal class TimeWindow : DraggableUIState
 	{
-		public override Tool OwnerTool => ModContent.GetInstance<Time>();
 		public TimeSlider slider;
 		public TimePauseButton pause;
 		public MoonPhaseButton[] moonButtons;

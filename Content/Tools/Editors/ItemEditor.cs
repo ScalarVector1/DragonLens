@@ -1,5 +1,6 @@
 ﻿using DragonLens.Content.GUI;
 using DragonLens.Content.GUI.FieldEditors;
+using DragonLens.Content.Tools.Developer;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
@@ -19,6 +20,8 @@ namespace DragonLens.Content.Tools.Editors
 	internal class ItemEditor : Tool
 	{
 		public override string IconKey => "ItemEditor";
+
+		public override bool IsHighlighted => UILoader.GetUIState<ItemEditorState>()?.Visible ?? false;
 
 		public override void OnActivate()
 		{

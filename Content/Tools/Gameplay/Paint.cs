@@ -1,4 +1,5 @@
 ﻿using DragonLens.Content.GUI;
+using DragonLens.Content.Tools.Editors;
 using DragonLens.Content.Tools.Multiplayer;
 using DragonLens.Content.Tools.Visualization;
 using DragonLens.Core.Loaders.UILoading;
@@ -23,6 +24,8 @@ namespace DragonLens.Content.Tools.Gameplay
 	internal class Paint : Tool
 	{
 		public override string IconKey => "Paint";
+
+		public override bool IsHighlighted => UILoader.GetUIState<PaintWindow>()?.Visible ?? false;
 
 		public override void Load()
 		{
@@ -51,7 +54,6 @@ namespace DragonLens.Content.Tools.Gameplay
 
 	internal class PaintWindow : DraggableUIState
 	{
-		public override Tool OwnerTool => ModContent.GetInstance<Paint>();
 		public bool firstSet;
 
 		public UIGrid structureButtons;

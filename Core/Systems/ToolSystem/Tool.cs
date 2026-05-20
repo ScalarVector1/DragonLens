@@ -19,7 +19,7 @@ namespace DragonLens.Core.Systems.ToolSystem
 		/// <summary>
 		/// Whether this tool is "open/enabled/toggled". Will draw a highlight.
 		/// </summary>
-		public virtual bool IsActive => UILoader.UIStates?.OfType<DraggableUIState>().Any(state => state.Visible && state.OwnerTool == this) ?? false;
+		public virtual bool IsHighlighted => false;
 
 		/// <summary>
 		/// The hotkey keybind for this tool.
@@ -167,15 +167,10 @@ namespace DragonLens.Core.Systems.ToolSystem
 
 			spriteBatch.Draw(tex, target.Center(), null, Color.White, 0, tex.Size() / 2f, scale, 0, 0);
 
-			if (IsActive)
+			if (IsHighlighted)
 			{
 				// Draw yellow outline if the tool is active
 				GUIHelper.DrawOutline(spriteBatch, new Rectangle(target.X - 4, target.Y - 4, 46, 46), ThemeHandler.ButtonColor.InvertColor());
-
-				// Draw glow in special cases.
-				Texture2D glowTex = Assets.Misc.GlowAlpha.Value;
-				var color = new Color(255, 220, 100, 0);
-				spriteBatch.Draw(glowTex, new Rectangle(target.X, target.Y, 38, 38), color);
 			}
 		}
 	}

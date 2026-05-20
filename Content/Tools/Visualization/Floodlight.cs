@@ -1,4 +1,6 @@
-﻿using DragonLens.Core.Systems.ThemeSystem;
+﻿using DragonLens.Content.Tools.Gameplay;
+using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using System;
@@ -13,6 +15,9 @@ namespace DragonLens.Content.Tools.Visualization
 		public override string IconKey => "Lighting";
 
 		public override bool HasRightClick => true;
+
+		public override bool IsHighlighted => strength > 0;
+
 		public override void ResetForNonAdmin(Player player)
 		{
 			strength = 0f;
@@ -40,8 +45,6 @@ namespace DragonLens.Content.Tools.Visualization
 
 			if (strength > 0)
 			{
-				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ThemeHandler.ButtonColor.InvertColor());
-
 				Texture2D tex = Assets.Misc.GlowAlpha.Value;
 				Color color = new Color(255, 215, 150) * strength;
 				color.A = 0;

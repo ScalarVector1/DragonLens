@@ -52,7 +52,6 @@ namespace DragonLens.Content.Tools.Spawners
 
 	internal class NPCBrowser : Browser
 	{
-		public override Tool OwnerTool => ModContent.GetInstance<NPCSpawner>();
 		public static NPC selected;
 		public static UnlockableNPCEntryIcon preview;
 

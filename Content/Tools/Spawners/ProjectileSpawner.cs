@@ -75,7 +75,6 @@ namespace DragonLens.Content.Tools.Spawners
 
 	internal class ProjectileBrowser : Browser
 	{
-		public override Tool OwnerTool => ModContent.GetInstance<ProjectileSpawner>();
 		public static Projectile selected;
 
 		public static Vector2 velocity;

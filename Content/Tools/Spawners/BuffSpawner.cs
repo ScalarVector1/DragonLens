@@ -88,8 +88,6 @@ namespace DragonLens.Content.Tools.Spawners
 
 	internal class BuffBrowser : Browser
 	{
-		public override Tool OwnerTool => ModContent.GetInstance<BuffSpawner>();
-
 		public static int selected = -1;
 
 		public static int duration = 180;

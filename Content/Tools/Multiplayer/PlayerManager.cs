@@ -46,7 +46,6 @@ namespace DragonLens.Content.Tools.Multiplayer
 
 	internal sealed class PlayerManagerBrowser : Browser
 	{
-		public override Tool OwnerTool => ModContent.GetInstance<PlayerManager>();
 		public override string Name => LocalizationHelper.GetText("Tools.PlayerManager.DisplayName");
 		public override string IconTexture => "PlayerManager";
 		public override Vector2 DefaultPosition => new(0.1f, 0.3f);

@@ -28,8 +28,6 @@ namespace DragonLens.Content.Tools.Spawners
 
 	internal class DustBrowser : Browser
 	{
-		public override Tool OwnerTool => ModContent.GetInstance<DustSpawner>();
-
 		public static Dust selected;
 
 		public static bool perfect;

@@ -27,7 +27,6 @@ namespace DragonLens.Content.Tools.Spawners
 
 	internal class TileBrowser : Browser
 	{
-		public override Tool OwnerTool => ModContent.GetInstance<TileSpawner>();
 		public static int selected = -1;
 
 		public static int variant = 0;

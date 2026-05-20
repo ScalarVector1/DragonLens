@@ -23,11 +23,12 @@ namespace DragonLens.Content.Tools.Developer
 		public override string IconKey => "AssetManager";
 
 		public override bool SyncOnClientJoint => false;
+
+		public override bool IsHighlighted => UILoader.GetUIState<AssetBrowser>()?.Visible ?? false;
 	}
 
 	internal class AssetBrowser : Browser
 	{
-		public override Tool OwnerTool => ModContent.GetInstance<AssetManager>();
 		public ReloadButton reloadButton;
 
 		public override string Name => ModContent.GetInstance<AssetManager>().DisplayName;

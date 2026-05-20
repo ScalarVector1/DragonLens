@@ -15,7 +15,7 @@ namespace DragonLens.Content.GUI
 		{
 			return BoundingBox.Contains(mouse);
 		}
-		public virtual Tool OwnerTool => null;
+
 		public static bool draggingAny;
 
 		private UIImageButton closeButton;
