@@ -33,7 +33,13 @@ namespace DragonLens
 				PermissionHandler.SendToolData(whoAmI);
 
 			if (type == "PlayerManager")
-				PlayerManagerNetHandler.HandlePacket(reader);
+				PlayerManagerNetHandler.HandlePacket(reader, whoAmI);
+
+			if (type == "SessionTracker")
+				SessionTrackerNetHandler.HandlePacket(reader, whoAmI);
+
+			if (type == "PingTracker")
+				PingTrackerNetHandler.HandlePacket(reader, whoAmI);
 		}
 	}
 }

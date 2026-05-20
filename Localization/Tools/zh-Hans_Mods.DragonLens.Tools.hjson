@@ -858,13 +858,225 @@ PlayerManager: {
 	RemoveAdmin: "{0}已不是管理员"
 	AddAdmin: "{0}已成为管理员"
 
-	InventoryManager: {
-		Inventory: "{0}的物品栏"
-		Equipment: 装备
-		Piggy: 猪猪存钱罐
-		Safe: 保险箱
-		DefendersForge: 护卫熔炉
-		VoidVault: 虚空宝库
+	Refresh: {
+		// Name: Refresh
+		// Tooltip: Show or hide Refresh button
+		// DisplayName: Refresh
+		// Description: Refresh all players
+	}
+
+	FilterCategories: {
+		// Filter: Filters
+		// Team: Team filters
+		// Biome: Biome filters
+		// ButtonOptions: Button options
+		// StatOptions: Stat options
+		// BackgroundOptions: Background options
+		// PlayerOptions: Player options
+	}
+
+	Filters: {
+		Frozen: {
+			// Name: Frozen
+			// Description: Any players currently frozen
+			// Toggle: Show or hide Freeze button
+		}
+
+		Admin: {
+			// Name: Admin
+			// Description: Any players with admin permissions
+			// Toggle: Show or hide Admin button
+		}
+
+		Dead: {
+			// Name: Dead
+			// Description: Any dead players
+		}
+
+		LowHealth: {
+			// Name: Low Health
+			// Description: Any players below half health
+		}
+
+		FullHealth: {
+			// Name: Full Health
+			// Description: Any players at full health
+		}
+
+		NoTeam: {
+			// Name: No Team
+			// Description: Any players on no team
+		}
+
+		Red: {
+			// Name: Red Team
+			// Description: Any players on Red team
+		}
+
+		Green: {
+			// Name: Green Team
+			// Description: Any players on Green team
+		}
+
+		Blue: {
+			// Name: Blue Team
+			// Description: Any players on Blue team
+		}
+
+		Yellow: {
+			// Name: Yellow Team
+			// Description: Any players on Yellow team
+		}
+
+		Pink: {
+			// Name: Pink Team
+			// Description: Any players on Pink team
+		}
+
+		Kick: {
+			// Name: Kick
+			// Toggle: Show or hide Kick button
+		}
+
+		View: {
+			// Name: Spectate
+			// Toggle: Show or hide Spectate button
+		}
+
+		Inventory: {
+			// Name: Inventory
+			// Toggle: Show or hide Inventory button
+		}
+
+		BringHere: {
+			// Name: Bring Here
+			// Toggle: Show or hide Bring Here button
+		}
+
+		GoTo: {
+			// Name: Go To
+			// Toggle: Show or hide Go To button
+		}
+
+		TeamColorBackground: {
+			// Name: Team Background
+			// Toggle: Shows the player's team color, or white if not on any team
+		}
+
+		BiomeBackground: {
+			// Name: Biome Background
+			// Toggle: Shows player's current biome background
+		}
+
+		PlayerFull: {
+			// Name: Player Full
+			// Toggle: Shows the entire player projection. This also moves some stats in list mode to make room for the player.
+		}
+
+		PlayerHead: {
+			// Name: Player Head
+			// Toggle: Shows the player's head and name
+		}
+
+		SessionTime: {
+			// Name: Session Time
+			// Toggle: Show or hide player's current session time
+		}
+
+		Life: {
+			// Name: Life
+			// Toggle: Show or hide player's current and max health
+		}
+
+		Mana: {
+			// Name: Mana
+			// Toggle: Show or hide player's current and max mana
+		}
+
+		Distance: {
+			// Name: Distance
+			// Toggle: Show or hide player's distance from you
+		}
+
+		Team: {
+			// Name: Team
+			// Toggle: Show or hide player's current team
+		}
+
+		Position: {
+			// Name: Position
+			// Toggle: Show or hide player's current tile position
+		}
+
+		BiomeName: {
+			// Name: Biome
+			// Toggle: Show or hide player's current biome info
+		}
+
+		HeldItem: {
+			// Name: Held Item
+			// Toggle: Show or hide the item the player is currently holding
+		}
+
+		Defense: {
+			// Name: Defense
+			// Toggle: Show or hide player's current defense
+		}
+
+		MovementSpeed: {
+			// Name: Movement Speed
+			// Toggle: Show or hide player's current movement speed
+		}
+
+		Ping: {
+			// Name: Ping
+			// Toggle: Show or hide player's current network ping
+		}
+
+		InventoryItemCount: {
+			// Name: Inventory Count
+			// Toggle: Show or hide the total number of items in the player's inventory
+		}
+
+		CoinCount: {
+			// Name: Coins
+			// Toggle: Show or hide the total coins the player is carrying
+		}
+
+		AmmoCount: {
+			// Name: Ammo
+			// Toggle: Show or hide the total ammo in the player's ammo slots
+		}
+
+		NearbyEnemies: {
+			// Name: Nearby Enemies
+			// Toggle: Show or hide the number of nearby enemies around the player
+		}
+
+		LastEnemyHit: {
+			// Name: Last Enemy Hit
+			// Toggle: Show or hide the last enemy the player hit
+		}
+
+		LastPlayerHit: {
+			// Name: Last Player Hit
+			// Toggle: Show or hide the last player the player hit
+		}
+
+		MinionCount: {
+			// Name: Minions
+			// Toggle: Show or hide the player's current and maximum minion count
+		}
+
+		DeathCount: {
+			// Name: Deaths
+			// Toggle: Show or hide player's PvP and PvE deaths
+		}
+
+		BossDamage: {
+			// Name: Boss Damage
+			// Toggle: Show or hide player's total boss damage
+		}
 	}
 
 	Admin: {
@@ -885,6 +1097,30 @@ PlayerManager: {
 	Inventory: {
 		Name: 管理物品栏
 		Tooltip: 查看并管理该玩家的物品栏
+	}
+
+	BringHere: {
+		// Name: Bring Here
+		// Tooltip: Teleport this player to your position
+	}
+
+	GoTo: {
+		// Name: Go To
+		// Tooltip: Teleport to this player's position
+	}
+
+	Freeze: {
+		// Name: Freeze
+		// Tooltip: Freeze this player
+	}
+
+	InventoryManager: {
+		Inventory: "{0}的物品栏"
+		Equipment: 装备
+		Piggy: 猪猪存钱罐
+		Safe: 保险箱
+		DefendersForge: 护卫熔炉
+		VoidVault: 虚空宝库
 	}
 
 	Stats:

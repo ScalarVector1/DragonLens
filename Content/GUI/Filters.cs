@@ -1,4 +1,6 @@
 ﻿using DragonLens.Content.Filters;
+using DragonLens.Content.Filters.PlayerManagerFilters;
+using DragonLens.Content.Filters.PlayerManagerFilters.Toggles;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
@@ -115,6 +117,45 @@ namespace DragonLens.Content.GUI
 
 		public override void SafeClick(UIMouseEvent evt)
 		{
+			// Debug print filter type.
+			//Main.NewText(filter);
+
+			// Special toggle filter.
+			if (filter is ButtonOptionFilter buttonToggle)
+			{
+				buttonToggle.Toggle();
+				parent.Recalculate();
+				parent.SortGrid();
+				return;
+			}
+
+			// Special toggle filter.
+			if (filter is StatOptionFilter statToggle)
+			{
+				statToggle.Toggle();
+				parent.Recalculate();
+				parent.SortGrid();
+				return;
+			}
+
+			// Special background filter.
+			if (filter is BackgroundOptionFilter backgroundToggle)
+			{
+				backgroundToggle.Toggle();
+				parent.Recalculate();
+				parent.SortGrid();
+				return;
+			}
+
+			// Special player filter.
+			if (filter is PlayerOptionFilter playerOptionsFilter)
+			{
+				playerOptionsFilter.Toggle();
+				parent.Recalculate();
+				parent.SortGrid();
+				return;
+			}
+
 			active = !active;
 
 			if (active && filter.isModFilter)
@@ -134,7 +175,15 @@ namespace DragonLens.Content.GUI
 
 			GUIHelper.DrawBox(spriteBatch, drawBox, ThemeHandler.ButtonColor);
 
-			if (active)
+			// Special case filter.
+			bool enabled =
+				active ||
+				filter is ButtonOptionFilter buttonToggle && buttonToggle.Enabled ||
+				filter is StatOptionFilter statToggle && statToggle.Enabled ||
+				filter is BackgroundOptionFilter backgroundToggle && backgroundToggle.Enabled ||
+				filter is PlayerOptionFilter playerFilter && playerFilter.Enabled;
+
+			if (enabled)
 				GUIHelper.DrawOutline(spriteBatch, drawBox, ThemeHandler.ButtonColor.InvertColor());
 
 			drawBox.Inflate(-4, -4);
@@ -144,7 +193,9 @@ namespace DragonLens.Content.GUI
 			{
 				Main.LocalPlayer.mouseInterface = true;
 				Tooltip.SetName(filter.Name);
-				Tooltip.SetTooltip(filter.Description);
+
+				if (!string.IsNullOrEmpty(filter.Description))
+					Tooltip.SetTooltip(filter.Description);
 			}
 		}
 
