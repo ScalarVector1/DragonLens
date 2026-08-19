@@ -1,4 +1,4 @@
-﻿BuffDespawner: {
+BuffDespawner: {
 	DisplayName: Очистить баффы
 	Description: Снимает с вас все баффы и дебаффы
 }
@@ -966,4 +966,10 @@ Pause: {
 	DisplayName: Пауза
 	Description: Позволяет останавливать игру. Нажмите ПКМ во время паузы, чтобы перейти на один кадр вперёд.
 	RightClickName: (Пауза) Перейти на один кадр вперёд
+}
+
+SpawnPoint: {
+	// DisplayName: Spawn Point
+	// Description: Sets the spawn point to your current position.
+	// Message: Spawn point set to {0} {1}
 }
