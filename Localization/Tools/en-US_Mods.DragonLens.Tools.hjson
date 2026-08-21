@@ -989,126 +989,6 @@ PlayerManager: {
 			Name: Go To
 			Toggle: Show or hide Go To button
 		}
-
-		TeamColorBackground: {
-			Name: Team Background
-			Toggle: Shows the player's team color, or white if not on any team
-		}
-
-		BiomeBackground: {
-			Name: Biome Background
-			Toggle: Shows player's current biome background
-		}
-
-		PlayerFull: {
-			Name: Player Full
-			Toggle: Shows the entire player projection. This also moves some stats in list mode to make room for the player.
-		}
-
-		PlayerHead: {
-			Name: Player Head
-			Toggle: Shows the player's head and name
-		}
-
-		SessionTime: {
-			Name: Session Time
-			Toggle: Show or hide player's current session time
-		}
-
-		Life: {
-			Name: Life
-			Toggle: Show or hide player's current and max health
-		}
-
-		Mana: {
-			Name: Mana
-			Toggle: Show or hide player's current and max mana
-		}
-
-		Distance: {
-			Name: Distance
-			Toggle: Show or hide player's distance from you
-		}
-
-		Team: {
-			Name: Team
-			Toggle: Show or hide player's current team
-		}
-
-		Position: {
-			Name: Position
-			Toggle: Show or hide player's current tile position
-		}
-
-		BiomeName: {
-			Name: Biome
-			Toggle: Show or hide player's current biome info
-		}
-
-		HeldItem: {
-			Name: Held Item
-			Toggle: Show or hide the item the player is currently holding
-		}
-
-		Defense: {
-			Name: Defense
-			Toggle: Show or hide player's current defense
-		}
-
-		MovementSpeed: {
-			Name: Movement Speed
-			Toggle: Show or hide player's current movement speed
-		}
-
-		Ping: {
-			Name: Ping
-			Toggle: Show or hide player's current network ping
-		}
-
-		InventoryItemCount: {
-			Name: Inventory Count
-			Toggle: Show or hide the total number of items in the player's inventory
-		}
-
-		CoinCount: {
-			Name: Coins
-			Toggle: Show or hide the total coins the player is carrying
-		}
-
-		AmmoCount: {
-			Name: Ammo
-			Toggle: Show or hide the total ammo in the player's ammo slots
-		}
-
-		NearbyEnemies: {
-			Name: Nearby Enemies
-			Toggle: Show or hide the number of nearby enemies around the player
-		}
-
-		LastEnemyHit: {
-			Name: Last Enemy Hit
-			Toggle: Show or hide the last enemy the player hit
-		}
-
-		LastPlayerHit: {
-			Name: Last Player Hit
-			Toggle: Show or hide the last player the player hit
-		}
-
-		MinionCount: {
-			Name: Minions
-			Toggle: Show or hide the player's current and maximum minion count
-		}
-
-		DeathCount: {
-			Name: Deaths
-			Toggle: Show or hide player's PvP and PvE deaths
-		}
-
-		BossDamage: {
-			Name: Boss Damage
-			Toggle: Show or hide player's total boss damage
-		}
 	}
 
 	Admin: {
@@ -1162,6 +1042,11 @@ PlayerManager: {
 		Position: {2}
 		Velocity: {3}
 		Alive: {4}
+		'''
+	PlayerTooltip:
+		'''
+		Life: {0}
+		Position: {1}
 		'''
 }
 

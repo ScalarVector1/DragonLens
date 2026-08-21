@@ -23,11 +23,11 @@ namespace DragonLens.Content.GUI
 	{
 		public BrowserTool tool;
 
-		internal UIGrid options;
-		private StyledScrollbar scrollBar;
-		private ToggleButton listButton;
-		private ToggleButton filterButton;
-		private ToggleButton sortButton;
+		public UIGrid options;
+		public StyledScrollbar scrollBar;
+		public ToggleButton listButton;
+		public ToggleButton filterButton;
+		public ToggleButton sortButton;
 		public FilterPanel filters;
 
 		internal SearchBar searchBar;

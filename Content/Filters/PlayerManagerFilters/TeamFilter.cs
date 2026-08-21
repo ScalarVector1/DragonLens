@@ -1,10 +1,5 @@
 ﻿namespace DragonLens.Content.Filters.PlayerManagerFilters
 {
-
-	/// <summary>
-	/// Draw filter with a custom spritesheet
-	/// Used for team icon filters
-	/// </summary>
 	internal class TeamFilter : Filter
 	{
 		public Rectangle sourceRect;
