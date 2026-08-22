@@ -49,7 +49,8 @@ namespace DragonLens.Core.Systems.ThemeSystem
 			"TileSpawner",
 			"Time",
 			"VoidMagnet",
-			"Weather"
+			"Weather",
+			"SpawnPoint"
 		};
 
 		/// <summary>

@@ -47,3 +47,4 @@ PlayerManager.DisplayName: "{$Mods.DragonLens.Tools.PlayerManager.DisplayName}"
 // AssetManager.DisplayName: Asset Manager
 // Pause.DisplayName: Pause
 // PauseRightClick.DisplayName: Pause Right Click
+// SpawnPoint.DisplayName: Spawn Point

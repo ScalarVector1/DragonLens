@@ -1063,3 +1063,9 @@ Pause: {
 	// Description: Pauses the game. You can right click this tool to advance by a single frame while paused.
 	// RightClickName: (Pause) Step single frame
 }
+
+SpawnPoint: {
+	// DisplayName: Spawn Point
+	// Description: Sets the spawn point to your current position.
+	// Message: Spawn point set to {0} {1}
+}
