@@ -12,7 +12,7 @@ namespace DragonLens.Content.GUI
 	{
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Tooltip.SetName(LocalizationHelper.GetGUIText($"ToolbarCustomizationElements.{GetType().Name}.Name"));
 				Tooltip.SetTooltip(LocalizationHelper.GetGUIText($"ToolbarCustomizationElements.{GetType().Name}.Tooltip"));
@@ -88,22 +88,22 @@ namespace DragonLens.Content.GUI
 
 		public override void SafeUpdate(GameTime gameTime)
 		{
-			if (dragging)
+			if (dragging && CanShowTooltip)
 			{
 				int index = ParentToolbar.toolbar.toolList.IndexOf(parent.tool);
 
-				if (ParentToolbar.toolbar.orientation == Orientation.Horizontal)
+				if (ParentToolbar.toolbar.orientation == Orientation.Horizontal && CanShowTooltip)
 				{
-					if (Main.MouseScreen.X > parent.GetDimensions().X + parent.GetDimensions().Width + 8 && index < parent.parent.toolbar.toolList.Count - 1)
+					if (Main.MouseScreen.X > parent.GetDimensions().X + parent.GetDimensions().Width + 8 && index < parent.parent.toolbar.toolList.Count - 1 && CanShowTooltip)
 						SwapTools(index + 1);
-					else if (Main.MouseScreen.X < parent.GetDimensions().X - 8 && index > 0)
+					else if (Main.MouseScreen.X < parent.GetDimensions().X - 8 && index > 0 && CanShowTooltip)
 						SwapTools(index - 1);
 				}
 				else
 				{
-					if (Main.MouseScreen.Y > parent.GetDimensions().Y + parent.GetDimensions().Height + 8 && index < parent.parent.toolbar.toolList.Count - 1)
+					if (Main.MouseScreen.Y > parent.GetDimensions().Y + parent.GetDimensions().Height + 8 && index < parent.parent.toolbar.toolList.Count - 1 && CanShowTooltip)
 						SwapTools(index + 1);
-					else if (Main.MouseScreen.Y < parent.GetDimensions().Y - 8 && index > 0)
+					else if (Main.MouseScreen.Y < parent.GetDimensions().Y - 8 && index > 0 && CanShowTooltip)
 						SwapTools(index - 1);
 				}
 			}
@@ -195,18 +195,18 @@ namespace DragonLens.Content.GUI
 
 			// This logic exists because this dragger is always present, not just when customizing. Has to be done due to
 			// append order effecting click priority :/
-			if (!CustomizeTool.customizing)
+			if (!CustomizeTool.customizing && CanShowTooltip)
 			{
 				Width.Set(0, 0);
 				Height.Set(0, 0);
 				return;
 			}
 
-			if (dragging && draggedElement != null)
+			if (dragging && draggedElement != null && CanShowTooltip)
 			{
-				if (Main.mouseRight && !debounce)
+				if (Main.mouseRight && !debounce && CanShowTooltip)
 				{
-					if (DraggedToolbar.orientation == Orientation.Horizontal)
+					if (DraggedToolbar.orientation == Orientation.Horizontal && CanShowTooltip)
 					{
 						DraggedToolbar.orientation = Orientation.Vertical;
 						draggedElement.Refresh();
@@ -247,7 +247,7 @@ namespace DragonLens.Content.GUI
 					DraggedToolbar.orientation = Orientation.Horizontal;
 				}
 
-				if (DraggedToolbar.CollapseDirection != DraggedToolbar.lastKnownCollapse)
+				if (DraggedToolbar.CollapseDirection != DraggedToolbar.lastKnownCollapse && CanShowTooltip)
 				{
 					draggedElement.Refresh();
 					DraggedToolbar.lastKnownCollapse = DraggedToolbar.CollapseDirection;
@@ -378,7 +378,7 @@ namespace DragonLens.Content.GUI
 
 			spriteBatch.Draw(tex, GetDimensions().Center(), source, new Color(200, 200, 100), rotation, new Vector2(30, 0), 1, 0, 0);
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				string hideOption = LocalizationHelper.GetGUIText($"ToolbarCustomizationElements.HideOptionButton.{Toolbar.automaticHideOption}.Name");
 

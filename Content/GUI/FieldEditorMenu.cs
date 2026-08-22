@@ -1,5 +1,4 @@
-﻿using DragonLens.Content.GUI;
-using DragonLens.Content.GUI.FieldEditors;
+﻿using DragonLens.Content.GUI.FieldEditors;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;

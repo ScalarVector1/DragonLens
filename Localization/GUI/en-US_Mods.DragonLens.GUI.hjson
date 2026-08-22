@@ -1,7 +1,11 @@
 Browser: {
-	ListView: List view
 	Filters: Filters
 	Sorts: Sorting mode
+	ListView: List view
+	GridView: Grid view
+	GridViewDescription: Grid view. Click to switch to list
+	ListViewDescription: List view. Click to switch to grid
+	Settings: Settings
 
 	Sort: {
 		ID: By ID
@@ -10,7 +14,10 @@ Browser: {
 		Defense: By Defense
 		Value: By Gold Value
 		Life: By Maximum Life
+		CurrentLife: By Current Life
+		SessionTime: By Session Time
 		AlphabeticalPath: Alphabetical by Path
+		Teams: By Teams
 	}
 
 	ButtonSizeSlider: {

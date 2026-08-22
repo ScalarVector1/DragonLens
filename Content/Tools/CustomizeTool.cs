@@ -22,6 +22,8 @@ namespace DragonLens.Content.Tools
 
 		public override string IconKey => "Customize";
 
+		public override bool IsHighlighted => customizing;
+
 		public static string GetText(string key, params object[] args)
 		{
 			return LocalizationHelper.GetText($"Tools.CustomizeTool.{key}", args);
@@ -158,7 +160,7 @@ namespace DragonLens.Content.Tools
 
 			spriteBatch.Draw(icon, target.Center(), null, Color.White, 0, icon.Size() / 2f, scale, 0, 0);
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Tooltip.SetName(tool.DisplayName);
 				Tooltip.SetTooltip(tool.Description);

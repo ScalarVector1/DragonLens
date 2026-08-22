@@ -16,6 +16,8 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public override string IconKey => "Weather";
 
+		public override bool IsHighlighted => UILoader.GetUIState<WeatherWindow>()?.Visible ?? false;
+
 		public override void OnActivate()
 		{
 			WeatherWindow state = UILoader.GetUIState<WeatherWindow>();
@@ -148,7 +150,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			Append(freezeButton);
 
 			width = 400;
-			height = 260;
+			height = 170;
 		}
 
 		public override void AdjustPositions(Vector2 newPos)
@@ -336,7 +338,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			if (Main.raining)
 				GUIHelper.DrawOutline(spriteBatch, dims, ThemeHandler.ButtonColor.InvertColor());
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Tooltip.SetName(Weather.GetText("RainButton.Name"));
 				Tooltip.SetTooltip(Weather.GetText("RainButton.Tooltip"));
@@ -376,7 +378,7 @@ namespace DragonLens.Content.Tools.Gameplay
 			if (Sandstorm.Happening)
 				GUIHelper.DrawOutline(spriteBatch, dims, ThemeHandler.ButtonColor.InvertColor());
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Tooltip.SetName(Weather.GetText("SandstormButton.Name"));
 				Tooltip.SetTooltip(Weather.GetText("SandstormButton.Tooltip"));
@@ -415,7 +417,7 @@ namespace DragonLens.Content.Tools.Gameplay
 				Assets.GUI.Play.Value :
 				Assets.GUI.Pause.Value;
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				string name = Weather.GetText($"FreezeWeatherButton.{(WeatherSystem.weatherFrozen ? "Resume" : "Freeze")}");
 				Tooltip.SetName(name);

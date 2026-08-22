@@ -1,4 +1,7 @@
 ﻿using DragonLens.Content.GUI;
+using DragonLens.Content.Tools.Editors;
+using DragonLens.Content.Tools.Multiplayer;
+using DragonLens.Content.Tools.Visualization;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
@@ -21,6 +24,8 @@ namespace DragonLens.Content.Tools.Gameplay
 	internal class Paint : Tool
 	{
 		public override string IconKey => "Paint";
+
+		public override bool IsHighlighted => UILoader.GetUIState<PaintWindow>()?.Visible ?? false;
 
 		public override void Load()
 		{
@@ -87,7 +92,7 @@ namespace DragonLens.Content.Tools.Gameplay
 				Append(adPanel);
 			}
 
-			sampleButton = new("DragonLens/Assets/GUI/Picker", () => selecting, Paint.GetTextValue("CreateStructure"));
+			sampleButton = new(Assets.GUI.Picker, () => selecting, Paint.GetTextValue("CreateStructure"));
 			sampleButton.OnLeftClick += (a, b) => selecting = !selecting;
 			Append(sampleButton);
 
@@ -190,7 +195,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBoxFancy(spriteBatch, BoundingBox, ThemeHandler.BackgroundColor);
+			GUIHelper.DrawBoxFancy(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, width, height), ThemeHandler.BackgroundColor);
 
 			Texture2D background = Terraria.GameContent.TextureAssets.MagicPixel.Value;
 			spriteBatch.Draw(background, structureButtons.GetDimensions().ToRectangle(), Color.Black * 0.25f);

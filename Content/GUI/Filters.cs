@@ -140,11 +140,13 @@ namespace DragonLens.Content.GUI
 			drawBox.Inflate(-4, -4);
 			filter.Draw(spriteBatch, drawBox);
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Main.LocalPlayer.mouseInterface = true;
 				Tooltip.SetName(filter.Name);
-				Tooltip.SetTooltip(filter.Description);
+
+				if (!string.IsNullOrEmpty(filter.Description))
+					Tooltip.SetTooltip(filter.Description);
 			}
 		}
 

@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Chat;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
@@ -19,7 +20,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 		/// </summary>
 		/// <param name="reader"></param>
 		/// <param name="sender"></param>
-		public static void HandlePacket(BinaryReader reader)
+		public static void HandlePacket(BinaryReader reader, int sender)
 		{
 			string type = reader.ReadString();
 
@@ -28,6 +29,12 @@ namespace DragonLens.Content.Tools.Multiplayer
 
 			if (type == "Kick")
 				RecieveKick(reader);
+
+			if (type == "TeleportToMe")
+				ReceiveTeleportToMe(reader, sender);
+
+			if (type == "FreezePlayer")
+				ReceiveFrozenPlayer(reader);
 		}
 
 		/// <summary>
@@ -95,6 +102,111 @@ namespace DragonLens.Content.Tools.Multiplayer
 				SendItem(pIndex, index, invIndex, item);
 		}
 
+		public static void SendTeleportToMe(int targetWhoAmI)
+		{
+			if (Main.netMode == NetmodeID.SinglePlayer)
+			{
+				Player me = Main.LocalPlayer;
+				Player target = Main.player[targetWhoAmI];
+
+				if (target != null && target.active)
+				{
+					Vector2 destination = me.Center - target.Size * 0.5f;
+					target.Teleport(destination, 1);
+					target.velocity = Vector2.Zero;
+				}
+
+				return;
+			}
+
+			ModPacket packet = GetPacket("TeleportToMe");
+			packet.Write(targetWhoAmI);
+			packet.Send();
+		}
+
+		private static void ReceiveTeleportToMe(BinaryReader reader, int sender)
+		{
+			if (Main.netMode != NetmodeID.Server)
+				return;
+
+			int targetWhoAmI = reader.ReadInt32();
+
+			if (sender < 0 || sender >= Main.maxPlayers || targetWhoAmI < 0 || targetWhoAmI >= Main.maxPlayers)
+				return;
+
+			Player me = Main.player[sender];
+			Player target = Main.player[targetWhoAmI];
+
+			if (me == null || !me.active || target == null || !target.active)
+				return;
+
+			Vector2 destination = me.Center - target.Size * 0.5f;
+
+			RemoteClient.CheckSection(target.whoAmI, destination, 1);
+
+			target.Teleport(destination, 1);
+			target.velocity = Vector2.Zero;
+
+			NetMessage.SendData(
+				MessageID.TeleportEntity,
+				-1,
+				-1,
+				null,
+				0,
+				target.whoAmI,
+				destination.X,
+				destination.Y,
+				TeleportationStyleID.PotionOfReturn
+			);
+		}
+
+		public static void SendFrozenPlayer(int targetWhoAmI)
+		{
+			if (Main.netMode == NetmodeID.SinglePlayer)
+			{
+				HashSet<int> frozenPlayers = ModContent.GetInstance<PlayerManagerSystem>().frozenPlayers;
+				bool frozen = frozenPlayers.Add(targetWhoAmI);
+
+				if (!frozen)
+					frozenPlayers.Remove(targetWhoAmI);
+
+				NotifyFrozenState(targetWhoAmI, frozen);
+				return;
+			}
+
+			ModPacket packet = GetPacket("FreezePlayer");
+			packet.Write(targetWhoAmI);
+			packet.Send();
+		}
+
+		private static void ReceiveFrozenPlayer(BinaryReader reader)
+		{
+			int targetWhoAmI = reader.ReadInt32();
+
+			if (targetWhoAmI < 0 || targetWhoAmI >= Main.maxPlayers)
+				return;
+
+			HashSet<int> frozenPlayers = ModContent.GetInstance<PlayerManagerSystem>().frozenPlayers;
+
+			if (Main.netMode == NetmodeID.Server)
+			{
+				bool frozen = frozenPlayers.Add(targetWhoAmI);
+
+				if (!frozen)
+					frozenPlayers.Remove(targetWhoAmI);
+
+				NotifyFrozenState(targetWhoAmI, frozen);
+
+				ModPacket packet = GetPacket("FreezePlayer");
+				packet.Write(targetWhoAmI);
+				packet.Send();
+				return;
+			}
+
+			if (!frozenPlayers.Add(targetWhoAmI))
+				frozenPlayers.Remove(targetWhoAmI);
+		}
+
 		/// <summary>
 		/// Sends a packet to ban a player
 		/// </summary>
@@ -112,6 +224,20 @@ namespace DragonLens.Content.Tools.Multiplayer
 		private static void RecieveKick(BinaryReader reader)
 		{
 			NetMessage.SendData(MessageID.Kick, reader.ReadInt32(), -1, NetworkText.FromLiteral("You were kicked by a DragonLens admin."));
+		}
+
+		private static void NotifyFrozenState(int targetWhoAmI, bool frozen)
+		{
+			string text = frozen ? "You are now frozen." : "You are no longer frozen.";
+
+			if (Main.netMode == NetmodeID.SinglePlayer)
+			{
+				Main.NewText(text, Color.Yellow);
+				return;
+			}
+
+			if (Main.netMode == NetmodeID.Server)
+				ChatHelper.SendChatMessageToClient(NetworkText.FromLiteral(text), Color.Yellow, targetWhoAmI);
 		}
 	}
 }

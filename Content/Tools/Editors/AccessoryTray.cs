@@ -1,4 +1,5 @@
 ﻿using DragonLens.Content.GUI;
+using DragonLens.Content.Tools.Developer;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
@@ -17,6 +18,8 @@ namespace DragonLens.Content.Tools.Editors
 		public static List<Item> loadCache = new();
 
 		public override string IconKey => "AccessoryTray";
+
+		public override bool IsHighlighted => UILoader.GetUIState<AccessoryTrayUI>()?.Visible ?? false;
 
 		public override void OnActivate()
 		{

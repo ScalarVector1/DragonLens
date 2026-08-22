@@ -1,5 +1,6 @@
 ﻿using DragonLens.Content.GUI;
 using DragonLens.Content.GUI.FieldEditors;
+using DragonLens.Content.Tools.Developer;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
@@ -19,6 +20,8 @@ namespace DragonLens.Content.Tools.Editors
 	internal class ItemEditor : Tool
 	{
 		public override string IconKey => "ItemEditor";
+
+		public override bool IsHighlighted => UILoader.GetUIState<ItemEditorState>()?.Visible ?? false;
 
 		public override void OnActivate()
 		{
@@ -209,12 +212,12 @@ namespace DragonLens.Content.Tools.Editors
 			}
 
 			Rectangle side = new Rectangle(BoundingBox.X - 230, BoundingBox.Y + 50, 218, 598);
-			Helpers.GUIHelper.DrawBoxFancy(spriteBatch, side, ThemeHandler.BackgroundColor);
+			Helpers.GUIHelper.DrawBox(spriteBatch, side, ThemeHandler.BackgroundColor);
 
 			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()) || side.Contains(Main.MouseScreen.ToPoint()))
 				PlayerInput.LockVanillaMouseScroll("DragonLens: Item Editor");
 
-			Helpers.GUIHelper.DrawBox(spriteBatch, BoundingBox, ThemeHandler.BackgroundColor);
+			Helpers.GUIHelper.DrawBoxFancy(spriteBatch, BoundingBox, ThemeHandler.BackgroundColor);
 
 			Texture2D back = Assets.GUI.Gradient.Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 400, 48);
@@ -371,7 +374,7 @@ namespace DragonLens.Content.Tools.Editors
 					spriteBatch.Draw(tex, GetDimensions().ToRectangle().TopLeft() + new Vector2(16, 16), null, Color.White, 0, tex.Size() / 2f, 0.5f, 0, 0);
 				}
 
-				if (IsMouseHovering)
+				if (IsMouseHovering && CanShowTooltip)
 				{
 					Tooltip.SetName(name);
 

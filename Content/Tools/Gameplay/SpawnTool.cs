@@ -15,6 +15,8 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public override string IconKey => "SpawnTool";
 
+		public override bool IsHighlighted => UILoader.GetUIState<SpawnWindow>()?.Visible ?? false;
+
 		public override void OnActivate()
 		{
 			SpawnWindow state = UILoader.GetUIState<SpawnWindow>();
@@ -98,7 +100,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, 360, 120), ThemeHandler.BackgroundColor);
+			GUIHelper.DrawBoxFancy(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, 360, 120), ThemeHandler.BackgroundColor);
 
 			Texture2D back = Assets.GUI.Gradient.Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 360, 40);

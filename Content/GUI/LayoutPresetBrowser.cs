@@ -74,7 +74,7 @@ namespace DragonLens.Content.GUI
 
 		public override void SafeDraw(SpriteBatch spriteBatch, Rectangle iconArea)
 		{
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Tooltip.SetName(Identifier);
 				Tooltip.SetTooltip(tooltip);

@@ -1,6 +1,7 @@
 ﻿using DragonLens.Content.Filters;
 using DragonLens.Content.Filters.ItemFilters;
 using DragonLens.Content.GUI;
+using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using System.Collections.Generic;
 using System.Linq;
@@ -136,7 +137,7 @@ namespace DragonLens.Content.Tools.Spawners
 			Main.inventoryScale = 36 / 52f * iconBox.Width / 36f;
 			ItemSlot.Draw(spriteBatch, ref item, 21, GetDimensions().Position());
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Main.LocalPlayer.mouseInterface = true;
 				Main.HoverItem = item;

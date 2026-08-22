@@ -12,6 +12,8 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override string IconKey => "InfiniteReach";
 
+		public override bool IsHighlighted => active;
+
 		public override void ResetForNonAdmin(Player player)
 		{
 			active = false;
@@ -20,23 +22,6 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void OnActivate()
 		{
 			active = !active;
-		}
-
-		public override void DrawIcon(SpriteBatch spriteBatch, Rectangle position)
-		{
-			base.DrawIcon(spriteBatch, position);
-
-			if (active)
-			{
-				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ThemeHandler.ButtonColor.InvertColor());
-
-				Texture2D tex = Assets.Misc.GlowAlpha.Value;
-				Color color = Color.White;
-				color.A = 0;
-				var target = new Rectangle(position.X, position.Y, 38, 38);
-
-				spriteBatch.Draw(tex, target, color);
-			}
 		}
 
 		public override void SaveData(TagCompound tag)
