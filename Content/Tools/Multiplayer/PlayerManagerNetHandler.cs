@@ -34,7 +34,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 				ReceiveTeleportToMe(reader, sender);
 
 			if (type == "FreezePlayer")
-				ReceiveFrozenPlayer(reader, sender);
+				ReceiveFrozenPlayer(reader);
 		}
 
 		/// <summary>
@@ -179,7 +179,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 			packet.Send();
 		}
 
-		private static void ReceiveFrozenPlayer(BinaryReader reader, int sender)
+		private static void ReceiveFrozenPlayer(BinaryReader reader)
 		{
 			int targetWhoAmI = reader.ReadInt32();
 

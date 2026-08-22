@@ -35,8 +35,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 			if (Main.netMode == NetmodeID.Server && sender >= 0)
 			{
-				if (NPCBrowser.selected != null)
-					NPCBrowser.selected.netID = type;
+				NPCBrowser.selected?.netID = type;
 
 				Main.mouseX = (int)pos.X;
 				Main.mouseY = (int)pos.Y;
