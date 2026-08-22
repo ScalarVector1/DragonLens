@@ -163,7 +163,7 @@ namespace DragonLens.Content.Tools.Editors
 			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
 				PlayerInput.LockVanillaMouseScroll("DragonLens: Accessory Tray");
 
-			GUIHelper.DrawBox(spriteBatch, BoundingBox, ThemeHandler.BackgroundColor);
+			GUIHelper.DrawBoxFancy(spriteBatch, BoundingBox, ThemeHandler.BackgroundColor);
 
 			Texture2D back = Assets.GUI.Gradient.Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 300, 40);

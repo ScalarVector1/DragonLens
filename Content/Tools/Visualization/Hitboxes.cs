@@ -271,7 +271,7 @@ namespace DragonLens.Content.Tools.Visualization
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, width, height), ThemeHandler.BackgroundColor);
+			GUIHelper.DrawBoxFancy(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, width, height), ThemeHandler.BackgroundColor);
 
 			Texture2D back = Assets.GUI.Gradient.Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, width, 40);

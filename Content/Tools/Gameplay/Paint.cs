@@ -195,7 +195,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, width, height), ThemeHandler.BackgroundColor);
+			GUIHelper.DrawBoxFancy(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, width, height), ThemeHandler.BackgroundColor);
 
 			Texture2D background = Terraria.GameContent.TextureAssets.MagicPixel.Value;
 			spriteBatch.Draw(background, structureButtons.GetDimensions().ToRectangle(), Color.Black * 0.25f);

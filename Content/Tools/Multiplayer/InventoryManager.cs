@@ -63,7 +63,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 		{
 			var target = new Rectangle((int)basePos.X, (int)basePos.Y, 580, 456);
 
-			GUIHelper.DrawBox(spriteBatch, target, ThemeHandler.BackgroundColor);
+			GUIHelper.DrawBoxFancy(spriteBatch, target, ThemeHandler.BackgroundColor);
 
 			Texture2D back = Assets.GUI.Gradient.Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 450, 48);
