@@ -1,6 +1,7 @@
 ﻿using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
 using System.Reflection;
+using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Graphics.Renderers;
 using Terraria.UI;
@@ -39,7 +40,22 @@ namespace DragonLens.Content.GUI
 			if (userInterface == null || !CanScroll)
 				return;
 
-			base.DrawSelf(spriteBatch);
+			CalculatedStyle dimensions = GetDimensions();
+			CalculatedStyle innerDimensions = GetInnerDimensions();
+			if (_isDragging)
+			{
+				float num = UserInterface.ActiveInstance.MousePosition.Y - innerDimensions.Y - _dragYOffset;
+				_viewPosition = MathHelper.Clamp(num / innerDimensions.Height * _maxViewSize, 0f, _maxViewSize - _viewSize);
+			}
+
+			Rectangle handleRectangle = GetHandleRectangle();
+			Vector2 mousePosition = UserInterface.ActiveInstance.MousePosition;
+			bool isHoveringOverHandle = _isHoveringOverHandle;
+			_isHoveringOverHandle = base.IsMouseHovering && handleRectangle.Contains(new Point((int)mousePosition.X, (int)mousePosition.Y));
+			if (!isHoveringOverHandle && _isHoveringOverHandle && Main.hasFocus)
+			{
+				SoundEngine.PlaySound(12);
+			}
 
 			Rectangle back = GetDimensions().ToRectangle();
 			back.Inflate(2, 2);
