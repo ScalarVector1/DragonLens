@@ -2,6 +2,7 @@
 using DragonLens.Content.Filters.BuffFilters;
 using DragonLens.Content.GUI;
 using DragonLens.Content.GUI.FieldEditors;
+using DragonLens.Content.Tools.Gameplay;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using System;
@@ -20,6 +21,7 @@ namespace DragonLens.Content.Tools.Spawners
 	{
 		public override string IconKey => "BuffSpawner";
 
+
 		public override void SendPacket(BinaryWriter writer)
 		{
 			writer.WriteVector2(Main.MouseWorld);
@@ -33,8 +35,31 @@ namespace DragonLens.Content.Tools.Spawners
 			int type = reader.ReadInt32();
 			int duration = reader.ReadInt32();
 
+			if (type <= 0 || type >= BuffLoader.BuffCount)
+			{
+				ModLoader.GetMod("DragonLens").Logger.Warn(
+					$"BuffSpawner: invalid buff type {type} (BuffCount={BuffLoader.BuffCount}) from sender {sender}. Ignoring.");
+				return;
+			}
+
+			if (duration < 1)
+			{
+				duration = 1;
+			}
+
+			// Cap duration to 1 hour just to prevent absurdly long buffs because it could cause issues/weird behavior
+			if (duration > 60 * 60 * 60)
+			{
+				duration = 60 * 60 * 60;
+			}
+
 			foreach (NPC npc in Main.npc)
 			{
+				if (!npc.active)
+				{
+					continue;
+				}
+
 				Rectangle clickbox = npc.Hitbox;
 				clickbox.Inflate(32, 32);
 
@@ -171,6 +196,11 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
+			if (selected <= 0 || selected >= BuffLoader.BuffCount)
+			{
+				selected = -1;
+			}
+
 			if (selected != -1)
 			{
 				Texture2D tex = Terraria.GameContent.TextureAssets.Buff[selected]?.Value;
@@ -246,7 +276,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 			spriteBatch.Draw(tex, iconBox.Center(), new Rectangle(0, 0, tex.Width, tex.Height), Color.White, 0, new Vector2(tex.Width, tex.Height) / 2, scale, 0, 0);
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Tooltip.SetName(Lang.GetBuffName(type));
 				Tooltip.SetTooltip(Main.GetBuffTooltip(Main.LocalPlayer, type));

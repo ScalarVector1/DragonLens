@@ -29,6 +29,11 @@ namespace DragonLens.Core.Loaders.UILoading
 		/// What scale setting this UI should scale with
 		/// </summary>
 		public virtual InterfaceScaleType Scale { get; set; } = InterfaceScaleType.UI;
+		public virtual bool OwnsMouse(Point mouse)
+		{
+			return UserInterface?.GetDimensions().ToRectangle().Contains(mouse) == true;
+		}
+		public virtual bool ParticipatesInHoverOwnership => true;
 
 		/// <summary>
 		/// Allows you to unload anything that might need to be unloaded

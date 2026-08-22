@@ -289,7 +289,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SafeDraw(SpriteBatch spriteBatch, Rectangle iconBox)
 		{
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Tooltip.SetName(Identifier);
 				Tooltip.SetTooltip(NPCSpawner.GetText("NPCType", npc.type, npc.netID));

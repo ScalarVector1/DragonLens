@@ -3,6 +3,7 @@ using DragonLens.Content.GUI;
 using DragonLens.Content.Tools.Spawners;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
+using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using Microsoft.Xna.Framework.Content;
 using System;
@@ -22,6 +23,8 @@ namespace DragonLens.Content.Tools.Developer
 		public override string IconKey => "AssetManager";
 
 		public override bool SyncOnClientJoint => false;
+
+		public override bool IsHighlighted => UILoader.GetUIState<AssetBrowser>()?.Visible ?? false;
 	}
 
 	internal class AssetBrowser : Browser
@@ -54,10 +57,8 @@ namespace DragonLens.Content.Tools.Developer
 
 			foreach (Mod mod in ModLoader.Mods)
 			{
-#if !DEBUG
 				if (mod is DragonLens)
 					continue;
-#endif
 
 				AssetRepository repo = mod.Assets;
 
@@ -86,10 +87,8 @@ namespace DragonLens.Content.Tools.Developer
 
 			foreach (Mod mod in ModLoader.Mods)
 			{
-#if !DEBUG
 				if (mod is DragonLens)
 					continue;
-#endif
 
 				filters.AddFilter(new AssetModFilter(mod));
 			}
@@ -209,7 +208,7 @@ namespace DragonLens.Content.Tools.Developer
 
 			spriteBatch.Draw(asset.Value, iconArea.Center.ToVector2(), null, Color.White, 0, asset.Size() / 2f, scale, 0, 0);
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Tooltip.SetName(Identifier);
 
@@ -329,7 +328,7 @@ namespace DragonLens.Content.Tools.Developer
 
 			Utils.DrawBorderString(spriteBatch, preview[..Math.Min(preview.Length, 4)], iconArea.Center(), color, 0.7f * (iconArea.Width / 32f), 0.5f, 0.1f);
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Tooltip.SetName(Identifier);
 
@@ -374,7 +373,7 @@ namespace DragonLens.Content.Tools.Developer
 			GUIHelper.DrawBox(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor);
 			spriteBatch.Draw(Assets.GUI.Refresh.Value, GetDimensions().Center(), null, Color.White, 0, Assets.GUI.Refresh.Size() / 2f, 1, 0, 0);
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Tooltip.SetName(LocalizationHelper.GetToolText("AssetManager.Rescan.DisplayName"));
 				Tooltip.SetTooltip(LocalizationHelper.GetToolText("AssetManager.Rescan.Description"));

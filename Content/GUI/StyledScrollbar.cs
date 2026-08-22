@@ -1,13 +1,8 @@
 ﻿using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.GameContent.UI.Elements;
-using Terraria.ModLoader.UI.Elements;
+using Terraria.Graphics.Renderers;
 using Terraria.UI;
 
 namespace DragonLens.Content.GUI
@@ -16,16 +11,16 @@ namespace DragonLens.Content.GUI
 	{
 		public float oldValue;
 		public int scrolledRecently;
-
 		public static MethodInfo handleMethod = typeof(UIScrollbar).GetMethod("GetHandleRectangle", BindingFlags.NonPublic | BindingFlags.Instance);
 
 		public StyledScrollbar(UserInterface userInterface) : base(userInterface) { }
 
 		public override void Update(GameTime gameTime)
 		{
+			base.Update(gameTime);
+
 			float value = GetValue();
 
-			// UIGrids and lists update a frame later than scrolling, so we need to be recalculating for 2 frames
 			if (value != oldValue)
 			{
 				oldValue = value;
@@ -39,21 +34,22 @@ namespace DragonLens.Content.GUI
 			}
 		}
 
-		public override void Draw(SpriteBatch spriteBatch)
+		public override void DrawSelf(SpriteBatch spriteBatch)
 		{
-			if (CanScroll)
-			{
-				var back = GetDimensions().ToRectangle();
-				back.Inflate(2, 2);
+			if (userInterface == null || !CanScroll)
+				return;
 
-				GUIHelper.DrawBox(spriteBatch, back, ThemeHandler.BackgroundColor);
+			base.DrawSelf(spriteBatch);
 
-				var handle = (Rectangle)handleMethod.Invoke(this, null);
-				handle.Width = (int)(GetDimensions().Width - 4);
-				handle.Offset(2, 0);
+			Rectangle back = GetDimensions().ToRectangle();
+			back.Inflate(2, 2);
+			GUIHelper.DrawBox(spriteBatch, back, ThemeHandler.BackgroundColor);
 
-				GUIHelper.DrawBox(spriteBatch, handle, ThemeHandler.ButtonColor);
-			}
+			Rectangle handle = (Rectangle)handleMethod.Invoke(this, null);
+			handle.Width = (int)GetDimensions().Width - 4;
+			handle.Offset(2, 0);
+
+			GUIHelper.DrawBox(spriteBatch, handle, ThemeHandler.ButtonColor);
 		}
 	}
 }

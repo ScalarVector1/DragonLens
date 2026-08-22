@@ -7,6 +7,8 @@ namespace DragonLens.Core.Loaders.UILoading
 	/// </summary>
 	public class SmartUIElement : UIElement
 	{
+		public bool CanShowTooltip => UILoader.CanShowTooltip(this);
+
 		#region XButton1
 		/// <summary>
 		/// A Safe wrapper around XButton1MouseUp that allows both an override and the OnXButton1MouseUp event to be used together
@@ -293,6 +295,7 @@ namespace DragonLens.Core.Loaders.UILoading
 			base.ScrollWheel(evt);
 			SafeScrollWheel(evt);
 		}
+
 		#endregion
 	}
 }

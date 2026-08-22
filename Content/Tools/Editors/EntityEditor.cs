@@ -1,5 +1,6 @@
 ﻿using DragonLens.Content.GUI;
 using DragonLens.Content.GUI.FieldEditors;
+using DragonLens.Content.Tools.Developer;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
@@ -18,6 +19,8 @@ namespace DragonLens.Content.Tools.Editors
 		public override string IconKey => "EntityEditor";
 
 		public override string LocalizationKey => "EntityEditor";
+
+		public override bool IsHighlighted => UILoader.GetUIState<EntityEditorState>()?.Visible ?? false;
 
 		public override void OnActivate()
 		{
@@ -386,7 +389,7 @@ namespace DragonLens.Content.Tools.Editors
 			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
 				PlayerInput.LockVanillaMouseScroll("DragonLens: Entity Editor");
 
-			Helpers.GUIHelper.DrawBoxFancy(spriteBatch, BoundingBox, ThemeHandler.BackgroundColor);
+			Helpers.GUIHelper.DrawBox(spriteBatch, BoundingBox, ThemeHandler.BackgroundColor);
 
 			Texture2D back = Assets.GUI.Gradient.Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 400, 48);

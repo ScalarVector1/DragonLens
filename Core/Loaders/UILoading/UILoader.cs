@@ -1,7 +1,11 @@
-﻿using System;
+﻿using DragonLens.Content.GUI;
+using DragonLens.Core.Systems;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Terraria.ID;
 using Terraria.UI;
+using static ReLogic.Peripherals.RGB.Corsair.CorsairDeviceGroup;
 
 namespace DragonLens.Core.Loaders.UILoading
 {
@@ -20,6 +24,115 @@ namespace DragonLens.Core.Loaders.UILoading
 		/// The collection of all automatically loaded SmartUIStates.
 		/// </summary>
 		public static List<SmartUIState> UIStates = new();
+
+		public static SmartUIState GetTopmostHoveredState()
+		{
+			if (SortedUserInterfaces is null)
+				return null;
+
+			Point mouse = Main.MouseScreen.ToPoint();
+
+			foreach (UserInterface ui in SortedUserInterfaces)
+			{
+				if (ui?.CurrentState is not SmartUIState state || !state.Visible || !state.ParticipatesInHoverOwnership)
+					continue;
+
+				if (state.OwnsMouse(mouse))
+					return state;
+			}
+
+			return null;
+		}
+
+		public static bool CanShowTooltip(UIElement element)
+		{
+			if (element is null)
+			{
+				//Main.NewText("Error: Null element!");
+				return false;
+			}
+
+			SmartUIState owner = GetOwningState(element);
+			SmartUIState topmost = GetTopmostHoveredState();
+			bool result = owner is not null && ReferenceEquals(owner, topmost);
+
+			string elementName = element.GetType().Name;
+			string ownerName = owner?.GetType().Name ?? "null";
+			string topmostName = topmost?.GetType().Name ?? "null";
+
+#if DEBUG
+			if (element.IsMouseHovering)
+			{
+				ModContent.GetInstance<DragonLens>().Logger.Debug(($"CanShowTooltip: element={elementName}, owner={ownerName}, topmost={topmostName}, result={result}"));
+				//Main.NewText(($"CanShowTooltip: element={elementName}, owner={ownerName}, topmost={topmostName}, result={result}"));
+			}
+#endif
+
+			return result;
+		}
+
+		private static SmartUIState GetOwningState(UIElement element)
+		{
+			UIElement current = element;
+
+			while (current is not null)
+			{
+				if (current is SmartUIState state)
+					return state;
+
+				current = current.Parent;
+			}
+
+			return null;
+		}
+
+		public static void BringToFront(SmartUIState state)
+		{
+			if (state is null || UIStates is null || UserInterfaces is null)
+				return;
+
+			int index = UIStates.IndexOf(state);
+
+			if (index < 0 || index >= UserInterfaces.Count)
+				return;
+
+			SmartUIState uiState = UIStates[index];
+			UserInterface userInterface = UserInterfaces[index];
+
+			UIStates.RemoveAt(index);
+			UserInterfaces.RemoveAt(index);
+
+			UIStates.Add(uiState);
+			UserInterfaces.Add(userInterface);
+		}
+
+		private static void RebuildSortedUserInterfaces(List<GameInterfaceLayer> layers)
+		{
+			List<Tuple<UserInterface, int, int>> orderedInterfaces = [];
+
+			for (int k = 0; k < UserInterfaces.Count; k++)
+			{
+				UserInterface inter = UserInterfaces[k];
+
+				if (inter?.CurrentState is not SmartUIState state)
+					continue;
+
+				int insertionIndex = state.InsertionIndex(layers);
+				orderedInterfaces.Add(new Tuple<UserInterface, int, int>(inter, insertionIndex, k));
+			}
+
+			orderedInterfaces.Sort((a, b) =>
+			{
+				int indexCompare = b.Item2.CompareTo(a.Item2);
+
+				if (indexCompare != 0)
+					return indexCompare;
+
+				return b.Item3.CompareTo(a.Item3);
+			});
+
+			SortedUserInterfaces = orderedInterfaces.Select(n => n.Item1).ToList();
+		}
 
 		/// <summary>
 		/// Uses reflection to scan through and find all types extending SmartUIState that arent abstract, and loads an instance of them.
@@ -62,14 +175,14 @@ namespace DragonLens.Core.Loaders.UILoading
 		/// <param name="index">Where this layer should be inserted</param>
 		/// <param name="visible">The logic dictating the visibility of this layer</param>
 		/// <param name="scale">The scale settings this layer should scale with</param>
-		public static void AddLayer(List<GameInterfaceLayer> layers, UIState state, int index, bool visible, InterfaceScaleType scale)
+		public static void AddLayer(List<GameInterfaceLayer> layers, UserInterface ui, int index, Func<bool> visible, InterfaceScaleType scale)
 		{
-			string name = state == null ? "Unknown" : state.ToString();
+			string name = ui?.CurrentState?.ToString() ?? "Unknown";
 			layers.Insert(index, new LegacyGameInterfaceLayer("DragonLens: " + name,
 				delegate
 				{
-					if (visible)
-						state.Draw(Main.spriteBatch);
+					if (visible())
+						ui.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
 
 					return true;
 				}, scale));
@@ -84,17 +197,52 @@ namespace DragonLens.Core.Loaders.UILoading
 			if (Main.ingameOptionsWindow || Main.InGameUI.IsVisible || SortedUserInterfaces is null)
 				return;
 
+			bool blockLowerLeftClick = false;
+			bool blockLowerRightClick = false;
+			Point mouse = Main.MouseScreen.ToPoint();
+
 			foreach (UserInterface eachState in SortedUserInterfaces)
 			{
-				if (eachState?.CurrentState != null && ((SmartUIState)eachState.CurrentState).Visible)
+				if (eachState?.CurrentState is not SmartUIState s || !s.Visible)
+					continue;
+
+				if (Main.netMode != NetmodeID.SinglePlayer && !PermissionHandler.CanUseTools(Main.LocalPlayer))
+					continue;
+
+				bool suppressMouseForThisState = false;
+
+				if (s is DraggableUIState draggable && draggable.BoundingBox.Contains(mouse))
+					{
+					suppressMouseForThisState = blockLowerLeftClick || blockLowerRightClick;
+
+					if (!suppressMouseForThisState)
+					{
+						blockLowerLeftClick = true;
+						blockLowerRightClick = true;
+					}
+				}
+
+				bool oldMouseLeft = Main.mouseLeft;
+				bool oldMouseRight = Main.mouseRight;
+
+				if (suppressMouseForThisState)
 				{
-					eachState.Update(gameTime);
+					Main.mouseLeft = false;
+					Main.mouseRight = false;
+				}
 
-					if (eachState.LeftMouse.WasDown && eachState.LeftMouse.LastDown is not null && eachState.LeftMouse.LastDown is not UIState)
-						Main.mouseLeft = false;
+				eachState.Update(gameTime);
 
-					if (eachState.RightMouse.WasDown && eachState.RightMouse.LastDown is not null && eachState.RightMouse.LastDown is not UIState)
-						Main.mouseRight = false;
+				if (eachState.LeftMouse.WasDown && eachState.LeftMouse.LastDown is not null && eachState.LeftMouse.LastDown is not UIState)
+					Main.mouseLeft = false;
+
+				if (eachState.RightMouse.WasDown && eachState.RightMouse.LastDown is not null && eachState.RightMouse.LastDown is not UIState)
+					Main.mouseRight = false;
+
+				if (suppressMouseForThisState)
+				{
+					Main.mouseLeft = oldMouseLeft;
+					Main.mouseRight = oldMouseRight;
 				}
 			}
 		}
@@ -127,24 +275,24 @@ namespace DragonLens.Core.Loaders.UILoading
 		/// <param name="layers"></param>
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
 		{
-			List<Tuple<UserInterface, int>> orderedInterfaces = new();
-
 			for (int k = 0; k < UserInterfaces.Count; k++)
 			{
 				UserInterface inter = UserInterfaces[k];
 
-				if (inter.CurrentState is not SmartUIState)
+				if (inter?.CurrentState is not SmartUIState state)
 					continue;
 
-				SmartUIState state = inter.CurrentState as SmartUIState;
-
 				int index = state.InsertionIndex(layers);
-				AddLayer(layers, state, index, state.Visible, state.Scale);
-				orderedInterfaces.Add(new Tuple<UserInterface, int>(inter, index));
+				AddLayer(layers, inter, index, () =>
+				{
+					if (Main.dedServ || Main.netMode == NetmodeID.SinglePlayer)
+						return state.Visible;
+
+					return state.Visible && PermissionHandler.CanUseTools(Main.LocalPlayer);
+				}, state.Scale);
 			}
 
-			orderedInterfaces.Sort((a, b) => a.Item2.CompareTo(b.Item2) * -1);
-			SortedUserInterfaces = orderedInterfaces.Select(a => a.Item1).ToList();
+			RebuildSortedUserInterfaces(layers);
 		}
 	}
 }

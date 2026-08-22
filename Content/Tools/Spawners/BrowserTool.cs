@@ -1,4 +1,5 @@
 ﻿using DragonLens.Content.GUI;
+using DragonLens.Content.Tools.Gameplay;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ToolSystem;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace DragonLens.Content.Tools.Spawners
 
 	internal abstract class BrowserTool<T> : BrowserTool where T : Browser
 	{
+		public override bool IsHighlighted => UILoader.GetUIState<T>()?.Visible ?? false;
+
 		public override void OnActivate()
 		{
 			T state = UILoader.GetUIState<T>();

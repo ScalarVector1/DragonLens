@@ -1,4 +1,5 @@
 ﻿using DragonLens.Content.GUI;
+using DragonLens.Content.Tools.Editors;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
@@ -15,6 +16,8 @@ namespace DragonLens.Content.Tools.Gameplay
 	internal class Time : Tool
 	{
 		public override string IconKey => "Time";
+
+		public override bool IsHighlighted => UILoader.GetUIState<TimeWindow>()?.Visible ?? false;
 
 		public override void OnActivate()
 		{
@@ -131,7 +134,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBoxFancy(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, 400, 200), ThemeHandler.BackgroundColor);
+			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, 400, 200), ThemeHandler.BackgroundColor);
 
 			Texture2D back = Assets.GUI.Gradient.Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 400, 40);
@@ -272,7 +275,7 @@ namespace DragonLens.Content.Tools.Gameplay
 
 			spriteBatch.Draw(icon, dims.TopLeft() + Vector2.One * 5, Color.White);
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				string name = LocalizationHelper.GetText($"Tools.Time.{(TimePauseSystem.savedTime == -1 ? "Freeze" : "Resume")}");
 				Tooltip.SetName(name);

@@ -1,6 +1,7 @@
 ﻿using DragonLens.Content.Filters;
 using DragonLens.Content.GUI.FieldEditors;
 using DragonLens.Content.Sorts;
+using DragonLens.Content.Tools.Multiplayer;
 using DragonLens.Content.Tools.Spawners;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
@@ -22,11 +23,11 @@ namespace DragonLens.Content.GUI
 	{
 		public BrowserTool tool;
 
-		internal UIGrid options;
-		private StyledScrollbar scrollBar;
-		private ToggleButton listButton;
-		private ToggleButton filterButton;
-		private ToggleButton sortButton;
+		public UIGrid options;
+		public StyledScrollbar scrollBar;
+		public ToggleButton listButton;
+		public ToggleButton filterButton;
+		public ToggleButton sortButton;
 		public FilterPanel filters;
 
 		internal SearchBar searchBar;
@@ -36,12 +37,27 @@ namespace DragonLens.Content.GUI
 		public bool listMode;
 		public bool filtersVisible;
 		public int buttonSize = 36;
+		public virtual int MinButtonSize => 36;
+		public virtual int BrowserWidth => 500;
+		public override bool OwnsMouse(Point mouse)
+		{
+			if (BoundingBox.Contains(mouse))
+				return true;
+
+			if (!filtersVisible || filters is null)
+				return false;
+
+			Rectangle filterBounds = filters.GetDimensions().ToRectangle();
+			filterBounds.Height = (int)MathHelper.Min(420, filters.filters.GetTotalHeight() + 20);
+
+			return filterBounds.Contains(mouse);
+		}
 
 		public abstract string Name { get; }
 
 		public virtual string IconTexture => "TestTool";
 
-		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, 500, 64);
+		public override Rectangle DragBox => new((int)basePos.X, (int)basePos.Y, BrowserWidth, 64);
 
 		public event FilterDelegate FilterEvent;
 		public int sortIndex = 0;
@@ -119,7 +135,7 @@ namespace DragonLens.Content.GUI
 
 		public sealed override void SafeOnInitialize()
 		{
-			width = 500;
+			width = BrowserWidth;
 			height = 600;
 
 			scrollBar = new(UserInterface);
@@ -128,8 +144,9 @@ namespace DragonLens.Content.GUI
 			Append(scrollBar);
 
 			options = new();
-			options.Width.Set(460, 0);
+			options.Width.Set(BrowserWidth - 40, 0);
 			options.Height.Set(480, 0);
+			options.OverflowHidden = true;
 			options.SetScrollbar(scrollBar);
 			options.ListPadding = 0;
 			Append(options);
@@ -142,7 +159,13 @@ namespace DragonLens.Content.GUI
 			sizeSlider = new(this);
 			Append(sizeSlider);
 
-			listButton = new("DragonLens/Assets/GUI/Play", () => listMode, LocalizationHelper.GetGUIText("Browser.ListView"));
+			listButton = new(
+				() => listMode ? Assets.GUI.List : Assets.GUI.Grid,
+				() => listMode,
+				() => LocalizationHelper.GetGUIText(listMode ? "Browser.ListView" : "Browser.GridView"),
+				() => LocalizationHelper.GetGUIText(listMode ? "Browser.ListViewDescription" : "Browser.GridViewDescription"),
+				drawHighlight: false
+			);
 			listButton.OnLeftClick += (n, k) =>
 			{
 				listMode = !listMode;
@@ -165,7 +188,7 @@ namespace DragonLens.Content.GUI
 			};
 			Append(filterButton);
 
-			sortButton = new("DragonLens/Assets/GUI/Sort", () => false, LocalizationHelper.GetGUIText("Browser.Sorts"), () => LocalizationHelper.GetGUIText($"Browser.Sort.{SortModes[sortIndex].Name}"));
+			sortButton = new(Assets.GUI.Sort, () => false, LocalizationHelper.GetGUIText("Browser.Sorts"), () => LocalizationHelper.GetGUIText($"Browser.Sort.{SortModes[sortIndex].Name}"));
 			sortButton.OnLeftClick += (n, k) =>
 			{
 				sortIndex++;
@@ -176,14 +199,8 @@ namespace DragonLens.Content.GUI
 			Append(sortButton);
 
 			filters = new(this);
-			filters.Width.Set(0, 0);
 			filters.Height.Set(420, 0);
-
-			if (filtersVisible)
-				filters.Width.Set(220, 0);
-			else
-				filters.Width.Set(0, 0);
-
+			filters.Width.Set(filtersVisible ? 220 : 0, 0);
 			Append(filters);
 
 			SetupFilters(filters);
@@ -193,7 +210,7 @@ namespace DragonLens.Content.GUI
 
 		public override void AdjustPositions(Vector2 newPos)
 		{
-			scrollBar.Left.Set(newPos.X + 464, 0);
+			scrollBar.Left.Set(newPos.X + BrowserWidth - 32, 0);
 			scrollBar.Top.Set(newPos.Y + 110, 0);
 
 			options.Left.Set(newPos.X + 10, 0);
@@ -202,7 +219,8 @@ namespace DragonLens.Content.GUI
 			searchBar.Left.Set(newPos.X + 10, 0);
 			searchBar.Top.Set(newPos.Y + 66, 0);
 
-			sizeSlider.Left.Set(newPos.X + 354, 0);
+			//sizeSlider.Left.Set(newPos.X + 354, 0);
+			sizeSlider.Left.Set(newPos.X + BrowserWidth - 124, 0);
 			sizeSlider.Top.Set(newPos.Y + 74, 0);
 
 			listButton.Left.Set(newPos.X + 220, 0);
@@ -233,12 +251,12 @@ namespace DragonLens.Content.GUI
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			var target = new Rectangle((int)basePos.X, (int)basePos.Y, 500, 600);
+			var target = new Rectangle((int)basePos.X, (int)basePos.Y, BrowserWidth, 600);
 
-			GUIHelper.DrawBoxFancy(spriteBatch, target, ThemeHandler.BackgroundColor);
+			GUIHelper.DrawBox(spriteBatch, target, ThemeHandler.BackgroundColor);
 
 			Texture2D back = Assets.GUI.Gradient.Value;
-			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 400, 48);
+			var backTarget = new Rectangle((int)basePos.X + 12, (int)basePos.Y + 8, BrowserWidth - 100, 48);
 			spriteBatch.Draw(back, backTarget, Color.Black * 0.5f);
 
 			Texture2D gridBack = Terraria.GameContent.TextureAssets.MagicPixel.Value;
@@ -261,6 +279,9 @@ namespace DragonLens.Content.GUI
 
 		public static int drawDelayTimer = 2; //Here so we dont draw on the first frame of the grid populating, causing a lag bonanza since every single button tries to draw.
 		public bool filtered;
+		protected virtual int GridSize => (int)MathHelper.Clamp(parent.buttonSize, parent.MinButtonSize, 108);
+		protected virtual int ListHeight => GridSize;
+		protected virtual int ListWidth => (int)Parent.GetDimensions().Width - 24;
 
 		public abstract string Identifier { get; }
 		public abstract string Key { get; } // Key used for favorites
@@ -269,7 +290,7 @@ namespace DragonLens.Content.GUI
 
 		public BrowserButton(Browser parent)
 		{
-			int size = (int)MathHelper.Clamp(parent.buttonSize, 36, 108);
+			int size = (int)MathHelper.Clamp(parent.buttonSize, parent.MinButtonSize, 108);
 
 			Width.Set(size, 0);
 			Height.Set(size, 0);
@@ -315,10 +336,8 @@ namespace DragonLens.Content.GUI
 
 		private void UpdateAsGrid()
 		{
-			int size = (int)MathHelper.Clamp(parent.buttonSize, 36, 108);
-
-			Width.Set(size, 0);
-			Height.Set(size, 0);
+			Width.Set(GridSize, 0);
+			Height.Set(GridSize, 0);
 
 			MarginLeft = 2;
 			MarginRight = 2;
@@ -328,10 +347,8 @@ namespace DragonLens.Content.GUI
 
 		private void UpdateAsList()
 		{
-			int size = (int)MathHelper.Clamp(parent.buttonSize, 36, 108);
-
-			Width.Set(Parent.GetDimensions().Width - 24, 0);
-			Height.Set(size, 0);
+			Width.Set(ListWidth, 0);
+			Height.Set(ListHeight, 0);
 
 			MarginLeft = 2;
 			MarginRight = 2;
@@ -354,7 +371,7 @@ namespace DragonLens.Content.GUI
 
 		public virtual void SafeDraw(SpriteBatch spriteBatch, Rectangle iconArea) { }
 
-		public sealed override void Draw(SpriteBatch spriteBatch)
+		public override void Draw(SpriteBatch spriteBatch)
 		{
 			if (filtered)
 				return;
@@ -365,7 +382,7 @@ namespace DragonLens.Content.GUI
 			if (drawDelayTimer > 0)
 				return;
 
-			int size = (int)MathHelper.Clamp(parent.buttonSize, 36, 108);
+			int size = GridSize;
 
 			var drawBox = GetDimensions().ToRectangle();
 
@@ -470,7 +487,7 @@ namespace DragonLens.Content.GUI
 			{
 				progress = MathHelper.Clamp((Main.MouseScreen.X - GetDimensions().Position().X) / GetDimensions().Width, 0, 1);
 
-				parent.buttonSize = (int)(36 + progress * (108 - 36));
+				parent.buttonSize = (int)(parent.MinButtonSize + progress * (108 - parent.MinButtonSize));
 
 				if (!Main.mouseLeft)
 					dragging = false;
@@ -479,7 +496,8 @@ namespace DragonLens.Content.GUI
 			}
 			else
 			{
-				progress = (parent.buttonSize - 36) / (108 - 36f);
+				parent.buttonSize = (int)MathHelper.Clamp(parent.buttonSize, parent.MinButtonSize, 108);
+				progress = (parent.buttonSize - parent.MinButtonSize) / (108f - parent.MinButtonSize);
 			}
 		}
 
@@ -500,7 +518,7 @@ namespace DragonLens.Content.GUI
 			var draggerTarget = new Rectangle(dims.X + (int)(progress * dims.Width) - 5, dims.Y - 6, 10, 20);
 			GUIHelper.DrawBox(spriteBatch, draggerTarget, ThemeHandler.ButtonColor);
 
-			if (IsMouseHovering && !Main.mouseLeft)
+			if (IsMouseHovering && !Main.mouseLeft && CanShowTooltip)
 			{
 				Tooltip.SetName(LocalizationHelper.GetGUIText("Browser.ButtonSizeSlider.Name"));
 				Tooltip.SetTooltip(LocalizationHelper.GetGUIText("Browser.ButtonSizeSlider.Tooltip"));

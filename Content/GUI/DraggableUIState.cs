@@ -1,6 +1,8 @@
 ﻿using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using Terraria.GameContent.UI.Elements;
+using Terraria.UI;
 
 namespace DragonLens.Content.GUI
 {
@@ -9,6 +11,11 @@ namespace DragonLens.Content.GUI
 	/// </summary>
 	public abstract class DraggableUIState : SmartUIState
 	{
+		public override bool OwnsMouse(Point mouse)
+		{
+			return BoundingBox.Contains(mouse);
+		}
+
 		public static bool draggingAny;
 
 		private UIImageButton closeButton;
@@ -59,6 +66,16 @@ namespace DragonLens.Content.GUI
 		public virtual void AdjustPositions(Vector2 newPos) { }
 
 		public virtual void SafeOnInitialize() { }
+		public override void SafeMouseDown(UIMouseEvent evt)
+		{
+			// Bring this UI state to front when clicking it.
+			if (BoundingBox.Contains(evt.MousePosition.ToPoint()))
+				UILoader.BringToFront(this);
+
+			// If you only want to bring to front when clicking the header area, use:
+			//if (DragBox.Contains(evt.MousePosition.ToPoint()))
+				//UILoader.BringToFront(this);
+		}
 
 		public virtual void DraggableUdpate(GameTime gameTime) { }
 
@@ -118,13 +135,6 @@ namespace DragonLens.Content.GUI
 
 			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
 				Main.LocalPlayer.mouseInterface = true;
-
-			if (!new Rectangle(0, 0, Main.screenWidth, Main.screenHeight).Contains(BoundingBox))
-			{
-				basePos.X = MathHelper.Clamp(basePos.X, 0, Main.screenWidth - width);
-				basePos.Y = MathHelper.Clamp(basePos.Y, 0, Main.screenHeight - height);
-				RecalculateEverything();
-			}
 
 			DraggableUdpate(gameTime);
 		}

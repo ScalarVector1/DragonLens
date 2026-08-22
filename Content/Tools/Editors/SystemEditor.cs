@@ -20,6 +20,8 @@ namespace DragonLens.Content.Tools.Editors
 
 		public override string LocalizationKey => "SystemEditor";
 
+		public override bool IsHighlighted => UILoader.GetUIState<SystemEditorState>()?.Visible ?? false;
+
 		public override void OnActivate()
 		{
 			SystemEditorState state = UILoader.GetUIState<SystemEditorState>();
@@ -150,7 +152,7 @@ namespace DragonLens.Content.Tools.Editors
 			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
 				PlayerInput.LockVanillaMouseScroll("DragonLens: System Editor");
 
-			Helpers.GUIHelper.DrawBoxFancy(spriteBatch, BoundingBox, ThemeHandler.BackgroundColor);
+			Helpers.GUIHelper.DrawBox(spriteBatch, BoundingBox, ThemeHandler.BackgroundColor);
 
 			Texture2D back = Assets.GUI.Gradient.Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 400, 48);

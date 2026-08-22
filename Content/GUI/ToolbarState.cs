@@ -1,5 +1,6 @@
 ﻿using DragonLens.Content.Tools;
 using DragonLens.Core.Loaders.UILoading;
+using DragonLens.Core.Systems;
 using DragonLens.Core.Systems.ToolbarSystem;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -168,27 +169,59 @@ namespace DragonLens.Content.GUI
 
 		private void DrawToolbars(Vector2 arg1, float arg2)
 		{
-			int savedX = Main.mouseX; //vanilla uses something strange for mouse pos here so preserve it
+			if (Main.dedServ)
+			{
+				return;
+			}
+
+			if (Main.netMode != NetmodeID.SinglePlayer && !PermissionHandler.CanUseTools(Main.LocalPlayer))
+			{
+				return;
+			}
+
+			int savedX = Main.mouseX; // vanilla uses something strange for mouse pos here so preserve it
 			int savedY = Main.mouseY;
 
 			PlayerInput.SetZoom_UI();
 
-			// Have to check if _drawInterfaceGameTime is null otherwise there is a crash with world gen preview mod
-			UILoader.GetUIState<ToolbarState>()?.UserInterface?.Update(Main._drawInterfaceGameTime ?? new GameTime());
-			UILoader.GetUIState<ToolBrowser>()?.UserInterface?.Update(Main._drawInterfaceGameTime ?? new GameTime()); //We update/draw the tool browser here too to ease customization
+			GameTime gameTime = Main._drawInterfaceGameTime ?? new GameTime();
+
+			ToolbarState toolbarState = UILoader.GetUIState<ToolbarState>();
+			if (toolbarState != null && toolbarState.Visible)
+			{
+				toolbarState.UserInterface?.Update(gameTime);
+			}
+
+			ToolBrowser toolBrowser = UILoader.GetUIState<ToolBrowser>();
+			if (toolBrowser != null && toolBrowser.Visible)
+			{
+				toolBrowser.UserInterface?.Update(gameTime);
+			}
 
 			Main.spriteBatch.Begin(default, default, default, default, default, default, Main.UIScaleMatrix);
-			UILoader.GetUIState<ToolbarState>()?.Draw(Main.spriteBatch);
 
-			if (UILoader.GetUIState<ToolBrowser>()?.Visible ?? false)
-				UILoader.GetUIState<ToolBrowser>()?.Draw(Main.spriteBatch);
+			if (toolbarState != null && toolbarState.Visible)
+			{
+				toolbarState.Draw(Main.spriteBatch);
+			}
 
-			UILoader.GetUIState<Tooltip>()?.Draw(Main.spriteBatch);
+			if (toolBrowser != null && toolBrowser.Visible)
+			{
+				toolBrowser.Draw(Main.spriteBatch);
+			}
+
+			Tooltip tooltip = UILoader.GetUIState<Tooltip>();
+			if (tooltip != null && tooltip.Visible)
+			{
+				tooltip.Draw(Main.spriteBatch);
+			}
+
 			Main.spriteBatch.End();
 
 			Main.mouseX = savedX;
 			Main.mouseY = savedY;
 		}
+
 
 		public override void PostUpdateEverything()
 		{
