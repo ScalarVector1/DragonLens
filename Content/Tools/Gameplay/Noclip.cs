@@ -3,6 +3,7 @@ using DragonLens.Core.Systems;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.IO;
 using Terraria.ID;
@@ -27,6 +28,8 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override string IconKey => "Noclip";
 
+		public override bool IsHighlighted => Active;
+
 		public override void OnActivate()
 		{
 			Active = !Active;
@@ -38,18 +41,6 @@ namespace DragonLens.Content.Tools.Gameplay
 		public override void DrawIcon(SpriteBatch spriteBatch, Rectangle position)
 		{
 			base.DrawIcon(spriteBatch, position);
-
-			if (Active)
-			{
-				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ThemeHandler.ButtonColor.InvertColor());
-
-				Texture2D tex = Assets.Misc.GlowAlpha.Value;
-				Color color = Color.White;
-				color.A = 0;
-				var target = new Rectangle(position.X, position.Y, 38, 38);
-
-				spriteBatch.Draw(tex, target, color);
-			}
 		}
 
 		public override void SendPacket(BinaryWriter writer)
@@ -102,14 +93,25 @@ namespace DragonLens.Content.Tools.Gameplay
 				// Check free cam to stop movement while freecam is active
 				if (!FreeCamera.active)
 				{
+					// Custom speeds with shift / ctrl keys:
+					// Ctrl+shift -> 120f
+					// Ctrl -> 7.5f
+					// Shift -> 60f
+					// (normal) -> 15f
+
+					bool shift = Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift);
+					bool ctrl = Main.keyState.IsKeyDown(Keys.LeftControl) || Main.keyState.IsKeyDown(Keys.RightControl);
+
+					float speed = ctrl && shift ? 120f : ctrl ? 7.5f : shift ? 60f : 15f;
+
 					if (Player.controlLeft)
-						desiredPos.X -= 15;
+						desiredPos.X -= speed;
 					if (Player.controlRight)
-						desiredPos.X += 15;
+						desiredPos.X += speed;
 					if (Player.controlUp)
-						desiredPos.Y -= 15;
+						desiredPos.Y -= speed;
 					if (Player.controlDown)
-						desiredPos.Y += 15;
+						desiredPos.Y += speed;
 				}
 
 				if (Main.netMode == NetmodeID.MultiplayerClient &&

@@ -15,6 +15,8 @@ namespace DragonLens.Content.Tools.Gameplay
 	{
 		public override string IconKey => "SpawnTool";
 
+		public override bool IsHighlighted => UILoader.GetUIState<SpawnWindow>()?.Visible ?? false;
+
 		public override void OnActivate()
 		{
 			SpawnWindow state = UILoader.GetUIState<SpawnWindow>();

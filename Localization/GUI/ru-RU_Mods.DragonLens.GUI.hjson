@@ -1,7 +1,11 @@
 Browser: {
-	ListView: Показать списком
 	Filters: Фильтры
 	Sorts: Тип сортировки
+	// ListView: List view
+	// GridView: Grid view
+	// GridViewDescription: Grid view. Click to switch to list
+	// ListViewDescription: List view. Click to switch to grid
+	// Settings: Settings
 
 	Sort: {
 		ID: по ID
@@ -10,7 +14,10 @@ Browser: {
 		Defense: по защите
 		Value: по цене
 		Life: по максимальному здоровью
+		// CurrentLife: By Current Life
+		// SessionTime: By Session Time
 		AlphabeticalPath: по алфавиту (путь)
+		// Teams: By Teams
 	}
 
 	ButtonSizeSlider: {

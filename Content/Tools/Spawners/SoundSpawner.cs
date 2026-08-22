@@ -1,4 +1,5 @@
 ﻿using DragonLens.Content.GUI;
+using DragonLens.Core.Systems.ToolSystem;
 using DragonLens.Helpers;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,11 +47,6 @@ namespace DragonLens.Content.Tools.Spawners
 
 				if (obj is SoundStyle sound)
 				{
-					// A strange edge case where vanilla has an invalid sound ID sitting around?
-					// Silly but seems the fastest way of excluding it
-					if (sound.SoundPath == "Terraria/Sounds/Item_")
-						continue;
-
 					if (sound != default)
 						buttons.Add(new SoundButton(sound, fields[k].Name, this));
 				}
@@ -97,7 +93,7 @@ namespace DragonLens.Content.Tools.Spawners
 			spriteBatch.Draw(tex, iconBox.Center(), null, Color.White, 0, tex.Size() / 2f, 1, 0, 0);
 			Utils.DrawBorderString(spriteBatch, name[..2], iconBox.TopLeft() + Vector2.One * 6, Color.Gray);
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Tooltip.SetName(Identifier);
 			}

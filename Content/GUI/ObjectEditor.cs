@@ -44,15 +44,13 @@ namespace DragonLens.Content.GUI
 
 		private float height = 32;
 
-		private readonly string nameOverride;
-
 		public string smartLabel => obj is ModType mt ? mt.Mod.Name + ": " + mt.Name : obj.GetType().Name;
-		public string Label => nameOverride == string.Empty ? smartLabel : nameOverride;
+		public string Label => field == string.Empty ? smartLabel : field;
 
 		public ObjectEditor(object obj, string nameOverride = "")
 		{
 			this.obj = obj;
-			this.nameOverride = nameOverride;
+			Label = nameOverride;
 
 			modPlayerEditorList = new();
 			modPlayerEditorList.Add(new ObjectEditorLabel(Label));

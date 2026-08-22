@@ -1,4 +1,6 @@
 ﻿using DragonLens.Content.GUI;
+using DragonLens.Content.Tools.Gameplay;
+using DragonLens.Content.Tools.Spawners;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
@@ -14,6 +16,8 @@ namespace DragonLens.Content.Tools.Visualization
 	internal class Hitboxes : Tool
 	{
 		public override string IconKey => "Hitboxes";
+
+		public override bool IsHighlighted => UILoader.GetUIState<HitboxWindow>()?.Visible ?? false;
 
 		public override void ResetForNonAdmin(Player player)
 		{
@@ -267,7 +271,7 @@ namespace DragonLens.Content.Tools.Visualization
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			GUIHelper.DrawBoxFancy(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, width, height), ThemeHandler.BackgroundColor);
+			GUIHelper.DrawBox(spriteBatch, new Rectangle((int)basePos.X, (int)basePos.Y, width, height), ThemeHandler.BackgroundColor);
 
 			Texture2D back = Assets.GUI.Gradient.Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, width, 40);
@@ -312,19 +316,19 @@ namespace DragonLens.Content.Tools.Visualization
 			slider.Top.Set(64, 0);
 			Append(slider);
 
-			var button = new ToggleButton("DragonLens/Assets/GUI/NoBox", () => boxState == BoxType.none);
+			var button = new ToggleButton(Assets.GUI.NoBox, () => boxState == BoxType.none);
 			button.Left.Set(10, 0);
 			button.Top.Set(28, 0);
 			button.OnLeftClick += (a, b) => boxState = BoxType.none;
 			Append(button);
 
-			button = new ToggleButton("DragonLens/Assets/GUI/BorderBox", () => boxState == BoxType.outline);
+			button = new ToggleButton(Assets.GUI.BorderBox, () => boxState == BoxType.outline);
 			button.Left.Set(46, 0);
 			button.Top.Set(28, 0);
 			button.OnLeftClick += (a, b) => boxState = BoxType.outline;
 			Append(button);
 
-			button = new ToggleButton("DragonLens/Assets/GUI/FillBox", () => boxState == BoxType.filled);
+			button = new ToggleButton(Assets.GUI.FillBox, () => boxState == BoxType.filled);
 			button.Left.Set(82, 0);
 			button.Top.Set(28, 0);
 			button.OnLeftClick += (a, b) => boxState = BoxType.filled;

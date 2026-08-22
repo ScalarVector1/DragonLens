@@ -890,13 +890,105 @@ PlayerManager: {
 	RemoveAdmin: "{0} is no longer an admin."
 	AddAdmin: "{0} is now an admin."
 
-	InventoryManager: {
-		Inventory: "{0}'s Inventory"
-		Equipment: Equipment
-		Piggy: Piggy bank
-		Safe: Safe
-		DefendersForge: Defenders forge
-		VoidVault: Void vault
+	Refresh: {
+		Name: Refresh
+		Tooltip: Show or hide Refresh button
+		DisplayName: Refresh
+		Description: Refresh all players
+	}
+
+	FilterCategories: {
+		Filter: Filters
+		Team: Team filters
+		Biome: Biome filters
+		ButtonOptions: Button options
+		StatOptions: Stat options
+		BackgroundOptions: Background options
+		PlayerOptions: Player options
+	}
+
+	Filters: {
+		Frozen: {
+			Name: Frozen
+			Description: Any players currently frozen
+			Toggle: Show or hide Freeze button
+		}
+
+		Admin: {
+			Name: Admin
+			Description: Any players with admin permissions
+			Toggle: Show or hide Admin button
+		}
+
+		Dead: {
+			Name: Dead
+			Description: Any dead players
+		}
+
+		LowHealth: {
+			Name: Low Health
+			Description: Any players below half health
+		}
+
+		FullHealth: {
+			Name: Full Health
+			Description: Any players at full health
+		}
+
+		NoTeam: {
+			Name: No Team
+			Description: Any players on no team
+		}
+
+		Red: {
+			Name: Red Team
+			Description: Any players on Red team
+		}
+
+		Green: {
+			Name: Green Team
+			Description: Any players on Green team
+		}
+
+		Blue: {
+			Name: Blue Team
+			Description: Any players on Blue team
+		}
+
+		Yellow: {
+			Name: Yellow Team
+			Description: Any players on Yellow team
+		}
+
+		Pink: {
+			Name: Pink Team
+			Description: Any players on Pink team
+		}
+
+		Kick: {
+			Name: Kick
+			Toggle: Show or hide Kick button
+		}
+
+		View: {
+			Name: Spectate
+			Toggle: Show or hide Spectate button
+		}
+
+		Inventory: {
+			Name: Inventory
+			Toggle: Show or hide Inventory button
+		}
+
+		BringHere: {
+			Name: Bring Here
+			Toggle: Show or hide Bring Here button
+		}
+
+		GoTo: {
+			Name: Go To
+			Toggle: Show or hide Go To button
+		}
 	}
 
 	Admin: {
@@ -910,13 +1002,37 @@ PlayerManager: {
 	}
 
 	View: {
-		Name: View
+		Name: Spectate
 		Tooltip: Move the camera to this players position
 	}
 
 	Inventory: {
 		Name: Inventory
 		Tooltip: View and edit this player's inventories
+	}
+
+	BringHere: {
+		Name: Bring Here
+		Tooltip: Teleport this player to your position
+	}
+
+	GoTo: {
+		Name: Go To
+		Tooltip: Teleport to this player's position
+	}
+
+	Freeze: {
+		Name: Freeze
+		Tooltip: Freeze this player
+	}
+
+	InventoryManager: {
+		Inventory: "{0}'s Inventory"
+		Equipment: Equipment
+		Piggy: Piggy bank
+		Safe: Safe
+		DefendersForge: Defenders forge
+		VoidVault: Void vault
 	}
 
 	Stats:
@@ -926,6 +1042,11 @@ PlayerManager: {
 		Position: {2}
 		Velocity: {3}
 		Alive: {4}
+		'''
+	PlayerTooltip:
+		'''
+		Life: {0}
+		Position: {1}
 		'''
 }
 

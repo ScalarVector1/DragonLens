@@ -13,6 +13,10 @@ namespace DragonLens.Core.Systems
 
 		public override void OnEnterWorld()
 		{
+			// Only show to users who can use tools (i.e. not guests)
+			if (!PermissionHandler.CanUseTools(Player))
+				return;
+
 			if (Mod.Version > seenMotd)
 			{
 				string MOTD = LocalizationHelper.GetText("MOTD", Mod.Version);

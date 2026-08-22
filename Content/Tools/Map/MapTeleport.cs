@@ -14,32 +14,17 @@ namespace DragonLens.Content.Tools.Map
 		public static bool active = true;
 
 		public override string IconKey => "MapTeleport";
+
+		public override bool IsHighlighted => active;
+
 		public override void ResetForNonAdmin(Player player)
 		{
 			active = false;
 		}
+
 		public override void OnActivate()
 		{
 			active = !active;
-		}
-
-		public override void DrawIcon(SpriteBatch spriteBatch, Rectangle position)
-		{
-			base.DrawIcon(spriteBatch, position);
-
-			if (active)
-			{
-				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ThemeHandler.ButtonColor.InvertColor());
-
-				Texture2D tex = Assets.Misc.GlowAlpha.Value;
-				var color = new Color(255, 100, 200)
-				{
-					A = 0
-				};
-				var target = new Rectangle(position.X, position.Y, 38, 38);
-
-				spriteBatch.Draw(tex, target, color);
-			}
 		}
 
 		public override void SaveData(TagCompound tag)

@@ -1,4 +1,5 @@
 ﻿using DragonLens.Content.GUI;
+using DragonLens.Content.Tools.Developer;
 using DragonLens.Core.Loaders.UILoading;
 using DragonLens.Core.Systems.ThemeSystem;
 using DragonLens.Core.Systems.ToolSystem;
@@ -17,6 +18,8 @@ namespace DragonLens.Content.Tools.Editors
 		public static List<Item> loadCache = new();
 
 		public override string IconKey => "AccessoryTray";
+
+		public override bool IsHighlighted => UILoader.GetUIState<AccessoryTrayUI>()?.Visible ?? false;
 
 		public override void OnActivate()
 		{
@@ -160,7 +163,7 @@ namespace DragonLens.Content.Tools.Editors
 			if (BoundingBox.Contains(Main.MouseScreen.ToPoint()))
 				PlayerInput.LockVanillaMouseScroll("DragonLens: Accessory Tray");
 
-			GUIHelper.DrawBoxFancy(spriteBatch, BoundingBox, ThemeHandler.BackgroundColor);
+			GUIHelper.DrawBox(spriteBatch, BoundingBox, ThemeHandler.BackgroundColor);
 
 			Texture2D back = Assets.GUI.Gradient.Value;
 			var backTarget = new Rectangle((int)basePos.X + 8, (int)basePos.Y + 8, 300, 40);
