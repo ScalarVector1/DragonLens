@@ -17,6 +17,8 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override bool HasRightClick => true;
 
+		public override bool IsHighlighted => godMode || dogMode;
+
 		public override void ResetForNonAdmin(Player player)
 		{
 			godMode = false;
@@ -44,8 +46,6 @@ namespace DragonLens.Content.Tools.Gameplay
 			if (godMode)
 			{
 				base.DrawIcon(spriteBatch, position);
-
-				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ThemeHandler.ButtonColor.InvertColor());
 
 				Texture2D tex = Assets.Misc.GlowAlpha.Value;
 				var color = new Color(255, 220, 100)

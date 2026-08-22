@@ -35,8 +35,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 			if (Main.netMode == NetmodeID.Server && sender >= 0)
 			{
-				if (NPCBrowser.selected != null)
-					NPCBrowser.selected.netID = type;
+				NPCBrowser.selected?.netID = type;
 
 				Main.mouseX = (int)pos.X;
 				Main.mouseY = (int)pos.Y;
@@ -289,7 +288,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 		public override void SafeDraw(SpriteBatch spriteBatch, Rectangle iconBox)
 		{
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Tooltip.SetName(Identifier);
 				Tooltip.SetTooltip(NPCSpawner.GetText("NPCType", npc.type, npc.netID));

@@ -29,22 +29,7 @@ namespace DragonLens.Content.Tools.Developer
 				Main.NewText("Cannot step while not paused", Color.Orange);
 		}
 
-		public override void DrawIcon(SpriteBatch spriteBatch, Rectangle position)
-		{
-			base.DrawIcon(spriteBatch, position);
-
-			if (FrameAdvanceSystem.paused)
-			{
-				GUIHelper.DrawOutline(spriteBatch, new Rectangle(position.X - 4, position.Y - 4, 46, 46), ThemeHandler.ButtonColor.InvertColor());
-
-				Texture2D tex = Assets.Misc.GlowAlpha.Value;
-				Color color = Color.White;
-				color.A = 0;
-				var target = new Rectangle(position.X, position.Y, 38, 38);
-
-				spriteBatch.Draw(tex, target, color);
-			}
-		}
+		public override bool IsHighlighted => FrameAdvanceSystem.paused;
 	}
 
 	internal class FrameAdvanceSystem : ModSystem

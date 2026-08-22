@@ -18,6 +18,8 @@ namespace DragonLens.Content.Tools.Gameplay
 
 		public override bool HasRightClick => true;
 
+		public override bool IsHighlighted => active || voidActive;
+
 		public override void OnActivate()
 		{
 			active = !active;

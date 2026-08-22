@@ -14,7 +14,7 @@ namespace DragonLens.Content.GUI
 		private static TextSnippet[] text;
 		private static TextSnippet[] tooltip;
 		private static Color color = Color.White;
-
+		public override bool ParticipatesInHoverOwnership => false;
 		public override bool Visible => true;
 
 		public void Load(Mod mod)

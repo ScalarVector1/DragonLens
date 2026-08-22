@@ -261,7 +261,7 @@ namespace DragonLens.Content.Tools.Spawners
 
 			spriteBatch.Draw(tex, iconBox.Center(), frame, Color.White, 0, frame.Size() / 2, scale, 0, 0);
 
-			if (IsMouseHovering)
+			if (IsMouseHovering && CanShowTooltip)
 			{
 				Tooltip.SetName(proj.Name);
 				Tooltip.SetTooltip(ProjectileSpawner.GetText("ProjectileType", proj.type));
