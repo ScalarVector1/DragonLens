@@ -181,7 +181,7 @@ namespace DragonLens.Core.Systems
 					if (!admins.Contains(Main.LocalPlayer.GetModPlayer<PermissionPlayer>().currentServerID))
 						admins.Add(Main.LocalPlayer.GetModPlayer<PermissionPlayer>().currentServerID);
 
-					Main.NewText($"You are now an admin.", Color.Yellow);
+					Main.NewText(LocalizationHelper.GetToolText("PlayerManager.AdminNow"), Color.Yellow);
 				}
 			}
 			else if (operation == 1) //Remove admin
@@ -202,7 +202,7 @@ namespace DragonLens.Core.Systems
 				else
 				{
 					admins.RemoveAll(n => n == Main.LocalPlayer.GetModPlayer<PermissionPlayer>().currentServerID);
-					Main.NewText($"You are no longer an admin.", Color.Yellow);
+					Main.NewText(LocalizationHelper.GetToolText("PlayerManager.Unadmin"), Color.Yellow);
 
 					foreach (SmartUIState item in UILoader.UIStates)
 					{

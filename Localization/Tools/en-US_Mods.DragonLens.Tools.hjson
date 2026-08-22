@@ -40,6 +40,7 @@ ShaderCompiler: {
 	Triggered: Triggered shader re-compile...
 	Completed: Shader re-compilation completed in {0} ms
 	Recompiled: Shaders for {0} recompiled!
+	RecompiledError: Failed to compile: {0}
 }
 
 AccessoryTray: {
@@ -890,6 +891,8 @@ PlayerManager: {
 	TryRemoveYourself: You cannot remove your own permissions!
 	RemoveAdmin: "{0} is no longer an admin."
 	AddAdmin: "{0} is now an admin."
+	AdminNow: You are now an admin.
+	Unadmin: You are no longer an admin.
 
 	InventoryManager: {
 		Inventory: "{0}'s Inventory"
@@ -974,4 +977,6 @@ Pause: {
 	DisplayName: Pause
 	Description: Pauses the game. You can right click this tool to advance by a single frame while paused.
 	RightClickName: (Pause) Step single frame
+	MultiplayerWarn: Pause is disabled in multiplayer
+	NotPaused: Cannot step while not paused
 }
