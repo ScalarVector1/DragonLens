@@ -1066,6 +1066,6 @@ Pause: {
 
 SpawnPoint: {
 	// DisplayName: Spawn Point
-	// Description: Sets the spawn point to your current position.
-	// Message: Spawn point set to {0} {1}
+	// Description: Sets your spawn point to your current position.
+	// Message: Spawn point set to X: {0}, Y: {1}.
 }
