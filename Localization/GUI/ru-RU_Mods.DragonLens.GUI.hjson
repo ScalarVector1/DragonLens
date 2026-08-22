@@ -1,11 +1,11 @@
 Browser: {
 	Filters: Фильтры
 	Sorts: Тип сортировки
-	// ListView: List view
-	// GridView: Grid view
-	// GridViewDescription: Grid view. Click to switch to list
-	// ListViewDescription: List view. Click to switch to grid
-	// Settings: Settings
+	ListView: Показать списком
+	GridView: Показать сеткой
+	GridViewDescription: Включён вид сеткой. Нажмите, чтобы переключиться на вид списком
+	ListViewDescription: Включён вид списком. Нажмите, чтобы переключиться на вид сеткой
+	Settings: Настройки
 
 	Sort: {
 		ID: по ID
@@ -14,10 +14,10 @@ Browser: {
 		Defense: по защите
 		Value: по цене
 		Life: по максимальному здоровью
-		// CurrentLife: By Current Life
-		// SessionTime: By Session Time
+		CurrentLife: по текущему здоровью
+		SessionTime: по времени в игре
 		AlphabeticalPath: по алфавиту (путь)
-		// Teams: By Teams
+		Teams: по команде
 	}
 
 	ButtonSizeSlider: {

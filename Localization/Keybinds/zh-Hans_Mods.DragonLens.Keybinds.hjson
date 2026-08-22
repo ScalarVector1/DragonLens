@@ -46,4 +46,4 @@ CollapseAll.DisplayName: 收起全部侧栏
 // AssetManager.DisplayName: "{$Mods.DragonLens.Tools.AssetManager.DisplayName}"
 // Pause.DisplayName: "{$Mods.DragonLens.Tools.Pause.DisplayName}"
 // PauseRightClick.DisplayName: "{$Mods.DragonLens.Tools.Pause.RightClickName}"
-// SpawnPoint.DisplayName: Spawn Point
+// SpawnPoint.DisplayName: "{$Mods.DragonLens.Tools.SpawnPoint.DisplayName}"

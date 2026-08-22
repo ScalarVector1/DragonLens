@@ -949,103 +949,103 @@ PlayerManager: {
 	Unadmin: Вы больше не являетесь администратором.
 
 	Refresh: {
-		// Name: Refresh
-		// Tooltip: Show or hide Refresh button
-		// DisplayName: Refresh
-		// Description: Refresh all players
+		Name: Обновить
+		Tooltip: Показать кнопку «{$Tools.PlayerManager.Refresh.Name}»
+		DisplayName: Обновить
+		Description: Обновляет всех игроков
 	}
 
 	FilterCategories: {
-		// Filter: Filters
-		// Team: Team filters
-		// Biome: Biome filters
-		// ButtonOptions: Button options
-		// StatOptions: Stat options
-		// BackgroundOptions: Background options
-		// PlayerOptions: Player options
+		Filter: По статусу
+		Team: По команде
+		Biome: По биому
+		ButtonOptions: Настроить кнопки
+		StatOptions: Настройки характеристик
+		BackgroundOptions: Настройки фона
+		PlayerOptions: Настройки игрока
 	}
 
 	Filters: {
 		Frozen: {
-			// Name: Frozen
-			// Description: Any players currently frozen
-			// Toggle: Show or hide Freeze button
+			Name: Заморожен
+			Description: Все игроки, которые сейчас заморожены
+			Toggle: Показать кнопку «{$Tools.PlayerManager.Frozen.Name}»
 		}
 
 		Admin: {
-			// Name: Admin
-			// Description: Any players with admin permissions
-			// Toggle: Show or hide Admin button
+			Name: Администратор
+			Description: Все игроки, которые имеют права администратора
+			Toggle: Показать кнопку «{$Tools.PlayerManager.Admin.Name}»
 		}
 
 		Dead: {
-			// Name: Dead
-			// Description: Any dead players
+			Name: Мёртв
+			Description: Все игроки, которые сейчас мертвы
 		}
 
 		LowHealth: {
-			// Name: Low Health
-			// Description: Any players below half health
+			Name: Малый запас здоровья
+			Description: Все игроки, у которых менее половины запаса здоровья
 		}
 
 		FullHealth: {
-			// Name: Full Health
-			// Description: Any players at full health
+			Name: Полный запас здоровья
+			Description: Все игроки, у которых полный запас здоровья
 		}
 
 		NoTeam: {
-			// Name: No Team
-			// Description: Any players on no team
+			Name: Без команды
+			Description: Все игроки, которые не состоят в команде
 		}
 
 		Red: {
-			// Name: Red Team
-			// Description: Any players on Red team
+			Name: Красная команда
+			Description: Все игроки, которые состоят в красной команде
 		}
 
 		Green: {
-			// Name: Green Team
-			// Description: Any players on Green team
+			Name: Зелёная команда
+			Description: Все игроки, которые состоят в зелёной команде
 		}
 
 		Blue: {
-			// Name: Blue Team
-			// Description: Any players on Blue team
+			Name: Синяя команда
+			Description: Все игроки, которые состоят в синей команде
 		}
 
 		Yellow: {
-			// Name: Yellow Team
-			// Description: Any players on Yellow team
+			Name: Жёлтая команда
+			Description: Все игроки, которые состоят в жёлтой команде
 		}
 
 		Pink: {
-			// Name: Pink Team
-			// Description: Any players on Pink team
+			Name: Розовая команда
+			Description: Все игроки, которые состоят в розовой команде
 		}
 
 		Kick: {
-			// Name: Kick
-			// Toggle: Show or hide Kick button
+			Name: Выгнать
+			Toggle: Показать кнопку «{$Tools.PlayerManager.Kick.Name}»
 		}
 
 		View: {
-			// Name: Spectate
-			// Toggle: Show or hide Spectate button
+			Name: Понаблюдать
+			Toggle: Показать кнопку «{$Tools.PlayerManager.View.Name}»
 		}
 
 		Inventory: {
-			// Name: Inventory
-			// Toggle: Show or hide Inventory button
+			Name: Инвентарь
+			Toggle: Показать кнопку «{$Tools.PlayerManager.Inventory.Name}»
 		}
 
 		BringHere: {
-			// Name: Bring Here
-			// Toggle: Show or hide Bring Here button
+			Name: Bring Here
+			Toggle: Показать кнопку «{$Tools.PlayerManager.BringHere.Name}»
 		}
 
 		GoTo: {
-			// Name: Go To
-			// Toggle: Show or hide Go To button
+			Name: Go To
+			Toggle: Показать кнопку «{$Tools.PlayerManager.GoTo.Name}»
 		}
 	}
 
@@ -1070,18 +1070,18 @@ PlayerManager: {
 	}
 
 	BringHere: {
-		// Name: Bring Here
-		// Tooltip: Teleport this player to your position
+		Name: Телепортировать к себе
+		Tooltip: Телепортирует игрока на ваши координаты
 	}
 
 	GoTo: {
-		// Name: Go To
-		// Tooltip: Teleport to this player's position
+		Name: Телепортироваться
+		Tooltip: Телепортирует вас на координаты игрока
 	}
 
 	Freeze: {
-		// Name: Freeze
-		// Tooltip: Freeze this player
+		Name: Заморозить
+		Tooltip: Заморозить игрока
 	}
 
 	InventoryManager: {
@@ -1101,11 +1101,11 @@ PlayerManager: {
 		Скорость: {3}
 		Жив: {4}
 		'''
-	/* PlayerTooltip:
+	PlayerTooltip:
 		'''
-		Life: {0}
-		Position: {1}
-		''' */
+		Здоровье: {0}
+		Местоположение: {1}
+		'''
 }
 
 AssetManager: {
@@ -1161,7 +1161,7 @@ Pause: {
 }
 
 SpawnPoint: {
-	// DisplayName: Spawn Point
-	// Description: Sets your spawn point to your current position.
-	// Message: Spawn point set to X: {0}, Y: {1}.
+	DisplayName: Точка возрождения
+	Description: Устанавливает вашу точку возрождения в текущем месте.
+	Message: Точка возрождения установлена по координатам X: {0}, Y: {1}.
 }
