@@ -97,7 +97,7 @@ namespace DragonLens.Content.GUI
 			 * e.g filter toggle button goes out of focus
 			 */
 			//if (drawHighlight && isOn() && CanShowTooltip)
-				//GUIHelper.DrawOutline(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor.InvertColor());
+			//GUIHelper.DrawOutline(spriteBatch, GetDimensions().ToRectangle(), ThemeHandler.ButtonColor.InvertColor());
 #endif
 
 			string hoverName = getTooltip?.Invoke() ?? tooltip;

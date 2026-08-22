@@ -63,7 +63,7 @@ namespace DragonLens.Core.Loaders.UILoading
 #if DEBUG
 			if (element.IsMouseHovering)
 			{
-				ModContent.GetInstance<DragonLens>().Logger.Debug(($"CanShowTooltip: element={elementName}, owner={ownerName}, topmost={topmostName}, result={result}"));
+				ModContent.GetInstance<DragonLens>().Logger.Debug($"CanShowTooltip: element={elementName}, owner={ownerName}, topmost={topmostName}, result={result}");
 				//Main.NewText(($"CanShowTooltip: element={elementName}, owner={ownerName}, topmost={topmostName}, result={result}"));
 			}
 #endif
@@ -212,7 +212,7 @@ namespace DragonLens.Core.Loaders.UILoading
 				bool suppressMouseForThisState = false;
 
 				if (s is DraggableUIState draggable && draggable.BoundingBox.Contains(mouse))
-					{
+				{
 					suppressMouseForThisState = blockLowerLeftClick || blockLowerRightClick;
 
 					if (!suppressMouseForThisState)

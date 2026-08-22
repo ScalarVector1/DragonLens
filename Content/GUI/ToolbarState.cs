@@ -222,7 +222,6 @@ namespace DragonLens.Content.GUI
 			Main.mouseY = savedY;
 		}
 
-
 		public override void PostUpdateEverything()
 		{
 			if (Main.netMode == NetmodeID.Server)

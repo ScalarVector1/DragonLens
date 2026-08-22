@@ -34,14 +34,16 @@ namespace DragonLens.Content.Themes.BoxProviders
 				shader.Parameters["u_power"].SetValue(0.01f);
 				shader.Parameters["u_color"].SetValue(color.ToVector4());
 				shader.Parameters["back_t"].SetValue(Main.screenTarget);
-				shader.Parameters["u_mouse"].SetValue(Main.MouseScreen * (Main.UIScale));
+				shader.Parameters["u_mouse"].SetValue(Main.MouseScreen * Main.UIScale);
 				shader.Parameters["u_scale"].SetValue(Matrix.CreateScale(1f / Main.UIScale));
 				shader.Parameters["u_resolution"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
 
 				shader.CurrentTechnique.Passes[0].Apply();
 
-				RasterizerState r = new();
-				r.ScissorTestEnable = true;
+				RasterizerState r = new()
+				{
+					ScissorTestEnable = true
+				};
 
 				spriteBatch.End();
 				spriteBatch.Begin(default, default, SamplerState.LinearClamp, default, r, shader, Main.UIScaleMatrix);
@@ -59,8 +61,10 @@ namespace DragonLens.Content.Themes.BoxProviders
 			spriteBatch.Draw(tex, new Rectangle(target.X + target.Width - cornerSize, target.Y + target.Height - cornerSize, cornerSize, cornerSize), new Rectangle(tex.Width - cornerSize, tex.Height - cornerSize, cornerSize, cornerSize), color, 0, Vector2.Zero, 0, 0);
 			spriteBatch.Draw(tex, new Rectangle(target.X, target.Y + target.Height - cornerSize, cornerSize, cornerSize), new Rectangle(0, tex.Height - cornerSize, cornerSize, cornerSize), color, 0, Vector2.Zero, 0, 0);
 
-			RasterizerState r2 = new();
-			r2.ScissorTestEnable = true;
+			RasterizerState r2 = new()
+			{
+				ScissorTestEnable = true
+			};
 
 			spriteBatch.End();
 			spriteBatch.Begin(default, default, SamplerState.LinearClamp, default, r2, default, Main.UIScaleMatrix);

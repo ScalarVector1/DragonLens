@@ -21,7 +21,6 @@ namespace DragonLens.Content.Tools.Spawners
 	{
 		public override string IconKey => "BuffSpawner";
 
-
 		public override void SendPacket(BinaryWriter writer)
 		{
 			writer.WriteVector2(Main.MouseWorld);

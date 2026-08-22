@@ -74,7 +74,7 @@ namespace DragonLens.Content.GUI
 
 			// If you only want to bring to front when clicking the header area, use:
 			//if (DragBox.Contains(evt.MousePosition.ToPoint()))
-				//UILoader.BringToFront(this);
+			//UILoader.BringToFront(this);
 		}
 
 		public virtual void DraggableUdpate(GameTime gameTime) { }

@@ -63,7 +63,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 		public override void PopulateGrid(UIGrid grid)
 		{
 			var buttons = new List<PlayerManagerItem>();
-			List<Player> players = [..Main.ActivePlayers];
+			List<Player> players = [.. Main.ActivePlayers];
 
 			foreach (Player player in players)
 			{
@@ -133,7 +133,7 @@ namespace DragonLens.Content.Tools.Multiplayer
 		public Player player;
 
 		private readonly Dictionary<string, PlayerManagerActionButton> actionButtons = [];
-		private UICharacter character;
+		private readonly UICharacter character;
 
 		private PlayerManagerSystem PlayerManager => ModContent.GetInstance<PlayerManagerSystem>();
 		private PlayerManagerBrowser PlayerBrowser => (PlayerManagerBrowser)parent;
