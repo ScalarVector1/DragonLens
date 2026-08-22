@@ -36,6 +36,7 @@ ShaderCompiler: {
 	Triggered: Shader已开始重新编译...
 	Completed: Shader重新编译已在{0}毫秒内完成
 	Recompiled: "{0}模组的Shader已重新编译！"
+	// RecompiledError: Failed to compile: {0}
 }
 
 AccessoryTray: {
@@ -60,7 +61,7 @@ ItemEditor: {
 	SetDefaults: 重置 (SetDefaults)
 
 	Filters: {
-		// FromMod: From mod:
+		// FromMod: From mod {0}
 		// FromVanilla: From Vanilla
 	}
 
@@ -231,6 +232,7 @@ Godmode: {
 InfiniteReach: {
 	DisplayName: 建筑大师
 	Description: 你拥有无限的放置范围且能够快速地放置物块。
+	// SmartСursorWarn: Smart cursor is disabled with omnipotent building
 }
 
 Magnet: {
@@ -857,6 +859,8 @@ PlayerManager: {
 	TryRemoveYourself: 你不能移除自己的权限！
 	RemoveAdmin: "{0}已不是管理员"
 	AddAdmin: "{0}已成为管理员"
+	// AdminNow: You are now an admin.
+	// Unadmin: You are no longer an admin.
 
 	Refresh: {
 		// Name: Refresh
@@ -1044,7 +1048,7 @@ AssetManager: {
 	}
 
 	Filters: {
-		// Mod.Description: Assets from {0}
+		// FromMod: Assets from {0}
 
 		Texture: {
 			// Name: Texture assets
@@ -1062,6 +1066,8 @@ Pause: {
 	// DisplayName: Pause
 	// Description: Pauses the game. You can right click this tool to advance by a single frame while paused.
 	// RightClickName: (Pause) Step single frame
+	// MultiplayerWarn: Pause is disabled in multiplayer
+	// NotPaused: Cannot step while not paused
 }
 
 SpawnPoint: {

@@ -93,7 +93,7 @@ ToolbarCustomizationElements: {
 
 	AddButton: {
 		Name: Add tool
-		Tooltip: Click to add tools to this toolbar
+		Tooltip: Click to add tools to this toolbar.
 	}
 
 	RemoveToolbarButton: {
@@ -103,7 +103,11 @@ ToolbarCustomizationElements: {
 
 	ToolbarDragger: {
 		Name: Move toolbar
-		Tooltip: Click and drag to re-position this toolbar. The toolbar will automatically snap to the edges of the screen if close enough. NEWBLOCK Right click while dragging to rotate the toolbar.
+		Tooltip:
+			'''
+			Click and drag to re-position this toolbar. The toolbar will automatically snap to the edges of the screen if close enough.
+			Right click while dragging to rotate the toolbar.
+			'''
 	}
 
 	ToolButtonDragger: {
@@ -113,7 +117,12 @@ ToolbarCustomizationElements: {
 
 	HideOptionButton: {
 		Name: Auto-hide: {0}
-		Tooltip: Allows you to set visibility rules for this toolbar. NEWBLOCK {0} NEWBLOCK Clicking will change to: {1}
+		Tooltip:
+			'''
+			Allows you to set visibility rules for this toolbar.
+			{0}
+			Clicking will change to: {1}
+			'''
 
 		Never: {
 			Name: Normal
@@ -132,7 +141,11 @@ ToolbarCustomizationElements: {
 
 		NoMapScreen: {
 			Name: Map only
-			Tip: Visible on the map -- note: tools which open other windows will require you to close the map to use them!
+			Tip:
+				'''
+				Visible on the map
+				Note: tools which open other windows will require you to close the map to use them!
+				'''
 		}
 	}
 

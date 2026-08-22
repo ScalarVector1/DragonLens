@@ -27,7 +27,7 @@ Magnet.DisplayName: "{$Mods.DragonLens.Tools.Magnet.DisplayName}"
 MagnetRightClick.DisplayName: "{$Mods.DragonLens.Tools.Magnet.RightClickName}"
 NoClip.DisplayName: "{$Mods.DragonLens.Tools.NoClip.DisplayName}"
 Paint.DisplayName: "{$Mods.DragonLens.Tools.Paint.DisplayName}"
-SpawnTool.DisplayName: "{$Mods.DragonLens.Tools.SpawnTool.DisplayName}"
+SpawnTool.DisplayName: Изм. частоту появления существ
 Time.DisplayName: "{$Mods.DragonLens.Tools.Time.DisplayName}"
 Weather.DisplayName: "{$Mods.DragonLens.Tools.Weather.DisplayName}"
 HideMap.DisplayName: "{$Mods.DragonLens.Tools.HideMap.DisplayName}"
@@ -43,8 +43,7 @@ SoundSpawner.DisplayName: "{$Mods.DragonLens.Tools.SoundSpawner.DisplayName}"
 EntityEditor.DisplayName: "{$Mods.DragonLens.Tools.EntityEditor.DisplayName}"
 SystemEditor.DisplayName: "{$Mods.DragonLens.Tools.SystemEditor.DisplayName}"
 PlayerManager.DisplayName: "{$Mods.DragonLens.Tools.PlayerManager.DisplayName}"
-// AssetInvalidator.DisplayName: Asset Invalidator
-// AssetManager.DisplayName: Asset Manager
-// Pause.DisplayName: Pause
-// PauseRightClick.DisplayName: Pause Right Click
-// SpawnPoint.DisplayName: Spawn Point
+AssetManager.DisplayName: "{$Mods.DragonLens.Tools.AssetManager.DisplayName}"
+Pause.DisplayName: "{$Mods.DragonLens.Tools.Pause.DisplayName}"
+PauseRightClick.DisplayName: "{$Mods.DragonLens.Tools.Pause.RightClickName}"
+SpawnPoint.DisplayName: "{$Mods.DragonLens.Tools.SpawnPoint.DisplayName}"

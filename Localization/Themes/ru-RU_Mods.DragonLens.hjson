@@ -1,36 +1,46 @@
 SimpleBoxes: {
 	Name: Упрощённый
-	Description: Стиль рамок DragonLens по умолчанию
+	Description: Стиль рамок DragonLens по умолчанию.
 }
 
 VanillaBoxes: {
-	Name: Ванила
-	Description: Рамки в стиле ванильного интерфейса
+	Name: Ванилла
+	Description: Рамки в стиле ванильного интерфейса.
 }
 
 MinimalBoxes: {
 	Name: Минимализм
-	Description: Самый простой стиль рамок из возможных
+	Description: Самый простой стиль рамок из возможных.
+}
+
+GlassBoxes: {
+	Name: Жидкое стекло
+	Description: Прозрачные и отражающие рамки в футуристическом стиле.
+}
+
+FancyBoxes: {
+	Name: Причудливый
+	Description: Рамки в стиле шкал здоровья и маны, а также миникарты.
 }
 
 DragonLensIcons: {
 	Name: По умолчанию
-	Description: Иноки DragonLens по умолчанию
+	Description: Иноки DragonLens по умолчанию.
 }
 
 HEROsIcons: {
 	Name: HERO's Mod
-	Description: Иконки из HERO's мода и подражающие его стилю
+	Description: Иконки из HERO's мода и подражающие его стилю.
 }
 
 BackgroundColor: {
 	Name: Фон
-	Description: Цвет фона графического интерфейса DragonLens
+	Description: Цвет фона графического интерфейса DragonLens.
 }
 
 ButtonColor: {
 	Name: Клавиши
-	Description: Цвет клавиш графического интерфейса DragonLens
+	Description: Цвет клавиш графического интерфейса DragonLens.
 }
 
 Configs: {
@@ -63,12 +73,12 @@ Configs: {
 
 		simple: {
 			Label: "{$Mods.DragonLens.BoxStyle.simple}"
-			// Tooltip: ""
+			Tooltip: ""
 		}
 
 		vanilla: {
 			Label: "{$Mods.DragonLens.BoxStyle.vanilla}"
-			// Tooltip: ""
+			Tooltip: ""
 		}
 	}
 
@@ -77,12 +87,12 @@ Configs: {
 
 		basic: {
 			Label: "{$Mods.DragonLens.IconStyle.basic}"
-			// Tooltip: ""
+			Tooltip: ""
 		}
 
 		HEROs: {
 			Label: "{$Mods.DragonLens.IconStyle.HEROs}"
-			// Tooltip: ""
+			Tooltip: ""
 		}
 	}
 

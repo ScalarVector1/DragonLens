@@ -169,7 +169,7 @@ namespace DragonLens.Content.Tools.Developer
 			}
 			else
 			{
-				Main.NewText($"Failed to compile: {error}", Color.Red);
+				Main.NewText(LocalizationHelper.GetToolText("ShaderCompiler.RecompiledError", error), Color.Red);
 				return false;
 			}
 		}

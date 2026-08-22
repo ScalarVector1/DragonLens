@@ -1,6 +1,7 @@
 ﻿using DragonLens.Content.GUI;
 using DragonLens.Content.Tools.Developer;
 using DragonLens.Content.Tools.Spawners;
+using DragonLens.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace DragonLens.Content.Filters.AssetFilters
 
 		public override string Name => mod.DisplayName;
 
-		public override string Description => $"Assets from {mod.DisplayName}";
+		public override string Description => LocalizationHelper.GetToolText("AssetManager.Filters.FromMod", mod.DisplayName);
 
 		public static bool FilterByMod(BrowserButton button, Mod mod)
 		{

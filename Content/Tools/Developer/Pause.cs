@@ -18,7 +18,7 @@ namespace DragonLens.Content.Tools.Developer
 			if (Main.netMode == NetmodeID.SinglePlayer)
 				FrameAdvanceSystem.paused = !FrameAdvanceSystem.paused;
 			else
-				Main.NewText("Pause is disabled in multiplayer", Color.Red);
+				Main.NewText(LocalizationHelper.GetToolText("Pause.MultiplayerWarn"), Color.Red);
 		}
 
 		public override void OnRightClick()
@@ -26,7 +26,7 @@ namespace DragonLens.Content.Tools.Developer
 			if (Main.netMode == NetmodeID.SinglePlayer && FrameAdvanceSystem.paused)
 				FrameAdvanceSystem.stepReady = true;
 			else
-				Main.NewText("Cannot step while not paused", Color.Orange);
+				Main.NewText(LocalizationHelper.GetToolText("Pause.NotPaused"), Color.Orange);
 		}
 
 		public override bool IsHighlighted => FrameAdvanceSystem.paused;

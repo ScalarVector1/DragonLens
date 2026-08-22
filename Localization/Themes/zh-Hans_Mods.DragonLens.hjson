@@ -13,6 +13,16 @@ MinimalBoxes: {
 	Description: 极简的UI框样式
 }
 
+GlassBoxes: {
+	// Name: Liquid Glass
+	// Description: A transparent and reflective box style
+}
+
+FancyBoxes: {
+	// Name: Fancy
+	// Description: A box style based on the health and mana bars and the minimap.
+}
+
 DragonLensIcons: {
 	Name: 默认
 	Description: DragonLens的默认工具图标
